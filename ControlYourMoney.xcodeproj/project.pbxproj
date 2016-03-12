@@ -8,22 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		E16ED93F1C23B8C700D9BFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */; };
-		E16ED9411C23B8C700D9BFB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9401C23B8C700D9BFB7 /* ViewController.swift */; };
 		E16ED9441C23B8C700D9BFB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E16ED9421C23B8C700D9BFB7 /* Main.storyboard */; };
 		E16ED9471C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */; };
 		E16ED9491C23B8C700D9BFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */; };
 		E16ED94C1C23B8C700D9BFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */; };
+		E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */; };
+		E16ED9661C23DEE800D9BFB7 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */; };
+		E17F90A91C30E76000AA418D /* GSAlertSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17F90A81C30E76000AA418D /* GSAlertSheet.swift */; };
+		E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */; };
+		E1DDC0281C2B9E960013FF6B /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */; };
+		E1DDC02A1C2B9F750013FF6B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */; };
+		E1DF6CDB1C240AF3004F7933 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */; };
+		E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFB7491C25520A0064CD24 /* SQLData.swift */; };
+		E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED87901C27CE5100A3D682 /* DataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E16ED93B1C23B8C700D9BFB7 /* ControlYourMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ControlYourMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E16ED93B1C23B8C700D9BFB7 /* MakeMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E16ED9401C23B8C700D9BFB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E16ED9431C23B8C700D9BFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E16ED9461C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ControlYourMoney.xcdatamodel; sourceTree = "<group>"; };
 		E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E16ED94B1C23B8C700D9BFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E16ED94D1C23B8C700D9BFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		E17F90A81C30E76000AA418D /* GSAlertSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAlertSheet.swift; sourceTree = "<group>"; };
+		E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLastViewController.swift; sourceTree = "<group>"; };
+		E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeViewController.swift; sourceTree = "<group>"; };
+		E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		E1DFB7491C25520A0064CD24 /* SQLData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLData.swift; sourceTree = "<group>"; };
+		E1ED87901C27CE5100A3D682 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +64,7 @@
 		E16ED93C1C23B8C700D9BFB7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E16ED93B1C23B8C700D9BFB7 /* ControlYourMoney.app */,
+				E16ED93B1C23B8C700D9BFB7 /* MakeMoney.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,12 +73,20 @@
 			isa = PBXGroup;
 			children = (
 				E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */,
-				E16ED9401C23B8C700D9BFB7 /* ViewController.swift */,
 				E16ED9421C23B8C700D9BFB7 /* Main.storyboard */,
 				E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */,
 				E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */,
 				E16ED94D1C23B8C700D9BFB7 /* Info.plist */,
 				E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */,
+				E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */,
+				E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */,
+				E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */,
+				E1DFB7491C25520A0064CD24 /* SQLData.swift */,
+				E1ED87901C27CE5100A3D682 /* DataSource.swift */,
+				E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */,
+				E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */,
+				E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */,
+				E17F90A81C30E76000AA418D /* GSAlertSheet.swift */,
 			);
 			path = ControlYourMoney;
 			sourceTree = "<group>";
@@ -84,7 +108,7 @@
 			);
 			name = ControlYourMoney;
 			productName = ControlYourMoney;
-			productReference = E16ED93B1C23B8C700D9BFB7 /* ControlYourMoney.app */;
+			productReference = E16ED93B1C23B8C700D9BFB7 /* MakeMoney.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -139,9 +163,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E16ED9411C23B8C700D9BFB7 /* ViewController.swift in Sources */,
+				E17F90A91C30E76000AA418D /* GSAlertSheet.swift in Sources */,
+				E1DDC0281C2B9E960013FF6B /* DetailTableViewController.swift in Sources */,
+				E1DF6CDB1C240AF3004F7933 /* AddViewController.swift in Sources */,
+				E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */,
 				E16ED9471C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld in Sources */,
+				E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */,
+				E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */,
+				E16ED9661C23DEE800D9BFB7 /* MainTableViewCell.swift in Sources */,
+				E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */,
 				E16ED93F1C23B8C700D9BFB7 /* AppDelegate.swift in Sources */,
+				E1DDC02A1C2B9F750013FF6B /* ChangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,9 +285,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.ControlYourMoney;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.MakeMoney;
+				PRODUCT_NAME = MakeMoney;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -264,9 +298,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.ControlYourMoney;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.MakeMoney;
+				PRODUCT_NAME = MakeMoney;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -289,6 +325,7 @@
 				E16ED9521C23B8C700D9BFB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
