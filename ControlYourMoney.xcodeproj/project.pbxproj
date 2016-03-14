@@ -13,12 +13,16 @@
 		E16ED9491C23B8C700D9BFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */; };
 		E16ED94C1C23B8C700D9BFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */; };
 		E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */; };
-		E16ED9661C23DEE800D9BFB7 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */; };
-		E17F90A91C30E76000AA418D /* GSAlertSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17F90A81C30E76000AA418D /* GSAlertSheet.swift */; };
+		E16FA2CD1C9419F3005A7B7A /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */; };
+		E16FA2CF1C941A58005A7B7A /* MyBottomMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */; };
+		E16FA2D31C941BAC005A7B7A /* MyTextToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */; };
+		E16FA2DA1C942041005A7B7A /* AddSalaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */; };
+		E16FA2DC1C94213D005A7B7A /* AddCashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */; };
+		E16FA2DE1C9421E8005A7B7A /* AddCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */; };
+		E16FA2E21C942463005A7B7A /* CashDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */; };
 		E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */; };
-		E1DDC0281C2B9E960013FF6B /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */; };
-		E1DDC02A1C2B9F750013FF6B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */; };
-		E1DF6CDB1C240AF3004F7933 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */; };
+		E1DDC0281C2B9E960013FF6B /* CreditDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */; };
+		E1DDC02A1C2B9F750013FF6B /* ChangeCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */; };
 		E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFB7491C25520A0064CD24 /* SQLData.swift */; };
 		E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED87901C27CE5100A3D682 /* DataSource.swift */; };
 /* End PBXBuildFile section */
@@ -32,12 +36,16 @@
 		E16ED94B1C23B8C700D9BFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E16ED94D1C23B8C700D9BFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		E17F90A81C30E76000AA418D /* GSAlertSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAlertSheet.swift; sourceTree = "<group>"; };
+		E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBottomMenuView.swift; sourceTree = "<group>"; };
+		E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextToast.swift; sourceTree = "<group>"; };
+		E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSalaryViewController.swift; sourceTree = "<group>"; };
+		E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCashViewController.swift; sourceTree = "<group>"; };
+		E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCreditViewController.swift; sourceTree = "<group>"; };
+		E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashDetailTableViewController.swift; sourceTree = "<group>"; };
 		E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLastViewController.swift; sourceTree = "<group>"; };
-		E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
-		E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeViewController.swift; sourceTree = "<group>"; };
-		E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditDetailTableViewController.swift; sourceTree = "<group>"; };
+		E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCreditViewController.swift; sourceTree = "<group>"; };
 		E1DFB7491C25520A0064CD24 /* SQLData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLData.swift; sourceTree = "<group>"; };
 		E1ED87901C27CE5100A3D682 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,23 +80,83 @@
 		E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */ = {
 			isa = PBXGroup;
 			children = (
-				E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */,
-				E16ED9421C23B8C700D9BFB7 /* Main.storyboard */,
-				E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */,
-				E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */,
-				E16ED94D1C23B8C700D9BFB7 /* Info.plist */,
-				E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */,
-				E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */,
-				E16ED9651C23DEE800D9BFB7 /* MainTableViewCell.swift */,
-				E1DF6CDA1C240AF3004F7933 /* AddViewController.swift */,
-				E1DFB7491C25520A0064CD24 /* SQLData.swift */,
-				E1ED87901C27CE5100A3D682 /* DataSource.swift */,
-				E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */,
-				E1DDC0271C2B9E960013FF6B /* DetailTableViewController.swift */,
-				E1DDC0291C2B9F750013FF6B /* ChangeViewController.swift */,
-				E17F90A81C30E76000AA418D /* GSAlertSheet.swift */,
+				E16FA2E01C942428005A7B7A /* detailTable */,
+				E16FA2DF1C94238D005A7B7A /* changeView */,
+				E16FA2D81C942017005A7B7A /* addView */,
+				E16FA2D71C941FEC005A7B7A /* mainTable */,
+				E16FA2D61C941FCD005A7B7A /* funcs */,
+				E16FA2D51C941FB9005A7B7A /* data */,
+				E16FA2D41C941F93005A7B7A /* others */,
 			);
 			path = ControlYourMoney;
+			sourceTree = "<group>";
+		};
+		E16FA2D41C941F93005A7B7A /* others */ = {
+			isa = PBXGroup;
+			children = (
+				E16ED94D1C23B8C700D9BFB7 /* Info.plist */,
+				E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */,
+				E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */,
+				E16ED9421C23B8C700D9BFB7 /* Main.storyboard */,
+			);
+			name = others;
+			sourceTree = "<group>";
+		};
+		E16FA2D51C941FB9005A7B7A /* data */ = {
+			isa = PBXGroup;
+			children = (
+				E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		E16FA2D61C941FCD005A7B7A /* funcs */ = {
+			isa = PBXGroup;
+			children = (
+				E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */,
+				E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */,
+				E1ED87901C27CE5100A3D682 /* DataSource.swift */,
+				E1DFB7491C25520A0064CD24 /* SQLData.swift */,
+				E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */,
+			);
+			name = funcs;
+			sourceTree = "<group>";
+		};
+		E16FA2D71C941FEC005A7B7A /* mainTable */ = {
+			isa = PBXGroup;
+			children = (
+				E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */,
+				E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */,
+			);
+			name = mainTable;
+			sourceTree = "<group>";
+		};
+		E16FA2D81C942017005A7B7A /* addView */ = {
+			isa = PBXGroup;
+			children = (
+				E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */,
+				E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */,
+				E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */,
+			);
+			name = addView;
+			sourceTree = "<group>";
+		};
+		E16FA2DF1C94238D005A7B7A /* changeView */ = {
+			isa = PBXGroup;
+			children = (
+				E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */,
+				E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */,
+			);
+			name = changeView;
+			sourceTree = "<group>";
+		};
+		E16FA2E01C942428005A7B7A /* detailTable */ = {
+			isa = PBXGroup;
+			children = (
+				E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */,
+				E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */,
+			);
+			name = detailTable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,17 +231,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E17F90A91C30E76000AA418D /* GSAlertSheet.swift in Sources */,
-				E1DDC0281C2B9E960013FF6B /* DetailTableViewController.swift in Sources */,
-				E1DF6CDB1C240AF3004F7933 /* AddViewController.swift in Sources */,
+				E1DDC0281C2B9E960013FF6B /* CreditDetailTableViewController.swift in Sources */,
 				E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */,
 				E16ED9471C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld in Sources */,
 				E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */,
+				E16FA2E21C942463005A7B7A /* CashDetailTableViewController.swift in Sources */,
 				E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */,
-				E16ED9661C23DEE800D9BFB7 /* MainTableViewCell.swift in Sources */,
+				E16FA2D31C941BAC005A7B7A /* MyTextToast.swift in Sources */,
 				E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */,
+				E16FA2CF1C941A58005A7B7A /* MyBottomMenuView.swift in Sources */,
+				E16FA2DC1C94213D005A7B7A /* AddCashViewController.swift in Sources */,
 				E16ED93F1C23B8C700D9BFB7 /* AppDelegate.swift in Sources */,
-				E1DDC02A1C2B9F750013FF6B /* ChangeViewController.swift in Sources */,
+				E16FA2CD1C9419F3005A7B7A /* MainTableViewCell.swift in Sources */,
+				E16FA2DE1C9421E8005A7B7A /* AddCreditViewController.swift in Sources */,
+				E1DDC02A1C2B9F750013FF6B /* ChangeCreditViewController.swift in Sources */,
+				E16FA2DA1C942041005A7B7A /* AddSalaryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

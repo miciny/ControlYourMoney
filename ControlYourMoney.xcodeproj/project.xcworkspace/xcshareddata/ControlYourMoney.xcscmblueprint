@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "4828F5F2C224291A424ADD37ED4C4D76BBD9F50B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4828F5F2C224291A424ADD37ED4C4D76BBD9F50B" : 0,
+    "009D6D5317368DC84429B825DBD4BD6B7B15C164" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "59D74025-D324-47BB-8FD1-82E6D48CDC93",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4828F5F2C224291A424ADD37ED4C4D76BBD9F50B" : "ControlYourMoney\/",
+    "009D6D5317368DC84429B825DBD4BD6B7B15C164" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ControlYourMoney",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ControlYourMoney.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/miciny\/Mechanical-Watches.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "009D6D5317368DC84429B825DBD4BD6B7B15C164"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/miciny\/ControlYourMoney",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4828F5F2C224291A424ADD37ED4C4D76BBD9F50B"
+    }
+  ]
+}

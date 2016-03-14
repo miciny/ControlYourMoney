@@ -22,13 +22,11 @@ class TableViewController: UITableViewController {
     var canUse : NSString = "0.00"
     var tableHeaderView = UIView()
     var textData = NSMutableDictionary()
+    
+    var creditTotal : Float = 0 //所有信用
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupData()
-        setUpTable()
-        setUpTitle()
-        calculateCredit()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -40,10 +38,13 @@ class TableViewController: UITableViewController {
         lastText.text = ""
         setupData()
         setUpTitle()
+        setUpTable()
+        calculateCredit()
         self.tableView.reloadData()
     }
     
     func setupData(){
+        creditTotal=0
         let timeNow = getTime() //当前时间
         textData.removeAllObjects()
         let cashArray = SelectAllData(entityNameOfCash)
@@ -64,10 +65,11 @@ class TableViewController: UITableViewController {
         }
         
         //显示本月应还／下月应还金额
-        //无需判断本月还款已过的，因为会过了之后，会自动到下个月
+        //无需判断本月还款已过的，因为过了之后，会自动到下个月
         var shouldPayData : Float = 0 //显示 本月应还 还是 下月应还 的flag， 1为本月 0为下月
         let creditTimeArray = creditArray.valueForKey(creditNameOfTime) as! NSArray
         let creditNumberArray = creditArray.valueForKey(creditNameOfNumber) as! NSArray
+        let creditPeriodArray = creditArray.valueForKey(creditNameOfPeriods) as! NSArray
         let MM = dateToInt(timeNow, dd: "MM")
         for(var i = 0 ; i < creditTimeArray.count ; i++){
             if(MM == dateToInt(creditTimeArray[i] as! NSDate, dd: "MM")){ //有一个月份与现月相同，则为本月
@@ -97,8 +99,12 @@ class TableViewController: UITableViewController {
             }
         }
         
+        for(var i = 0 ; i < creditTimeArray.count ; i++){
+            creditTotal = creditTotal - (creditPeriodArray[i] as! Float)*(creditNumberArray[i] as! Float)
+        }
+        
         //显示总金额，可用和应还
-        total = String(getTotalToFloat())
+        total = String(creditTotal + getCanUseToFloat())
         canUse = String(getCanUseToFloat())
         
         totalLable.text = total as String
@@ -126,30 +132,13 @@ class TableViewController: UITableViewController {
     
     //弹出添加的actionView
     func Add(){
-        showAlert(.ActionSheet, title: "选择添加类型", message: "", sourceView: nil, actions: [
-            AlertAction(title: "Cancel", type: .Cancel, handler: nil),
-            AlertAction(title: addArray[0], type: .Default) {
-                let vc = AddViewController()
-                vc.addType = 0
-                self.navigationController?.pushViewController(vc, animated: true)
-            },
-            AlertAction(title: addArray[1], type: .Default) {
-                let vc = AddViewController()
-                vc.addType = 1
-                self.navigationController?.pushViewController(vc, animated: true)
-            },
-            AlertAction(title: addArray[2], type: .Default) {
-                let vc = AddViewController()
-                vc.addType = 2
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-            ])
+        let bottomMenu = MyBottomMenuView()
+        bottomMenu.showBottomMenu("选择添加类型", cancel: "取消", object: addArray,eventFlag: 0 , target: self)
     }
     
     //右上角快速记账的按钮
     func AddFast(){
-        let vc = AddViewController()
-        vc.addType = 0
+        let vc = AddCashViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -243,7 +232,6 @@ class TableViewController: UITableViewController {
         
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : MainTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MainTableViewCell
         
@@ -306,7 +294,6 @@ class TableViewController: UITableViewController {
                 cell.dataNumber2222.text = "+" + String(0-useTotal)
             }
             
-            
         }
         
         if((textData.allKeys[indexPath.section] as? String) == keyOfCredit){
@@ -351,20 +338,21 @@ class TableViewController: UITableViewController {
         self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)
         
         if((textData.allKeys[indexPath.section] as? String) == keyOfCash){
-            let vc = DetailTableViewController()
-            vc.tableviewType = 1
+            let vc = CashDetailTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }else if((textData.allKeys[indexPath.section] as? String) == keyOfSalary){
-            let vc = DetailTableViewController()
-            vc.tableviewType = 0
+            let vc = CreditDetailTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            let vc = ChangeViewController()
+            let vc = ChangeCreditViewController()
             vc.recivedData.append(String((textData.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row).valueForKey(creditNameOfPeriods) as! NSInteger))
             vc.recivedData.append(String((textData.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row).valueForKey(creditNameOfNumber) as! Float))
             vc.recivedData.append(String((textData.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row).valueForKey(creditNameOfDate) as! Int))
             vc.recivedData.append(((textData.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row).valueForKey(creditNameOfAccount)  as? String)!)
             vc.changeIndex = indexPath.row
+            
+            print(indexPath.row)
+            
             vc.nextPaydayString = dateToStringNoHH((textData.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row).valueForKey(creditNameOfTime) as! NSDate)
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -374,52 +362,29 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return textData.allKeys[section] as? String
     }
-    
 
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+//选择的协议
+extension TableViewController : bottomMenuViewDelegate{
+    func buttonClicked(tag: Int, eventFlag: Int) {
+        switch eventFlag{
+        case 0:
+            switch tag{
+            case 0:
+                let vc = AddCashViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 1:
+                let vc = AddCreditViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 2:
+                let vc = AddSalaryViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
+        default:
+            break
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

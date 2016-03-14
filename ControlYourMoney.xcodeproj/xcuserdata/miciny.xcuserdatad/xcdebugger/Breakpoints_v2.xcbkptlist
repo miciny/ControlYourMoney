@@ -42,61 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ControlYourMoney/DataSource.swift"
-            timestampString = "472965344.600392"
+            timestampString = "479618711.885895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "dateToInt(_:dd:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ControlYourMoney/DetailTableViewController.swift"
-            timestampString = "476158871.264445"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "setupData()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MakeMoney.DetailTableViewController.setupData (MakeMoney.DetailTableViewController)() -&gt; ()"
-                  moduleName = "MakeMoney"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miciny/Desktop/iOS%E5%AD%A6%E4%B9%A0/ControlYourMoney/ControlYourMoney/DetailTableViewController.swift"
-                  timestampString = "472961663.166951"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "4168">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MakeMoney.DetailTableViewController.setupData (MakeMoney.DetailTableViewController)() -&gt; ()"
-                  moduleName = "MakeMoney"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miciny/Desktop/iOS%E5%AD%A6%E4%B9%A0/ControlYourMoney/ControlYourMoney/DetailTableViewController.swift"
-                  timestampString = "472961663.167171"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "4172">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

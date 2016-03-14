@@ -50,15 +50,14 @@ class ChangeLastViewController: UIViewController {
             textView("请输入内容！")
         }else{
             if(stringIsFloat(totalData.text! as String)){
-                InsertTotaleData(getTotalToFloat() + Float(totalData.text!)! - getCanUseToFloat(), canUse: Float(totalData.text!)!)
-                textView("修改成功！")
+                InsertTotaleData(Float(totalData.text!)!, time: getTime())
+                showToast().showToast("修改成功！")
                 self.navigationController?.popToRootViewControllerAnimated(true)
             }else{
                 textView("请输入正确金额！")
             }
         }
     }
-    
     
     func textView(str :String) ->UIAlertView{
         let alert=UIAlertView()

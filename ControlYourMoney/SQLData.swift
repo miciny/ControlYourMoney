@@ -100,6 +100,18 @@ func UpdateCreditDataSortedByTime(indexPath:Int,periods:Int,number:Float,date : 
     saveData()
 }
 
+//删一条数据
+func DeleteCreditData(indexPath:Int){
+    var data = NSArray()
+    data = SelectAllData(entityNameOfCredit)
+    
+    let time1 : NSSortDescriptor = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
+    data = data.sortedArrayUsingDescriptors([time1])
+    
+    allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+    saveData()
+}
+
 //Salary插入一条数据
 func InsertSalaryData(time:NSDate,number:Float){
     
@@ -120,18 +132,18 @@ func UpdateSalaryData(indexPath:Int,time:NSDate,number:Float){
 }
 
 //Total插入一条数据
-func InsertTotaleData(total : Float,canUse : Float){
+func InsertTotaleData(canUse : Float, time : NSDate){
     
     let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfTotal, inManagedObjectContext: allDataSource)
-    row.setValue(total, forKey: TotalNameOfTotal)
     row.setValue(canUse, forKey: TotalNameOfCanUse)
+    row.setValue(time, forKey: TotalNameOfTime)
     saveData()
 }
 //Total改一条数据
-func UpdateTotalData(indexPath:Int, total : Float,canUse : Float){
+func UpdateTotalData(indexPath:Int, canUse : Float, time : NSDate){
     var data = NSArray()
     data = SelectAllData(entityNameOfTotal)
-    data[indexPath].setValue(total, forKey: TotalNameOfTotal)
     data[indexPath].setValue(canUse, forKey: TotalNameOfCanUse)
+    data[indexPath].setValue(time, forKey: TotalNameOfTime)
     saveData()
 }

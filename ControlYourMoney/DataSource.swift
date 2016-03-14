@@ -37,8 +37,8 @@ let creditNameOfTime = "time"
 let salaryNameOftime = "time"
 let salaryNameOfNumber = "number"
 
-let TotalNameOfTotal = "total"
 let TotalNameOfCanUse = "canUse"
+let TotalNameOfTime = "time"
 let addArray = ["现金记账","信用卡（电子分期）","工资"]
 
 
@@ -48,14 +48,6 @@ func getTime() -> NSDate{
     //        let interval : NSInteger = zoon.secondsFromGMTForDate(now)
     //        return now.dateByAddingTimeInterval(Double(interval))
     return now
-}
-
-func getTotalToFloat() -> Float{
-    if(SelectAllData(entityNameOfTotal).count == 0){
-        return 0
-    }else{
-        return SelectAllData(entityNameOfTotal).valueForKey(TotalNameOfTotal).lastObject as! Float
-    }
 }
 
 func getCanUseToFloat() -> Float{
@@ -158,41 +150,41 @@ func calculateCredit(){
             if(months == 0 && day <= dateToInt(calculateTime, dd: "dd")){
                 if(periods == 1){
                     DeleteData(entityNameOfCredit, indexPath: i)
-                    InsertTotaleData(getTotalToFloat(), canUse:  getCanUseToFloat() - number )
+                    InsertTotaleData(getCanUseToFloat() - number, time:  calculateTime)
                 }else{
                     if(dateToInt(calculateTime, dd: "MM") == 12){
                         let timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy") + 1) + "-1-" + String(day))
                         UpdateCreditData(i, periods: periods - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number)
+                        InsertTotaleData( getCanUseToFloat() - number, time:  calculateTime)
                     }else{
                         let timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy")) + "-" + String(dateToInt(date, dd: "MM") + 1) + "-" + String(day))
                         UpdateCreditData(i, periods: periods - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number)
+                        InsertTotaleData(getCanUseToFloat() - number, time:  calculateTime)
                     }
                 }
             }else if(months > 0 && day <= dateToInt(calculateTime, dd: "dd")){
                 if((months+1) >= periods){
                     DeleteData(entityNameOfCredit, indexPath: i)
-                    InsertTotaleData(getTotalToFloat(), canUse:  getCanUseToFloat() - number * Float(periods))
+                    InsertTotaleData( getCanUseToFloat() - number * Float(periods), time:  calculateTime)
                 }else{
                     if(dateToInt(calculateTime, dd: "MM") == 12){
                         let timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy") + 1) + "-1-" + String(day))
                         UpdateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months+1))
+                        InsertTotaleData(getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
                     }else{
                         let timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy")) + "-" + String(dateToInt(calculateTime, dd: "MM") + 1) + "-" + String(day))
                         UpdateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months+1))
+                        InsertTotaleData(getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
                     }
                 }
             }else if(months > 0 && day > dateToInt(calculateTime, dd: "dd")){
                 if(months >= periods){
                     DeleteData(entityNameOfCredit, indexPath: i)
-                    InsertTotaleData(getTotalToFloat(), canUse:  getCanUseToFloat() - number * Float(periods))
+                    InsertTotaleData( getCanUseToFloat() - number * Float(periods), time:  calculateTime)
                 }else{
                     let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM")) + "-" + String(day))
                     UpdateCreditData(i, periods: periods - months, number: number, date: day, account: accout, time: timeTmp)
-                    InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months))
+                    InsertTotaleData(getCanUseToFloat() - number * Float(months), time:  calculateTime)
                 }
             }
             
@@ -201,26 +193,26 @@ func calculateCredit(){
             if(day <= dateToInt(calculateTime, dd: "dd")){
                 if((months+1) >= periods){
                     DeleteData(entityNameOfCredit, indexPath: i)
-                    InsertTotaleData(getTotalToFloat(), canUse:  getCanUseToFloat() - number * Float(periods))
+                    InsertTotaleData(getCanUseToFloat() - number * Float(periods), time:  calculateTime)
                 }else{
                     if((dateToInt(calculateTime, dd: "MM")) == 12){
                         let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy") + 1) + "-1-" + String(day))
                         UpdateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months+1))
+                        InsertTotaleData(getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
                     }else{
                         let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM")) + "-" + String(dateToInt(calculateTime, dd: "MM") + 1) + "-" + String(day))
                         UpdateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months+1))
+                        InsertTotaleData( getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
                     }
                 }
             }else if(day > dateToInt(calculateTime, dd: "dd")){
                 if(months >= periods){
                     DeleteData(entityNameOfCredit, indexPath: i)
-                    InsertTotaleData(getTotalToFloat(), canUse:  getCanUseToFloat() - number * Float(periods))
+                    InsertTotaleData(getCanUseToFloat() - number * Float(periods), time:  calculateTime)
                 }else{
                     let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM")) + "-" + String(day))
                     UpdateCreditData(i, periods: periods - months, number: number, date: day, account: accout, time: timeTmp)
-                    InsertTotaleData(getTotalToFloat() , canUse:  getCanUseToFloat() - number * Float(months))
+                    InsertTotaleData(getCanUseToFloat() - number * Float(months), time:  calculateTime)
                 }
             }
 
