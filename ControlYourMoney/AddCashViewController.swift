@@ -18,7 +18,6 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
 
         setupCashLable()
-        
     }
     
     func setupCashLable(){

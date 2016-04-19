@@ -23,11 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         //定义一个视图控制器
-        let one_vc = TableViewController(nibName:nil,bundle: nil);
+        let one_vc = TableViewController(nibName:nil,bundle: nil)
         //创建导航控制器
-        let nvc=UINavigationController(rootViewController:one_vc);
+        let nvc=UINavigationController(rootViewController:one_vc)
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 28/255, green: 28/255, blue: 28/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(17.0), NSForegroundColorAttributeName: UIColor.whiteColor()]
+    
         //设置根视图
-        self.window!.rootViewController=nvc;
+        self.window!.rootViewController=nvc
+        setStatusBarColor(true)
         
         return true
     }

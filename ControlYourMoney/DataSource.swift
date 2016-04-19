@@ -219,3 +219,12 @@ func calculateCredit(){
         }
     }
 }
+
+//设置系统栏颜色
+func setStatusBarColor(color: Bool){
+    if(color == true){
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated:true)//系统栏白色文字 info中 View controller-based status bar appearance设置为no才能用
+    }else{
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default //系统栏黑色文字
+    }
+}
