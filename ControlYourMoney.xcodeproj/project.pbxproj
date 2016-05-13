@@ -7,47 +7,75 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E16ED93F1C23B8C700D9BFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */; };
-		E16ED9441C23B8C700D9BFB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E16ED9421C23B8C700D9BFB7 /* Main.storyboard */; };
-		E16ED9471C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */; };
-		E16ED9491C23B8C700D9BFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */; };
-		E16ED94C1C23B8C700D9BFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */; };
-		E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */; };
-		E16FA2CD1C9419F3005A7B7A /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */; };
-		E16FA2CF1C941A58005A7B7A /* MyBottomMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */; };
-		E16FA2D31C941BAC005A7B7A /* MyTextToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */; };
-		E16FA2DA1C942041005A7B7A /* AddSalaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */; };
-		E16FA2DC1C94213D005A7B7A /* AddCashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */; };
-		E16FA2DE1C9421E8005A7B7A /* AddCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */; };
-		E16FA2E21C942463005A7B7A /* CashDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */; };
-		E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */; };
-		E1DDC0281C2B9E960013FF6B /* CreditDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */; };
-		E1DDC02A1C2B9F750013FF6B /* ChangeCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */; };
-		E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFB7491C25520A0064CD24 /* SQLData.swift */; };
-		E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED87901C27CE5100A3D682 /* DataSource.swift */; };
+		E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67481CE56E52005C35D9 /* AccountListViewController.swift */; };
+		E16A67521CE56E52005C35D9 /* AddCashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67491CE56E52005C35D9 /* AddCashViewController.swift */; };
+		E16A67531CE56E52005C35D9 /* AddCreditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674A1CE56E52005C35D9 /* AddCreditAccountViewController.swift */; };
+		E16A67541CE56E52005C35D9 /* AddCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674B1CE56E52005C35D9 /* AddCreditViewController.swift */; };
+		E16A67551CE56E52005C35D9 /* AddSalaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674C1CE56E52005C35D9 /* AddSalaryViewController.swift */; };
+		E16A67561CE56E52005C35D9 /* CashDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674D1CE56E52005C35D9 /* CashDetailTableViewController.swift */; };
+		E16A67571CE56E52005C35D9 /* ChangeCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674E1CE56E52005C35D9 /* ChangeCreditViewController.swift */; };
+		E16A67581CE56E52005C35D9 /* ChangeLastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A674F1CE56E52005C35D9 /* ChangeLastViewController.swift */; };
+		E16A67591CE56E52005C35D9 /* SalaryDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67501CE56E52005C35D9 /* SalaryDetailTableViewController.swift */; };
+		E16A67601CE56E6F005C35D9 /* AccountListModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675A1CE56E6F005C35D9 /* AccountListModul.swift */; };
+		E16A67611CE56E6F005C35D9 /* CashDetailTableDataModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675B1CE56E6F005C35D9 /* CashDetailTableDataModul.swift */; };
+		E16A67621CE56E6F005C35D9 /* MainTableCashModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675C1CE56E6F005C35D9 /* MainTableCashModul.swift */; };
+		E16A67631CE56E6F005C35D9 /* MainTableCreditModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675D1CE56E6F005C35D9 /* MainTableCreditModul.swift */; };
+		E16A67641CE56E6F005C35D9 /* MainTableSalaryModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675E1CE56E6F005C35D9 /* MainTableSalaryModul.swift */; };
+		E16A67651CE56E6F005C35D9 /* SalaryDetailTableDataModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A675F1CE56E6F005C35D9 /* SalaryDetailTableDataModul.swift */; };
+		E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67661CE56E89005C35D9 /* MyBottomMenuView.swift */; };
+		E16A676A1CE56E89005C35D9 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67671CE56E89005C35D9 /* MyToastView.swift */; };
+		E16A676B1CE56E89005C35D9 /* MyWaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67681CE56E89005C35D9 /* MyWaitView.swift */; };
+		E16A676F1CE56E93005C35D9 /* AccountListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A676C1CE56E93005C35D9 /* AccountListTableViewCell.swift */; };
+		E16A67701CE56E93005C35D9 /* MainTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A676D1CE56E93005C35D9 /* MainTableHeaderView.swift */; };
+		E16A67711CE56E93005C35D9 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A676E1CE56E93005C35D9 /* MainTableViewCell.swift */; };
+		E18774701CE2C96100CBBBB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E187746F1CE2C96100CBBBB3 /* Assets.xcassets */; };
+		E187747D1CE2CC2600CBBBB3 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E187747C1CE2CC2600CBBBB3 /* Base.lproj */; };
+		E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */; };
+		E18774861CE2D57000CBBBB3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18774851CE2D57000CBBBB3 /* Constant.swift */; };
+		E18774881CE2D6A400CBBBB3 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18774871CE2D6A400CBBBB3 /* MainTableViewController.swift */; };
+		E18774981CE3289C00CBBBB3 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18774971CE3289C00CBBBB3 /* Protocol.swift */; };
+		E187749C1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E187749B1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift */; };
+		E19E01FA1CE2C89B00A52C04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E01F71CE2C89B00A52C04 /* AppDelegate.swift */; };
+		E19E01FB1CE2C89B00A52C04 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E01F81CE2C89B00A52C04 /* Funcs.swift */; };
+		E19E01FC1CE2C89B00A52C04 /* SQLLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E01F91CE2C89B00A52C04 /* SQLLine.swift */; };
+		E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E19E01FF1CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E16A67481CE56E52005C35D9 /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
+		E16A67491CE56E52005C35D9 /* AddCashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCashViewController.swift; sourceTree = "<group>"; };
+		E16A674A1CE56E52005C35D9 /* AddCreditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCreditAccountViewController.swift; sourceTree = "<group>"; };
+		E16A674B1CE56E52005C35D9 /* AddCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCreditViewController.swift; sourceTree = "<group>"; };
+		E16A674C1CE56E52005C35D9 /* AddSalaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSalaryViewController.swift; sourceTree = "<group>"; };
+		E16A674D1CE56E52005C35D9 /* CashDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashDetailTableViewController.swift; sourceTree = "<group>"; };
+		E16A674E1CE56E52005C35D9 /* ChangeCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCreditViewController.swift; sourceTree = "<group>"; };
+		E16A674F1CE56E52005C35D9 /* ChangeLastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLastViewController.swift; sourceTree = "<group>"; };
+		E16A67501CE56E52005C35D9 /* SalaryDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalaryDetailTableViewController.swift; sourceTree = "<group>"; };
+		E16A675A1CE56E6F005C35D9 /* AccountListModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountListModul.swift; path = ControlYourMoney/modules/MainPage/AccountListModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A675B1CE56E6F005C35D9 /* CashDetailTableDataModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CashDetailTableDataModul.swift; path = ControlYourMoney/modules/MainPage/CashDetailTableDataModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A675C1CE56E6F005C35D9 /* MainTableCashModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTableCashModul.swift; path = ControlYourMoney/modules/MainPage/MainTableCashModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A675D1CE56E6F005C35D9 /* MainTableCreditModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTableCreditModul.swift; path = ControlYourMoney/modules/MainPage/MainTableCreditModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A675E1CE56E6F005C35D9 /* MainTableSalaryModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTableSalaryModul.swift; path = ControlYourMoney/modules/MainPage/MainTableSalaryModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A675F1CE56E6F005C35D9 /* SalaryDetailTableDataModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalaryDetailTableDataModul.swift; path = ControlYourMoney/modules/MainPage/SalaryDetailTableDataModul.swift; sourceTree = SOURCE_ROOT; };
+		E16A67661CE56E89005C35D9 /* MyBottomMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBottomMenuView.swift; sourceTree = "<group>"; };
+		E16A67671CE56E89005C35D9 /* MyToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyToastView.swift; sourceTree = "<group>"; };
+		E16A67681CE56E89005C35D9 /* MyWaitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWaitView.swift; sourceTree = "<group>"; };
+		E16A676C1CE56E93005C35D9 /* AccountListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListTableViewCell.swift; sourceTree = "<group>"; };
+		E16A676D1CE56E93005C35D9 /* MainTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableHeaderView.swift; sourceTree = "<group>"; };
+		E16A676E1CE56E93005C35D9 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		E16ED93B1C23B8C700D9BFB7 /* MakeMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E16ED9431C23B8C700D9BFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E16ED9461C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ControlYourMoney.xcdatamodel; sourceTree = "<group>"; };
-		E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E16ED94B1C23B8C700D9BFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E16ED94D1C23B8C700D9BFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
-		E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBottomMenuView.swift; sourceTree = "<group>"; };
-		E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextToast.swift; sourceTree = "<group>"; };
-		E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSalaryViewController.swift; sourceTree = "<group>"; };
-		E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCashViewController.swift; sourceTree = "<group>"; };
-		E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCreditViewController.swift; sourceTree = "<group>"; };
-		E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashDetailTableViewController.swift; sourceTree = "<group>"; };
-		E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLastViewController.swift; sourceTree = "<group>"; };
-		E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditDetailTableViewController.swift; sourceTree = "<group>"; };
-		E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCreditViewController.swift; sourceTree = "<group>"; };
-		E1DFB7491C25520A0064CD24 /* SQLData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLData.swift; sourceTree = "<group>"; };
-		E1ED87901C27CE5100A3D682 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		E187746F1CE2C96100CBBBB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E187747C1CE2CC2600CBBBB3 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
+		E18774801CE2CDDC00CBBBB3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ControlYourMoney/Info.plist; sourceTree = SOURCE_ROOT; };
+		E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		E18774851CE2D57000CBBBB3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		E18774871CE2D6A400CBBBB3 /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		E18774971CE3289C00CBBBB3 /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		E187749B1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAnalyseViewController.swift; sourceTree = "<group>"; };
+		E19E01F71CE2C89B00A52C04 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E19E01F81CE2C89B00A52C04 /* Funcs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
+		E19E01F91CE2C89B00A52C04 /* SQLLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLLine.swift; sourceTree = "<group>"; };
+		E19E02001CE2C8A700A52C04 /* ControlYourMoney.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ControlYourMoney.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +89,99 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E16A673F1CE56C8A005C35D9 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				E16A676C1CE56E93005C35D9 /* AccountListTableViewCell.swift */,
+				E16A676D1CE56E93005C35D9 /* MainTableHeaderView.swift */,
+				E16A676E1CE56E93005C35D9 /* MainTableViewCell.swift */,
+			);
+			name = MainPage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/MainPage;
+			sourceTree = "<absolute>";
+		};
+		E16A67401CE56C99005C35D9 /* AnalysePage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AnalysePage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/AnalysePage;
+			sourceTree = "<absolute>";
+		};
+		E16A67411CE56D7A005C35D9 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MainPage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/MainPage;
+			sourceTree = "<absolute>";
+		};
+		E16A67421CE56D82005C35D9 /* AnalysePage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AnalysePage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/AnalysePage;
+			sourceTree = "<absolute>";
+		};
+		E16A67431CE56D8D005C35D9 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				E16A675A1CE56E6F005C35D9 /* AccountListModul.swift */,
+				E16A675B1CE56E6F005C35D9 /* CashDetailTableDataModul.swift */,
+				E16A675C1CE56E6F005C35D9 /* MainTableCashModul.swift */,
+				E16A675D1CE56E6F005C35D9 /* MainTableCreditModul.swift */,
+				E16A675E1CE56E6F005C35D9 /* MainTableSalaryModul.swift */,
+				E16A675F1CE56E6F005C35D9 /* SalaryDetailTableDataModul.swift */,
+			);
+			name = Universal;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/Universal;
+			sourceTree = "<absolute>";
+		};
+		E16A67441CE56DA2005C35D9 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				E16A67661CE56E89005C35D9 /* MyBottomMenuView.swift */,
+				E16A67671CE56E89005C35D9 /* MyToastView.swift */,
+				E16A67681CE56E89005C35D9 /* MyWaitView.swift */,
+			);
+			name = Universal;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Universal;
+			sourceTree = "<absolute>";
+		};
+		E16A67451CE56DAF005C35D9 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				E16A67481CE56E52005C35D9 /* AccountListViewController.swift */,
+				E16A67491CE56E52005C35D9 /* AddCashViewController.swift */,
+				E16A674A1CE56E52005C35D9 /* AddCreditAccountViewController.swift */,
+				E16A674B1CE56E52005C35D9 /* AddCreditViewController.swift */,
+				E16A674C1CE56E52005C35D9 /* AddSalaryViewController.swift */,
+				E16A674D1CE56E52005C35D9 /* CashDetailTableViewController.swift */,
+				E16A674E1CE56E52005C35D9 /* ChangeCreditViewController.swift */,
+				E16A674F1CE56E52005C35D9 /* ChangeLastViewController.swift */,
+				E16A67501CE56E52005C35D9 /* SalaryDetailTableViewController.swift */,
+			);
+			name = MainPage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/MainPage;
+			sourceTree = "<absolute>";
+		};
+		E16A67461CE56DB5005C35D9 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Universal;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Universal;
+			sourceTree = "<absolute>";
+		};
+		E16A67471CE56DBF005C35D9 /* AnalysePage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AnalysePage;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/AnalysePage;
+			sourceTree = "<absolute>";
+		};
 		E16ED9321C23B8C700D9BFB7 = {
 			isa = PBXGroup;
 			children = (
@@ -80,84 +201,93 @@
 		E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */ = {
 			isa = PBXGroup;
 			children = (
-				E16FA2E01C942428005A7B7A /* detailTable */,
-				E16FA2DF1C94238D005A7B7A /* changeView */,
-				E16FA2D81C942017005A7B7A /* addView */,
-				E16FA2D71C941FEC005A7B7A /* mainTable */,
-				E16FA2D61C941FCD005A7B7A /* funcs */,
-				E16FA2D51C941FB9005A7B7A /* data */,
-				E16FA2D41C941F93005A7B7A /* others */,
+				E18774821CE2D41600CBBBB3 /* navigation */,
+				E19E01EC1CE2C74700A52C04 /* modules */,
+				E19E01E81CE2C6E700A52C04 /* universal */,
+				E19E01EA1CE2C6FA00A52C04 /* views */,
+				E19E01E91CE2C6F400A52C04 /* controllers */,
+				E18774711CE2C96700CBBBB3 /* lproj */,
+				E19E01EB1CE2C70100A52C04 /* resources */,
 			);
 			path = ControlYourMoney;
 			sourceTree = "<group>";
 		};
-		E16FA2D41C941F93005A7B7A /* others */ = {
+		E18774711CE2C96700CBBBB3 /* lproj */ = {
 			isa = PBXGroup;
 			children = (
-				E16ED94D1C23B8C700D9BFB7 /* Info.plist */,
-				E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */,
-				E16ED9481C23B8C700D9BFB7 /* Assets.xcassets */,
-				E16ED9421C23B8C700D9BFB7 /* Main.storyboard */,
+				E18774801CE2CDDC00CBBBB3 /* Info.plist */,
+				E187747C1CE2CC2600CBBBB3 /* Base.lproj */,
 			);
-			name = others;
-			sourceTree = "<group>";
+			name = lproj;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/lproj;
+			sourceTree = "<absolute>";
 		};
-		E16FA2D51C941FB9005A7B7A /* data */ = {
+		E18774821CE2D41600CBBBB3 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
-				E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */,
+				E18774871CE2D6A400CBBBB3 /* MainTableViewController.swift */,
+				E187749B1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift */,
+				E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */,
 			);
-			name = data;
-			sourceTree = "<group>";
+			name = navigation;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/navigation;
+			sourceTree = "<absolute>";
 		};
-		E16FA2D61C941FCD005A7B7A /* funcs */ = {
+		E19E01E81CE2C6E700A52C04 /* universal */ = {
 			isa = PBXGroup;
 			children = (
-				E16FA2D21C941BAC005A7B7A /* MyTextToast.swift */,
-				E16FA2CE1C941A58005A7B7A /* MyBottomMenuView.swift */,
-				E1ED87901C27CE5100A3D682 /* DataSource.swift */,
-				E1DFB7491C25520A0064CD24 /* SQLData.swift */,
-				E16ED93E1C23B8C700D9BFB7 /* AppDelegate.swift */,
+				E19E01F71CE2C89B00A52C04 /* AppDelegate.swift */,
+				E19E01F81CE2C89B00A52C04 /* Funcs.swift */,
+				E19E01F91CE2C89B00A52C04 /* SQLLine.swift */,
+				E18774851CE2D57000CBBBB3 /* Constant.swift */,
+				E18774971CE3289C00CBBBB3 /* Protocol.swift */,
 			);
-			name = funcs;
-			sourceTree = "<group>";
+			name = universal;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/universal;
+			sourceTree = "<absolute>";
 		};
-		E16FA2D71C941FEC005A7B7A /* mainTable */ = {
+		E19E01E91CE2C6F400A52C04 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E16FA2CC1C9419F3005A7B7A /* MainTableViewCell.swift */,
-				E16ED9631C23DDF600D9BFB7 /* TableViewController.swift */,
+				E16A67471CE56DBF005C35D9 /* AnalysePage */,
+				E16A67461CE56DB5005C35D9 /* Universal */,
+				E16A67451CE56DAF005C35D9 /* MainPage */,
 			);
-			name = mainTable;
-			sourceTree = "<group>";
+			name = controllers;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers;
+			sourceTree = "<absolute>";
 		};
-		E16FA2D81C942017005A7B7A /* addView */ = {
+		E19E01EA1CE2C6FA00A52C04 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				E16FA2D91C942041005A7B7A /* AddSalaryViewController.swift */,
-				E16FA2DB1C94213D005A7B7A /* AddCashViewController.swift */,
-				E16FA2DD1C9421E8005A7B7A /* AddCreditViewController.swift */,
+				E16A67441CE56DA2005C35D9 /* Universal */,
+				E16A67401CE56C99005C35D9 /* AnalysePage */,
+				E16A673F1CE56C8A005C35D9 /* MainPage */,
 			);
-			name = addView;
-			sourceTree = "<group>";
+			name = views;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views;
+			sourceTree = "<absolute>";
 		};
-		E16FA2DF1C94238D005A7B7A /* changeView */ = {
+		E19E01EB1CE2C70100A52C04 /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				E1DDC0291C2B9F750013FF6B /* ChangeCreditViewController.swift */,
-				E196CE4A1C29379300C5CEDF /* ChangeLastViewController.swift */,
+				E187746F1CE2C96100CBBBB3 /* Assets.xcassets */,
+				E19E01FF1CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld */,
 			);
-			name = changeView;
-			sourceTree = "<group>";
+			name = resources;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/resources;
+			sourceTree = "<absolute>";
 		};
-		E16FA2E01C942428005A7B7A /* detailTable */ = {
+		E19E01EC1CE2C74700A52C04 /* modules */ = {
 			isa = PBXGroup;
 			children = (
-				E1DDC0271C2B9E960013FF6B /* CreditDetailTableViewController.swift */,
-				E16FA2E11C942463005A7B7A /* CashDetailTableViewController.swift */,
+				E16A67431CE56D8D005C35D9 /* Universal */,
+				E16A67421CE56D82005C35D9 /* AnalysePage */,
+				E16A67411CE56D7A005C35D9 /* MainPage */,
 			);
-			name = detailTable;
-			sourceTree = "<group>";
+			name = modules;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -185,13 +315,13 @@
 		E16ED9331C23B8C700D9BFB7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = maocaiyuan;
 				TargetAttributes = {
 					E16ED93A1C23B8C700D9BFB7 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 4AB7FQ4W8L;
+						DevelopmentTeam = 6Z66KJ4WDN;
 					};
 				};
 			};
@@ -218,9 +348,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E16ED94C1C23B8C700D9BFB7 /* LaunchScreen.storyboard in Resources */,
-				E16ED9491C23B8C700D9BFB7 /* Assets.xcassets in Resources */,
-				E16ED9441C23B8C700D9BFB7 /* Main.storyboard in Resources */,
+				E18774701CE2C96100CBBBB3 /* Assets.xcassets in Resources */,
+				E187747D1CE2CC2600CBBBB3 /* Base.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,44 +360,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1DDC0281C2B9E960013FF6B /* CreditDetailTableViewController.swift in Sources */,
-				E1DFB74A1C25520A0064CD24 /* SQLData.swift in Sources */,
-				E16ED9471C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld in Sources */,
-				E196CE4B1C29379300C5CEDF /* ChangeLastViewController.swift in Sources */,
-				E16FA2E21C942463005A7B7A /* CashDetailTableViewController.swift in Sources */,
-				E16ED9641C23DDF600D9BFB7 /* TableViewController.swift in Sources */,
-				E16FA2D31C941BAC005A7B7A /* MyTextToast.swift in Sources */,
-				E1ED87911C27CE5100A3D682 /* DataSource.swift in Sources */,
-				E16FA2CF1C941A58005A7B7A /* MyBottomMenuView.swift in Sources */,
-				E16FA2DC1C94213D005A7B7A /* AddCashViewController.swift in Sources */,
-				E16ED93F1C23B8C700D9BFB7 /* AppDelegate.swift in Sources */,
-				E16FA2CD1C9419F3005A7B7A /* MainTableViewCell.swift in Sources */,
-				E16FA2DE1C9421E8005A7B7A /* AddCreditViewController.swift in Sources */,
-				E1DDC02A1C2B9F750013FF6B /* ChangeCreditViewController.swift in Sources */,
-				E16FA2DA1C942041005A7B7A /* AddSalaryViewController.swift in Sources */,
+				E16A676A1CE56E89005C35D9 /* MyToastView.swift in Sources */,
+				E16A676F1CE56E93005C35D9 /* AccountListTableViewCell.swift in Sources */,
+				E16A67591CE56E52005C35D9 /* SalaryDetailTableViewController.swift in Sources */,
+				E16A67641CE56E6F005C35D9 /* MainTableSalaryModul.swift in Sources */,
+				E16A67711CE56E93005C35D9 /* MainTableViewCell.swift in Sources */,
+				E16A67651CE56E6F005C35D9 /* SalaryDetailTableDataModul.swift in Sources */,
+				E18774981CE3289C00CBBBB3 /* Protocol.swift in Sources */,
+				E16A67611CE56E6F005C35D9 /* CashDetailTableDataModul.swift in Sources */,
+				E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */,
+				E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */,
+				E16A67631CE56E6F005C35D9 /* MainTableCreditModul.swift in Sources */,
+				E18774881CE2D6A400CBBBB3 /* MainTableViewController.swift in Sources */,
+				E16A67541CE56E52005C35D9 /* AddCreditViewController.swift in Sources */,
+				E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */,
+				E16A67521CE56E52005C35D9 /* AddCashViewController.swift in Sources */,
+				E16A67571CE56E52005C35D9 /* ChangeCreditViewController.swift in Sources */,
+				E16A67551CE56E52005C35D9 /* AddSalaryViewController.swift in Sources */,
+				E19E01FA1CE2C89B00A52C04 /* AppDelegate.swift in Sources */,
+				E19E01FB1CE2C89B00A52C04 /* Funcs.swift in Sources */,
+				E19E01FC1CE2C89B00A52C04 /* SQLLine.swift in Sources */,
+				E16A67581CE56E52005C35D9 /* ChangeLastViewController.swift in Sources */,
+				E16A67601CE56E6F005C35D9 /* AccountListModul.swift in Sources */,
+				E18774861CE2D57000CBBBB3 /* Constant.swift in Sources */,
+				E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */,
+				E16A67701CE56E93005C35D9 /* MainTableHeaderView.swift in Sources */,
+				E187749C1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift in Sources */,
+				E16A676B1CE56E89005C35D9 /* MyWaitView.swift in Sources */,
+				E16A67561CE56E52005C35D9 /* CashDetailTableViewController.swift in Sources */,
+				E16A67531CE56E52005C35D9 /* AddCreditAccountViewController.swift in Sources */,
+				E16A67621CE56E6F005C35D9 /* MainTableCashModul.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		E16ED9421C23B8C700D9BFB7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E16ED9431C23B8C700D9BFB7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E16ED94A1C23B8C700D9BFB7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E16ED94B1C23B8C700D9BFB7 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E16ED94E1C23B8C700D9BFB7 /* Debug */ = {
@@ -356,11 +481,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.MakeMoney;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.myMoney;
 				PRODUCT_NAME = MakeMoney;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -369,11 +499,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.MakeMoney;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.myMoney;
 				PRODUCT_NAME = MakeMoney;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -402,12 +536,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		E16ED9451C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodeld */ = {
+		E19E01FF1CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E16ED9461C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodel */,
+				E19E02001CE2C8A700A52C04 /* ControlYourMoney.xcdatamodel */,
 			);
-			currentVersion = E16ED9461C23B8C700D9BFB7 /* ControlYourMoney.xcdatamodel */;
+			currentVersion = E19E02001CE2C8A700A52C04 /* ControlYourMoney.xcdatamodel */;
 			path = ControlYourMoney.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
