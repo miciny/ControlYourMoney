@@ -36,6 +36,8 @@ let creditNameOfNumber = "number"
 let creditNameOfAccount = "account"
 let creditNameOfDate = "date"
 let creditNameOfTime = "time"
+let creditNameOfNextPayDay = "nextPayDay"
+let creditNameOfLeftPeriods = "leftPeriods"
 
 let salaryNameOfTime = "time"
 let salaryNameOfNumber = "number"
@@ -59,6 +61,9 @@ let detailTitleFont = UIFont.systemFontOfSize(standardFontNo+5) //tableView的ce
 let detailFont = UIFont.systemFontOfSize(standardFontNo+1) //输入框前面文字的字体大小
 
 let accountListTitleFont = UIFont.systemFontOfSize(standardFontNo-3)//字体大小
+
+let analyseTitleFont = UIFont.boldSystemFontOfSize(standardFontNo+2)//字体大小
+let analyseDataFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
 
 let myOwnAccount = "招商银行_"
 let myOwnAccountPayDay = Int(21)

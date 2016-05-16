@@ -103,8 +103,8 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.nextPaydayText.backgroundColor = UIColor.whiteColor()
         self.nextPaydayText.textColor = UIColor.blackColor()
         self.nextPaydayText.text = self.nextPaydayString
-        self.nextPaydayText.enabled = false
         self.view.addSubview(self.nextPaydayText)
+        self.nextPaydayText.enabled = false
         
         self.periodsCreditData = UITextField(frame: CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30))
         self.periodsCreditData.font = introduceFont
@@ -182,16 +182,16 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     
     func alreadyPayAll(){
         
-        SQLLine.insertTotalData(getCanUseToFloat() - Float(numberCreditData.text!)! * Float(periodsCreditData.text!)!, time: getTime())
+        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
-        SQLLine.deleteCreditData(changeIndex)
+        SQLLine.deleteCreditDataSortedByTime(changeIndex)
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
 
     }
     
     func deleteBtnClicked(){
-        SQLLine.deleteCreditData(changeIndex)
+        SQLLine.deleteCreditDataSortedByTime(changeIndex)
         MyToastView().showToast("删除成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -201,24 +201,14 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         if !checkData(){
             return
         }
-                            
-        var refundDate = NSDate()
-        let payDay = stringToDateNoHH(nextPaydayString)
+        let thisPayDay = stringToDateNoHH(recivedData.time)
+        let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
+        let periods = Int(recivedData.periods)!-1
         
-        if(dateToInt(payDay, dd: "MM") == 12){
-            refundDate = stringToDateNoHH(String(dateToInt(payDay, dd: "yyyy") + 1) + "-1-" + String(Int(dateCreditData.text!)!))
-        }else{
-            refundDate = stringToDateNoHH(String(dateToInt(payDay, dd: "yyyy")) + "-" + String(dateToInt(payDay, dd: "MM") + 1) + "-" + String(Int(dateCreditData.text!)!))
-        }
+        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
         
-        if(Int(periodsCreditData.text!)! > 1){
-            SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: Int(periodsCreditData.text!)!-1, number: Float(numberCreditData.text!)!,date: Int(dateCreditData.text!)!, account: accountCreditData.text!,time: refundDate)
-        }else{
-            SQLLine.deleteData(entityNameOfCredit, indexPath: changeIndex)
-        }
-        
-        SQLLine.insertTotalData(getCanUseToFloat() - Float(numberCreditData.text!)!, time: getTime())
-        
+        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
         
@@ -230,27 +220,12 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         if !checkData(){
             return
         }
-        
-        var refundDate = NSDate()
         let timeNow = getTime()
-        if(Int(dateCreditData.text!)! <= dateToInt(timeNow, dd: "dd")){
-            if(dateToInt(timeNow, dd: "MM") == 12){
-                refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy") + 1) + "-1-" + String(Int(dateCreditData.text!)!))
-            }else{
-                refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM") + 1) + "-" + String(Int(dateCreditData.text!)!))
-            }
-        }else{
-            refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM")) + "-" + String(Int(dateCreditData.text!)!))
-        }
+        let date = Int(dateCreditData.text!)!
+        let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
+        let periods = Int(periodsCreditData.text!)!
+        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods)
         
-        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: Int(periodsCreditData.text!)!, number: Float(numberCreditData.text!)!,date: Int(dateCreditData.text!)!, account: accountCreditData.text!,time: refundDate)
-        
-        let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
-        if(countTmp == 0){
-            SQLLine.insertTotalData(0, time: getTime())
-        }else{
-            SQLLine.insertTotalData(getCanUseToFloat(), time: getTime())
-        }
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
         

@@ -127,54 +127,23 @@ class MainTableHeaderView: UIView {
     
     //提取数据
     func setUpData(){
-        let timeNow = getTime() //当前时间
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
         
-        //显示本月应还／下月应还金额
-        //无需判断本月还款已过的，因为过了之后，会自动到下个月
-        var shouldPayData: Float = 0
-        let creditTimeArray = creditArray.valueForKey(creditNameOfTime) as! NSArray
-        let creditNumberArray = creditArray.valueForKey(creditNameOfNumber) as! NSArray
-        let creditPeriodArray = creditArray.valueForKey(creditNameOfPeriods) as! NSArray
-        
-        let MM = dateToInt(timeNow, dd: "MM")
-        
-        //有一个月份与现月相同，则为本月
-        for i in 0  ..< creditTimeArray.count{
-            if(MM == dateToInt(creditTimeArray[i] as! NSDate, dd: "MM")){
-                self.shouldPayType = 1
-                break
-            }
-        }
-        
-        //计算本月或者下月应还
-        if(self.shouldPayType == 1){
-            for i in 0  ..< creditTimeArray.count{
-                if(MM == dateToInt(creditTimeArray[i] as! NSDate, dd: "MM")){
-                    shouldPayData = shouldPayData + (creditNumberArray[i] as! Float)
-                }
-            }
+        var shouldPayData : Float = 0
+        let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
+        if thisMonthCreditLeftPay > 0{
+            self.shouldPayType = 1
+            shouldPayData = thisMonthCreditLeftPay
         }else{
-            for i in 0  ..< creditTimeArray.count{
-                if(MM == 12){
-                    if(dateToInt(creditTimeArray[i] as! NSDate, dd: "MM") == 1){
-                        shouldPayData = shouldPayData + (creditNumberArray[i] as! Float)
-                    }
-                }else{
-                    if(dateToInt(creditTimeArray[i] as! NSDate, dd: "MM") == MM + 1){
-                        shouldPayData = shouldPayData + (creditNumberArray[i] as! Float)
-                    }
-                }
-            }
+            self.shouldPayType = 0
+            let nextMonthCredit = GetAnalyseData.getCreditNextMonthPay()
+            shouldPayData = nextMonthCredit
         }
         
         //计算信用卡全部应还
-        for i in 0  ..< creditTimeArray.count{
-            self.creditTotal = self.creditTotal - (creditPeriodArray[i] as! Float)*(creditNumberArray[i] as! Float)
-        }
+        self.creditTotal = -GetAnalyseData.getCreditTotalPay()
         
         //显示总金额，可用和应还
-        let lastData = getCanUseToFloat()
+        let lastData = GetAnalyseData.getCanUseToFloat()
         self.total = String(creditTotal + lastData)
         self.last = String(lastData)
         self.shouldPay = String(shouldPayData)

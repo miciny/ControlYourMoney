@@ -65,7 +65,7 @@ class SQLLine: NSObject{
     }
     
     //Credit插入一条数据
-    class func insertCrediData(periods: Int, number: Float, time: NSDate, account: String, date : Int){
+    class func insertCrediData(periods: Int, number: Float, time: NSDate, account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCredit, inManagedObjectContext: allDataSource)
@@ -75,26 +75,17 @@ class SQLLine: NSObject{
         row.setValue(date, forKey: creditNameOfDate)
         row.setValue(account, forKey: creditNameOfAccount)
         row.setValue(time, forKey: creditNameOfTime)
+        row.setValue(nextPayDay, forKey: creditNameOfNextPayDay)
+        row.setValue(leftPeriods, forKey: creditNameOfLeftPeriods)
         saveData()
     }
+    
     //Credit改一条数据
-    class func updateCreditData(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate){
+    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate, nextPayDay: NSDate, leftPeriods: Int){
         var data = NSArray()
         data = selectAllData(entityNameOfCredit)
         
-        data[indexPath].setValue(periods, forKey: creditNameOfPeriods)
-        data[indexPath].setValue(number, forKey: creditNameOfNumber)
-        data[indexPath].setValue(date, forKey: creditNameOfDate)
-        data[indexPath].setValue(account, forKey: creditNameOfAccount)
-        data[indexPath].setValue(time, forKey: creditNameOfTime)
-        saveData()
-    }
-    //Credit改一条数据
-    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate){
-        var data = NSArray()
-        data = selectAllData(entityNameOfCredit)
-        
-        let time1 : NSSortDescriptor = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
+        let time1 = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
         data = data.sortedArrayUsingDescriptors([time1])
         
         data[indexPath].setValue(periods, forKey: creditNameOfPeriods)
@@ -102,24 +93,30 @@ class SQLLine: NSObject{
         data[indexPath].setValue(date, forKey: creditNameOfDate)
         data[indexPath].setValue(account, forKey: creditNameOfAccount)
         data[indexPath].setValue(time, forKey: creditNameOfTime)
+        data[indexPath].setValue(nextPayDay, forKey: creditNameOfNextPayDay)
+        data[indexPath].setValue(leftPeriods, forKey: creditNameOfLeftPeriods)
         saveData()
     }
     
-    class func updateCreditData(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
+    class func updateCreditDataSortedByTime(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
         var data = NSArray()
         data = selectAllData(entityNameOfCredit)
+        
+        let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        data = data.sortedArrayUsingDescriptors([time])
+        
         data[indexPath].setValue(changeValue, forKey: changeEntityName)
         saveData()
     }
     
     //Credit删一条数据
-    class func deleteCreditData(indexPath: Int){
+    class func deleteCreditDataSortedByTime(indexPath: Int){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         var data = NSArray()
         data = selectAllData(entityNameOfCredit)
         
-        let time1 : NSSortDescriptor = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
-        data = data.sortedArrayUsingDescriptors([time1])
+        let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        data = data.sortedArrayUsingDescriptors([time])
         
         allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
         saveData()
@@ -135,6 +132,7 @@ class SQLLine: NSObject{
         row.setValue(number, forKey: salaryNameOfNumber)
         saveData()
     }
+    
     //Salary改一条数据
     class func updateSalaryData(indexPath: Int, time: NSDate, number: Float){
         var data = NSArray()

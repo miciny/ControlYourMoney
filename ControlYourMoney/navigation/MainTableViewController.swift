@@ -18,109 +18,28 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        self.setupData()
+        CalculateCredit.calculateCredit()
+        self.setUpData()
         self.setUpTitle()
-        self.calculateCredit()
         self.tableView.reloadData()
     }
     
     //获取数据
-    func setupData(){
-        let textData = NSMutableDictionary()
+    func setUpData(){
+        AllData = NSMutableDictionary()
+        let creditModul =  GetDataArray.getCreditShowArray()
+        let salaryModul =  GetDataArray.getSalaryShowArray()
+        let cashModul =  GetDataArray.getCashShowArray()
         
-        //数据库读取数据
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
-        let salaryArray = SQLLine.selectAllData(entityNameOfSalary)
-        
-        //给textdata字典添加数据，用于table显示
-        if(cashArray.count != 0){
-            textData.setObject(cashArray, forKey: keyOfCash)
+        if creditModul != nil {
+            AllData.setObject(creditModul!, forKey: keyOfCredit)
         }
-        
-        if(creditArray.count != 0){
-            let time = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
-            creditArray = creditArray.sortedArrayUsingDescriptors([time])
-            textData.setObject(creditArray, forKey: keyOfCredit)
+        if salaryModul != nil {
+            AllData.setObject(salaryModul!, forKey: keyOfSalary)
         }
-        
-        if(salaryArray.count != 0){
-            textData.setObject(salaryArray, forKey: keyOfSalary)
+        if cashModul != nil {
+            AllData.setObject(cashModul!, forKey: keyOfCash)
         }
-        
-        initData(textData)
-    }
-    
-    //计算数据
-    func initData(data: NSMutableDictionary){
-        self.AllData = NSMutableDictionary()
-        let tempData = data
-        
-        //信用卡数据模型
-        if tempData.valueForKey(keyOfCredit) != nil{
-            var creditModul = [MainTableCreditModul]()
-            let creditArray = tempData.valueForKey(keyOfCredit) as! NSArray
-            let creditArrayCount = creditArray.count
-            for i in 0 ..< creditArrayCount {
-                let periods = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! NSInteger)
-                let number = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float)
-                let time = dateToStringNoHH(creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate)
-                let all = "-" + String(Float(creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! NSInteger) *
-                    (creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float))
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String
-                let date = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)
-                
-                let tempCreditModul = MainTableCreditModul(periods: periods, number: number, accout: accout, all: all, time: time, date: date)
-                creditModul.append(tempCreditModul)
-            }
-            AllData.setObject(creditModul, forKey: keyOfCredit)
-        }
-        
-        
-        //工资数据模型
-        if tempData.valueForKey(keyOfSalary) != nil {
-            var salaryModul = [MainTableSalaryModul]()
-            let salaryArray = tempData.valueForKey(keyOfSalary) as! NSArray
-            
-            let date = String(dateToInt(salaryArray.lastObject!.valueForKey(salaryNameOfTime) as! NSDate, dd: "MM")) + "月" + keyOfSalary
-            let number = String(salaryArray.lastObject!.valueForKey(salaryNameOfNumber) as! Float)
-            let time = dateToStringNoHH(salaryArray.lastObject!.valueForKey(salaryNameOfTime) as! NSDate)
-            let tempSalaryModul = MainTableSalaryModul(number: number, date: date, time: time)
-            salaryModul.append(tempSalaryModul)
-            AllData.setObject(salaryModul, forKey: keyOfSalary)
-        }
-        
-        
-        //现金数据模型
-        if tempData.valueForKey(keyOfCash) != nil {
-            var cashModul = [MainTableCashModul]()
-            let cashArray = tempData.valueForKey(keyOfCash) as! NSArray
-            
-            let useWhere = cashArray.lastObject!.valueForKey(cashNameOfUseWhere) as? String
-            let useNumber = String(cashArray.lastObject!.valueForKey(cashNameOfUseNumber) as! Float)
-            let useTime = dateToString(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate)
-            
-            let useNo = cashArray.count
-            var useTotal = Float()
-            var useTotalDay = Float()
-            
-            for i in 0  ..< useNo{
-                if(dateToInt(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate, dd: "MM") == dateToInt(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, dd: "MM")){
-                    useTotal = useTotal + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
-                }
-                
-                if(dateToStringBySelf(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd") == dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")){
-                    useTotalDay = useTotalDay + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
-                }
-            }
-            let useTotalDayStr = String(useTotalDay)
-            let useTotalStr = String(useTotal)
-            let tempCashModul = MainTableCashModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime, useTotalDayStr: useTotalDayStr, useTotalStr: useTotalStr)
-            cashModul.append(tempCashModul)
-            AllData.setObject(cashModul, forKey: keyOfCash)
-        }
-        
     }
     
     //title,左边按钮和右边按钮
@@ -253,86 +172,6 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         return AllData.allKeys[section] as? String
     }
     
-    //根据时间判断信用还款
-    func calculateCredit(){
-        let creditAccountNumber = (SQLLine.selectAllData(entityNameOfCredit) as NSArray).count
-        let calculateTime = getTime()
-        for i in 0  ..< creditAccountNumber{
-            
-            let day : Int = getCreditDayToIntArray()[i] as! Int
-            let number : Float = getCreditNumberToFloatArray()[i] as! Float
-            let periods : Int = getCreditPeriodsToIntArray()[i] as! Int
-            let accout : String = getCreditAccountToStringArray()[i] as! String
-            let date : NSDate = getCreditTimeToNsdateArray()[i] as! NSDate
-            
-            if(dateToInt(date, dd: "yyyy") == dateToInt(calculateTime, dd: "yyyy")){ //同一年
-                let months = dateToInt(calculateTime, dd: "MM") - dateToInt(date, dd: "MM")
-                if(months == 0 && day <= dateToInt(calculateTime, dd: "dd")){ //同一月 并且 过了还款日期
-                    
-                    if(periods == 1){
-                        SQLLine.deleteData(entityNameOfCredit, indexPath: i)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number, time: calculateTime)
-                    }else{
-                        var timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy")) + "-" + String(dateToInt(date, dd: "MM") + 1) + "-" + String(day))
-                        if(dateToInt(calculateTime, dd: "MM") == 12){
-                            timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy") + 1) + "-1-" + String(day))
-                        }
-                        SQLLine.updateCreditData(i, periods: periods - 1, number: number, date: day, account: accout, time: timeTmp)
-                        SQLLine.insertTotalData( getCanUseToFloat() - number, time: calculateTime)
-                    }
-                    
-                }else if(months > 0 && day <= dateToInt(calculateTime, dd: "dd")){ //月份过了还款日期 并且 日也过了还款日期
-                    
-                    if((months+1) >= periods){
-                        SQLLine.deleteData(entityNameOfCredit, indexPath: i)
-                        SQLLine.insertTotalData( getCanUseToFloat() - number * Float(periods), time:  calculateTime)
-                    }else{
-                        var timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy")) + "-" + String(dateToInt(calculateTime, dd: "MM") + 1) + "-" + String(day))
-                        if(dateToInt(calculateTime, dd: "MM") == 12){
-                            timeTmp = stringToDateNoHH(String(dateToInt(date, dd: "yyyy") + 1) + "-1-" + String(day))
-                        }
-                        SQLLine.updateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
-                    }
-                    
-                }else if(months > 0 && day > dateToInt(calculateTime, dd: "dd")){  //月份过了还款日期 并且 日未过还款日期
-                    if(months >= periods){
-                        SQLLine.deleteData(entityNameOfCredit, indexPath: i)
-                        SQLLine.insertTotalData( getCanUseToFloat() - number * Float(periods), time:  calculateTime)
-                    }else{
-                        let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM")) + "-" + String(day))
-                        SQLLine.updateCreditData(i, periods: periods - months, number: number, date: day, account: accout, time: timeTmp)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(months), time:  calculateTime)
-                    }
-                }
-                
-            }else if(dateToInt(date, dd: "yyyy") < dateToInt(calculateTime, dd: "yyyy")){ //年过了还款日期
-                let months = dateToInt(calculateTime, dd: "MM") + 12 - dateToInt(date, dd: "MM")
-                if(day <= dateToInt(calculateTime, dd: "dd")){
-                    if((months+1) >= periods){
-                        SQLLine.deleteData(entityNameOfCredit, indexPath: i)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(periods), time:  calculateTime)
-                    }else{
-                        var timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM") + 1) + "-" + String(day))
-                        if((dateToInt(calculateTime, dd: "MM")) == 12){
-                            timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy") + 1) + "-1-" + String(day))
-                        }
-                        SQLLine.updateCreditData(i, periods: periods - months - 1, number: number, date: day, account: accout, time: timeTmp)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(months+1), time:  calculateTime)
-                    }
-                }else if(day > dateToInt(calculateTime, dd: "dd")){
-                    if(months >= periods){
-                        SQLLine.deleteData(entityNameOfCredit, indexPath: i)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(periods), time:  calculateTime)
-                    }else{
-                        let timeTmp = stringToDateNoHH(String(dateToInt(calculateTime, dd: "yyyy"))  + "-" + String(dateToInt(calculateTime, dd: "MM")) + "-" + String(day))
-                        SQLLine.updateCreditData(i, periods: periods - months, number: number, date: day, account: accout, time: timeTmp)
-                        SQLLine.insertTotalData(getCanUseToFloat() - number * Float(months), time:  calculateTime)
-                    }
-                }
-            }
-        }
-    }
 }
 
 //选择的协议

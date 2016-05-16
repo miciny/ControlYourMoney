@@ -27,16 +27,10 @@ class SalaryDetailTableViewController: UITableViewController {
     }
     
     func setupData(){
-        var textData = SQLLine.selectAllData(entityNameOfSalary)
-        let time : NSSortDescriptor = NSSortDescriptor.init(key: salaryNameOfTime, ascending: false)
-        textData = textData.sortedArrayUsingDescriptors([time])
         
-        for i in 0 ..< textData.count {
-            let date = String(dateToInt(textData.objectAtIndex(i).valueForKey(salaryNameOfTime) as! NSDate, dd: "MM")) + "月" + keyOfSalary
-            let number = String((textData.objectAtIndex(i)).valueForKey(salaryNameOfNumber) as! Float)
-            let time = dateToStringNoHH((textData.objectAtIndex(i)).valueForKey(salaryNameOfTime) as! NSDate)
-            let tempModul = SalaryDetailTableDataModul(time: time, number: number, date: date)
-            AllData.append(tempModul)
+        let aa = GetDataArray.getSalaryDetailShowArray()
+        if aa != nil {
+            AllData = aa!
         }
     }
     

@@ -29,68 +29,24 @@ class CashDetailTableViewController: UITableViewController {
     }
     
     func setupData(){
-        //获取数据
-        self.textData = SQLLine.selectAllData(entityNameOfCash)
-        self.textDataTitle = NSMutableArray()
         self.textDataTotalDic = NSMutableDictionary()
         self.textDataDic = NSMutableDictionary()
         
-        //排序
-        let time = NSSortDescriptor.init(key: salaryNameOfTime, ascending: false)
-        self.textData = self.textData.sortedArrayUsingDescriptors([time])
-        
-        //获取时间序列
-        let textDataTmp = NSMutableArray()
-        for i in 0 ..< self.textData.valueForKey(cashNameOfTime).count{
-            textDataTmp.addObject(dateToStringBySelf(self.textData.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM"))
-        }
-        
-        //去重,时间在同一个月的
-        for i in 0 ..< textDataTmp.count{
-            if(self.textDataTitle.containsObject(textDataTmp[i]) == false){
-                self.textDataTitle.addObject(textDataTmp[i])
-            }
-        }
-        
-        //计算这个月总额
-        textDataTmp.removeAllObjects()
-        var monthTotal: Float = 0
-        
-        for i in 0 ..< self.textDataTitle.count{
-            monthTotal = 0
-            textDataTmp.removeAllObjects()
-            for j in 0 ..< self.textData.count{
-                if(dateToStringBySelf(self.textData.objectAtIndex(j).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM") == textDataTitle[i] as! String){
-                    
-                    let useWhere = (self.textData.objectAtIndex(j).valueForKey(cashNameOfUseWhere) as! String)
-                    let useNumber = "-" + String(self.textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float)
-                    let useTime = dateToString(self.textData.objectAtIndex(j).valueForKey(cashNameOfTime) as! NSDate)
-                    let TempModul = CashDetailTableDataModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime)
-                    textDataTmp.addObject(TempModul)
-                    
-                    if(self.textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float > 0){
-                        monthTotal = monthTotal + (self.textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float)
-                    }
-                }
-            }
-            self.textDataTotalDic.setObject(monthTotal, forKey: textDataTitle[i] as! String)
-            self.textDataDic.setObject(textDataTmp.copy(), forKey: textDataTitle[i] as! String)
-        }
+        let tempData = GetDataArray.getCashDetailShowArray()
+        self.textDataDic = tempData[0]
+        self.textDataTotalDic = tempData[1]
     }
     
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return self.textDataDic.allKeys.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return (self.textDataDic.allValues[section] as! NSArray).count
 
     }
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -100,18 +56,11 @@ class CashDetailTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)
-        
-    }
-    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 90
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         return (self.self.textDataDic.allKeys[section] as? String)! + "(" + String(0-(self.textDataTotalDic.objectForKey(self.textDataDic.allKeys[section]) as! Float)) + ")"
     }
     

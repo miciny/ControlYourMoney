@@ -107,26 +107,23 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         if !isCreditCheck.selected{
             SQLLine.insertCashData(self.whereUsedData.text!, useNumber: Float(self.numberUsedData.text!)!, time: getTime())
             
-            let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
-            if(countTmp == 0){
-                SQLLine.insertTotalData(0 - Float(self.numberUsedData.text!)!, time: getTime())
-            }else{
-                var canTmp = getCanUseToFloat()
-                canTmp = canTmp - Float(self.numberUsedData.text!)!
-                SQLLine.insertTotalData(canTmp, time: getTime())
-            }
-            MyToastView().showToast("添加成功！")
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
         }else{
             var isIn = false
             var index = 0
             let timeNow = getTime()
             var account = String()
             
-            if(myOwnAccountBillDay <= dateToInt(timeNow, dd: "dd")){
-                account = myOwnAccount + String(dateToInt(timeNow, dd: "MM")+1)
+            var MM = timeNow.currentMonth
+            
+            if(myOwnAccountBillDay <= timeNow.currentDay){
+                MM += 1
+                if MM+1 == 13{
+                    MM = 1
+                }
+                account = myOwnAccount + String(MM)
             }else{
-                account = myOwnAccount + String(dateToInt(timeNow, dd: "MM"))
+                account = myOwnAccount + String(MM)
             }
             
             let creditArray = SQLLine.selectAllData(entityNameOfCredit)
@@ -141,34 +138,30 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             
             if !isIn {
                 var refundDate = NSDate()
-                if(myOwnAccountBillDay <= dateToInt(timeNow, dd: "dd")){
-                    if(dateToInt(timeNow, dd: "MM") == 12){
-                        refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy") + 1) + "-1-" + String(myOwnAccountPayDay))
-                    }else{
-                        refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM") + 1) + "-" + String(myOwnAccountPayDay))
-                    }
+                if(myOwnAccountBillDay < timeNow.currentDay){
+                    refundDate = timeNow
                 }else{
-                    refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM")) + "-" + String(myOwnAccountPayDay))
+                    var mm = timeNow.currentMonth-1
+                    var yyyy = timeNow.currentYear
+                    if mm == 0 {
+                        mm = 12
+                        yyyy -= 1
+                    }
+                    
+                    refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
                 }
                 
-                SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay)
+                let nextPayDay = CalculateCredit.getFirstPayDate(refundDate, day: myOwnAccountPayDay)
+                
+                SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1)
             }else{
                 let oldNumber = creditArray[index].valueForKey(creditNameOfNumber) as! Float
-                SQLLine.updateCreditData(index, changeValue: oldNumber+Float(numberUsedData.text!)!, changeEntityName: creditNameOfNumber)
+                SQLLine.updateCreditDataSortedByTime(index, changeValue: oldNumber+Float(numberUsedData.text!)!, changeEntityName: creditNameOfNumber)
                
             }
-            
-            //更新时间
-            let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
-            if(countTmp == 0){
-                SQLLine.insertTotalData(0, time: getTime())
-            }else{
-                SQLLine.insertTotalData(getCanUseToFloat(), time: getTime())
-            }
-            MyToastView().showToast("添加成功！")
-            self.navigationController?.popToRootViewControllerAnimated(true)
         }
-        
+        MyToastView().showToast("添加成功！")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func isCreditSeleted(){
@@ -179,5 +172,4 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }

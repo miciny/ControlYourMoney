@@ -18,33 +18,6 @@ func getTime() -> NSDate{
     return now
 }
 
-//获取可用余额
-func getCanUseToFloat() -> Float{
-    let data = SQLLine.selectAllData(entityNameOfTotal)
-    if(data.count == 0){
-        return 0
-    }else{
-        return SQLLine.selectAllData(entityNameOfTotal).valueForKey(TotalNameOfCanUse).lastObject as! Float
-    }
-}
-
-//获取行用卡还款时间数组
-func getCreditDayToIntArray() -> NSArray{
-    return (SQLLine.selectAllData(entityNameOfCredit) as NSArray).valueForKey(creditNameOfDate) as! NSArray
-}
-func getCreditNumberToFloatArray() -> NSArray{
-    return (SQLLine.selectAllData(entityNameOfCredit) as NSArray).valueForKey(creditNameOfNumber) as! NSArray
-}
-func getCreditPeriodsToIntArray() -> NSArray{
-    return (SQLLine.selectAllData(entityNameOfCredit) as NSArray).valueForKey(creditNameOfPeriods) as! NSArray
-}
-func getCreditAccountToStringArray() -> NSArray{
-    return (SQLLine.selectAllData(entityNameOfCredit) as NSArray).valueForKey(creditNameOfAccount) as! NSArray
-}
-func getCreditTimeToNsdateArray() -> NSArray{
-    return (SQLLine.selectAllData(entityNameOfCredit) as NSArray).valueForKey(creditNameOfTime) as! NSArray
-}
-
 //时间转为字符串
 func dateToString(date : NSDate) -> String{
     let dateFormatter = NSDateFormatter()
@@ -80,13 +53,6 @@ func stringToDateNoHH(dateStr : String) -> NSDate{
     dateFormatter.dateFormat = "yyyy-MM-dd"
     // String to Date
     return dateFormatter.dateFromString(dateStr)!
-}
-
-//提取时间的年 月  日，转为int
-func dateToInt(date : NSDate,dd : String) -> Int{
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dd
-    return Int(dateFormatter.stringFromDate(date))!
 }
 
 //判断字符串为数字

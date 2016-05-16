@@ -9,11 +9,11 @@
 import UIKit
 
 class MainTableCreditModul: NSObject {
-    let periods: String!
+    let periods: String!  //剩余还款期数
     let number: String!
     let accout: String!
     let all: String!
-    let time: String!
+    let time: String!  //下期还款时间
     let date: String!
     
     init(periods: String!, number: String!, accout: String!, all: String!, time: String!, date: String!){

@@ -67,16 +67,7 @@ class AddSalaryViewController: UIViewController, UITextFieldDelegate, UITextView
         }
         
         SQLLine.insertSalaryData(getTime(), number: Float(self.numberSalaryData.text!)!)
-        
-        let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
-        if(countTmp == 0){
-            let floatTmp = (Float(self.numberSalaryData.text!)!)
-            SQLLine.insertTotalData(floatTmp, time: getTime() )
-        }else{
-            var canTmp = getCanUseToFloat()
-            canTmp = canTmp + (Float(self.numberSalaryData.text!)!)
-            SQLLine.insertTotalData(canTmp, time: getTime())
-        }
+        CalculateCredit.changeTotal(-Float(self.numberSalaryData.text!)!)
         
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

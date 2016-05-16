@@ -164,30 +164,15 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
             return
         }
         
-        var refundDate = NSDate()
         let timeNow = getTime()
-        if(Int(dateCreditData.text!)! <= dateToInt(timeNow, dd: "dd")){
-            if(dateToInt(timeNow, dd: "MM") == 12){
-                refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy") + 1) + "-1-" + String(Int(dateCreditData.text!)!))
-            }else{
-                refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM") + 1) + "-" + String(Int(dateCreditData.text!)!))
-            }
-        }else{
-            refundDate = stringToDateNoHH(String(dateToInt(timeNow, dd: "yyyy")) + "-" + String(dateToInt(timeNow, dd: "MM")) + "-" + String(Int(dateCreditData.text!)!))
-        }
+        let date = Int(dateCreditData.text!)!
+        let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
+        let periods = Int(periodsCreditData.text!)!
         
-        SQLLine.insertCrediData(Int(periodsCreditData.text!)!, number: Float(numberCreditData.text!)!, time: refundDate, account: accountCreditData.text!, date: Int(dateCreditData.text!)!)
+        SQLLine.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods)
         
-        let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
-        if(countTmp == 0){
-            SQLLine.insertTotalData(0, time: getTime())
-        }else{
-            SQLLine.insertTotalData(getCanUseToFloat(), time: getTime())
-        }
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
-        
-        
     }
     
     func checkData() -> Bool{
