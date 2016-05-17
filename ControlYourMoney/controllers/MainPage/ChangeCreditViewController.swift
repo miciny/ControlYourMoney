@@ -205,8 +205,9 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
         let periods = Int(recivedData.periods)!-1
         
-        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        //由于按nextPayDay排序，必须先保存周期
         SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
+        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
         
         SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")

@@ -21,6 +21,7 @@ let entityNameOfCredit = "Credit"
 let entityNameOfSalary = "Salary"
 let entityNameOfTotal = "Total"
 let entityNameOfCreditAccount = "CreditAccount"
+let entityNameOfCost = "Cost"
 
 let keyOfCash = "记账"
 let keyOfCredit = "信用卡（电子信用账号）"
@@ -47,6 +48,12 @@ let accountNameOfName = "name"
 
 let TotalNameOfCanUse = "canUse"
 let TotalNameOfTime = "time"
+
+let costNameOfName = "name"
+let costNameOfNumber = "number"
+let costNameOfTime = "time"
+let costNameOfType = "type" //0代表每月，1代表一年
+
 let addArray = ["信用帐号","信用卡（电子分期）","工资"]
 
 let standardFontNo = CGFloat(15)

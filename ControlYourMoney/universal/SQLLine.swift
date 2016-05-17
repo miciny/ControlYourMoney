@@ -178,4 +178,24 @@ class SQLLine: NSObject{
         data[indexPath].setValue(changeValue, forKey: changeEntityName)
         saveData()
     }
+    
+    //cost插入一条数据
+    class func insertCostData(name: String, time: NSDate, type: Int, number: Float){
+        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCost, inManagedObjectContext: allDataSource)
+        row.setValue(name, forKey: costNameOfName)
+        row.setValue(time, forKey: costNameOfTime)
+        row.setValue(type, forKey: costNameOfType)
+        row.setValue(number, forKey: costNameOfNumber)
+        saveData()
+    }
+    
+    //cost改一条数
+    class func updateCostData(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
+        var data = NSArray()
+        data = selectAllData(entityNameOfCost)
+        data[indexPath].setValue(changeValue, forKey: changeEntityName)
+        saveData()
+    }
 }

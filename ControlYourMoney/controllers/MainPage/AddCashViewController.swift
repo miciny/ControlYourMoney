@@ -139,7 +139,9 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             if !isIn {
                 var refundDate = NSDate()
                 if(myOwnAccountBillDay < timeNow.currentDay){
-                    refundDate = timeNow
+                    let yyyy = timeNow.currentYear
+                    let mm = timeNow.currentMonth
+                    refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
                 }else{
                     var mm = timeNow.currentMonth-1
                     var yyyy = timeNow.currentYear

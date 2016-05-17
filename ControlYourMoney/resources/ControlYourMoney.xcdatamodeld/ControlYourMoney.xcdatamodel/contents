@@ -5,6 +5,12 @@
         <attribute name="useNumber" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="useWhere" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Cost" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Credit" representedClassName=".Credit" syncable="YES">
         <attribute name="account" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -32,5 +38,6 @@
         <element name="CreditAccount" positionX="-45" positionY="27" width="128" height="75"/>
         <element name="Salary" positionX="-36" positionY="9" width="128" height="75"/>
         <element name="Total" positionX="-36" positionY="27" width="128" height="75"/>
+        <element name="Cost" positionX="-45" positionY="36" width="128" height="105"/>
     </elements>
 </model>

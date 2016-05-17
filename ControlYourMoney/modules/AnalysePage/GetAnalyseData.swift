@@ -9,6 +9,60 @@
 import UIKit
 
 class GetAnalyseData: NSObject {
+    //每月收入
+    class func getEveryMonthSalary() -> Float{
+        let salaryArray = SQLLine.selectAllData(entityNameOfSalary)
+        var salary = Float(8500)
+        if salaryArray.count == 0{
+            return salary
+        }
+        salary = salaryArray.lastObject!.valueForKey(salaryNameOfNumber) as! Float
+        return salary
+    }
+    
+    //每年的一次性开销，如房租，不好记得，只好这样了
+    class func getThisYearOnceUse() -> Float{
+        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        var thisYearOnceUse = Float(0)
+        
+        if costArray.count == 0{
+            return thisYearOnceUse
+        }
+        
+        for i in 0 ..< costArray.count {
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            if type == 1 {
+                thisYearOnceUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
+            }
+        }
+        return thisYearOnceUse
+    }
+
+    
+    //根据每月开销，计算本月到年底（包括本月 到 2月）的花费
+    class func getThisYearEveryMonthsAllUse() -> Float{
+        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        let timeNow = getTime()
+        var thisyearEveryMonthsAllUse = Float(0)
+        var months = Int()
+        if timeNow.currentMonth <= 2 {
+            months = 3 - timeNow.currentMonth
+        }else{
+            months = 15 - timeNow.currentMonth
+        }
+        
+        if costArray.count == 0{
+            return thisyearEveryMonthsAllUse
+        }
+        
+        for i in 0 ..< costArray.count {
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            if type == 0 {
+                thisyearEveryMonthsAllUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)! * Float(months)
+            }
+        }
+        return thisyearEveryMonthsAllUse
+    }
     
     //最后一月用钱总数
     class func getThisMonthUse() -> Float{
@@ -151,27 +205,56 @@ class GetAnalyseData: NSObject {
         return creditNextMonthPay
     }
 
-    //预计本月总支出
+    //预计本月总支出 ， 为 每月支出 ＋ 信用卡
     class func getThisMonthPay() -> Float{
-        let thisMonthPay: Float = -1
+        var thisMonthPay: Float = 0
+        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        if costArray.count == 0{
+            thisMonthPay += getCreditThisMonthPay()
+            return thisMonthPay
+        }
+        
+        for i in 0 ..< costArray.count {
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            if type == 0 {
+                thisMonthPay += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
+            }
+        }
+        
+        thisMonthPay += getCreditThisMonthPay()
         return thisMonthPay
     }
     
-    //本月今年结余
+    //预计今年结余，为 今年总收入(不包括本月的收入) ＋ 现有的 － 今年总开支
     class func getThisYearLeft() -> Float{
-        let thisYearLeft: Float = -1
+        var thisYearLeft: Float = 0
+        
+        let timeNow = getTime()
+        var months = Int()
+        if timeNow.currentMonth <= 2 {
+            months = 3 - timeNow.currentMonth
+        }else{
+            months = 15 - timeNow.currentMonth
+        }
+        
+        let thisYearPay = getEveryMonthSalary()*Float(months) + getCanUseToFloat()
+        thisYearLeft = thisYearPay-getThisYearPay()
         return thisYearLeft
     }
     
-    //本月本月结余
-    class func getThisMonthLeft() -> Float{
-        let thisMonthLeft: Float = -1
-        return thisMonthLeft
+    //预计本年支出, 为每月支出＊剩余月份 ＋ 每年一次性支出  ＋ 信用卡剩余应还
+    class func getThisYearPay() -> Float{
+        var thisYearPay: Float = 0
+        thisYearPay = getThisYearEveryMonthsAllUse()+getThisYearOnceUse()+getCreditTotalPay()
+        return thisYearPay
     }
     
-    //本月现结余
+    //本月现结余，为 现有的 － 本月总支出（预计支出 ＋ 信用卡本月剩余应还）
     class func getNowLeft() -> Float{
-        let nowLeft : Float = -1
+        var nowLeft : Float = 0
+        let thisMonthLeft = getCanUseToFloat()
+        let thisMonthPay = getThisMonthPay()-getCreditThisMonthPay()+getCreditThisMonthLeftPay()
+        nowLeft = thisMonthLeft-thisMonthPay
         return nowLeft
     }
     

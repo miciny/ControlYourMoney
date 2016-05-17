@@ -45,6 +45,10 @@
 		E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E19E01FF1CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld */; };
 		E1ABCC771CE9646D005A359C /* CalculateCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC761CE9646D005A359C /* CalculateCredit.swift */; };
 		E1ABCC7C1CE9947E005A359C /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC7B1CE9947E005A359C /* NSDateExtension.swift */; };
+		E1ABCC811CE9C956005A359C /* MonthCostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC801CE9C956005A359C /* MonthCostViewController.swift */; };
+		E1ABCC831CEA0919005A359C /* YearCostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC821CEA0919005A359C /* YearCostViewController.swift */; };
+		E1ABCC851CEA10B9005A359C /* EveryMonthSalaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC841CEA10B9005A359C /* EveryMonthSalaryViewController.swift */; };
+		E1ABCC8A1CEABA3B005A359C /* TouchIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +92,10 @@
 		E19E02001CE2C8A700A52C04 /* ControlYourMoney.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ControlYourMoney.xcdatamodel; sourceTree = "<group>"; };
 		E1ABCC761CE9646D005A359C /* CalculateCredit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculateCredit.swift; sourceTree = "<group>"; };
 		E1ABCC7B1CE9947E005A359C /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		E1ABCC801CE9C956005A359C /* MonthCostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthCostViewController.swift; sourceTree = "<group>"; };
+		E1ABCC821CEA0919005A359C /* YearCostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearCostViewController.swift; sourceTree = "<group>"; };
+		E1ABCC841CEA10B9005A359C /* EveryMonthSalaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryMonthSalaryViewController.swift; sourceTree = "<group>"; };
+		E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +202,9 @@
 		E16A67471CE56DBF005C35D9 /* AnalysePage */ = {
 			isa = PBXGroup;
 			children = (
+				E1ABCC801CE9C956005A359C /* MonthCostViewController.swift */,
+				E1ABCC821CEA0919005A359C /* YearCostViewController.swift */,
+				E1ABCC841CEA10B9005A359C /* EveryMonthSalaryViewController.swift */,
 			);
 			name = AnalysePage;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/AnalysePage;
@@ -245,6 +256,7 @@
 				E18774871CE2D6A400CBBBB3 /* MainTableViewController.swift */,
 				E187749B1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift */,
 				E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */,
+				E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */,
 			);
 			name = navigation;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/navigation;
@@ -378,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1ABCC831CEA0919005A359C /* YearCostViewController.swift in Sources */,
 				E16A676A1CE56E89005C35D9 /* MyToastView.swift in Sources */,
 				E16A67831CE58347005C35D9 /* GetAnalyseData.swift in Sources */,
 				E16A67731CE571CD005C35D9 /* AnalyseMainViewCollectionViewCell.swift in Sources */,
@@ -388,6 +401,7 @@
 				E16A67801CE5730A005C35D9 /* MainTableSalaryModul.swift in Sources */,
 				E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */,
 				E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */,
+				E1ABCC811CE9C956005A359C /* MonthCostViewController.swift in Sources */,
 				E18774881CE2D6A400CBBBB3 /* MainTableViewController.swift in Sources */,
 				E16A677E1CE5730A005C35D9 /* MainTableCashModul.swift in Sources */,
 				E16A677F1CE5730A005C35D9 /* MainTableCreditModul.swift in Sources */,
@@ -405,11 +419,13 @@
 				E1ABCC7C1CE9947E005A359C /* NSDateExtension.swift in Sources */,
 				E18774861CE2D57000CBBBB3 /* Constant.swift in Sources */,
 				E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */,
+				E1ABCC8A1CEABA3B005A359C /* TouchIDViewController.swift in Sources */,
 				E16A67701CE56E93005C35D9 /* MainTableHeaderView.swift in Sources */,
 				E16A67751CE572EF005C35D9 /* AnalysePageDataModul.swift in Sources */,
 				E16A677C1CE5730A005C35D9 /* AccountListModul.swift in Sources */,
 				E16A67851CE59A0A005C35D9 /* GetDataArray.swift in Sources */,
 				E16A67811CE5730A005C35D9 /* SalaryDetailTableDataModul.swift in Sources */,
+				E1ABCC851CEA10B9005A359C /* EveryMonthSalaryViewController.swift in Sources */,
 				E187749C1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift in Sources */,
 				E16A676B1CE56E89005C35D9 /* MyWaitView.swift in Sources */,
 				E16A67561CE56E52005C35D9 /* CashDetailTableViewController.swift in Sources */,

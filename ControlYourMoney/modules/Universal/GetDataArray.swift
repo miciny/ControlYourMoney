@@ -153,7 +153,7 @@ class GetDataArray: NSObject {
         
         for i in 0 ..< creditArrayCount {
             let number = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float) // 每期还款金额
-            let all = "-" + String(Float(creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! NSInteger) *
+            let all = "-" + String(Float(creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger) *
                 (creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float)) // 总还款金额
             let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
             let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
