@@ -31,13 +31,14 @@ class GetAnalyseData: NSObject {
             let cash = getPreThisMonthCashPay()
             
             let timeArray = NSMutableArray()
-            if timeNow.currentMonth>9 {
+            if i > 9 {
                 timeArray.addObject("\(timeNow.currentYear)-\(i)")
             }else{
                 timeArray.addObject("\(timeNow.currentYear)-0\(i)")
             }
             
             let credit = getWhichMonthCreditPayIncludeDone(timeArray)
+            
             thisMonthUse.append(credit+cash)
         }
         return thisMonthUse
@@ -374,10 +375,9 @@ class GetAnalyseData: NSObject {
             let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
             for j in 0 ..< periods {
                 let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
-                
                 let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
                 if timeArray.containsObject(lastStr){
+                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
                     thisMonthPay += number
                 }
             }
