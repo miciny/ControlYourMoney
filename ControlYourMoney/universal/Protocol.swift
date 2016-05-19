@@ -21,3 +21,7 @@ protocol mainHeaderChangeLastDelegate{
 protocol accountListViewDelegate {
     func buttonClicked(name: String)
 }
+
+protocol costNameListViewDelegate {
+    func costNameClicked(name: String)
+}

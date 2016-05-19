@@ -12,7 +12,7 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
     
     var searchTable = UITableView()
     var dataAll: NSMutableArray!
-    var dataShow = [AccountListModul]()
+    var dataShow: [AccountListModul]!
     var delegate: accountListViewDelegate?
 
     override func viewDidLoad() {
@@ -21,19 +21,31 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
         self.title = "选择信用账号"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         
-        
         //取消按钮
         let leftBarBtn = UIBarButtonItem(title: "取消", style: .Plain, target: self,
-                                          action: #selector(AccountListViewController.backToPrevious))
+                                          action: #selector(backToPrevious))
         self.navigationItem.leftBarButtonItem = leftBarBtn
         
-        setUpData()
+        //+按钮
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(goAddCreditAccount))
+        self.navigationItem.rightBarButtonItem = addItem
+        
         setUpTable()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        setUpData()
+        self.searchTable.reloadData()
     }
     
     func backToPrevious(){
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func goAddCreditAccount(){
+        let vc = AddCreditAccountViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func setUpTable(){
@@ -50,6 +62,15 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func setUpData(){
+        
+        dataAll = NSMutableArray()
+        let accountTempArray = SQLLine.selectAllData(entityNameOfCreditAccount)
+        for i in 0 ..< accountTempArray.count {
+            let name = accountTempArray[i].valueForKey(creditAccountNameOfName) as! String
+            dataAll.addObject(name)
+        }
+        
+        self.dataShow = [AccountListModul]()
         let titleModul = AccountListModul(name: "信用帐号", type: 0)
         dataShow.append(titleModul)
         for i in 0 ..< dataAll.count {

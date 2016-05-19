@@ -25,6 +25,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     var numberCreditData = UITextField()
     var dateCreditData = UITextField()
     var accountCreditData = UILabel()
+    var typeData = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,8 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.periodsCreditData.text = self.recivedData.periods
         self.numberCreditData.text = self.recivedData.number
         self.dateCreditData.text = self.recivedData.date
-        self.accountCreditData.text = self.recivedData.accout
+        self.accountCreditData.text = self.recivedData.account
+        self.typeData.text = self.recivedData.type
     }
     
     func setUpTitle(){
@@ -95,6 +97,14 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         account.text = "信用账户："
         self.view.addSubview(account)
         
+        let type = UILabel(frame: CGRectMake(20, account.frame.maxY+gap, nextPaydaySize.width, 30))
+        type.font = introduceFont
+        type.textAlignment = NSTextAlignment.Left
+        type.backgroundColor = UIColor.clearColor()
+        type.textColor = UIColor.blackColor()
+        type.text = "支出类型："
+        self.view.addSubview(type)
+        
         self.nextPaydayText = UITextField(frame: CGRectMake(nextPayday.frame.maxX, nextPayday.frame.minY, self.view.frame.size.width-nextPayday.frame.maxX-20, 30))
         self.nextPaydayText.font = introduceFont
         self.nextPaydayText.textAlignment = NSTextAlignment.Left
@@ -144,7 +154,15 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.accountCreditData.layer.cornerRadius = 3
         self.view.addSubview(self.accountCreditData)
         
-        let save = UIButton(frame: CGRectMake(20, account.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
+        self.typeData = UILabel(frame: CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30))
+        self.typeData.textAlignment = NSTextAlignment.Left
+        self.typeData.backgroundColor = UIColor.whiteColor()
+        self.typeData.textColor = UIColor.blackColor()
+        self.typeData.layer.masksToBounds = true
+        self.typeData.layer.cornerRadius = 3
+        self.view.addSubview(self.typeData)
+        
+        let save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.setTitle("保  存", forState: UIControlState.Normal)
         save.layer.cornerRadius = 3
@@ -225,7 +243,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let date = Int(dateCreditData.text!)!
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
         let periods = Int(periodsCreditData.text!)!
-        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods)
+        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: "")
         
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

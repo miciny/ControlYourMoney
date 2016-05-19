@@ -55,7 +55,7 @@ class YearCostViewController: UIViewController {
         numberText.textColor = UIColor.blackColor()
         numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
         numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
-        numberText.text = String(GetAnalyseData.getThisYearEveryMonthsAllUse()+GetAnalyseData.getCreditTotalPay())
+        numberText.text = String(GetAnalyseData.getThisYearEveryMonthsAllUse()+GetAnalyseData.getCreditThisYearLeftPay())
         self.view.addSubview(numberText)
         numberText.tag = 2
         numberText.enabled = false
@@ -75,7 +75,7 @@ class YearCostViewController: UIViewController {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
             if type == 1 {
                 self.nameArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfName) as? String)!)
                 self.numberArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!)
@@ -174,7 +174,7 @@ class YearCostViewController: UIViewController {
         for i in 0 ..< nameArray.count {
             let nameStr = nameArray[i] as! String
             let number = Float(numberArray[i] as! String)
-            SQLLine.insertCostData(nameStr, time: timeNow, type: 1, number: number!)
+            SQLLine.insertCostData(nameStr, time: timeNow, type: "", number: number!, period: 1)
         }
         let toast = MyToastView()
         toast.showToast("保存成功")
@@ -198,7 +198,7 @@ class YearCostViewController: UIViewController {
         let costArray = SQLLine.selectAllData(entityNameOfCost)
         var count = 0
         for i in 0 ..< costArray.count{
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
             if type == 1 {
                 count += 1
             }
@@ -207,7 +207,7 @@ class YearCostViewController: UIViewController {
         for _ in 0 ..< count {
             let TempCostArray = SQLLine.selectAllData(entityNameOfCost)
             for j in 0 ..< TempCostArray.count{
-                let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfType) as! Int
+                let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfPeriod) as! Int
                 if type == 1 {
                     SQLLine.deleteData(entityNameOfCost, indexPath: j)
                     break

@@ -23,7 +23,7 @@ class GetDataArray: NSObject {
         let textDataTitle = NSMutableArray()
         
         //排序
-        let time = NSSortDescriptor.init(key: salaryNameOfTime, ascending: false)
+        let time = NSSortDescriptor(key: cashNameOfTime, ascending: false)
         textData = textData.sortedArrayUsingDescriptors([time])
         
         //获取时间序列
@@ -52,7 +52,8 @@ class GetDataArray: NSObject {
                     let useWhere = (textData.objectAtIndex(j).valueForKey(cashNameOfUseWhere) as! String)
                     let useNumber = "-" + String(textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float)
                     let useTime = dateToString(textData.objectAtIndex(j).valueForKey(cashNameOfTime) as! NSDate)
-                    let TempModul = CashDetailTableDataModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime)
+                    let type = (textData.objectAtIndex(j).valueForKey(cashNameOfType) as! String)
+                    let TempModul = CashDetailTableDataModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime, type: type)
                     textDataTmp.addObject(TempModul)
                     
                     if(textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float > 0){
@@ -71,21 +72,22 @@ class GetDataArray: NSObject {
     //工资详细列表页
     class func getSalaryDetailShowArray() -> [SalaryDetailTableDataModul]?{
         
-        var textData = SQLLine.selectAllData(entityNameOfSalary)
+        var textData = SQLLine.selectAllData(entityNameOfIncome)
         
         if textData.count == 0 {
             return nil
         }
         
         var AllData = [SalaryDetailTableDataModul]()
-        let time : NSSortDescriptor = NSSortDescriptor.init(key: salaryNameOfTime, ascending: false)
+        let time : NSSortDescriptor = NSSortDescriptor(key: incomeOfTime, ascending: false)
         textData = textData.sortedArrayUsingDescriptors([time])
         
         for i in 0 ..< textData.count {
-            let date = String((textData.objectAtIndex(i).valueForKey(salaryNameOfTime) as! NSDate).currentMonth) + "月" + keyOfSalary
-            let number = String((textData.objectAtIndex(i)).valueForKey(salaryNameOfNumber) as! Float)
-            let time = dateToStringNoHH((textData.objectAtIndex(i)).valueForKey(salaryNameOfTime) as! NSDate)
-            let tempModul = SalaryDetailTableDataModul(time: time, number: number, date: date)
+            let type = (textData.objectAtIndex(i)).valueForKey(incomeOfName) as! String
+            let date = String((textData.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate).currentMonth) + "月" + keyOfIncome
+            let number = String((textData.objectAtIndex(i)).valueForKey(incomeOfNumber) as! Float)
+            let time = dateToStringNoHH((textData.objectAtIndex(i)).valueForKey(incomeOfTime) as! NSDate)
+            let tempModul = SalaryDetailTableDataModul(time: time, number: number, date: date, type: type)
             AllData.append(tempModul)
         }
         return AllData
@@ -100,7 +102,9 @@ class GetDataArray: NSObject {
         }
         var cashModul = [MainTableCashModul]()
         
+        let type = cashArray.lastObject!.valueForKey(cashNameOfType) as? String
         let useWhere = cashArray.lastObject!.valueForKey(cashNameOfUseWhere) as? String
+        let title = type! + "—" + useWhere!
         let useNumber = String(cashArray.lastObject!.valueForKey(cashNameOfUseNumber) as! Float)
         let useTime = dateToString(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate)
         
@@ -108,7 +112,7 @@ class GetDataArray: NSObject {
         let useTotal = GetAnalyseData.getThisMonthUse()
         let useTotalDayStr = String(useTotalDay)
         let useTotalStr = String(useTotal)
-        let tempCashModul = MainTableCashModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime, useTotalDayStr: useTotalDayStr, useTotalStr: useTotalStr)
+        let tempCashModul = MainTableCashModul(useWhere: title, useNumber: useNumber, useTime: useTime, useTotalDayStr: useTotalDayStr, useTotalStr: useTotalStr)
         cashModul.append(tempCashModul)
         
         return cashModul
@@ -118,7 +122,7 @@ class GetDataArray: NSObject {
     
     class func getSalaryShowArray() -> [MainTableSalaryModul]?{
         
-        let salaryArray = SQLLine.selectAllData(entityNameOfSalary)
+        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
         
         if salaryArray.count == 0 {
             return nil
@@ -126,10 +130,11 @@ class GetDataArray: NSObject {
         
         var salaryModul = [MainTableSalaryModul]()
         
-        let date = String((salaryArray.lastObject!.valueForKey(salaryNameOfTime) as! NSDate).currentMonth) + "月" + keyOfSalary
-        let number = String(salaryArray.lastObject!.valueForKey(salaryNameOfNumber) as! Float)
-        let time = dateToStringNoHH(salaryArray.lastObject!.valueForKey(salaryNameOfTime) as! NSDate)
-        let tempSalaryModul = MainTableSalaryModul(number: number, date: date, time: time)
+        let type = salaryArray.lastObject!.valueForKey(incomeOfName) as! String
+        let title = String((salaryArray.lastObject!.valueForKey(incomeOfTime) as! NSDate).currentMonth)+"月"+keyOfIncome + "—" + type
+        let number = String(salaryArray.lastObject!.valueForKey(incomeOfNumber) as! Float)
+        let time = dateToStringNoHH(salaryArray.lastObject!.valueForKey(incomeOfTime) as! NSDate)
+        let tempSalaryModul = MainTableSalaryModul(number: number, date: title, time: time)
         salaryModul.append(tempSalaryModul)
         
         return salaryModul
@@ -152,6 +157,7 @@ class GetDataArray: NSObject {
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
+            let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
             let number = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float) // 每期还款金额
             let all = "-" + String(Float(creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger) *
                 (creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float)) // 总还款金额
@@ -159,12 +165,14 @@ class GetDataArray: NSObject {
             let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
             let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             
+            let title = accout! + "—" + type
+            
             let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
             let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
             
             if leftPeriods > 0 {
                 let periodsStr = String(leftPeriods) //
-                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: number, accout: accout, all: all, time: timeStr, date: dateStr)
+                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: number, title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type)
                 creditModul.append(tempCreditModul)
             }
         }

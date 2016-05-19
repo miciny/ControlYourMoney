@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 //等待效果
-class MyTextToast: UIView{
+class MyWaitToast: UIView{
     
     var loadingLab:UILabel!
     var mask:UIControl!
@@ -73,13 +73,13 @@ class MyTextToast: UIView{
         if timer != nil {
             NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         }
-        MyTextToast.showNetIndicator()
+        MyWaitToast.showNetIndicator()
     }
     
     //请求超时时显示
     func timerDeadLine(){
         self.hideView()
-        MyTextToast.makeToast("请求超时")
+        MyWaitToast.makeToast("请求超时")
     }
     
     //隐藏
@@ -92,7 +92,7 @@ class MyTextToast: UIView{
                 self.removeView()
             })
         }
-        MyTextToast.hidenNetIndicator()
+        MyWaitToast.hidenNetIndicator()
     }
     
     func removeView(){

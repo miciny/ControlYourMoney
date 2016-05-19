@@ -8,10 +8,12 @@
 
 import UIKit
 
-class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, costNameListViewDelegate{
     var numberUsedData = UITextField()
     var whereUsedData = UITextField()
     var isCreditCheck: UIButton! //
+    var accountData = UILabel()
+    var accountArray = NSMutableArray()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +23,40 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         setupCashLable()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        initData()
+    }
+    
+    func initData(){
+        accountArray = NSMutableArray()
+        let accountTempArray = SQLLine.selectAllData(entityNameOfPayName)
+        
+        if accountTempArray.count == 0{
+            let alert = textAlertView("请先添加支出类型")
+            alert.delegate = self
+            return
+        }
+        
+        for i in 0 ..< accountTempArray.count {
+            let name = accountTempArray[i].valueForKey(payNameNameOfName) as! String
+            accountArray.addObject(name)
+        }
+        
+        if self.accountData.text == nil {
+            self.accountData.text = accountArray.objectAtIndex(0) as? String
+        }
+    }
+    
+    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        let vc = AddCostNameViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func setupCashLable(){
         let gap = CGFloat(10)
         
-        let numberUsedSize = sizeWithText("金额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let numberUsedSize = sizeWithText("支出类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
         let numberUsed = UILabel(frame: CGRectMake(20, 90, numberUsedSize.width, 30))
         numberUsed.font = introduceFont
         numberUsed.textAlignment = NSTextAlignment.Left
@@ -40,24 +72,6 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         whereUsed.textColor = UIColor.blackColor()
         whereUsed.text = "用处："
         self.view.addSubview(whereUsed)
-        
-        isCreditCheck = UIButton(type: UIButtonType.Custom)
-        isCreditCheck.frame = CGRect(x: 20, y: whereUsed.frame.maxY+gap+5, width: 20, height: 20)
-        isCreditCheck.setImage(UIImage(named: "CheckOff"), forState:UIControlState.Normal)
-        isCreditCheck.setImage(UIImage(named: "CheckOn"), forState:UIControlState.Selected)
-        isCreditCheck.addTarget(self, action: #selector(AddCashViewController.isCreditSeleted), forControlEvents:.TouchUpInside)
-        isCreditCheck.selected = false
-        self.view.addSubview(isCreditCheck)
-        let size1 = sizeWithText("信用账号", font: introduceFont, maxSize: CGSizeMake(Width, 30))
-        let isCreditCheckButtonText = UILabel(frame: CGRect(x: isCreditCheck.frame.maxX+10, y: isCreditCheck.frame.minY-5, width: size1.width, height: 30))
-        isCreditCheckButtonText.text = "信用账号"
-        isCreditCheckButtonText.textAlignment = NSTextAlignment.Left
-        isCreditCheckButtonText.font = introduceFont
-        isCreditCheckButtonText.textColor = UIColor.blackColor()
-        isCreditCheckButtonText.userInteractionEnabled = true //打开点击事件
-        let tap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCashViewController.isCreditSeleted))
-        isCreditCheckButtonText.addGestureRecognizer(tap1)
-        self.view.addSubview(isCreditCheckButtonText)
         
         self.numberUsedData = UITextField(frame: CGRectMake(numberUsed.frame.maxX, numberUsed.frame.minY, self.view.frame.size.width-numberUsed.frame.maxX-20, 30))
         self.numberUsedData.font = introduceFont
@@ -83,12 +97,63 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.whereUsedData.text = "早中晚餐"
         self.view.addSubview(self.whereUsedData)
         
-        let save = UIButton(frame: CGRectMake(20, isCreditCheck.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
+        let account = UILabel(frame: CGRectMake(20, whereUsed.frame.maxY+gap, numberUsedSize.width, 30))
+        account.font = introduceFont
+        account.textAlignment = NSTextAlignment.Left
+        account.backgroundColor = UIColor.clearColor()
+        account.textColor = UIColor.blackColor()
+        account.text = "支出类型："
+        self.view.addSubview(account)
+        
+        self.accountData = UILabel(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
+        self.accountData.textAlignment = NSTextAlignment.Left
+        self.accountData.backgroundColor = UIColor.whiteColor()
+        self.accountData.textColor = UIColor.blackColor()
+        self.accountData.layer.masksToBounds = true
+        self.accountData.layer.cornerRadius = 3
+        self.accountData.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(goSelectAccount))
+        self.accountData.addGestureRecognizer(tap)
+        self.view.addSubview(self.accountData)
+        
+        
+        isCreditCheck = UIButton(type: UIButtonType.Custom)
+        isCreditCheck.frame = CGRect(x: 20, y: account.frame.maxY+gap+5, width: 20, height: 20)
+        isCreditCheck.setImage(UIImage(named: "CheckOff"), forState:UIControlState.Normal)
+        isCreditCheck.setImage(UIImage(named: "CheckOn"), forState:UIControlState.Selected)
+        isCreditCheck.addTarget(self, action: #selector(AddCashViewController.isCreditSeleted), forControlEvents:.TouchUpInside)
+        isCreditCheck.selected = false
+        self.view.addSubview(isCreditCheck)
+        
+        let size1 = sizeWithText("信用账号", font: introduceFont, maxSize: CGSizeMake(Width, 30))
+        let isCreditCheckButtonText = UILabel(frame: CGRect(x: isCreditCheck.frame.maxX+10, y: isCreditCheck.frame.minY-5, width: size1.width, height: 30))
+        isCreditCheckButtonText.text = "信用账号"
+        isCreditCheckButtonText.textAlignment = NSTextAlignment.Left
+        isCreditCheckButtonText.font = introduceFont
+        isCreditCheckButtonText.textColor = UIColor.blackColor()
+        isCreditCheckButtonText.userInteractionEnabled = true //打开点击事件
+        let tap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCashViewController.isCreditSeleted))
+        isCreditCheckButtonText.addGestureRecognizer(tap1)
+        self.view.addSubview(isCreditCheckButtonText)
+        
+        let save = UIButton(frame: CGRectMake(20, isCreditCheckButtonText.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.layer.cornerRadius = 3
         save.setTitle("保  存", forState: UIControlState.Normal)
         save.addTarget(self,action: #selector(saveCash),forControlEvents:.TouchUpInside)
         self.view.addSubview(save)
+    }
+    
+    func goSelectAccount(){
+        
+        let vc = CostNameListViewController()
+        vc.delegate = self
+        let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
+        self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
+    }
+    
+    func costNameClicked(name: String) {
+        self.accountData.text = name
     }
     
     func saveCash(){
@@ -105,7 +170,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         //用的现金
         if !isCreditCheck.selected{
-            SQLLine.insertCashData(self.whereUsedData.text!, useNumber: Float(self.numberUsedData.text!)!, time: getTime())
+            SQLLine.insertCashData(self.whereUsedData.text!, useNumber: Float(self.numberUsedData.text!)!, type: self.accountData.text!, time: getTime())
             
             CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
         }else{
@@ -121,9 +186,9 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                 if MM+1 == 13{
                     MM = 1
                 }
-                account = myOwnAccount + String(MM)
+                account = myOwnAccount + String(MM) + "月"
             }else{
-                account = myOwnAccount + String(MM)
+                account = myOwnAccount + String(MM) + "月"
             }
             
             let creditArray = SQLLine.selectAllData(entityNameOfCredit)
@@ -155,7 +220,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                 
                 let nextPayDay = CalculateCredit.getFirstPayDate(refundDate, day: myOwnAccountPayDay)
                 
-                SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1)
+                SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1, type: self.accountData.text!)
             }else{
                 let oldNumber = creditArray[index].valueForKey(creditNameOfNumber) as! Float
                 SQLLine.updateCreditDataSortedByTime(index, changeValue: oldNumber+Float(numberUsedData.text!)!, changeEntityName: creditNameOfNumber)

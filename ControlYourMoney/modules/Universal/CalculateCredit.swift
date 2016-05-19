@@ -9,6 +9,7 @@
 import Foundation
 
 class CalculateCredit: NSObject {
+    
     //获取第一期还款时间
     class func getFirstPayDate(time: NSDate, day: Int) -> NSDate{
         var yyyy = time.currentYear
@@ -24,6 +25,13 @@ class CalculateCredit: NSObject {
             }
         }
         return stringToDateNoHH("\(yyyy)-\(MM)-\(dd1)")
+    }
+    
+    //获取最后一期还款时间
+    class func getLastPayDate(time: NSDate, day: Int, periods: Int) -> NSDate{
+        let first = getFirstPayDate(time, day: day)
+        let last = calculateTime(first, months: periods-1)
+        return last
     }
     
     //获取信用卡的月份差，与日也有关系
@@ -104,6 +112,7 @@ class CalculateCredit: NSObject {
         }
     }
     
+    //给定时间 和 月份差（大于0），返回一个时间
     class func calculateTime(time: NSDate, months: Int) -> NSDate{
         var yyyy = time.currentYear
         var MM = time.currentMonth
@@ -111,8 +120,8 @@ class CalculateCredit: NSObject {
         
         MM = MM + months
         
-        yyyy = yyyy + Int(MM/12)
-        MM = MM%12
+        yyyy = yyyy + Int(MM/13)
+        MM = MM%13
         if MM == 0 {
             MM = 1
         }

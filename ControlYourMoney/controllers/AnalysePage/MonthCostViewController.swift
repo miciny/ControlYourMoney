@@ -74,7 +74,7 @@ class MonthCostViewController: UIViewController {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
             if type == 0 {
                 self.nameArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfName) as? String)!)
                 self.numberArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!)
@@ -173,7 +173,7 @@ class MonthCostViewController: UIViewController {
         for i in 0 ..< nameArray.count {
             let nameStr = nameArray[i] as! String
             let number = Float(numberArray[i] as! String)
-            SQLLine.insertCostData(nameStr, time: timeNow, type: 0, number: number!)
+            SQLLine.insertCostData(nameStr, time: timeNow, type: "", number: number!, period: 0)
         }
         let toast = MyToastView()
         toast.showToast("保存成功")
@@ -197,7 +197,7 @@ class MonthCostViewController: UIViewController {
         let costArray = SQLLine.selectAllData(entityNameOfCost)
         var count = 0
         for i in 0 ..< costArray.count{
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
             if type == 0 {
                 count += 1
             }
@@ -206,7 +206,7 @@ class MonthCostViewController: UIViewController {
         for _ in 0 ..< count {
             let TempCostArray = SQLLine.selectAllData(entityNameOfCost)
             for j in 0 ..< TempCostArray.count{
-                let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfType) as! Int
+                let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfPeriod) as! Int
                 if type == 0 {
                     SQLLine.deleteData(entityNameOfCost, indexPath: j)
                     break

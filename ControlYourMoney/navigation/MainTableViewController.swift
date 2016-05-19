@@ -12,15 +12,20 @@ import CoreData
 class MainTableViewController: UITableViewController, mainHeaderChangeLastDelegate{
     
     var AllData: NSMutableDictionary!
+    let keyOfCash = "记账"
+    let keyOfCredit = "信用"
+    let keyOfIncome = "收入"
+    var headerView: MainTableHeaderView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpTitle()
     }
     
     override func viewWillAppear(animated: Bool) {
         CalculateCredit.calculateCredit()
         self.setUpData()
-        self.setUpTitle()
+        setUpHeaderView()
         self.tableView.reloadData()
     }
     
@@ -35,7 +40,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
             AllData.setObject(creditModul!, forKey: keyOfCredit)
         }
         if salaryModul != nil {
-            AllData.setObject(salaryModul!, forKey: keyOfSalary)
+            AllData.setObject(salaryModul!, forKey: keyOfIncome)
         }
         if cashModul != nil {
             AllData.setObject(cashModul!, forKey: keyOfCash)
@@ -44,6 +49,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //title,左边按钮和右边按钮
     func setUpTitle(){
+        AllData = NSMutableDictionary()
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         
         self.title = "首页"
@@ -58,8 +64,6 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         
         let backItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: nil)
         self.navigationItem.backBarButtonItem = backItem
-        
-        setUpHeaderView()
     }
     
     //弹出添加的actionView
@@ -77,9 +81,14 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //table顶部，用于显示总金额 可用和应还
     func setUpHeaderView(){
+        if headerView == nil {
+            headerView = MainTableHeaderView(viewHeight: 120, target: self)
+            self.tableView.tableHeaderView = headerView
+            self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        }else{
+            headerView?.setUpData()
+        }
         
-        self.tableView.tableHeaderView = MainTableHeaderView(viewHeight: 120, target: self)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     func buttonClicked(lastStr: String) {
@@ -124,7 +133,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
             return cell
             
         }else{ // if((textData.allKeys[indexPath.section] as? String) == keyOfSalary)
-            let data = AllData.valueForKey(keyOfSalary)?.objectAtIndex(indexPath.row) as! MainTableSalaryModul
+            let data = AllData.valueForKey(keyOfIncome)?.objectAtIndex(indexPath.row) as! MainTableSalaryModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.salary, reuseIdentifier: "cell")
             return cell
@@ -152,7 +161,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
             let vc = CashDetailTableViewController()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if((AllData.allKeys[indexPath.section] as? String) == keyOfSalary){
+        }else if((AllData.allKeys[indexPath.section] as? String) == keyOfIncome){
             let vc = SalaryDetailTableViewController()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
@@ -171,7 +180,6 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return AllData.allKeys[section] as? String
     }
-    
 }
 
 //选择的协议
@@ -181,15 +189,11 @@ extension MainTableViewController: bottomMenuViewDelegate{
         case 0:
             switch tag{
             case 0:
-                let vc = AddCreditAccountViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            case 1:
                 let vc = AddCreditViewController()
                 vc.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc, animated: true)
-            case 2:
-                let vc = AddSalaryViewController()
+            case 1:
+                let vc = AddIncomeViewController()
                 vc.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc, animated: true)
             default:

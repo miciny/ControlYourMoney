@@ -13,6 +13,11 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     private var collectionView : UICollectionView?
     private let cellReuseIdentifier = "analyseCell"
     private var cellData: NSMutableDictionary?
+    
+    let preOneStr = "预计本月支出"
+    let preTowStr = "预计年底结余"
+    let preThreeStr = "预计月底结余"
+    let preFourStr = "预计本年支出"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,40 +51,63 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     func setUpData(){
         self.cellData = NSMutableDictionary()
         
-        let thisMonthPay = GetAnalyseData.getThisMonthPay()
-        let thisYearPay = GetAnalyseData.getThisYearPay()
-        let nowLeft = GetAnalyseData.getNowLeft()
-        let thisYearLeft = GetAnalyseData.getThisYearLeft()
+        let wiatView = MyWaitToast()
+        wiatView.title = "计算中..."
+        wiatView.showWait(self.view)
         
-        let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
-        let allCreditLeftPay = GetAnalyseData.getCreditTotalPay()
-        let thisMonthCredit = GetAnalyseData.getCreditThisMonthPay()
-        let nextMonthCredit = GetAnalyseData.getCreditNextMonthPay()
-        
-        let todayUse = GetAnalyseData.getTodayUse()
-        let thisMonthUse = GetAnalyseData.getThisMonthUse()
-        let thisMonthRealPay = thisMonthUse+thisMonthCredit
-        let canUse = GetAnalyseData.getCanUseToFloat()
-        
-        let dataOne = AnalysePageDataModul(pic: nil, name: "预计本月支出", data: "\(thisMonthPay)")
-        let dataTow = AnalysePageDataModul(pic: nil, name: "预计年底结余", data: "\(thisYearLeft)")
-        let dataThree = AnalysePageDataModul(pic: nil, name: "预计月底结余", data: "\(nowLeft)")
-        let dataFour = AnalysePageDataModul(pic: nil, name: "预计本年支出", data: "\(thisYearPay)")
-        
-        let dataFive = AnalysePageDataModul(pic: nil, name: "本月信用卡总还", data: "\(thisMonthCredit)")
-        let dataSix = AnalysePageDataModul(pic: nil, name: "下月信用卡总还", data: "\(nextMonthCredit)")
-        let dataSeven = AnalysePageDataModul(pic: nil, name: "所有信用卡总还", data: "\(allCreditLeftPay)")
-        let dataEight = AnalysePageDataModul(pic: nil, name: "本月信用卡剩余应还", data: "\(thisMonthCreditLeftPay)")
-        
-        let dataNine = AnalysePageDataModul(pic: nil, name: "今日现金支出", data: "\(todayUse)")
-        let dataTen = AnalysePageDataModul(pic: nil, name: "本月现金支出", data: "\(thisMonthUse)")
-        let dataEleven = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: "\(canUse)")
-        let dataTwelve = AnalysePageDataModul(pic: nil, name: "实际本月支出", data: "\(thisMonthRealPay)")
-        
-        self.cellData?.setValue([dataOne, dataTow, dataThree, dataFour], forKey: "预计")
-        self.cellData?.setValue([dataFive, dataSix, dataSeven, dataEight], forKey: "信用")
-        self.cellData?.setValue([dataNine, dataTen, dataEleven, dataTwelve], forKey: "现金")
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+            //这里写需要放到子线程做的耗时的代码
+            let thisMonthPay = GetAnalyseData.getPreThisMonthPay()
+            let thisYearPay = GetAnalyseData.getPreThisYearPay()
+            let nowLeft = GetAnalyseData.getPreNowLeft()
+            let thisYearLeft = GetAnalyseData.getPreThisYearLeft()
+            
+            let preOne = AnalysePageDataModul(pic: nil, name: self.preOneStr, data: "\(thisMonthPay)")
+            let preTow = AnalysePageDataModul(pic: nil, name: self.preTowStr, data: "\(thisYearLeft)")
+            let preThree = AnalysePageDataModul(pic: nil, name: self.preThreeStr, data: "\(nowLeft)")
+            let preFour = AnalysePageDataModul(pic: nil, name: self.preFourStr, data: "\(thisYearPay)")
+            
+            let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
+            let allCreditLeftPay = GetAnalyseData.getCreditTotalLeftPay()
+            let thisMonthCredit = GetAnalyseData.getCreditThisMonthAllPayIncludeDone()
+            let nextMonthCredit = GetAnalyseData.getCreditNextMonthAllPay()
+            let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
+            let thisYearCreditLeftPay = GetAnalyseData.getCreditThisYearLeftPay()
+            
+            let creditOne = AnalysePageDataModul(pic: nil, name: "本月信用总还", data: "\(thisMonthCredit)")
+            let creditTwo = AnalysePageDataModul(pic: nil, name: "下月信用总还", data: "\(nextMonthCredit)")
+            let creditThree = AnalysePageDataModul(pic: nil, name: "所有信用余还", data: "\(allCreditLeftPay)")
+            let creditFour = AnalysePageDataModul(pic: nil, name: "本月信用余还", data: "\(thisMonthCreditLeftPay)")
+            let creditfive = AnalysePageDataModul(pic: nil, name: "今年信用总还", data: "\(thisYearCreditPayTotal)")
+            let creditSix = AnalysePageDataModul(pic: nil, name: "今年信用剩还", data: "\(thisYearCreditLeftPay)")
+            
+            
+            let todayUse = GetAnalyseData.getTodayUse()
+            let thisMonthUse = GetAnalyseData.getThisMonthUse()
+            let thisMonthRealPay = thisMonthUse + GetAnalyseData.getCreditThisMonthAllPayIncludeDone()
+            let canUse =  GetAnalyseData.getCanUseToFloat()
+            let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
+            let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
+            
+            let cashOne = AnalysePageDataModul(pic: nil, name: "今日现金支出", data: "\(todayUse)")
+            let cashTwo = AnalysePageDataModul(pic: nil, name: "本月现金支出", data: "\(thisMonthUse)")
+            let cashThree = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: "\(canUse)")
+            let cashFour = AnalysePageDataModul(pic: nil, name: "实际本月支出", data: "\(thisMonthRealPay)") //本月现金支出和本月信用卡支出
+            let cashFive = AnalysePageDataModul(pic: nil, name: "今年现金支出", data: "\(thisYearCashPayTotal)")
+            let cashSix = AnalysePageDataModul(pic: nil, name: "今年总共支出", data: "\(thisYearPayTotal)")
+            
+            let allRealSalary = GetAnalyseData.getAllRealSalary()
+            let IncomeOne = AnalysePageDataModul(pic: nil, name: "今年总共收入", data: "\(allRealSalary)")
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.cellData?.setValue([preOne, preTow, preThree, preFour], forKey: "预计")
+                self.cellData?.setValue([creditOne, creditTwo, creditThree, creditFour, creditfive, creditSix], forKey: "信用")
+                self.cellData?.setValue([cashOne, cashTwo, cashThree, cashFour, cashFive, cashSix], forKey: "现金")
+                self.cellData?.setValue([IncomeOne], forKey: "收入")
+                wiatView.hideView()
+                self.collectionView?.reloadData()
+            })
+        })
     }
     
     func setUpTitle(){
@@ -93,7 +121,6 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func refresh(){
         setUpData()
-        self.collectionView?.reloadData()
     }
     
     // MARK: UICollectionViewDataSource
@@ -126,49 +153,20 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     
     //cell点击事件
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        switch indexPath.section {
-        case 0:
-            switch indexPath.row {
-            case 0:
-                let vc = MonthCostViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            case 1:
-                let vc = EveryMonthSalaryViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            case 2:
-                print("2")
-            case 3:
-                let vc = YearCostViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            default:
-                break
-            }
-        case 1:
-            switch indexPath.row {
-            case 0:
-                print("4")
-            case 1:
-                print("5")
-            case 2:
-                print("6")
-            case 3:
-                print("7")
-            default:
-                break
-            }
-        case 2:
-            switch indexPath.row {
-            case 0:
-                print("8")
-            case 1:
-                print("9")
-            default:
-                break
-            }
+        let data = (cellData!.allValues[indexPath.section] as! NSArray)[indexPath.row] as! AnalysePageDataModul
+        switch data.name {
+        case preOneStr:
+            let vc = MonthCostViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case preTowStr:
+            let vc = EveryMonthSalaryViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case preFourStr:
+            let vc = YearCostViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
         default:
             break
         }

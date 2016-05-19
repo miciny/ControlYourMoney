@@ -22,7 +22,7 @@ class AddCreditAccountViewController: UIViewController {
                                          action: #selector(AddCreditAccountViewController.backToPrevious))
         self.navigationItem.rightBarButtonItem = rightBarBtn
 
-        setupSalaryLable()
+        setupLable()
         // Do any additional setup after loading the view.
     }
     
@@ -30,7 +30,7 @@ class AddCreditAccountViewController: UIViewController {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    func setupSalaryLable(){
+    func setupLable(){
         let gap = CGFloat(10)
         
         let creditAccountSize = sizeWithText("信用账号：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
@@ -75,7 +75,7 @@ class AddCreditAccountViewController: UIViewController {
         let accountArray = SQLLine.selectAllData(entityNameOfCreditAccount)
         
         for i in 0 ..< accountArray.count {
-            let name = accountArray[i].valueForKey(accountNameOfName) as! String
+            let name = accountArray[i].valueForKey(creditAccountNameOfName) as! String
             if name == str {
                 textAlertView("已存在")
                 return

@@ -18,19 +18,17 @@ let mainViewTitle = "MyMoney"
 
 let entityNameOfCash = "Cash"
 let entityNameOfCredit = "Credit"
-let entityNameOfSalary = "Salary"
+let entityNameOfIncome = "Income"
+let entityNameOfIncomeName = "IncomeName"
 let entityNameOfTotal = "Total"
 let entityNameOfCreditAccount = "CreditAccount"
 let entityNameOfCost = "Cost"
-
-let keyOfCash = "记账"
-let keyOfCredit = "信用卡（电子信用账号）"
-let keyOfSalary = "工资"
-let keyOfTotal = "总计"
+let entityNameOfPayName = "PayName"
 
 let cashNameOfUseWhere = "useWhere"
 let cashNameOfUseNumber = "useNumber"
 let cashNameOfTime = "time"
+let cashNameOfType = "type"
 
 let creditNameOfPeriods = "periods"
 let creditNameOfNumber = "number"
@@ -39,22 +37,33 @@ let creditNameOfDate = "date"
 let creditNameOfTime = "time"
 let creditNameOfNextPayDay = "nextPayDay"
 let creditNameOfLeftPeriods = "leftPeriods"
+let creditNameOfType = "type"
 
-let salaryNameOfTime = "time"
-let salaryNameOfNumber = "number"
+let payNameNameOfName = "name"
+let payNameNameOfTime = "time"
 
-let accountNameOfTime = "time"
-let accountNameOfName = "name"
+let creditAccountNameOfTime = "time"
+let creditAccountNameOfName = "name"
 
-let TotalNameOfCanUse = "canUse"
-let TotalNameOfTime = "time"
+let totalNameOfCanUse = "canUse"
+let totalNameOfTime = "time"
+
+let incomeOfName = "name"
+let incomeOfNumber = "number"
+let incomeOfTime = "time"
+
+let incomeNameOfName = "name"
+let incomeNameOfTime = "time"
 
 let costNameOfName = "name"
 let costNameOfNumber = "number"
 let costNameOfTime = "time"
-let costNameOfType = "type" //0代表每月，1代表一年
+let costNameOfType = "type"
+let costNameOfPeriod = "period" //0代表每月，1代表一年
 
-let addArray = ["信用帐号","信用卡（电子分期）","工资"]
+let addArray = ["信用卡（电子分期）","收入"]
+
+let keyOfIncome = "收入"
 
 let standardFontNo = CGFloat(15)
 let standardFont = UIFont.systemFontOfSize(standardFontNo) //标准字体大小

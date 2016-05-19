@@ -43,7 +43,7 @@ class SQLLine: NSObject{
     }
     
     //Cash插入一条数据
-    class func insertCashData(useWhere: String, useNumber: Float, time: NSDate){
+    class func insertCashData(useWhere: String, useNumber: Float, type: String, time: NSDate){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCash, inManagedObjectContext: allDataSource)
@@ -51,23 +51,13 @@ class SQLLine: NSObject{
         row.setValue(useWhere, forKey: cashNameOfUseWhere)
         row.setValue(useNumber, forKey: cashNameOfUseNumber)
         row.setValue(time, forKey: cashNameOfTime)
-        saveData()
-    }
-    //Cash改一条数据
-    class func updateCashData(indexPath: Int, useWhere: String, useNumber: Float, time: NSDate){
-        var data = NSArray()
-        data = selectAllData(entityNameOfCash)
-        
-        data[indexPath].setValue(useWhere, forKey: cashNameOfUseWhere)
-        data[indexPath].setValue(useNumber, forKey: cashNameOfUseNumber)
-        data[indexPath].setValue(time, forKey:cashNameOfTime)
+        row.setValue(type, forKey: cashNameOfType)
         saveData()
     }
     
     //Credit插入一条数据
-    class func insertCrediData(periods: Int, number: Float, time: NSDate, account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int){
+    class func insertCrediData(periods: Int, number: Float, time: NSDate, account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int, type: String){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCredit, inManagedObjectContext: allDataSource)
         
         row.setValue(periods, forKey: creditNameOfPeriods)
@@ -77,11 +67,12 @@ class SQLLine: NSObject{
         row.setValue(time, forKey: creditNameOfTime)
         row.setValue(nextPayDay, forKey: creditNameOfNextPayDay)
         row.setValue(leftPeriods, forKey: creditNameOfLeftPeriods)
+        row.setValue(type, forKey: creditNameOfType)
         saveData()
     }
     
     //Credit改一条数据
-    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate, nextPayDay: NSDate, leftPeriods: Int){
+    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate, nextPayDay: NSDate, leftPeriods: Int, type: String){
         var data = NSArray()
         data = selectAllData(entityNameOfCredit)
         
@@ -95,6 +86,7 @@ class SQLLine: NSObject{
         data[indexPath].setValue(time, forKey: creditNameOfTime)
         data[indexPath].setValue(nextPayDay, forKey: creditNameOfNextPayDay)
         data[indexPath].setValue(leftPeriods, forKey: creditNameOfLeftPeriods)
+        data[indexPath].setValue(type, forKey: creditNameOfType)
         saveData()
     }
     
@@ -122,24 +114,47 @@ class SQLLine: NSObject{
         saveData()
     }
     
-    //Salary插入一条数据
-    class func insertSalaryData(time: NSDate, number: Float){
+    //Income插入一条数据
+    class func insertIncomeData(time: NSDate, number: Float, name: String){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
-        let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfSalary, inManagedObjectContext: allDataSource)
+        let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfIncome, inManagedObjectContext: allDataSource)
         
-        row.setValue(time, forKey: salaryNameOfTime)
-        row.setValue(number, forKey: salaryNameOfNumber)
+        row.setValue(time, forKey: incomeOfTime)
+        row.setValue(number, forKey: incomeOfNumber)
+        row.setValue(name, forKey: incomeOfName)
         saveData()
     }
     
-    //Salary改一条数据
-    class func updateSalaryData(indexPath: Int, time: NSDate, number: Float){
+    //Income改一条数据
+    class func updateIncomeData(indexPath: Int, time: NSDate, number: Float, name: String){
         var data = NSArray()
-        data = selectAllData(entityNameOfSalary)
+        data = selectAllData(entityNameOfIncome)
         
-        data[indexPath].setValue(time, forKey: salaryNameOfTime)
-        data[indexPath].setValue(number, forKey: salaryNameOfNumber)
+        data[indexPath].setValue(time, forKey: incomeOfTime)
+        data[indexPath].setValue(number, forKey: incomeOfNumber)
+        data[indexPath].setValue(name, forKey: incomeOfName)
+        saveData()
+    }
+    
+    //IncomeName插入一条数据
+    class func insertIncomeNameData(time: NSDate, name: String){
+        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfIncomeName, inManagedObjectContext: allDataSource)
+        
+        row.setValue(time, forKey: incomeNameOfTime)
+        row.setValue(name, forKey: incomeNameOfName)
+        saveData()
+    }
+    
+    //IncomeName改一条数据
+    class func updateIncomeNameData(indexPath: Int, time: NSDate, name: String){
+        var data = NSArray()
+        data = selectAllData(entityNameOfIncomeName)
+        
+        data[indexPath].setValue(time, forKey: incomeNameOfTime)
+        data[indexPath].setValue(name, forKey: incomeNameOfName)
         saveData()
     }
     
@@ -148,30 +163,30 @@ class SQLLine: NSObject{
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfTotal, inManagedObjectContext: allDataSource)
-        row.setValue(canUse, forKey: TotalNameOfCanUse)
-        row.setValue(time, forKey: TotalNameOfTime)
+        row.setValue(canUse, forKey: totalNameOfCanUse)
+        row.setValue(time, forKey: totalNameOfTime)
         saveData()
     }
     //Total改一条数据
     class func updateTotalData(indexPath: Int, canUse: Float, time: NSDate){
         var data = NSArray()
         data = selectAllData(entityNameOfTotal)
-        data[indexPath].setValue(canUse, forKey: TotalNameOfCanUse)
-        data[indexPath].setValue(time, forKey: TotalNameOfTime)
+        data[indexPath].setValue(canUse, forKey: totalNameOfCanUse)
+        data[indexPath].setValue(time, forKey: totalNameOfTime)
         saveData()
     }
     
-    //account插入一条数据
+    //CreditAccount插入一条数据
     class func insertAccountData(name: String, time: NSDate){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCreditAccount, inManagedObjectContext: allDataSource)
-        row.setValue(name, forKey: accountNameOfName)
-        row.setValue(time, forKey: accountNameOfTime)
+        row.setValue(name, forKey: creditAccountNameOfName)
+        row.setValue(time, forKey: creditAccountNameOfTime)
         saveData()
     }
     
-    //account改一条数
+    //CreditAccount改一条数
     class func updateAccountData(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
         var data = NSArray()
         data = selectAllData(entityNameOfCreditAccount)
@@ -179,8 +194,26 @@ class SQLLine: NSObject{
         saveData()
     }
     
+    //payName插入一条数据
+    class func insertPayNameData(name: String, time: NSDate){
+        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfPayName, inManagedObjectContext: allDataSource)
+        row.setValue(name, forKey: payNameNameOfName)
+        row.setValue(time, forKey: payNameNameOfTime)
+        saveData()
+    }
+    
+    //PayName改一条数
+    class func updatePayNameData(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
+        var data = NSArray()
+        data = selectAllData(entityNameOfPayName)
+        data[indexPath].setValue(changeValue, forKey: changeEntityName)
+        saveData()
+    }
+    
     //cost插入一条数据
-    class func insertCostData(name: String, time: NSDate, type: Int, number: Float){
+    class func insertCostData(name: String, time: NSDate, type: String, number: Float, period: Int){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row : AnyObject = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCost, inManagedObjectContext: allDataSource)
@@ -188,6 +221,7 @@ class SQLLine: NSObject{
         row.setValue(time, forKey: costNameOfTime)
         row.setValue(type, forKey: costNameOfType)
         row.setValue(number, forKey: costNameOfNumber)
+        row.setValue(period, forKey: costNameOfPeriod)
         saveData()
     }
     

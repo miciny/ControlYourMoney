@@ -49,9 +49,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
                 // 进入主页面
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
-                        let home = TabbarViewController()
-                        self.presentViewController(home, animated: false, completion: nil)
-                        self.removeFromParentViewController()
+                        self.dismissViewControllerAnimated(false, completion: nil)
                     }else{
                         if(error?.code == -3){
                             self.showPasswordAlert()
@@ -85,9 +83,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         if buttonIndex == 1{
             if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
                 if alertView.textFieldAtIndex(0)!.text == passwdString {
-                    let home = TabbarViewController()
-                    self.presentViewController(home, animated: false, completion: nil)
-                    self.removeFromParentViewController()
+                    self.dismissViewControllerAnimated(false, completion: nil)
                 }else{
                     showPasswordAlert()
                 }

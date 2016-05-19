@@ -9,17 +9,131 @@
 import UIKit
 
 class GetAnalyseData: NSObject {
-    //每月收入
+    
+    //1月到12月，每月现金实际支出
+    class func getEveryMonthPay() -> [Float]{
+        var thisMonthUse = [Float]()
+        let timeNow = getTime()
+        
+        for i in 1 ..< 13 {
+            let single = getMonthPay(timeNow.currentYear, month: i)
+            thisMonthUse.append(single)
+        }
+        return thisMonthUse
+    }
+    
+    //1月到12月，预计每月支出 现金加信用
+    class func getPreEveryMonthPay() -> [Float]{
+        var thisMonthUse = [Float]()
+        let timeNow = getTime()
+        
+        for i in 1 ..< 13 {
+            let cash = getPreThisMonthCashPay()
+            
+            let timeArray = NSMutableArray()
+            if timeNow.currentMonth>9 {
+                timeArray.addObject("\(timeNow.currentYear)-\(i)")
+            }else{
+                timeArray.addObject("\(timeNow.currentYear)-0\(i)")
+            }
+            
+            let credit = getWhichMonthCreditPayIncludeDone(timeArray)
+            thisMonthUse.append(credit+cash)
+        }
+        return thisMonthUse
+    }
+    
+
+//    实际
+/////////////////////////////////////////////////////////////////////////////////////
+    
+    //某月现金支出
+    class func getMonthPay(yyyy: Int, month: Int) -> Float{
+        var thisMonthUse : Float = 0
+        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        
+        if cashArray.count == 0 {
+            return thisMonthUse
+        }
+        
+        let yyyy = yyyy
+        let timeStr = dateToStringBySelf(stringToDateNoHH("\(yyyy)-\(month)-\(1)"), str: "yyyy-MM")
+        
+        for i in 0  ..< cashArray.count{
+            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM")
+            if(timeStr == dayStr){
+                thisMonthUse = thisMonthUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+            }
+        }
+        return thisMonthUse
+    }
+    
+    //今年现金支出 (到次年2月)
+    class func getThisYearPayTotal() -> Float{
+        var thisYearUse : Float = 0
+        let timeNow = getTime()
+        let month = timeNow.currentMonth
+        let year = timeNow.currentYear
+        
+        if month < 3 {
+            for i in 1  ..< 13{
+                if(i < 3){
+                    thisYearUse = thisYearUse + getMonthPay(year, month: i)
+                }else{
+                    thisYearUse = thisYearUse + getMonthPay(year-1, month: i)
+                }
+            }
+        }else{
+            for i in 1  ..< 13{
+                if(i < 3){
+                    thisYearUse = thisYearUse + getMonthPay(year+1, month: i)
+                }else{
+                    thisYearUse = thisYearUse + getMonthPay(year, month: i)
+                }
+            }
+        }
+        return thisYearUse
+    }
+    
+    //预计每月收入
     class func getEveryMonthSalary() -> Float{
-        let salaryArray = SQLLine.selectAllData(entityNameOfSalary)
+        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
         var salary = Float(8500)
         if salaryArray.count == 0{
             return salary
         }
-        salary = salaryArray.lastObject!.valueForKey(salaryNameOfNumber) as! Float
+        salary = Float(0)
+        let date = salaryArray.lastObject!.valueForKey(incomeOfTime) as! NSDate
+        let dateStr = dateToStringBySelf(date, str: "yyyy-MM")
+        
+        for i in 0 ..< salaryArray.count {
+            let dateOne = salaryArray.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate
+            let dateOneStr = dateToStringBySelf(dateOne, str: "yyyy-MM")
+            
+            if dateStr == dateOneStr{
+                let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                salary += number
+            }
+        }
         return salary
     }
     
+    //现在总收入
+    class func getAllRealSalary() -> Float{
+        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
+        var salary = Float(0)
+        if salaryArray.count == 0{
+            return salary
+        }
+        for i in 0 ..< salaryArray.count {
+            let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+            salary += number
+            
+        }
+        return salary
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////
     //每年的一次性开销，如房租，不好记得，只好这样了
     class func getThisYearOnceUse() -> Float{
         let costArray = SQLLine.selectAllData(entityNameOfCost)
@@ -30,7 +144,7 @@ class GetAnalyseData: NSObject {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
             if type == 1 {
                 thisYearOnceUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
             }
@@ -41,7 +155,6 @@ class GetAnalyseData: NSObject {
     
     //根据每月开销，计算本月到年底（包括本月 到 2月）的花费
     class func getThisYearEveryMonthsAllUse() -> Float{
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
         let timeNow = getTime()
         var thisyearEveryMonthsAllUse = Float(0)
         var months = Int()
@@ -51,39 +164,32 @@ class GetAnalyseData: NSObject {
             months = 15 - timeNow.currentMonth
         }
         
-        if costArray.count == 0{
-            return thisyearEveryMonthsAllUse
-        }
-        
-        for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
-            if type == 0 {
-                thisyearEveryMonthsAllUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)! * Float(months)
-            }
-        }
+        thisyearEveryMonthsAllUse = getPreThisMonthCashPay() * Float(months)
         return thisyearEveryMonthsAllUse
     }
     
-    //最后一月用钱总数
+/////////////////////////////////////////////////////////////////////////////////////
+    
+    //本月现金总数
     class func getThisMonthUse() -> Float{
-        var thisMonthUse : Float = 0
+        var thisMonthUse: Float = 0
         
         let cashArray = SQLLine.selectAllData(entityNameOfCash)
         if cashArray.count == 0 {
             return thisMonthUse
         }
+        let todayDayStr = dateToStringBySelf(getTime(), str: "yyyy-MM")
         
         for i in 0  ..< cashArray.count{
-            let lastDayStr = dateToStringBySelf(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM")
             let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM")
-            if(lastDayStr == dayStr){
+            if(todayDayStr == dayStr){
                 thisMonthUse = thisMonthUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
             }
         }
         return thisMonthUse
     }
     
-    //最后一日用钱总数
+    //今日现金总数
     class func getTodayUse() -> Float{
         var todayUse : Float = 0
         
@@ -92,19 +198,121 @@ class GetAnalyseData: NSObject {
             return todayUse
         }
         
+        let todayDayStr = dateToStringBySelf(getTime(), str: "yyyy-MM-dd")
         for i in 0  ..< cashArray.count{
-            let lastDayStr = dateToStringBySelf(cashArray.lastObject!.valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")
             let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")
-            if(lastDayStr == dayStr){
+            if(todayDayStr == dayStr){
                 todayUse = todayUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
             }
         }
         return todayUse
     }
     
+    //预计本月现金开支  cost里type为0 的
+    class func getPreThisMonthCashPay() -> Float{
+        var thisMonthPay: Float = 0
+        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        if costArray.count == 0{
+            return thisMonthPay
+        }
+        
+        for i in 0 ..< costArray.count {
+            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
+            if type == 0 {
+                thisMonthPay += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
+            }
+        }
+        return thisMonthPay
+    }
+    
+/////////////////////////////////////////////////////////////////////////////////////
+    
+    //信用卡今年所有总应还 到次年的2月
+    class func getCreditThisYearTotalPay() -> Float{
+        var creditTotal = Float(0)
+        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        
+        if creditArray.count == 0 {
+            return creditTotal
+        }
+    
+        let timeNow = getTime()
+        let month = timeNow.currentMonth
+        let year = timeNow.currentYear
+        
+        let monthArrya = NSMutableArray()
+        
+        if month < 3 {
+            for i in 1  ..< 13{
+                if(i < 3){
+                    monthArrya.addObject("\(year)-0\(i)")
+                }else if i > 9{
+                    monthArrya.addObject("\(year-1)-\(i)")
+                }else{
+                    monthArrya.addObject("\(year-1)-0\(i)")
+                }
+            }
+        }else{
+            for i in 1  ..< 13{
+                if(i < 3){
+                    monthArrya.addObject("\(year+1)-0\(i)")
+                }else if i > 9{
+                    monthArrya.addObject("\(year)-\(i)")
+                }else{
+                    monthArrya.addObject("\(year)-0\(i)")
+                }
+            }
+        }
+        
+        for i in 0  ..< creditArray.count{
+            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
+            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
+            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+            for j in 0 ..< periods {
+                let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
+                let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
+                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
+                if monthArrya.containsObject(lastStr){
+                    creditTotal += number
+                }
+            }
+        }
+        return creditTotal
+    }
+    
+    //信用卡今年所有剩余应还 到次年的2月，不包括还了的, 所以应该是 去掉本月 然后，本月剩余应还，加上下月到年底剩余应还的
+    class func getCreditThisYearLeftPay() -> Float{
+        var creditTotal = Float(0)
+        
+        let timeNow = getTime()
+        let month = timeNow.currentMonth
+        let year = timeNow.currentYear
+        
+        let monthArrya = NSMutableArray()
+        
+        creditTotal += getCreditThisMonthLeftPay()
+        
+        if month == 1 {
+            monthArrya.addObject("\(year)-02")
+        }else if month > 2{
+            for i in month+1 ..< 13{
+                if i > 9{
+                    monthArrya.addObject("\(year)-\(i)")
+                }else{
+                    monthArrya.addObject("\(year)-0\(i)")
+                }
+            }
+            for i in 1 ..< 3{
+                monthArrya.addObject("\(year+1)-0\(i)")
+            }
+        }
+        
+        creditTotal += getWhichMonthCreditPay(monthArrya)
+        return creditTotal
+    }
     
     //信用卡所有剩余应还
-    class func getCreditTotalPay() -> Float{
+    class func getCreditTotalLeftPay() -> Float{
         let creditArray = SQLLine.selectAllData(entityNameOfCredit)
         var creditTotal = Float(0)
         
@@ -121,6 +329,64 @@ class GetAnalyseData: NSObject {
         return creditTotal
     }
     
+    //某月信用卡总还,没还完的 调用次数过多会很慢
+    class func getWhichMonthCreditPay(strArray: NSMutableArray) -> Float{
+        
+        var thisMonthPay : Float = 0
+        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        
+        if creditArray.count == 0 {
+            return thisMonthPay
+        }
+        for i in 0  ..< creditArray.count{
+            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int
+            if leftPeriods > 0 {
+                let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
+                let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
+                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+                for j in 0 ..< periods {
+                    let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
+                    let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
+                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
+                    if strArray.containsObject(lastStr){
+                        thisMonthPay += number
+                    }
+                }
+                
+            }
+        }
+        return thisMonthPay
+    }
+    
+    //某月信用卡总还,还完的也算
+    class func getWhichMonthCreditPayIncludeDone(timeArray: NSMutableArray) -> Float{
+        
+        var thisMonthPay : Float = 0
+        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        
+        if creditArray.count == 0 {
+            return thisMonthPay
+        }
+        
+        for i in 0  ..< creditArray.count{
+            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
+            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
+            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+            for j in 0 ..< periods {
+                let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
+                
+                let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
+                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
+                if timeArray.containsObject(lastStr){
+                    thisMonthPay += number
+                }
+            }
+            
+        }
+        return thisMonthPay
+    }
+
+    
     //本月信用卡剩余应还
     class func getCreditThisMonthLeftPay() -> Float{
         var shouldPayData : Float = 0
@@ -130,103 +396,81 @@ class GetAnalyseData: NSObject {
             return shouldPayData
         }
         let timeNow = getTime()
-        let MM = timeNow.currentMonth
+        let todayMonthStr = dateToStringBySelf(timeNow, str: "yyyy-MM")
         
         for i in 0  ..< creditArray.count{
             let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate
+            let nextMonthStr = dateToStringBySelf(nextPayDay, str: "yyyy-MM")
+            
             let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
             let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger
             
-            if(MM == nextPayDay.currentMonth && leftPeriods > 0){
+            if(todayMonthStr == nextMonthStr && leftPeriods > 0){
                 shouldPayData = shouldPayData + number
             }
         }
-        
         return shouldPayData
     }
     
     //本月信用卡总还
-    class func getCreditThisMonthPay() -> Float{
-        var creditThisMonthPay: Float = 0
-        
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
-        if creditArray.count == 0 {
-            return creditThisMonthPay
-        }
-    
+    class func getCreditThisMonthAllPay() -> Float{
+        var shouldPayData : Float = 0
         let timeNow = getTime()
-        let MM = timeNow.currentMonth
-        let yyyy = timeNow.currentYear
-        
-        for i in 0  ..< creditArray.count{
-            let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
-            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
-            
-            let firstPayDay = CalculateCredit.getFirstPayDate(time, day: date)
-            let firstMM = firstPayDay.currentMonth
-            let firstYYYY = firstPayDay.currentYear
-            
-            let timeOffset = firstPayDay.timeIntervalSinceDate(timeNow)
-            
-            if((MM==firstMM&&yyyy==firstYYYY) || timeOffset < 0){
-                creditThisMonthPay = creditThisMonthPay + number
-            }
+        let timeArray = NSMutableArray()
+        if timeNow.currentMonth > 9{
+            timeArray.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth)")
+        }else{
+            timeArray.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
         }
-        return creditThisMonthPay
+        shouldPayData += getWhichMonthCreditPay(timeArray)
+        return shouldPayData
     }
     
     //下月信用卡总还
-    class func getCreditNextMonthPay() -> Float{
-        var creditNextMonthPay: Float = 0
-        
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
-        if creditArray.count == 0 {
-            return creditNextMonthPay
-        }
+    class func getCreditNextMonthAllPay() -> Float{
+        var shouldPayData : Float = 0
         let timeNow = getTime()
-        let MM = timeNow.currentMonth
-        
-        for i in 0  ..< creditArray.count{
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate
-            let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger
-            
-            let MM1 = nextPayDay.currentMonth
-            var MM2 = MM + 1
-            if MM2 == 13 {
-                MM2 = 1
-            }
-            //本月未还  剩余周期大于1 或者  本月还了 剩余周期大于0
-            if((MM == MM1 && leftPeriods > 1) || (MM2 == MM1 && leftPeriods > 0)){
-                creditNextMonthPay = creditNextMonthPay + number
-            }
+        let timeArrayOne = NSMutableArray()
+        if timeNow.currentMonth == 12{
+            timeArrayOne.addObject("\(timeNow.currentYear+1)-01")
+        }else if timeNow.currentMonth > 8{
+            timeArrayOne.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth+1)")
+        }else{
+            timeArrayOne.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth+1)")
         }
-        return creditNextMonthPay
+        shouldPayData += getWhichMonthCreditPay(timeArrayOne)
+        return shouldPayData
     }
+    
+    //本月月信用卡总还,包括本月还了就还完的，也应该算在本月
+    class func getCreditThisMonthAllPayIncludeDone() -> Float{
+        var shouldPayData : Float = 0
+        let timeNow = getTime()
+        
+        let timeArray = NSMutableArray()
+        if timeNow.currentMonth > 9{
+            timeArray.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth)")
+        }else{
+            timeArray.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
+        }
+        
+        shouldPayData = GetAnalyseData.getWhichMonthCreditPayIncludeDone(timeArray)
 
-    //预计本月总支出 ， 为 每月支出 ＋ 信用卡
-    class func getThisMonthPay() -> Float{
+        return shouldPayData
+    }
+    
+//    预计
+/////////////////////////////////////////////////////////////////////////////////////
+    
+    //预计本月总支出 ， 为 预计的本月现金开支 ＋ 信用卡本月总还
+    class func getPreThisMonthPay() -> Float{
         var thisMonthPay: Float = 0
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
-        if costArray.count == 0{
-            thisMonthPay += getCreditThisMonthPay()
-            return thisMonthPay
-        }
-        
-        for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfType) as! Int
-            if type == 0 {
-                thisMonthPay += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
-            }
-        }
-        
-        thisMonthPay += getCreditThisMonthPay()
+        thisMonthPay = getCreditThisMonthAllPay() + getPreThisMonthCashPay()
         return thisMonthPay
     }
     
-    //预计今年结余，为 今年总收入(不包括本月的收入) ＋ 现有的 － 今年总开支
-    class func getThisYearLeft() -> Float{
+    //预计今年结余，为 今年总收入(不包括本月的收入) ＋ 现有的 － 今年总开支  年底双薪
+    class func getPreThisYearLeft() -> Float{
         var thisYearLeft: Float = 0
         
         let timeNow = getTime()
@@ -238,22 +482,22 @@ class GetAnalyseData: NSObject {
         }
         
         let thisYearPay = getEveryMonthSalary()*Float(months) + getCanUseToFloat()
-        thisYearLeft = thisYearPay-getThisYearPay()
+        thisYearLeft = thisYearPay-getPreThisYearPay()
         return thisYearLeft
     }
     
-    //预计本年支出, 为每月支出＊剩余月份 ＋ 每年一次性支出  ＋ 信用卡剩余应还
-    class func getThisYearPay() -> Float{
+    //预计本年支出, 为每月预计的支出＊剩余月份 ＋ 每年一次性支出  ＋ 信用卡今年总应还
+    class func getPreThisYearPay() -> Float{
         var thisYearPay: Float = 0
-        thisYearPay = getThisYearEveryMonthsAllUse()+getThisYearOnceUse()+getCreditTotalPay()
+        thisYearPay = getThisYearEveryMonthsAllUse() + getThisYearOnceUse() + getCreditThisYearTotalPay()
         return thisYearPay
     }
     
-    //本月现结余，为 现有的 － 本月总支出（预计支出 ＋ 信用卡本月剩余应还）
-    class func getNowLeft() -> Float{
+    //本月现结余，为 现有的 － 本月总支出（预计现金支出 ＋ 信用卡本月剩余应还）
+    class func getPreNowLeft() -> Float{ //不准
         var nowLeft : Float = 0
         let thisMonthLeft = getCanUseToFloat()
-        let thisMonthPay = getThisMonthPay()-getCreditThisMonthPay()+getCreditThisMonthLeftPay()
+        let thisMonthPay = getPreThisMonthCashPay() + getCreditThisMonthLeftPay()
         nowLeft = thisMonthLeft-thisMonthPay
         return nowLeft
     }
@@ -264,7 +508,8 @@ class GetAnalyseData: NSObject {
         if(data.count == 0){
             return 0
         }else{
-            return SQLLine.selectAllData(entityNameOfTotal).valueForKey(TotalNameOfCanUse).lastObject as! Float
+            return SQLLine.selectAllData(entityNameOfTotal).valueForKey(totalNameOfCanUse).lastObject as! Float
         }
     }
+/////////////////////////////////////////////////////////////////////////////////////
 }

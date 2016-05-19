@@ -12,10 +12,12 @@ class SalaryDetailTableDataModul: NSObject {
     let time: String!
     let number: String!
     let date: String!
+    let type: String!
     
-    init(time: String!, number: String!, date: String!){
+    init(time: String!, number: String!, date: String!, type: String!){
         self.time = time
         self.number = number //
         self.date = date //
+        self.type = type
     }
 }

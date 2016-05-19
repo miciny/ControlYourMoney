@@ -131,7 +131,7 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableCreditModul
         
-        let size = sizeWithText(modul.accout, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
+        let size = sizeWithText(modul.title, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
         let size1 = sizeWithText("剩余周期：", font: detailFont, maxSize: CGSizeMake(Width, 30))
         self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
         self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
@@ -148,7 +148,7 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber1111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+70, size1.width, 15)
         self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataLable!.frame.maxY+70, Width-self.dataNumber1111!.frame.maxX-20, 15)
         
-        self.dataLable!.text = modul.accout
+        self.dataLable!.text = modul.title
         self.dataNumber1!.text = "剩余周期："
         self.dataNumber2!.text = modul.periods
         self.dataNumber11!.text = "还款金额："
@@ -235,7 +235,6 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber222!.text = modul.useTotalDayStr
         self.dataNumber1111!.text = "月总额："
         self.dataNumber2222!.text = modul.useTotalStr
-   
     }
     
     //设置现金详情列表也的label
@@ -247,10 +246,12 @@ class MainTableViewCell: UITableViewCell {
         self.addSubview(self.dataNumber2!)
         self.addSubview(self.dataNumber11!)
         self.addSubview(self.dataNumber22!)
+        self.addSubview(self.dataNumber111!)
+        self.addSubview(self.dataNumber222!)
         
         let modul = self.dataModul as! CashDetailTableDataModul
         
-        let size = sizeWithText(modul.useWhere, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
+        let size = sizeWithText(modul.type, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
         let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
         self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
         self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
@@ -261,11 +262,16 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
         self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
         
-        self.dataLable!.text = modul.useWhere
+        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+50, size1.width, 15)
+        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataLable!.frame.maxY+50, Width-self.dataNumber111!.frame.maxX-20, 15)
+        
+        self.dataLable!.text = modul.type
         self.dataNumber1!.text = "金额："
         self.dataNumber2!.text = modul.useNumber
         self.dataNumber11!.text = "时间："
         self.dataNumber22!.text = modul.useTime
+        self.dataNumber111!.text = "用途："
+        self.dataNumber222!.text = modul.useWhere
         
     }
     
@@ -279,6 +285,8 @@ class MainTableViewCell: UITableViewCell {
         self.addSubview(self.dataNumber2!)
         self.addSubview(self.dataNumber11!)
         self.addSubview(self.dataNumber22!)
+        self.addSubview(self.dataNumber111!)
+        self.addSubview(self.dataNumber222!)
         
         let modul = self.dataModul as! SalaryDetailTableDataModul
         
@@ -293,11 +301,16 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
         self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
         
+        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+50, size1.width, 15)
+        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataLable!.frame.maxY+50, Width-self.dataNumber111!.frame.maxX-20, 15)
+        
         self.dataLable!.text = modul.date
         self.dataNumber1!.text = "金额："
         self.dataNumber2!.text = modul.number
         self.dataNumber11!.text = "时间："
         self.dataNumber22!.text = modul.time
+        self.dataNumber111!.text = "来源："
+        self.dataNumber222!.text = modul.type
         
     }
     

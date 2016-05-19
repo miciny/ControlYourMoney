@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ControlYourMoney/modules/Universal/GetDataArray.swift"
-            timestampString = "485072880.952155"
+            timestampString = "485247444.567759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "getCreditShowArray()"
             landmarkType = "5">
          </BreakpointContent>

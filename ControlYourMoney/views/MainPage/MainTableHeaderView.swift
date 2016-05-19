@@ -58,7 +58,6 @@ class MainTableHeaderView: UIView {
         self.headerViewHeight = viewHeight
         self.setUpData()
         self.setUpView()
-        self.setUpLabelData()
     }
     
     func setUpLabelData(){
@@ -127,26 +126,32 @@ class MainTableHeaderView: UIView {
     
     //提取数据
     func setUpData(){
-        
-        var shouldPayData : Float = 0
-        let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
-        if thisMonthCreditLeftPay > 0{
-            self.shouldPayType = 1
-            shouldPayData = thisMonthCreditLeftPay
-        }else{
-            self.shouldPayType = 0
-            let nextMonthCredit = GetAnalyseData.getCreditNextMonthPay()
-            shouldPayData = nextMonthCredit
-        }
-        
-        //计算信用卡全部应还
-        self.creditTotal = -GetAnalyseData.getCreditTotalPay()
-        
-        //显示总金额，可用和应还
-        let lastData = GetAnalyseData.getCanUseToFloat()
-        self.total = String(creditTotal + lastData)
-        self.last = String(lastData)
-        self.shouldPay = String(shouldPayData)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+            //这里写需要放到子线程做的耗时的代码
+            var shouldPayData : Float = 0
+            let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
+            if thisMonthCreditLeftPay > 0{
+                self.shouldPayType = 1
+                shouldPayData = thisMonthCreditLeftPay
+            }else{
+                self.shouldPayType = 0
+                let nextMonthCredit = GetAnalyseData.getCreditNextMonthAllPay()
+                shouldPayData = nextMonthCredit
+            }
+            
+            //计算信用卡全部应还
+            self.creditTotal = -GetAnalyseData.getCreditTotalLeftPay()
+            
+            //显示总金额，可用和应还
+            let lastData = GetAnalyseData.getCanUseToFloat()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.total = String(self.creditTotal + lastData)
+                self.last = String(lastData)
+                self.shouldPay = String(shouldPayData)
+                self.setUpLabelData()
+            })
+        })
     }
     
     //点击可用金额的label，跳转到改可用金额页面

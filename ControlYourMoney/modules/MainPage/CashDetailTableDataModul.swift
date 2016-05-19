@@ -12,10 +12,12 @@ class CashDetailTableDataModul: NSObject {
     let useWhere: String!
     let useNumber: String!
     let useTime: String!
+    let type: String!
     
-    init(useWhere: String!, useNumber: String!, useTime: String!){
+    init(useWhere: String!, useNumber: String!, useTime: String!, type: String!){
         self.useWhere = useWhere
         self.useNumber = useNumber //
         self.useTime = useTime //
+        self.type = type
     }
 }

@@ -8,13 +8,15 @@
 
 import UIKit
 
-class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, accountListViewDelegate{
+class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, accountListViewDelegate, costNameListViewDelegate{
     
     var periodsCreditData = UITextField()
     var numberCreditData = UITextField()
     var dateCreditData = UITextField()
     var accountCreditData = UILabel()
     var accountArray = NSMutableArray()
+    var typeArray = NSMutableArray()
+    var accountData = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,22 +37,48 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         
         if accountTempArray.count == 0{
             let alert = textAlertView("请先添加信用卡账户")
+            alert.tag = 0
+            alert.delegate = self
+            return
+        }
+        
+        typeArray = NSMutableArray()
+        let typeTempArray = SQLLine.selectAllData(entityNameOfPayName)
+        
+        if typeTempArray.count == 0{
+            let alert = textAlertView("请先添加支出类型")
+            alert.tag = 1
             alert.delegate = self
             return
         }
         
         for i in 0 ..< accountTempArray.count {
-            let name = accountTempArray[i].valueForKey(accountNameOfName) as! String
+            let name = accountTempArray[i].valueForKey(creditAccountNameOfName) as! String
             accountArray.addObject(name)
+        }
+        
+        for i in 0 ..< typeTempArray.count {
+            let name = typeTempArray[i].valueForKey(payNameNameOfName) as! String
+            typeArray.addObject(name)
         }
         
         if self.accountCreditData.text == nil {
             self.accountCreditData.text = accountArray.objectAtIndex(0) as? String
         }
+        
+        if self.accountData.text == nil {
+            self.accountData.text = typeArray.objectAtIndex(0) as? String
+        }
     }
     
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        let vc = AddCreditAccountViewController()
+        var vc = UIViewController()
+        if alertView.tag == 0 {
+            vc = AddCreditAccountViewController()
+        }else if alertView.tag == 1{
+            vc = AddCostNameViewController()
+        }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -138,7 +166,26 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         self.accountCreditData.addGestureRecognizer(tap)
         self.view.addSubview(self.accountCreditData)
         
-        let save = UIButton(frame: CGRectMake(20, account.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
+        let type = UILabel(frame: CGRectMake(20, account.frame.maxY+gap, periodsCreditSize.width, 30))
+        type.font = introduceFont
+        type.textAlignment = NSTextAlignment.Left
+        type.backgroundColor = UIColor.clearColor()
+        type.textColor = UIColor.blackColor()
+        type.text = "支出类型："
+        self.view.addSubview(type)
+        
+        self.accountData = UILabel(frame: CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30))
+        self.accountData.textAlignment = NSTextAlignment.Left
+        self.accountData.backgroundColor = UIColor.whiteColor()
+        self.accountData.textColor = UIColor.blackColor()
+        self.accountData.layer.masksToBounds = true
+        self.accountData.layer.cornerRadius = 3
+        self.accountData.userInteractionEnabled = true
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(goSelectType))
+        self.accountData.addGestureRecognizer(tap1)
+        self.view.addSubview(self.accountData)
+        
+        let save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.layer.cornerRadius = 3
         save.setTitle("保  存", forState: UIControlState.Normal)
@@ -147,9 +194,15 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         
     }
     
+    func goSelectType(){
+        let vc = CostNameListViewController()
+        vc.delegate = self
+        let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
+        self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
+    }
+    
     func goSelectAccount(){
         let vc = AccountListViewController()
-        vc.dataAll = accountArray
         vc.delegate = self
         let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
         self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
@@ -157,6 +210,10 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
     
     func buttonClicked(name: String) {
         self.accountCreditData.text = name
+    }
+    
+    func costNameClicked(name: String) {
+        self.accountData.text = name
     }
 
     func saveCredit(){
@@ -169,7 +226,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
         let periods = Int(periodsCreditData.text!)!
         
-        SQLLine.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods)
+        SQLLine.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods, type: self.accountData.text!)
         
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
