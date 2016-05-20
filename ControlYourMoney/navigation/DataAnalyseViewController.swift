@@ -22,8 +22,16 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     
     let cashOneStr = "今日现金支出"
     let cashTwoStr = "本月现金支出"
-    let cashFive = "今年现金支出"
-    let cashSix = "今年总共支出"
+    let cashFourStr = "实际本月支出"
+    let cashFiveStr = "今年现金支出"
+    let cashSixStr = "今年总共支出"
+    
+    let creditOneStr = "本月信用总还"
+    let creditTwoStr = "下月信用总还"
+    let creditThreeStr = "所有信用余还"
+    let creditFourStr = "本月信用余还"
+    let creditFiveStr = "今年信用总还"
+    let creditSixStr = "今年信用余还"
     
     let incomeOneStr = "今年总共收入"
 
@@ -84,12 +92,12 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
             let thisYearCreditLeftPay = GetAnalyseData.getCreditThisYearLeftPay()
             
-            let creditOne = AnalysePageDataModul(pic: nil, name: "本月信用总还", data: "\(thisMonthCredit)")
-            let creditTwo = AnalysePageDataModul(pic: nil, name: "下月信用总还", data: "\(nextMonthCredit)")
-            let creditThree = AnalysePageDataModul(pic: nil, name: "所有信用余还", data: "\(allCreditLeftPay)")
-            let creditFour = AnalysePageDataModul(pic: nil, name: "本月信用余还", data: "\(thisMonthCreditLeftPay)")
-            let creditfive = AnalysePageDataModul(pic: nil, name: "今年信用总还", data: "\(thisYearCreditPayTotal)")
-            let creditSix = AnalysePageDataModul(pic: nil, name: "今年信用剩还", data: "\(thisYearCreditLeftPay)")
+            let creditOne = AnalysePageDataModul(pic: nil, name: self.creditOneStr, data: "\(thisMonthCredit)")
+            let creditTwo = AnalysePageDataModul(pic: nil, name: self.creditTwoStr, data: "\(nextMonthCredit)")
+            let creditThree = AnalysePageDataModul(pic: nil, name: self.creditThreeStr, data: "\(allCreditLeftPay)")
+            let creditFour = AnalysePageDataModul(pic: nil, name: self.creditFourStr, data: "\(thisMonthCreditLeftPay)")
+            let creditfive = AnalysePageDataModul(pic: nil, name: self.creditFiveStr, data: "\(thisYearCreditPayTotal)")
+            let creditSix = AnalysePageDataModul(pic: nil, name: self.creditSixStr, data: "\(thisYearCreditLeftPay)")
             
             let todayUse = GetAnalyseData.getTodayUse()
             let thisMonthUse = GetAnalyseData.getThisMonthUse()
@@ -101,9 +109,9 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let cashOne = AnalysePageDataModul(pic: nil, name: self.cashOneStr, data: "\(todayUse)")
             let cashTwo = AnalysePageDataModul(pic: nil, name: self.cashTwoStr, data: "\(thisMonthUse)")
             let cashThree = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: "\(canUse)")
-            let cashFour = AnalysePageDataModul(pic: nil, name: "实际本月支出", data: "\(thisMonthRealPay)") //本月现金支出和本月信用卡支出
-            let cashFive = AnalysePageDataModul(pic: nil, name: self.cashFive, data: "\(thisYearCashPayTotal)")
-            let cashSix = AnalysePageDataModul(pic: nil, name: self.cashSix, data: "\(thisYearPayTotal)")
+            let cashFour = AnalysePageDataModul(pic: nil, name: self.cashFourStr, data: "\(thisMonthRealPay)") //本月现金支出和本月信用卡支出
+            let cashFive = AnalysePageDataModul(pic: nil, name: self.cashFiveStr, data: "\(thisYearCashPayTotal)")
+            let cashSix = AnalysePageDataModul(pic: nil, name: self.cashSixStr, data: "\(thisYearPayTotal)")
             
             let allRealSalary = GetAnalyseData.getAllRealSalary()
             let IncomeOne = AnalysePageDataModul(pic: nil, name: self.incomeOneStr, data: "\(allRealSalary)")
@@ -202,10 +210,45 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             vc.showData =  GetAnalyseDataArray.getThisMonthCashDetailShowArray()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        case cashFive:
+        case cashFourStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getThisMonthRealPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case cashFiveStr:
             self.tabBarController?.selectedIndex = 2
-        case cashSix:
+        case cashSixStr:
             self.tabBarController?.selectedIndex = 2
+        case creditOneStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getThisCreditRealPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case creditTwoStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getNextMonthCreditPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case creditThreeStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getAllCreditLeftPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case creditFourStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getThisCreditLeftPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case creditFiveStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getThisYearCreditPayIncludeDone()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case creditSixStr:
+            let vc = CreditDetailListViewController()
+            vc.AllData = GetAnalyseDataArray.getThisYearCreditLeftPay()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
         default:
             break
         }

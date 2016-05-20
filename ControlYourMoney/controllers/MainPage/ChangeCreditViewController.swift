@@ -27,6 +27,10 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     var accountCreditData = UILabel()
     var typeData = UILabel()
     
+    var save = UIButton()
+    var alreadyPay = UIButton()
+    var alreadyPayAll = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpTitle()
@@ -40,6 +44,16 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.dateCreditData.text = self.recivedData.date
         self.accountCreditData.text = self.recivedData.account
         self.typeData.text = self.recivedData.type
+        
+        if Int(self.recivedData.periods) <= 0 {
+            save.enabled = false
+            alreadyPay.enabled = false
+            alreadyPayAll.enabled = false
+            
+            save.backgroundColor = UIColor.lightGrayColor()
+            alreadyPay.backgroundColor = UIColor.lightGrayColor()
+            alreadyPayAll.backgroundColor = UIColor.lightGrayColor()
+        }
     }
     
     func setUpTitle(){
@@ -162,25 +176,25 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.typeData.layer.cornerRadius = 3
         self.view.addSubview(self.typeData)
         
-        let save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
+        save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.setTitle("保  存", forState: UIControlState.Normal)
         save.layer.cornerRadius = 3
         save.addTarget(self,action:#selector(ChangeCreditViewController.saveCredit),forControlEvents:.TouchUpInside)
         self.view.addSubview(save)
         
-        let alreadyPay = UIButton(frame: CGRectMake(20, save.frame.maxY+gap, self.view.frame.size.width - 40, 44))
+        alreadyPay = UIButton(frame: CGRectMake(20, save.frame.maxY+gap, self.view.frame.size.width - 40, 44))
         alreadyPay.layer.backgroundColor = UIColor.redColor().CGColor
         alreadyPay.setTitle("本月已还", forState: UIControlState.Normal)
         alreadyPay.layer.cornerRadius = 3
-        alreadyPay.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPay),forControlEvents:.TouchUpInside)
+        alreadyPay.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayCredit),forControlEvents:.TouchUpInside)
         self.view.addSubview(alreadyPay)
         
-        let alreadyPayAll = UIButton(frame: CGRectMake(20, alreadyPay.frame.maxY+gap, self.view.frame.size.width - 40, 44))
+        alreadyPayAll = UIButton(frame: CGRectMake(20, alreadyPay.frame.maxY+gap, self.view.frame.size.width - 40, 44))
         alreadyPayAll.layer.backgroundColor = UIColor.redColor().CGColor
         alreadyPayAll.setTitle("全部已还", forState: UIControlState.Normal)
         alreadyPayAll.layer.cornerRadius = 3
-        alreadyPayAll.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayAll),forControlEvents:.TouchUpInside)
+        alreadyPayAll.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayAllCredit),forControlEvents:.TouchUpInside)
         self.view.addSubview(alreadyPayAll)
         
         let deleteBtn = UIButton(frame: CGRectMake(20, alreadyPayAll.frame.maxY+gap, self.view.frame.size.width - 40, 44))
@@ -198,11 +212,20 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         return true
     }
     
-    func alreadyPayAll(){
+    func alreadyPayAllCredit(){
         
         SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
-        SQLLine.deleteCreditDataSortedByTime(changeIndex)
+        let nextTime = stringToDateNoHH(recivedData.time)
+        let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!)
+        let periods = 0
+        
+        //由于按nextPayDay排序，必须先保存周期
+        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
+        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        
+        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
+        
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
 
@@ -215,7 +238,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     }
 
     //已还
-    func alreadyPay(){
+    func alreadyPayCredit(){
         if !checkData(){
             return
         }

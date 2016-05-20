@@ -34,6 +34,12 @@ class CalculateCredit: NSObject {
         return last
     }
     
+    //获取最后一期还款时间
+    class func getLastPayDate(nextTime: NSDate, leftPeriods: Int) -> NSDate{
+        let last = calculateTime(nextTime, months: leftPeriods)
+        return last
+    }
+    
     //获取信用卡的月份差，与日也有关系
     class func getMonthOffset(time1: NSDate, time2: NSDate) -> Int{
         
@@ -97,15 +103,14 @@ class CalculateCredit: NSObject {
                 if months < leftPeriods && months > 0{
                     
                     let nextPay = calculateTime(nextPayDay, months: months)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     SQLLine.updateCreditDataSortedByTime(i, changeValue: leftPeriods-months, changeEntityName: creditNameOfLeftPeriods)
+                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     changeTotal(Float(months)*number)
                     
                 }else if(months >= leftPeriods){
-                    
                     let nextPay = calculateTime(nextPayDay, months: leftPeriods)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     SQLLine.updateCreditDataSortedByTime(i, changeValue: 0, changeEntityName: creditNameOfLeftPeriods)
+                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     changeTotal(Float(leftPeriods)*number)
                 }
             }
