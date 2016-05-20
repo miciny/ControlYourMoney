@@ -9,10 +9,11 @@
 import UIKit
 
 class CashDetailTableViewController: UITableViewController {
-    var textData = NSArray()
-    var textDataTitle = NSMutableArray()
-    var textDataDic = NSMutableDictionary()
-    var textDataTotalDic = NSMutableDictionary()
+    private var textData = NSArray()
+    private var textDataTitle = NSMutableArray()
+    var showData: [NSMutableDictionary]?
+    private var textDataDic = NSMutableDictionary()
+    private var textDataTotalDic = NSMutableDictionary()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +33,8 @@ class CashDetailTableViewController: UITableViewController {
         self.textDataTotalDic = NSMutableDictionary()
         self.textDataDic = NSMutableDictionary()
         
-        let tempData = GetDataArray.getCashDetailShowArray()
-        self.textDataDic = tempData[0]
-        self.textDataTotalDic = tempData[1]
+        self.textDataDic = showData![0]
+        self.textDataTotalDic = showData![1]
     }
     
     // MARK: - Table view data source

@@ -25,3 +25,8 @@ protocol accountListViewDelegate {
 protocol costNameListViewDelegate {
     func costNameClicked(name: String)
 }
+
+//下拉刷新的代理
+protocol isRefreshingDelegate{
+    func reFreshing()
+}

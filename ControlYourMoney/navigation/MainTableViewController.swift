@@ -159,6 +159,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         
         if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
             let vc = CashDetailTableViewController()
+            vc.showData =  GetDataArray.getCashDetailShowArray()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }else if((AllData.allKeys[indexPath.section] as? String) == keyOfIncome){

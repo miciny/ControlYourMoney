@@ -31,13 +31,13 @@ class AddCostNameViewController: UIViewController {
     func setupLable(){
         let gap = CGFloat(10)
         
-        let accountSize = sizeWithText("收入类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let accountSize = sizeWithText("支出类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
         let account = UILabel(frame: CGRectMake(20, 90, accountSize.width, 30))
         account.font = introduceFont
         account.textAlignment = NSTextAlignment.Left
         account.backgroundColor = UIColor.clearColor()
         account.textColor = UIColor.blackColor()
-        account.text = "收入类型："
+        account.text = "支出类型："
         self.view.addSubview(account)
         
         

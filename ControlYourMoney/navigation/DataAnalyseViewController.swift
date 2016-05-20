@@ -8,16 +8,24 @@
 
 import UIKit
 
-class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, isRefreshingDelegate{
     
     private var collectionView : UICollectionView?
     private let cellReuseIdentifier = "analyseCell"
     private var cellData: NSMutableDictionary?
+    private var refreshView: RefreshHeaderView? //自己写的
     
     let preOneStr = "预计本月支出"
     let preTowStr = "预计年底结余"
     let preThreeStr = "预计月底结余"
     let preFourStr = "预计本年支出"
+    
+    let cashOneStr = "今日现金支出"
+    let cashTwoStr = "本月现金支出"
+    let cashFive = "今年现金支出"
+    let cashSix = "今年总共支出"
+    
+    let incomeOneStr = "今年总共收入"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,19 +51,21 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         self.collectionView?.dataSource = self
         
         self.view.addSubview(self.collectionView!)
-        
+        refreshView =  RefreshHeaderView(frame: collectionView!.frame, subView: collectionView!, target: self)  //添加下拉刷新
         setUpData()
     }
     
     
+    let wiatView = MyWaitToast()
     func setUpData(){
         self.cellData = NSMutableDictionary()
-        
-        let wiatView = MyWaitToast()
         wiatView.title = "计算中..."
         wiatView.showWait(self.view)
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+        calculateData()
+    }
+    
+    func calculateData(){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 2),{
             //这里写需要放到子线程做的耗时的代码
             let thisMonthPay = GetAnalyseData.getPreThisMonthPay()
             let thisYearPay = GetAnalyseData.getPreThisYearPay()
@@ -81,7 +91,6 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let creditfive = AnalysePageDataModul(pic: nil, name: "今年信用总还", data: "\(thisYearCreditPayTotal)")
             let creditSix = AnalysePageDataModul(pic: nil, name: "今年信用剩还", data: "\(thisYearCreditLeftPay)")
             
-            
             let todayUse = GetAnalyseData.getTodayUse()
             let thisMonthUse = GetAnalyseData.getThisMonthUse()
             let thisMonthRealPay = thisMonthUse + GetAnalyseData.getCreditThisMonthAllPayIncludeDone()
@@ -89,23 +98,26 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
             let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
             
-            let cashOne = AnalysePageDataModul(pic: nil, name: "今日现金支出", data: "\(todayUse)")
-            let cashTwo = AnalysePageDataModul(pic: nil, name: "本月现金支出", data: "\(thisMonthUse)")
+            let cashOne = AnalysePageDataModul(pic: nil, name: self.cashOneStr, data: "\(todayUse)")
+            let cashTwo = AnalysePageDataModul(pic: nil, name: self.cashTwoStr, data: "\(thisMonthUse)")
             let cashThree = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: "\(canUse)")
             let cashFour = AnalysePageDataModul(pic: nil, name: "实际本月支出", data: "\(thisMonthRealPay)") //本月现金支出和本月信用卡支出
-            let cashFive = AnalysePageDataModul(pic: nil, name: "今年现金支出", data: "\(thisYearCashPayTotal)")
-            let cashSix = AnalysePageDataModul(pic: nil, name: "今年总共支出", data: "\(thisYearPayTotal)")
+            let cashFive = AnalysePageDataModul(pic: nil, name: self.cashFive, data: "\(thisYearCashPayTotal)")
+            let cashSix = AnalysePageDataModul(pic: nil, name: self.cashSix, data: "\(thisYearPayTotal)")
             
             let allRealSalary = GetAnalyseData.getAllRealSalary()
-            let IncomeOne = AnalysePageDataModul(pic: nil, name: "今年总共收入", data: "\(allRealSalary)")
+            let IncomeOne = AnalysePageDataModul(pic: nil, name: self.incomeOneStr, data: "\(allRealSalary)")
             
             dispatch_async(dispatch_get_main_queue(), {
+                self.cellData = NSMutableDictionary()
                 self.cellData?.setValue([preOne, preTow, preThree, preFour], forKey: "预计")
                 self.cellData?.setValue([creditOne, creditTwo, creditThree, creditFour, creditfive, creditSix], forKey: "信用")
                 self.cellData?.setValue([cashOne, cashTwo, cashThree, cashFour, cashFive, cashSix], forKey: "现金")
                 self.cellData?.setValue([IncomeOne], forKey: "收入")
-                wiatView.hideView()
+                self.wiatView.hideView()
                 self.collectionView?.reloadData()
+                
+                self.endFresh()
             })
         })
     }
@@ -113,14 +125,23 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         self.title = "分析"
-        
-        let refresh = UIBarButtonItem(title: "刷新", style: .Plain, target: self, action:
-            #selector(DataAnalyseViewController.refresh))
-        self.navigationItem.leftBarButtonItem = refresh
     }
     
-    func refresh(){
-        setUpData()
+    //isfreshing中的代理方法
+    func reFreshing(){
+        collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight*2), animated: true)
+        collectionView!.scrollEnabled = false
+        //这里做你想做的事
+        self.calculateData()
+    }
+    
+    func endFresh(){
+        self.collectionView!.scrollEnabled = true
+        self.collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
+        
+        self.refreshView?.endRefresh()
+        let toast = MyToastView()
+        toast.showToast("刷新完成！")
     }
     
     // MARK: UICollectionViewDataSource
@@ -167,6 +188,24 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let vc = YearCostViewController()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
+        case incomeOneStr:
+            let vc = SalaryDetailTableViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case cashOneStr:
+            let vc = CashDetailTableViewController()
+            vc.showData =  GetAnalyseDataArray.getTodayCashDetailShowArray()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case cashTwoStr:
+            let vc = CashDetailTableViewController()
+            vc.showData =  GetAnalyseDataArray.getThisMonthCashDetailShowArray()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case cashFive:
+            self.tabBarController?.selectedIndex = 2
+        case cashSix:
+            self.tabBarController?.selectedIndex = 2
         default:
             break
         }

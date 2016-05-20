@@ -15,6 +15,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
     var monthCostLine: LineChartView!
     var monthPreLine: LineChartView!
     
+    var isCounting = false
+    
     var months = NSArray()
     var temps = NSArray()
     var weights = NSArray()
@@ -29,16 +31,32 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
-            self.getData()
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.setTempData(self.months, ydata: self.temps)
-                self.setWeightData(self.months, ydata: self.weights)
-                self.monthCostLine.setNeedsDisplay()
-                self.monthPreLine.setNeedsDisplay()
+        let wiatView = MyWaitToast()
+        if temps.count == 0 {
+            wiatView.title = "计算中..."
+            wiatView.showWait(self.view)
+        }
+        
+        if !isCounting {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+                self.isCounting = true
+                self.getData()
+                let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
+                let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
+                let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    wiatView.hideView()
+                    self.setTempData(self.months, ydata: self.temps)
+                    self.setWeightData(self.months, ydata: self.weights)
+                    self.monthCostLine.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
+                    self.monthPreLine.descriptionText = "预计月支出(\(thisYearPayTotal))"
+                    self.monthCostLine.setNeedsDisplay()
+                    self.monthPreLine.setNeedsDisplay()
+                    self.isCounting = false
+                })
             })
-        })
+        }
     }
     
     func setUpTitle(){
@@ -68,7 +86,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         monthCostLine.frame = CGRect(x: 5, y: 10, width: Width-10, height: Width/2)
         monthCostLine.backgroundColor = UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 1)
         
-        monthCostLine.descriptionText = "月现金支出"
+        monthCostLine.descriptionText = "月现金支出()"
         monthCostLine.descriptionTextColor = UIColor.whiteColor()
         monthCostLine.noDataTextDescription = "无数据"
         monthCostLine.dragEnabled = true
@@ -160,7 +178,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         monthPreLine.frame = CGRect(x: 5, y: Width/2 + 20, width: Width-10, height: Width/2)
         monthPreLine.backgroundColor = UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 1)
         
-        monthPreLine.descriptionText = "预计月支出"
+        monthPreLine.descriptionText = "预计月支出()"
         monthPreLine.descriptionTextColor = UIColor.whiteColor()
         monthPreLine.noDataTextDescription = "无数据"
         monthPreLine.dragEnabled = true

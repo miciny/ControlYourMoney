@@ -26,10 +26,8 @@ class GetAnalyseData: NSObject {
     class func getPreEveryMonthPay() -> [Float]{
         var thisMonthUse = [Float]()
         let timeNow = getTime()
-        
+        let cash = getPreThisMonthCashPay()
         for i in 1 ..< 13 {
-            let cash = getPreThisMonthCashPay()
-            
             let timeArray = NSMutableArray()
             if i > 9 {
                 timeArray.addObject("\(timeNow.currentYear)-\(i)")

@@ -20,7 +20,7 @@ class SalaryDetailTableViewController: UITableViewController {
     }
 
     func setUpTitle(){
-        self.title = "工资列表"
+        self.title = "收入列表"
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         
