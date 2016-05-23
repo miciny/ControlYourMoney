@@ -71,109 +71,63 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     func setupCreditLable(){
         let gap = CGFloat(10)
         let nextPaydaySize = sizeWithText("下期还款：", font: introduceFont, maxSize: CGSizeMake(Width, 30))
-        let nextPayday = UILabel(frame: CGRectMake(20, 90, nextPaydaySize.width, 30))
-        nextPayday.font = introduceFont
-        nextPayday.textAlignment = NSTextAlignment.Left
-        nextPayday.backgroundColor = UIColor.clearColor()
-        nextPayday.textColor = UIColor.blackColor()
+        let nextPayday = UILabel.introduceLabel()
+        nextPayday.frame = CGRectMake(20, 90, nextPaydaySize.width, 30)
         nextPayday.text = "下期还款："
         self.view.addSubview(nextPayday)
         
-        let periodsCredit = UILabel(frame: CGRectMake(20, nextPayday.frame.maxY+gap, nextPaydaySize.width, 30))
-        periodsCredit.font = introduceFont
-        periodsCredit.textAlignment = NSTextAlignment.Left
-        periodsCredit.backgroundColor = UIColor.clearColor()
-        periodsCredit.textColor = UIColor.blackColor()
+        let periodsCredit = UILabel.introduceLabel()
+        periodsCredit.frame = CGRectMake(20, nextPayday.frame.maxY+gap, nextPaydaySize.width, 30)
         periodsCredit.text = "还款期数："
         self.view.addSubview(periodsCredit)
         
-        let numberCredit = UILabel(frame: CGRectMake(20, periodsCredit.frame.maxY+gap, nextPaydaySize.width, 30))
-        numberCredit.font = introduceFont
-        numberCredit.textAlignment = NSTextAlignment.Left
-        numberCredit.backgroundColor = UIColor.clearColor()
-        numberCredit.textColor = UIColor.blackColor()
+        let numberCredit = UILabel.introduceLabel()
+        numberCredit.frame = CGRectMake(20, periodsCredit.frame.maxY+gap, nextPaydaySize.width, 30)
         numberCredit.text = "每期金额："
         self.view.addSubview(numberCredit)
         
-        let dateCredit = UILabel(frame: CGRectMake(20, numberCredit.frame.maxY+gap, nextPaydaySize.width, 30))
-        dateCredit.font = introduceFont
-        dateCredit.textAlignment = NSTextAlignment.Left
-        dateCredit.backgroundColor = UIColor.clearColor()
-        dateCredit.textColor = UIColor.blackColor()
+        let dateCredit = UILabel.introduceLabel()
+        dateCredit.frame = CGRectMake(20, numberCredit.frame.maxY+gap, nextPaydaySize.width, 30)
         dateCredit.text = "还款日期："
         self.view.addSubview(dateCredit)
         
-        let account = UILabel(frame: CGRectMake(20, dateCredit.frame.maxY+gap, nextPaydaySize.width, 30))
-        account.font = introduceFont
-        account.textAlignment = NSTextAlignment.Left
-        account.backgroundColor = UIColor.clearColor()
-        account.textColor = UIColor.blackColor()
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, dateCredit.frame.maxY+gap, nextPaydaySize.width, 30)
         account.text = "信用账户："
         self.view.addSubview(account)
         
-        let type = UILabel(frame: CGRectMake(20, account.frame.maxY+gap, nextPaydaySize.width, 30))
-        type.font = introduceFont
-        type.textAlignment = NSTextAlignment.Left
-        type.backgroundColor = UIColor.clearColor()
-        type.textColor = UIColor.blackColor()
+        let type = UILabel.introduceLabel()
+        type.frame = CGRectMake(20, account.frame.maxY+gap, nextPaydaySize.width, 30)
         type.text = "支出类型："
         self.view.addSubview(type)
         
-        self.nextPaydayText = UITextField(frame: CGRectMake(nextPayday.frame.maxX, nextPayday.frame.minY, self.view.frame.size.width-nextPayday.frame.maxX-20, 30))
-        self.nextPaydayText.font = introduceFont
-        self.nextPaydayText.textAlignment = NSTextAlignment.Left
-        self.nextPaydayText.borderStyle = UITextBorderStyle.RoundedRect
-        self.nextPaydayText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.nextPaydayText.backgroundColor = UIColor.whiteColor()
-        self.nextPaydayText.textColor = UIColor.blackColor()
+        self.nextPaydayText = UITextField.inputTextField()
+        self.nextPaydayText.frame = CGRectMake(nextPayday.frame.maxX, nextPayday.frame.minY, self.view.frame.size.width-nextPayday.frame.maxX-20, 30)
         self.nextPaydayText.text = self.nextPaydayString
         self.view.addSubview(self.nextPaydayText)
         self.nextPaydayText.enabled = false
         
-        self.periodsCreditData = UITextField(frame: CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30))
-        self.periodsCreditData.font = introduceFont
-        self.periodsCreditData.textAlignment = NSTextAlignment.Left
-        self.periodsCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.periodsCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.periodsCreditData.backgroundColor = UIColor.whiteColor()
-        self.periodsCreditData.textColor = UIColor.blackColor()
+        self.periodsCreditData = UITextField.inputTextField()
+        self.periodsCreditData.frame = CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30)
         self.periodsCreditData.placeholder = "还款期数..."
         self.view.addSubview(self.periodsCreditData)
         
-        self.numberCreditData = UITextField(frame: CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30))
-        self.numberCreditData.font = introduceFont
-        self.numberCreditData.textAlignment = NSTextAlignment.Left
-        self.numberCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.numberCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.numberCreditData.backgroundColor = UIColor.whiteColor()
-        self.numberCreditData.textColor = UIColor.blackColor()
+        self.numberCreditData = UITextField.inputTextField()
+        self.numberCreditData.frame = CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30)
         self.numberCreditData.placeholder = "每期金额..."
         self.view.addSubview(self.numberCreditData)
         
-        self.dateCreditData = UITextField(frame: CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30))
-        self.dateCreditData.font = introduceFont
-        self.dateCreditData.textAlignment = NSTextAlignment.Left
-        self.dateCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.dateCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.dateCreditData.backgroundColor = UIColor.whiteColor()
-        self.dateCreditData.textColor = UIColor.blackColor()
+        self.dateCreditData = UITextField.inputTextField()
+        self.dateCreditData.frame = CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30)
         self.dateCreditData.placeholder = "还款日期..."
         self.view.addSubview(dateCreditData)
         
-        self.accountCreditData = UILabel(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
-        self.accountCreditData.textAlignment = NSTextAlignment.Left
-        self.accountCreditData.backgroundColor = UIColor.whiteColor()
-        self.accountCreditData.textColor = UIColor.blackColor()
-        self.accountCreditData.layer.masksToBounds = true
-        self.accountCreditData.layer.cornerRadius = 3
+        self.accountCreditData = UILabel.inputLabel()
+        self.accountCreditData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountCreditData)
         
-        self.typeData = UILabel(frame: CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30))
-        self.typeData.textAlignment = NSTextAlignment.Left
-        self.typeData.backgroundColor = UIColor.whiteColor()
-        self.typeData.textColor = UIColor.blackColor()
-        self.typeData.layer.masksToBounds = true
-        self.typeData.layer.cornerRadius = 3
+        self.typeData = UILabel.inputLabel()
+        self.typeData.frame = CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30)
         self.view.addSubview(self.typeData)
         
         save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
@@ -199,7 +153,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         
         let deleteBtn = UIButton(frame: CGRectMake(20, alreadyPayAll.frame.maxY+gap, self.view.frame.size.width - 40, 44))
         deleteBtn.layer.backgroundColor = UIColor.redColor().CGColor
-        deleteBtn.setTitle("删除", forState: UIControlState.Normal)
+        deleteBtn.setTitle("删   除", forState: UIControlState.Normal)
         deleteBtn.layer.cornerRadius = 3
         deleteBtn.addTarget(self,action:#selector(ChangeCreditViewController.deleteBtnClicked),forControlEvents:.TouchUpInside)
         self.view.addSubview(deleteBtn)
@@ -266,7 +220,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let date = Int(dateCreditData.text!)!
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
         let periods = Int(periodsCreditData.text!)!
-        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: "")
+        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
         
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

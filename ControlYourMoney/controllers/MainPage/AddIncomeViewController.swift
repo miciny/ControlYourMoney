@@ -54,44 +54,26 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         let gap = CGFloat(10)
         
         let numberSalarySize = sizeWithText("工资金额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let numberSalary = UILabel(frame: CGRectMake(20, 90, numberSalarySize.width, 30))
-        numberSalary.font = introduceFont
-        numberSalary.textAlignment = NSTextAlignment.Left
-        numberSalary.backgroundColor = UIColor.clearColor()
-        numberSalary.textColor = UIColor.blackColor()
+        let numberSalary = UILabel.introduceLabel()
+        numberSalary.frame = CGRectMake(20, 90, numberSalarySize.width, 30)
         numberSalary.text = "收入金额："
         self.view.addSubview(numberSalary)
         
-        self.numberSalaryData = UITextField(frame: CGRectMake(numberSalary.frame.maxX, numberSalary.frame.minY, self.view.frame.size.width-numberSalary.frame.maxX-20, 30))
-        self.numberSalaryData.font = introduceFont
-        self.numberSalaryData.textAlignment = NSTextAlignment.Left
-        self.numberSalaryData.borderStyle = UITextBorderStyle.RoundedRect
-        self.numberSalaryData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.numberSalaryData.backgroundColor = UIColor.whiteColor()
-        self.numberSalaryData.textColor = UIColor.blackColor()
+        self.numberSalaryData = UITextField.inputTextField()
+        self.numberSalaryData.frame = CGRectMake(numberSalary.frame.maxX, numberSalary.frame.minY, self.view.frame.size.width-numberSalary.frame.maxX-20, 30)
         self.numberSalaryData.placeholder = "请输入金额..."
         self.numberSalaryData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
         self.numberSalaryData.becomeFirstResponder() //界面打开时就获取焦点
         self.numberSalaryData.returnKeyType = UIReturnKeyType.Done //表示完成输入
         self.view.addSubview(self.numberSalaryData)
         
-        let account = UILabel(frame: CGRectMake(20, numberSalary.frame.maxY+gap, numberSalarySize.width, 30))
-        account.font = introduceFont
-        account.textAlignment = NSTextAlignment.Left
-        account.backgroundColor = UIColor.clearColor()
-        account.textColor = UIColor.blackColor()
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, numberSalary.frame.maxY+gap, numberSalarySize.width, 30)
         account.text = "收入类型："
         self.view.addSubview(account)
         
-        self.accountData = UILabel(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
-        self.accountData.textAlignment = NSTextAlignment.Left
-        self.accountData.backgroundColor = UIColor.whiteColor()
-        self.accountData.textColor = UIColor.blackColor()
-        self.accountData.layer.masksToBounds = true
-        self.accountData.layer.cornerRadius = 3
-        self.accountData.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(goSelectAccount))
-        self.accountData.addGestureRecognizer(tap)
+        self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
+        self.accountData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountData)
         
         let save = UIButton(frame: CGRectMake(20, account.frame.maxY+gap*3, self.view.frame.size.width-40, 44))

@@ -86,103 +86,59 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let gap = CGFloat(10)
         
         let periodsCreditSize = sizeWithText("还款期数：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let periodsCredit = UILabel(frame: CGRectMake(20, 90, periodsCreditSize.width, 30))
-        periodsCredit.font = introduceFont
-        periodsCredit.textAlignment = NSTextAlignment.Left
-        periodsCredit.backgroundColor = UIColor.clearColor()
-        periodsCredit.textColor = UIColor.blackColor()
+        let periodsCredit = UILabel.introduceLabel()
+        periodsCredit.frame = CGRectMake(20, 90, periodsCreditSize.width, 30)
         periodsCredit.text = "还款期数："
         self.view.addSubview(periodsCredit)
         
-        let numberCredit = UILabel(frame: CGRectMake(20, periodsCredit.frame.maxY+gap, periodsCreditSize.width, 30))
-        numberCredit.font = introduceFont
-        numberCredit.textAlignment = NSTextAlignment.Left
-        numberCredit.backgroundColor = UIColor.clearColor()
-        numberCredit.textColor = UIColor.blackColor()
+        let numberCredit = UILabel.introduceLabel()
+        numberCredit.frame = CGRectMake(20, periodsCredit.frame.maxY+gap, periodsCreditSize.width, 30)
         numberCredit.text = "每期金额："
         self.view.addSubview(numberCredit)
         
-        let dateCredit = UILabel(frame: CGRectMake(20, numberCredit.frame.maxY+gap, periodsCreditSize.width, 30))
-        dateCredit.font = introduceFont
-        dateCredit.textAlignment = NSTextAlignment.Left
-        dateCredit.backgroundColor = UIColor.clearColor()
-        dateCredit.textColor = UIColor.blackColor()
+        let dateCredit = UILabel.introduceLabel()
+        dateCredit.frame = CGRectMake(20, numberCredit.frame.maxY+gap, periodsCreditSize.width, 30)
         dateCredit.text = "还款日期："
         self.view.addSubview(dateCredit)
         
-        let account = UILabel(frame: CGRectMake(20, dateCredit.frame.maxY+gap, periodsCreditSize.width, 30))
-        account.font = introduceFont
-        account.textAlignment = NSTextAlignment.Left
-        account.backgroundColor = UIColor.clearColor()
-        account.textColor = UIColor.blackColor()
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, dateCredit.frame.maxY+gap, periodsCreditSize.width, 30)
         account.text = "信用账户："
         self.view.addSubview(account)
         
-        self.periodsCreditData = UITextField(frame: CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30))
-        self.periodsCreditData.font = introduceFont
-        self.periodsCreditData.textAlignment = NSTextAlignment.Left
-        self.periodsCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.periodsCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.periodsCreditData.backgroundColor = UIColor.whiteColor()
-        self.periodsCreditData.textColor = UIColor.blackColor()
+        self.periodsCreditData = UITextField.inputTextField()
+        self.periodsCreditData.frame = CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30)
         self.periodsCreditData.placeholder = "还款期数..."
         self.periodsCreditData.keyboardType = UIKeyboardType.NumberPad //激活时 弹出数字键盘
         self.periodsCreditData.becomeFirstResponder() //界面打开时就获取焦点
         self.periodsCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
         self.view.addSubview(self.periodsCreditData)
         
-        self.numberCreditData = UITextField(frame: CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30))
-        self.numberCreditData.font = introduceFont
-        self.numberCreditData.textAlignment = NSTextAlignment.Left
-        self.numberCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.numberCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.numberCreditData.backgroundColor = UIColor.whiteColor()
-        self.numberCreditData.textColor = UIColor.blackColor()
+        self.numberCreditData = UITextField.inputTextField()
+        self.numberCreditData.frame = CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30)
         self.numberCreditData.placeholder = "每期金额..."
         self.numberCreditData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
         self.numberCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
         self.view.addSubview(self.numberCreditData)
         
-        self.dateCreditData = UITextField(frame: CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30))
-        self.dateCreditData.font = introduceFont
-        self.dateCreditData.textAlignment = NSTextAlignment.Left
-        self.dateCreditData.borderStyle = UITextBorderStyle.RoundedRect
-        self.dateCreditData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.dateCreditData.backgroundColor = UIColor.whiteColor()
-        self.dateCreditData.textColor = UIColor.blackColor()
+        self.dateCreditData = UITextField.inputTextField()
+        self.dateCreditData.frame = CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30)
         self.dateCreditData.placeholder = "还款日期..."
         self.dateCreditData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
         self.dateCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
         self.view.addSubview(self.dateCreditData)
         
-        self.accountCreditData = UILabel(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
-        self.accountCreditData.textAlignment = NSTextAlignment.Left
-        self.accountCreditData.backgroundColor = UIColor.whiteColor()
-        self.accountCreditData.textColor = UIColor.blackColor()
-        self.accountCreditData.layer.masksToBounds = true
-        self.accountCreditData.layer.cornerRadius = 3
-        self.accountCreditData.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(goSelectAccount))
-        self.accountCreditData.addGestureRecognizer(tap)
+        self.accountCreditData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
+        self.accountCreditData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountCreditData)
         
-        let type = UILabel(frame: CGRectMake(20, account.frame.maxY+gap, periodsCreditSize.width, 30))
-        type.font = introduceFont
-        type.textAlignment = NSTextAlignment.Left
-        type.backgroundColor = UIColor.clearColor()
-        type.textColor = UIColor.blackColor()
+        let type = UILabel.introduceLabel()
+        type.frame = CGRectMake(20, account.frame.maxY+gap, periodsCreditSize.width, 30)
         type.text = "支出类型："
         self.view.addSubview(type)
         
-        self.accountData = UILabel(frame: CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30))
-        self.accountData.textAlignment = NSTextAlignment.Left
-        self.accountData.backgroundColor = UIColor.whiteColor()
-        self.accountData.textColor = UIColor.blackColor()
-        self.accountData.layer.masksToBounds = true
-        self.accountData.layer.cornerRadius = 3
-        self.accountData.userInteractionEnabled = true
-        let tap1 = UITapGestureRecognizer(target: self, action: #selector(goSelectType))
-        self.accountData.addGestureRecognizer(tap1)
+        self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectType))
+        self.accountData.frame = CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30)
         self.view.addSubview(self.accountData)
         
         let save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width-40, 44))

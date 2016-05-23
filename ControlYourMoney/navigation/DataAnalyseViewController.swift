@@ -34,6 +34,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     let creditSixStr = "今年信用余还"
     
     let incomeOneStr = "今年总共收入"
+    let incomeTwoStr = "目前总共财产"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +102,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             
             let todayUse = GetAnalyseData.getTodayUse()
             let thisMonthUse = GetAnalyseData.getThisMonthUse()
-            let thisMonthRealPay = thisMonthUse + GetAnalyseData.getCreditThisMonthAllPayIncludeDone()
+            let thisMonthRealPay = thisMonthUse + thisMonthCredit
             let canUse =  GetAnalyseData.getCanUseToFloat()
             let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
             let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
@@ -114,14 +115,16 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let cashSix = AnalysePageDataModul(pic: nil, name: self.cashSixStr, data: "\(thisYearPayTotal)")
             
             let allRealSalary = GetAnalyseData.getAllRealSalary()
+            let allPropety = canUse-allCreditLeftPay
             let IncomeOne = AnalysePageDataModul(pic: nil, name: self.incomeOneStr, data: "\(allRealSalary)")
+            let IncomeTwo = AnalysePageDataModul(pic: nil, name: self.incomeTwoStr, data: "\(allPropety)")
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.cellData = NSMutableDictionary()
                 self.cellData?.setValue([preOne, preTow, preThree, preFour], forKey: "预计")
                 self.cellData?.setValue([creditOne, creditTwo, creditThree, creditFour, creditfive, creditSix], forKey: "信用")
                 self.cellData?.setValue([cashOne, cashTwo, cashThree, cashFour, cashFive, cashSix], forKey: "现金")
-                self.cellData?.setValue([IncomeOne], forKey: "收入")
+                self.cellData?.setValue([IncomeOne, IncomeTwo], forKey: "收入")
                 self.wiatView.hideView()
                 self.collectionView?.reloadData()
                 

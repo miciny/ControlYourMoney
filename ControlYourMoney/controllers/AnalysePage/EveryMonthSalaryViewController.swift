@@ -26,22 +26,14 @@ class EveryMonthSalaryViewController: UIViewController {
     func setUpElesCon(){
         let nameUsed = "每月收入"
         let namelbSize = sizeWithText("每月收入：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let namelb = UILabel(frame: CGRectMake(20, 90, namelbSize.width, 30))
-        namelb.font = introduceFont
-        namelb.textAlignment = NSTextAlignment.Left
-        namelb.backgroundColor = UIColor.clearColor()
-        namelb.textColor = UIColor.blackColor()
+        let namelb = UILabel.introduceLabel()
+        namelb.frame = CGRectMake(20, 90, namelbSize.width, 30)
         namelb.text = nameUsed
         namelb.tag = 1
         self.view.addSubview(namelb)
         
-        let numberText = UITextField(frame: CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30))
-        numberText.font = introduceFont
-        numberText.textAlignment = NSTextAlignment.Left
-        numberText.borderStyle = UITextBorderStyle.RoundedRect
-        numberText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        numberText.backgroundColor = UIColor.whiteColor()
-        numberText.textColor = UIColor.blackColor()
+        let numberText = UITextField.inputTextField()
+        numberText.frame = CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30)
         numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
         numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
         numberText.text = String(GetAnalyseData.getEveryMonthSalary())
@@ -50,7 +42,6 @@ class EveryMonthSalaryViewController: UIViewController {
         numberText.enabled = false
         
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

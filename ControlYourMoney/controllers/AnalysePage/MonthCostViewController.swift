@@ -36,22 +36,14 @@ class MonthCostViewController: UIViewController {
     func setUpElesCon(){
         let nameUsed = "本月已用"
         let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let namelb = UILabel(frame: CGRectMake(20, 90, namelbSize.width, 30))
-        namelb.font = introduceFont
-        namelb.textAlignment = NSTextAlignment.Left
-        namelb.backgroundColor = UIColor.clearColor()
-        namelb.textColor = UIColor.blackColor()
+        let namelb = UILabel.introduceLabel()
+        namelb.frame = CGRectMake(20, 90, namelbSize.width, 30)
         namelb.text = nameUsed
         namelb.tag = 1
         self.view.addSubview(namelb)
         
-        let numberText = UITextField(frame: CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30))
-        numberText.font = introduceFont
-        numberText.textAlignment = NSTextAlignment.Left
-        numberText.borderStyle = UITextBorderStyle.RoundedRect
-        numberText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        numberText.backgroundColor = UIColor.whiteColor()
-        numberText.textColor = UIColor.blackColor()
+        let numberText = UITextField.inputTextField()
+        numberText.frame = CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30)
         numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
         numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
         numberText.text = String(GetAnalyseData.getThisMonthUse())
@@ -91,22 +83,14 @@ class MonthCostViewController: UIViewController {
             let numberStr = String(numberArray![i] as! Float)
             
             let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-            let namelb = UILabel(frame: CGRectMake(20, 130+(30+gap!)*CGFloat(i), namelbSize.width, 30))
-            namelb.font = introduceFont
-            namelb.textAlignment = NSTextAlignment.Left
-            namelb.backgroundColor = UIColor.clearColor()
-            namelb.textColor = UIColor.blackColor()
+            let namelb = UILabel.introduceLabel()
+            namelb.frame = CGRectMake(20, 130+(30+gap!)*CGFloat(i), namelbSize.width, 30)
             namelb.text = nameStr
             namelb.tag = i*2+3
             self.view.addSubview(namelb)
             
-            let numberText = UITextField(frame: CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30))
-            numberText.font = introduceFont
-            numberText.textAlignment = NSTextAlignment.Left
-            numberText.borderStyle = UITextBorderStyle.RoundedRect
-            numberText.clearButtonMode = UITextFieldViewMode.WhileEditing
-            numberText.backgroundColor = UIColor.whiteColor()
-            numberText.textColor = UIColor.blackColor()
+            let numberText = UITextField.inputTextField()
+            numberText.frame = CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30)
             numberText.placeholder = "请输入金额..."
             numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
             numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
@@ -217,12 +201,8 @@ class MonthCostViewController: UIViewController {
     
     func addCost(){
         let nameTextSize = sizeWithText("本月已用", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let nameText = UITextField(frame: CGRectMake(20, lastY!+gap!, nameTextSize.width, 30))
-        nameText.font = introduceFont
-        nameText.textAlignment = NSTextAlignment.Left
-        nameText.borderStyle = UITextBorderStyle.RoundedRect
-        nameText.backgroundColor = UIColor.whiteColor()
-        nameText.textColor = UIColor.blackColor()
+        let nameText = UITextField.inputTextField()
+        nameText.frame = CGRectMake(20, lastY!+gap!, nameTextSize.width, 30)
         nameText.placeholder = "名称"
         nameText.keyboardType = UIKeyboardType.Default //激活时
         nameText.returnKeyType = UIReturnKeyType.Done //表示完成输入
@@ -233,13 +213,8 @@ class MonthCostViewController: UIViewController {
         lb.text = "："
         self.view.addSubview(lb)
         
-        let numberText = UITextField(frame: CGRectMake(lb.frame.maxX, nameText.frame.minY, self.view.frame.size.width-lb.frame.maxX-20, 30))
-        numberText.font = introduceFont
-        numberText.textAlignment = NSTextAlignment.Left
-        numberText.borderStyle = UITextBorderStyle.RoundedRect
-        numberText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        numberText.backgroundColor = UIColor.whiteColor()
-        numberText.textColor = UIColor.blackColor()
+        let numberText = UITextField.inputTextField()
+        numberText.frame = CGRectMake(lb.frame.maxX, nameText.frame.minY, self.view.frame.size.width-lb.frame.maxX-20, 30)
         numberText.placeholder = "金额"
         numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
         numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入

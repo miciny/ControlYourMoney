@@ -80,7 +80,6 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    
     //cell点击事件
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)

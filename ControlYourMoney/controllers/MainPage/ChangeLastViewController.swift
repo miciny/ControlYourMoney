@@ -24,21 +24,13 @@ class ChangeLastViewController: UIViewController {
         let gap = CGFloat(10)
         
         let totlaSize = sizeWithText("可用总额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let total = UILabel(frame: CGRectMake(20, 90, totlaSize.width, 30))
-        total.font = introduceFont
-        total.textAlignment = NSTextAlignment.Left
-        total.backgroundColor = UIColor.clearColor()
-        total.textColor = UIColor.blackColor()
+        let total = UILabel.introduceLabel()
+        total.frame = CGRectMake(20, 90, totlaSize.width, 30)
         total.text = "可用总额："
         self.view.addSubview(total)
         
-        self.totalData = UITextField(frame: CGRectMake(total.frame.maxX, total.frame.minY, self.view.frame.size.width-total.frame.maxX-20, 30))
-        self.totalData.font = introduceFont
-        self.totalData.textAlignment = NSTextAlignment.Left
-        self.totalData.borderStyle = UITextBorderStyle.RoundedRect
-        self.totalData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.totalData.backgroundColor = UIColor.whiteColor()
-        self.totalData.textColor = UIColor.blackColor()
+        self.totalData = UITextField.inputTextField()
+        self.totalData.frame = CGRectMake(total.frame.maxX, total.frame.minY, self.view.frame.size.width-total.frame.maxX-20, 30)
         self.totalData.placeholder = "请输入金额..."
         self.totalData.text = lastStr
         self.totalData.becomeFirstResponder() //界面打开时就获取焦点

@@ -44,7 +44,11 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         }
         
         if self.accountData.text == nil {
-            self.accountData.text = accountArray.objectAtIndex(0) as? String
+            if accountArray.containsObject("早中晚餐"){
+                self.accountData.text = "早中晚餐"
+            }else{
+                self.accountData.text = accountArray.objectAtIndex(0) as? String
+            }
         }
     }
     
@@ -57,80 +61,47 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         let gap = CGFloat(10)
         
         let numberUsedSize = sizeWithText("支出类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let numberUsed = UILabel(frame: CGRectMake(20, 90, numberUsedSize.width, 30))
-        numberUsed.font = introduceFont
-        numberUsed.textAlignment = NSTextAlignment.Left
-        numberUsed.backgroundColor = UIColor.clearColor()
-        numberUsed.textColor = UIColor.blackColor()
+        let numberUsed = UILabel.introduceLabel()
+        numberUsed.frame = CGRectMake(20, 90, numberUsedSize.width, 30)
         numberUsed.text = "金额："
         self.view.addSubview(numberUsed)
         
-        let whereUsed = UILabel(frame: CGRectMake(20, numberUsed.frame.maxY+gap, numberUsedSize.width, 30))
-        whereUsed.font = introduceFont
-        whereUsed.textAlignment = NSTextAlignment.Left
-        whereUsed.backgroundColor = UIColor.clearColor()
-        whereUsed.textColor = UIColor.blackColor()
+        let whereUsed = UILabel.introduceLabel()
+        whereUsed.frame = CGRectMake(20, numberUsed.frame.maxY+gap, numberUsedSize.width, 30)
         whereUsed.text = "用处："
         self.view.addSubview(whereUsed)
         
-        self.numberUsedData = UITextField(frame: CGRectMake(numberUsed.frame.maxX, numberUsed.frame.minY, self.view.frame.size.width-numberUsed.frame.maxX-20, 30))
-        self.numberUsedData.font = introduceFont
-        self.numberUsedData.textAlignment = NSTextAlignment.Left
-        self.numberUsedData.borderStyle = UITextBorderStyle.RoundedRect
-        self.numberUsedData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.numberUsedData.backgroundColor = UIColor.whiteColor()
-        self.numberUsedData.textColor = UIColor.blackColor()
+        self.numberUsedData = UITextField.inputTextField()
+        self.numberUsedData.frame = CGRectMake(numberUsed.frame.maxX, numberUsed.frame.minY, self.view.frame.size.width-numberUsed.frame.maxX-20, 30)
         self.numberUsedData.placeholder = "请输入金额..."
         self.numberUsedData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
         self.numberUsedData.becomeFirstResponder() //界面打开时就获取焦点
         self.numberUsedData.returnKeyType = UIReturnKeyType.Done //表示完成输入
         self.view.addSubview(self.numberUsedData)
         
-        self.whereUsedData = UITextField(frame: CGRectMake(whereUsed.frame.maxX, whereUsed.frame.minY, self.view.frame.size.width-whereUsed.frame.maxX-20, 30))
-        self.whereUsedData.font = introduceFont
-        self.whereUsedData.textAlignment = NSTextAlignment.Left
-        self.whereUsedData.borderStyle = UITextBorderStyle.RoundedRect
-        self.whereUsedData.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.whereUsedData.backgroundColor = UIColor.whiteColor()
-        self.whereUsedData.textColor = UIColor.blackColor()
+        self.whereUsedData = UITextField.inputTextField()
+        self.whereUsedData.frame = CGRectMake(whereUsed.frame.maxX, whereUsed.frame.minY, self.view.frame.size.width-whereUsed.frame.maxX-20, 30)
         self.whereUsedData.placeholder = "请输入用处..."
-        self.whereUsedData.text = "早中晚餐"
         self.view.addSubview(self.whereUsedData)
         
-        let account = UILabel(frame: CGRectMake(20, whereUsed.frame.maxY+gap, numberUsedSize.width, 30))
-        account.font = introduceFont
-        account.textAlignment = NSTextAlignment.Left
-        account.backgroundColor = UIColor.clearColor()
-        account.textColor = UIColor.blackColor()
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, whereUsed.frame.maxY+gap, numberUsedSize.width, 30)
         account.text = "支出类型："
         self.view.addSubview(account)
         
-        self.accountData = UILabel(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
-        self.accountData.textAlignment = NSTextAlignment.Left
-        self.accountData.backgroundColor = UIColor.whiteColor()
-        self.accountData.textColor = UIColor.blackColor()
-        self.accountData.layer.masksToBounds = true
-        self.accountData.layer.cornerRadius = 3
-        self.accountData.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(goSelectAccount))
-        self.accountData.addGestureRecognizer(tap)
+        self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
+        self.accountData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountData)
         
-        
-        isCreditCheck = UIButton(type: UIButtonType.Custom)
+        isCreditCheck = UIButton.checkButton(self, selector: #selector(isCreditSeleted))
         isCreditCheck.frame = CGRect(x: 20, y: account.frame.maxY+gap+5, width: 20, height: 20)
-        isCreditCheck.setImage(UIImage(named: "CheckOff"), forState:UIControlState.Normal)
-        isCreditCheck.setImage(UIImage(named: "CheckOn"), forState:UIControlState.Selected)
-        isCreditCheck.addTarget(self, action: #selector(AddCashViewController.isCreditSeleted), forControlEvents:.TouchUpInside)
         isCreditCheck.selected = false
         self.view.addSubview(isCreditCheck)
         
         let size1 = sizeWithText("信用账号", font: introduceFont, maxSize: CGSizeMake(Width, 30))
-        let isCreditCheckButtonText = UILabel(frame: CGRect(x: isCreditCheck.frame.maxX+10, y: isCreditCheck.frame.minY-5, width: size1.width, height: 30))
+        let isCreditCheckButtonText = UILabel.introduceLabel()
+        isCreditCheckButtonText.frame = CGRectMake(isCreditCheck.frame.maxX+10, isCreditCheck.frame.minY-5, size1.width, 30)
         isCreditCheckButtonText.text = "信用账号"
-        isCreditCheckButtonText.textAlignment = NSTextAlignment.Left
-        isCreditCheckButtonText.font = introduceFont
-        isCreditCheckButtonText.textColor = UIColor.blackColor()
         isCreditCheckButtonText.userInteractionEnabled = true //打开点击事件
         let tap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCashViewController.isCreditSeleted))
         isCreditCheckButtonText.addGestureRecognizer(tap1)
@@ -145,7 +116,6 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     func goSelectAccount(){
-        
         let vc = CostNameListViewController()
         vc.delegate = self
         let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏

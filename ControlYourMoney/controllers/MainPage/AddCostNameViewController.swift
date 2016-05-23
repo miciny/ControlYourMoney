@@ -32,22 +32,13 @@ class AddCostNameViewController: UIViewController {
         let gap = CGFloat(10)
         
         let accountSize = sizeWithText("支出类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let account = UILabel(frame: CGRectMake(20, 90, accountSize.width, 30))
-        account.font = introduceFont
-        account.textAlignment = NSTextAlignment.Left
-        account.backgroundColor = UIColor.clearColor()
-        account.textColor = UIColor.blackColor()
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, 90, accountSize.width, 30)
         account.text = "支出类型："
         self.view.addSubview(account)
         
-        
-        self.accountText = UITextField(frame: CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30))
-        self.accountText.font = introduceFont
-        self.accountText.textAlignment = NSTextAlignment.Left
-        self.accountText.borderStyle = UITextBorderStyle.RoundedRect
-        self.accountText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.accountText.backgroundColor = UIColor.whiteColor()
-        self.accountText.textColor = UIColor.blackColor()
+        self.accountText = UITextField.inputTextField()
+        self.accountText.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.accountText.placeholder = "请输入类型名称..."
         self.accountText.keyboardType = UIKeyboardType.Default //激活时
         self.accountText.becomeFirstResponder() //界面打开时就获取焦点

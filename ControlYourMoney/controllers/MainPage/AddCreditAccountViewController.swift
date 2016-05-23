@@ -34,22 +34,13 @@ class AddCreditAccountViewController: UIViewController {
         let gap = CGFloat(10)
         
         let creditAccountSize = sizeWithText("信用账号：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
-        let creditAccount = UILabel(frame: CGRectMake(20, 90, creditAccountSize.width, 30))
-        creditAccount.font = introduceFont
-        creditAccount.textAlignment = NSTextAlignment.Left
-        creditAccount.backgroundColor = UIColor.clearColor()
-        creditAccount.textColor = UIColor.blackColor()
+        let creditAccount = UILabel.introduceLabel()
+        creditAccount.frame = CGRectMake(20, 90, creditAccountSize.width, 30)
         creditAccount.text = "信用账号："
         self.view.addSubview(creditAccount)
         
-        
-        self.creditAccountText = UITextField(frame: CGRectMake(creditAccount.frame.maxX, creditAccount.frame.minY, self.view.frame.size.width-creditAccount.frame.maxX-20, 30))
-        self.creditAccountText.font = introduceFont
-        self.creditAccountText.textAlignment = NSTextAlignment.Left
-        self.creditAccountText.borderStyle = UITextBorderStyle.RoundedRect
-        self.creditAccountText.clearButtonMode = UITextFieldViewMode.WhileEditing
-        self.creditAccountText.backgroundColor = UIColor.whiteColor()
-        self.creditAccountText.textColor = UIColor.blackColor()
+        self.creditAccountText = UITextField.inputTextField()
+        self.creditAccountText.frame = CGRectMake(creditAccount.frame.maxX, creditAccount.frame.minY, self.view.frame.size.width-creditAccount.frame.maxX-20, 30)
         self.creditAccountText.placeholder = "请输入信用账号..."
         self.creditAccountText.keyboardType = UIKeyboardType.Default //激活时
         self.creditAccountText.becomeFirstResponder() //界面打开时就获取焦点
