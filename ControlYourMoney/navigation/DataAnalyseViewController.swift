@@ -136,6 +136,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         self.title = "分析"
+        
     }
     
     //isfreshing中的代理方法

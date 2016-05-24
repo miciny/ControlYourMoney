@@ -89,7 +89,7 @@ public class BalloonMarker: ChartMarker{
     
     public override func refreshContent(entry entry: ChartDataEntry, highlight: ChartHighlight){
         let label = entry.value.description
-        labelns = label as NSString
+        labelns = NSString(format: "%.2f", Float(label as String)!)
         
         _drawAttributes.removeAll()
         _drawAttributes[NSFontAttributeName] = self.font
