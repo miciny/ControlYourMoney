@@ -36,6 +36,7 @@ class MCYCreditPieChartView: UIView {
         pieChart.descriptionText = title
         pieChart.setExtraOffsets(left: -10, top: 0, right: -10, bottom: -10)
         pieChart.noDataText = "无数据"
+        pieChart.userInteractionEnabled = false //不影响cell的交互
         
         pieChart.drawCenterTextEnabled = true
         
