@@ -76,7 +76,8 @@ let lastFont = UIFont.systemFontOfSize(standardFontNo+5) //可用字体大小
 let introduceFont = UIFont.systemFontOfSize(standardFontNo+3) //输入框前面文字的字体大小
 
 let detailTitleFont = UIFont.systemFontOfSize(standardFontNo+5) //tableView的cell的title
-let detailFont = UIFont.systemFontOfSize(standardFontNo+1) //输入框前面文字的字体大小
+let detailFont = UIFont.systemFontOfSize(standardFontNo+1) //文字的字体大小
+let useNumberFont = UIFont.systemFontOfSize(standardFontNo+35) //文字的字体大小
 
 let accountListTitleFont = UIFont.systemFontOfSize(standardFontNo-3)//字体大小
 
