@@ -84,18 +84,18 @@ class MainTableHeaderView: UIView {
         self.totalText.frame = CGRectMake(20, 0, totalSize.width , headerViewHeight/3)
         self.totalText.textAlignment = NSTextAlignment.Left
         self.totalText.font = totalFont
-        self.totalText.textColor = UIColor.redColor()
+        self.totalText.textColor = UIColor.blackColor()
         
         self.totalLabel.frame = CGRectMake(totalText.frame.maxX, 0, self.frame.width-totalText.frame.maxX-20 , headerViewHeight/3)
         self.totalLabel.textAlignment = NSTextAlignment.Right
         self.totalLabel.font = totalFont
-        self.totalLabel.textColor = UIColor.redColor()
+        self.totalLabel.textColor = UIColor.blueColor()
         
         let lastSize = sizeWithText("可用：", font: lastFont, maxSize: CGSizeMake(self.frame.width/2, headerViewHeight/3))
         self.lastText.frame = CGRectMake(20, headerViewHeight/3, lastSize.width , headerViewHeight/3)
         self.lastText.textAlignment = NSTextAlignment.Left
         self.lastText.font = lastFont
-        self.lastText.textColor = UIColor.blueColor()
+        self.lastText.textColor = UIColor.blackColor()
         
         self.lastLabel.frame = CGRectMake(lastText.frame.maxX, headerViewHeight/3, self.frame.width-lastText.frame.maxX-20, headerViewHeight/3)
         self.lastLabel.textAlignment = NSTextAlignment.Right
@@ -109,7 +109,7 @@ class MainTableHeaderView: UIView {
         self.shouldPayText.frame = CGRectMake(20, headerViewHeight*2/3, shouldPaySize.width, headerViewHeight/3)
         self.shouldPayText.textAlignment = NSTextAlignment.Left
         self.shouldPayText.font = lastFont
-        self.shouldPayText.textColor = UIColor.blueColor()
+        self.shouldPayText.textColor = UIColor.blackColor()
         
         self.shouldPayLabel.frame = CGRectMake(shouldPayText.frame.maxX, headerViewHeight*2/3, self.frame.width-shouldPayText.frame.maxX-20, headerViewHeight/3)
         self.shouldPayLabel.textAlignment = NSTextAlignment.Right
@@ -140,14 +140,26 @@ class MainTableHeaderView: UIView {
             }
             
             //计算信用卡全部应还
-            self.creditTotal = -GetAnalyseData.getCreditTotalLeftPay()
+            self.creditTotal = GetAnalyseData.getCreditTotalLeftPay()
             
             //显示总金额，可用和应还
             let lastData = GetAnalyseData.getCanUseToFloat()
             
             dispatch_async(dispatch_get_main_queue(), {
-                self.total = String(self.creditTotal + lastData)
-                self.last = String(lastData)
+                if self.creditTotal > 3000{
+                    self.shouldPayLabel.textColor = UIColor.redColor()
+                }
+                
+                if lastData < 1000{
+                    self.lastLabel.textColor = UIColor.redColor()
+                }
+                
+                if -self.creditTotal + lastData < 1000{
+                    self.totalLabel.textColor = UIColor.redColor()
+                }
+                
+                self.total = String(-self.creditTotal + lastData)
+                self.last = String(format: "%.2f", lastData)
                 self.shouldPay = String(shouldPayData)
                 self.setUpLabelData()
             })

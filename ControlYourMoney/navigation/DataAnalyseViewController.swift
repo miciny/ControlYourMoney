@@ -109,7 +109,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             
             let cashOne = AnalysePageDataModul(pic: nil, name: self.cashOneStr, data: "\(todayUse)")
             let cashTwo = AnalysePageDataModul(pic: nil, name: self.cashTwoStr, data: "\(thisMonthUse)")
-            let cashThree = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: "\(canUse)")
+            let cashThree = AnalysePageDataModul(pic: nil, name: "现金目前余额", data: String(format: "%.2f", canUse))
             let cashFour = AnalysePageDataModul(pic: nil, name: self.cashFourStr, data: "\(thisMonthRealPay)") //本月现金支出和本月信用卡支出
             let cashFive = AnalysePageDataModul(pic: nil, name: self.cashFiveStr, data: "\(thisYearCashPayTotal)")
             let cashSix = AnalysePageDataModul(pic: nil, name: self.cashSixStr, data: "\(thisYearPayTotal)")

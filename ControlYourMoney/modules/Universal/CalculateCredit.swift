@@ -89,9 +89,11 @@ class CalculateCredit: NSObject {
         let time = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
         creditArray = creditArray.sortedArrayUsingDescriptors([time])
         
-        if creditArray.count == 0 {
+        guard creditArray.count > 0 else{
+            print("excute guard")
             return
         }
+        
         let timeNow = getTime()
         for i in 0 ..< creditArray.count {
             let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期

@@ -10,6 +10,18 @@ import UIKit
 
 class GetAnalyseData: NSObject {
     
+    //本月目前每日支出
+    class func getEveryDayPay() -> [Float]{
+        var todayUse = [Float]()
+        let timeNow = getTime()
+        
+        for i in 1 ..< timeNow.currentDay+1 {
+            let single = getDayPay(i)
+            todayUse.append(single)
+        }
+        return todayUse
+    }
+    
     //1月到12月，每月现金实际支出
     class func getEveryMonthPay() -> [Float]{
         var thisMonthUse = [Float]()
@@ -45,6 +57,28 @@ class GetAnalyseData: NSObject {
 
 //    实际
 /////////////////////////////////////////////////////////////////////////////////////
+    
+    //某天现金支出
+    class func getDayPay(day: Int) -> Float{
+        
+        var todayUse : Float = 0
+        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        
+        guard cashArray.count > 0 else{
+            return todayUse
+        }
+        
+        let timeNow = getTime()
+        let todayDayStr = dateToStringNoHH(stringToDateNoHH("\(timeNow.currentYear)-\(timeNow.currentMonth)-\(day)"))
+        
+        for i in 0  ..< cashArray.count{
+            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")
+            if(todayDayStr == dayStr){
+                todayUse = todayUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+            }
+        }
+        return todayUse
+    }
     
     //某月现金支出
     class func getMonthPay(yyyy: Int, month: Int) -> Float{

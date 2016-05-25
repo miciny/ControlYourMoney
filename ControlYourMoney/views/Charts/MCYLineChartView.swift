@@ -12,6 +12,7 @@ import Charts
 class MCYLineChartView: UIView {
     var lineChart: LineChartView!
     var delegate: ChartViewDelegate?
+    var visibleXRangeMaximum = CGFloat(12)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -112,6 +113,6 @@ class MCYLineChartView: UIView {
         dataSets.append(set1)
         
         lineChart.data = LineChartData(xVals: xVals, dataSets: dataSets)
-        lineChart.setVisibleXRangeMaximum(CGFloat(12))
+        lineChart.setVisibleXRangeMaximum(visibleXRangeMaximum)
     }
 }

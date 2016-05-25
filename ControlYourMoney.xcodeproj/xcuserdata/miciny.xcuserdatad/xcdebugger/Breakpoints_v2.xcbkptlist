@@ -9,13 +9,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ControlYourMoney/views/MainPage/MainTableViewCell.swift"
-            timestampString = "485843090.206949"
+            filePath = "ControlYourMoney/views/MainPage/MainTableHeaderView.swift"
+            timestampString = "485876637.003594"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "setUpCreditLabel()"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "setUpData()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ControlYourMoney/views/MainPage/MainTableHeaderView.swift"
+            timestampString = "485876637.003594"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "setUpData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

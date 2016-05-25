@@ -173,6 +173,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
     }
 
     func saveCredit(){
+        
         if !checkData() {
             return
         }

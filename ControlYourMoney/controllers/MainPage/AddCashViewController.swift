@@ -128,19 +128,24 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     func saveCash(){
         
-        if(self.numberUsedData.text == "" || self.whereUsedData.text == ""){
-            textAlertView("请输入金额和用处！")
+        guard let numberStr = self.numberUsedData.text where numberStr != "" else{
+            textAlertView("请输入金额！")
             return
         }
         
-        if(!stringIsFloat(self.numberUsedData.text! as String)){
+        guard let whereStr = self.whereUsedData.text where whereStr != "" else{
+            textAlertView("请输入用处！")
+            return
+        }
+        
+        if(!stringIsFloat(numberStr)){
             textAlertView("请输入正确金额！")
             return
         }
         
         //用的现金
         if !isCreditCheck.selected{
-            SQLLine.insertCashData(self.whereUsedData.text!, useNumber: Float(self.numberUsedData.text!)!, type: self.accountData.text!, time: getTime())
+            SQLLine.insertCashData(whereStr, useNumber: Float(numberStr)!, type: self.accountData.text!, time: getTime())
             
             CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
         }else{

@@ -19,7 +19,6 @@ enum dataTpye {
 class MainTableViewCell: UITableViewCell {
     
     var dataLable: UILabel?
-    var dataLine: UIView?
     var dataNumber1: UILabel?
     var dataNumber2: UILabel?
     var dataNumber11: UILabel?
@@ -30,7 +29,10 @@ class MainTableViewCell: UITableViewCell {
     var dataNumber2222: UILabel?
     var dataNumber111111: UILabel?
     
-    var creditCellHeight = CGFloat(120)
+    var creditCellHeight = CGFloat(130)
+    var cashDetailCellHeight = CGFloat(120)
+    var salaryCellHeight = CGFloat(90)
+    var salaryDetailCellHeight = CGFloat(120)
     
     var dataModul: AnyObject?
     
@@ -64,9 +66,6 @@ class MainTableViewCell: UITableViewCell {
         self.dataLable!.textAlignment = NSTextAlignment.Center
         self.dataLable!.backgroundColor = UIColor.clearColor()
         self.dataLable!.textColor = UIColor.blackColor()
-        
-        self.dataLine = UIView(frame: CGRectZero)
-        self.dataLine!.backgroundColor = UIColor.lightGrayColor()
         
         self.dataNumber1 = UILabel(frame: CGRectZero)
         self.dataNumber1!.font = detailFont
@@ -149,9 +148,9 @@ class MainTableViewCell: UITableViewCell {
         let strOne = "\(Int(modul.allPeriods)!-Int(modul.periods)!)/\(modul.allPeriods)"
         let strTwo = "每期:\(modul.number)"
         
-        let viewFrame = CGRect(x: 0, y: 0, width: creditCellHeight, height: creditCellHeight)
+        let viewFrame = CGRect(x: 0, y: 0, width: self.creditCellHeight, height: self.creditCellHeight)
         let pie = MCYCreditPieChartView(frame: viewFrame, title: "", holeText: strOne+"\n"+strTwo)
-        pie.frame = CGRect(x: Width*2/3+Width/6-creditCellHeight/2, y: 0, width: creditCellHeight, height: creditCellHeight)
+        pie.frame = CGRect(x: Width*2/3+Width/6-self.creditCellHeight/2, y: 0, width: self.creditCellHeight, height: self.creditCellHeight)
         pie.setPieChartData(titles, values: values)
         
         self.addSubview(pie)
@@ -162,7 +161,6 @@ class MainTableViewCell: UITableViewCell {
         
         
         self.addSubview(self.dataLable!)
-        self.addSubview(self.dataLine!)
         self.addSubview(self.dataNumber1!)
         self.addSubview(self.dataNumber2!)
         self.addSubview(self.dataNumber11!)
@@ -170,16 +168,19 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableSalaryModul
         
-        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
-        self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
+        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 300))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size2 = sizeWithText(modul.time, font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size3 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY+10, size1.width, 15)
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataLable!.frame.maxY+10, Width-self.dataNumber1!.frame.maxX-20, 15)
+        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, salaryCellHeight/3)
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
+        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRectMake(Width-size3.width-10, self.dataLable!.frame.maxY-10, size3.width, size3.height)
+        self.dataNumber2!.font = useNumberFont
+        
+        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, salaryCellHeight/3)
+        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, salaryCellHeight/3)
         
         self.dataLable!.text = modul.date
         self.dataNumber1!.text = "金额："
@@ -212,7 +213,7 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber1111!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size2.width, self.dataLable!.frame.height)
         self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataNumber1111!.frame.minY, size3.width, self.dataLable!.frame.height)
         
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber2222!.frame.maxX+20, self.dataNumber1!.frame.minY, size4.width, size4.height)
+        self.dataNumber2!.frame = CGRectMake(Width*5/6-self.creditCellHeight/2-10-size4.width, self.dataNumber1!.frame.minY, size4.width, size4.height)
         
         self.dataLable!.text = modul.useWhere
         self.dataNumber1!.text = "金额："
@@ -229,9 +230,9 @@ class MainTableViewCell: UITableViewCell {
         let strOne = "今日:\(modul.useTotalDayStr)"
         let strTwo = "平均:\(avg)"
         
-        let viewFrame = CGRect(x: 0, y: 0, width: creditCellHeight, height: creditCellHeight)
+        let viewFrame = CGRect(x: 0, y: 0, width: self.creditCellHeight, height: self.creditCellHeight)
         let pie = MCYCreditPieChartView(frame: viewFrame, title: "", holeText: strOne+"\n"+strTwo)
-        pie.frame = CGRect(x: Width*2/3+Width/6-creditCellHeight/2, y: 0, width: creditCellHeight, height: creditCellHeight)
+        pie.frame = CGRect(x: Width*2/3+Width/6-self.creditCellHeight/2, y: 0, width: self.creditCellHeight, height: self.creditCellHeight)
         pie.setPieChartData(titles, values: values)
         
         self.addSubview(pie)
@@ -241,8 +242,6 @@ class MainTableViewCell: UITableViewCell {
     func setUpCashDetailLabel(){
         
         self.addSubview(self.dataLable!)
-        self.addSubview(self.dataLine!)
-        self.addSubview(self.dataNumber1!)
         self.addSubview(self.dataNumber2!)
         self.addSubview(self.dataNumber11!)
         self.addSubview(self.dataNumber22!)
@@ -251,27 +250,29 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! CashDetailTableDataModul
         
-        let size = sizeWithText(modul.type, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
-        self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
+        let size = sizeWithText(modul.type, font: detailTitleFont, maxSize: CGSizeMake(Width, 100))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size2 = sizeWithText(modul.useWhere, font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size3 = sizeWithText(modul.useTime, font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size4 = sizeWithText(modul.useNumber, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY+10, size1.width, 15)
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataLable!.frame.maxY+10, Width-self.dataNumber1!.frame.maxX-20, 15)
+        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, cashDetailCellHeight/3)
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
+        self.dataNumber2!.frame = CGRectMake(Width-size4.width-10, self.dataLable!.frame.maxY-10, size4.width, self.dataLable!.frame.height)
+        self.dataNumber2!.font = useNumberFont
         
-        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+50, size1.width, 15)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataLable!.frame.maxY+50, Width-self.dataNumber111!.frame.maxX-20, 15)
+        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, self.dataLable!.frame.height)
+        
+        self.dataNumber111!.frame = CGRectMake(20, self.dataNumber11!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, size3.width, self.dataNumber111!.frame.height)
         
         self.dataLable!.text = modul.type
-        self.dataNumber1!.text = "金额："
         self.dataNumber2!.text = modul.useNumber
-        self.dataNumber11!.text = "时间："
-        self.dataNumber22!.text = modul.useTime
-        self.dataNumber111!.text = "用途："
-        self.dataNumber222!.text = modul.useWhere
+        self.dataNumber111!.text = "时间："
+        self.dataNumber222!.text = modul.useTime
+        self.dataNumber11!.text = "用途："
+        self.dataNumber22!.text = modul.useWhere
         
     }
     
@@ -279,8 +280,6 @@ class MainTableViewCell: UITableViewCell {
     func setUpSalaryDetailLabel(){
         
         self.addSubview(self.dataLable!)
-        self.addSubview(self.dataLine!)
-        self.addSubview(self.dataNumber1!)
         self.addSubview(self.dataNumber2!)
         self.addSubview(self.dataNumber11!)
         self.addSubview(self.dataNumber22!)
@@ -289,27 +288,29 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! SalaryDetailTableDataModul
         
-        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
-        self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
+        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 300))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size2 = sizeWithText(modul.type, font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size3 = sizeWithText(modul.time, font: detailFont, maxSize: CGSizeMake(Width, 300))
+        let size4 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY+10, size1.width, 15)
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataLable!.frame.maxY+10, Width-self.dataNumber1!.frame.maxX-20, 15)
+        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, salaryDetailCellHeight/3)
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
+        self.dataNumber2!.frame = CGRectMake(Width-size4.width-10, self.dataLable!.frame.maxY-10, size4.width, self.dataLable!.frame.height)
+        self.dataNumber2!.font = useNumberFont
         
-        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+50, size1.width, 15)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataLable!.frame.maxY+50, Width-self.dataNumber111!.frame.maxX-20, 15)
+        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, self.dataLable!.frame.height)
+        
+        self.dataNumber111!.frame = CGRectMake(20, self.dataNumber11!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, size3.width, self.dataNumber111!.frame.height)
         
         self.dataLable!.text = modul.date
-        self.dataNumber1!.text = "金额："
         self.dataNumber2!.text = modul.number
-        self.dataNumber11!.text = "时间："
-        self.dataNumber22!.text = modul.time
-        self.dataNumber111!.text = "来源："
-        self.dataNumber222!.text = modul.type
+        self.dataNumber111!.text = "时间："
+        self.dataNumber222!.text = modul.time
+        self.dataNumber11!.text = "来源："
+        self.dataNumber22!.text = modul.type
         
     }
     
@@ -317,7 +318,6 @@ class MainTableViewCell: UITableViewCell {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func awakeFromNib() {
         super.awakeFromNib()
