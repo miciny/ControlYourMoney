@@ -27,7 +27,6 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         setScroll()
         addMonthCostLine()
         addMonthPreLine()
-        addPie()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -95,26 +94,10 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         monthPreLine = MCYLineChartView(frame: viewFrame, title: "预计月支出", scaleEnabled: false)
         monthPreLine.frame = CGRect(x: 0, y: monthCostLine.frame.maxY+20, width: Width, height: Width/2)
         scrollView.addSubview(monthPreLine)
+        
+        scrollView.contentSize = CGSize(width: Width, height: monthPreLine.frame.maxY+20)
     }
     
-    var pie : MCYCreditPieChartView!
-    func addPie(){
-        
-        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
-        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0]
-        
-        let viewFrame = CGRect(x: 5, y: 0, width: Width/2, height: Width/2)
-        pie = MCYCreditPieChartView(frame: viewFrame, title: "预计月支出", scaleEnabled: false)
-        pie.frame = CGRect(x: 0, y: monthPreLine.frame.maxY+20, width: Width/2, height: Width/2)
-        pie.delegate = self
-//        pie.backgroundColor = UIColor.grayColor()
-//        pie.setPieChartData(2, range: 20)
-        
-        pie.setChart(months, values: unitsSold)
-        scrollView.addSubview(pie)
-        
-        scrollView.contentSize = CGSize(width: Width, height: pie.frame.maxY+20)
-    }
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
         print(dataSetIndex)

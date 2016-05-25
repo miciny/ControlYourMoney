@@ -158,12 +158,12 @@ class GetDataArray: NSObject {
         
         for i in 0 ..< creditArrayCount {
             let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-            let number = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float) // 每期还款金额
-            let all = "-" + String(Float(creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger) *
-                (creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float)) // 总还款金额
+            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+            let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
             let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
             let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  //  总还款期数
             
             let title = accout! + "—" + type
             
@@ -172,7 +172,7 @@ class GetDataArray: NSObject {
             
             if leftPeriods > 0 {
                 let periodsStr = String(leftPeriods) //
-                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: number, title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type)
+                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
                 creditModul.append(tempCreditModul)
             }
         }

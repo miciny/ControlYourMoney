@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ControlYourMoney/views/Charts/MCYCreditPieChartView.swift"
-            timestampString = "485776443.178106"
+            filePath = "ControlYourMoney/views/MainPage/MainTableViewCell.swift"
+            timestampString = "485843090.206949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "setChart(_:values:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ControlYourMoney/views/Charts/MCYCreditPieChartView.swift"
-            timestampString = "485776443.178106"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "setChart(_:values:)"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "setUpCreditLabel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

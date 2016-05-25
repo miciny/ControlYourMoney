@@ -30,6 +30,8 @@ class MainTableViewCell: UITableViewCell {
     var dataNumber2222: UILabel?
     var dataNumber111111: UILabel?
     
+    var creditCellHeight = CGFloat(120)
+    
     var dataModul: AnyObject?
     
     init(data: AnyObject, dataType: dataTpye, reuseIdentifier cellId:String){
@@ -119,11 +121,6 @@ class MainTableViewCell: UITableViewCell {
     func setUpCreditLabel(){
         
         self.addSubview(self.dataLable!)
-        self.addSubview(self.dataLine!)
-        self.addSubview(self.dataNumber1!)
-        self.addSubview(self.dataNumber2!)
-        self.addSubview(self.dataNumber11!)
-        self.addSubview(self.dataNumber22!)
         self.addSubview(self.dataNumber111!)
         self.addSubview(self.dataNumber222!)
         self.addSubview(self.dataNumber1111!)
@@ -131,33 +128,33 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableCreditModul
         
-        let size = sizeWithText(modul.title, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
+        let size = sizeWithText(modul.title, font: detailTitleFont, maxSize: CGSizeMake(Width, creditCellHeight/3))
         let size1 = sizeWithText("剩余周期：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width-size.width)/2, 0, size.width, 30)
-        self.dataLine!.frame = CGRectMake(self.dataLable!.frame.minX, self.dataLable!.frame.maxY+2, size.width, 1)
+        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, creditCellHeight/3)
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY+10, size1.width, 15)
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataLable!.frame.maxY+10, Width-self.dataNumber1!.frame.maxX-20, 15)
-        
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, 15)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataLable!.frame.maxY+30, Width-self.dataNumber11!.frame.maxX-20, 15)
-        
-        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+50, size1.width, 15)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataLable!.frame.maxY+50, Width-self.dataNumber111!.frame.maxX-20, 15)
-        
-        self.dataNumber1111!.frame = CGRectMake(20, self.dataLable!.frame.maxY+70, size1.width, 15)
-        self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataLable!.frame.maxY+70, Width-self.dataNumber1111!.frame.maxX-20, 15)
+        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, Width*2/3-self.dataNumber111!.frame.maxX-10, self.dataLable!.frame.height)
+
+        self.dataNumber1111!.frame = CGRectMake(20, self.dataNumber111!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataNumber1111!.frame.minY, Width*2/3-self.dataNumber1111!.frame.maxX-10, self.dataLable!.frame.height)
         
         self.dataLable!.text = modul.title
-        self.dataNumber1!.text = "剩余周期："
-        self.dataNumber2!.text = modul.periods
-        self.dataNumber11!.text = "还款金额："
-        self.dataNumber22!.text = modul.number
         self.dataNumber111!.text = "还款时间："
         self.dataNumber222!.text = modul.time
         self.dataNumber1111!.text = "还款总额："
         self.dataNumber2222!.text = modul.all
         
+        let titles = ["", ""] //["已还周期", "未还周期"]
+        let values : [Double] = [Double(modul.allPeriods)!-Double(modul.periods)!, Double(modul.periods)!]
+        let strOne = "\(Int(modul.allPeriods)!-Int(modul.periods)!)/\(modul.allPeriods)"
+        let strTwo = "每期:\(modul.number)"
+        
+        let viewFrame = CGRect(x: 0, y: 0, width: creditCellHeight, height: creditCellHeight)
+        let pie = MCYCreditPieChartView(frame: viewFrame, title: "", holeText: strOne+"\n"+strTwo)
+        pie.frame = CGRect(x: Width*2/3+Width/6-creditCellHeight/2, y: 0, width: creditCellHeight, height: creditCellHeight)
+        pie.setPieChartData(titles, values: values)
+        
+        self.addSubview(pie)
     }
     
     //设置工资的label

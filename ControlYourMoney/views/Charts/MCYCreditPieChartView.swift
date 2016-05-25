@@ -11,7 +11,6 @@ import Charts
 
 class MCYCreditPieChartView: UIView {
     var pieChart: PieChartView!
-    var delegate: ChartViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,80 +20,64 @@ class MCYCreditPieChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(frame: CGRect, title: String, scaleEnabled: Bool) {
+    convenience init(frame: CGRect, title: String, holeText: String) {
         self.init()
-        setUpPieChart(frame, title: title)
+        setUpPieChart(frame, title: title, holeText: holeText)
     }
     
-    func setUpPieChart(frame: CGRect, title: String){
+    func setUpPieChart(frame: CGRect, title: String, holeText:String){
         pieChart = PieChartView()
         pieChart.frame = frame
         
-        pieChart.usePercentValuesEnabled = true
+        pieChart.usePercentValuesEnabled = true  //百分百显示
         pieChart.drawSlicesUnderHoleEnabled = false
-        pieChart.holeRadiusPercent = 0.58
-        pieChart.transparentCircleRadiusPercent = 0.61
+        pieChart.holeRadiusPercent = 0.9 //图表中间的半径
+        pieChart.transparentCircleRadiusPercent = 0.68
         pieChart.descriptionText = title
-        pieChart.setExtraOffsets(left: 5, top: 10, right: 5, bottom: 5)
+        pieChart.setExtraOffsets(left: -10, top: 0, right: -10, bottom: -10)
         pieChart.noDataText = "无数据"
         
         pieChart.drawCenterTextEnabled = true
         
-        let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        paragraphStyle.alignment = NSTextAlignment.Center
-        
-        let centerText = NSMutableAttributedString(string: "iOS Charts\nby Daniel Cohen Gindi")
-        centerText.addAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size:12)!, NSParagraphStyleAttributeName: paragraphStyle], range: NSMakeRange(0, centerText.length))
-        
-        centerText.addAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size:10)!, NSParagraphStyleAttributeName: UIColor.grayColor()], range: NSMakeRange(10, centerText.length - 10))
-        
-        centerText.addAttributes([NSFontAttributeName: UIFont(name: "HelveticaNeue-LightItalic", size:10)!, NSParagraphStyleAttributeName: UIColor(red: 51/255, green: 181/255, blue:229/255, alpha: 1)], range: NSMakeRange(centerText.length - 19, 19))
+        let centerText = NSMutableAttributedString(string: holeText)
         
         pieChart.centerAttributedText = centerText
         
-        pieChart.drawHoleEnabled = true
-        pieChart.rotationAngle = 0
+        pieChart.drawHoleEnabled = true //允许中间的文字
+        pieChart.rotationAngle = 270 //开始的角度
         pieChart.rotationEnabled = true
-        pieChart.highlightPerTapEnabled = true
+        pieChart.highlightPerTapEnabled = false //点击之后高亮
         
-        let l = pieChart.legend
+        let l = pieChart.legend  // 图例，暂时不需要
         l.horizontalAlignment = .Right
         l.verticalAlignment = .Top
         l.xEntrySpace = 7.0
         l.yEntrySpace = 0.0
         l.yOffset = 0.0
-        
-        pieChart.delegate = delegate
+        l.enabled = false //显不显示
+    
         self.addSubview(pieChart)
-        pieChart.animate(xAxisDuration: 1.4, easingOption: ChartEasingOption.EaseOutBack)
+//        pieChart.animate(xAxisDuration: 1.4, easingOption: ChartEasingOption.EaseOutBack) //动画
     }
     
-    func setPieChartData(count: Int, range: Double){
+    func setPieChartData(titles: [String], values: [Double]){
         var yVals = [ChartDataEntry]()
         var xVals = [String]()
-    
+        let count = titles.count
         for i in 0 ..< count{
-            yVals.append(ChartDataEntry(value: 0.5, xIndex: i))
+            yVals.append(ChartDataEntry(value: values[i], xIndex: i))
         }
     
         for i in 0 ..< count{
-            xVals.append(String(i+1))
+            xVals.append(titles[i])
         }
     
         let dataSet = PieChartDataSet(yVals: yVals, label: nil)
-        dataSet.sliceSpace = 1.0
+        dataSet.sliceSpace = 0 //每个弧度的间隔
         var colors = [UIColor]()
-        
-        for _ in 0 ..< count{
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
-        
+        colors.append(UIColor.greenColor())
+        colors.append(UIColor.redColor())
+        colors.append(UIColor.yellowColor())
         dataSet.colors = colors
     
         let data = PieChartData(xVals: xVals, dataSet: dataSet)
@@ -108,38 +91,9 @@ class MCYCreditPieChartView: UIView {
         data.setValueFormatter(pFormatter)
         data.setValueFont(UIFont(name: "HelveticaNeue-Light", size:11))
         data.setValueTextColor(UIColor.whiteColor())
+        data.setDrawValues(false) //不显示每个弧度的values
     
-        print(data.xVals)
-        print(data.dataSets)
-        
         pieChart.data = data
         pieChart.highlightValues(nil)
-    }
-    
-    func setChart(dataPoints: [String], values: [Double]) {
-        
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-            dataEntries.append(dataEntry)
-        }
-        
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "Units Sold")
-        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
-//        pieChart.data = pieChartData
-        
-        var colors: [UIColor] = []
-        
-        for _ in 0..<dataPoints.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
-        
-        pieChartDataSet.colors = colors
     }
 }
