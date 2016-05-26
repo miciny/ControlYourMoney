@@ -40,8 +40,15 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     thirdNav.tabBarItem.image=UIImage(named: "Chat")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     thirdNav.tabBarItem.selectedImage=UIImage(named: "Chat_Selected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     
+    //添加第四个试图,图表
+    let fourthVC = SettingViewController()
+    let fourthNav = UINavigationController(rootViewController: fourthVC)
+    fourthNav.tabBarItem.title = "设置"
+    fourthNav.tabBarItem.image=UIImage(named: "Chat")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    fourthNav.tabBarItem.selectedImage=UIImage(named: "Chat_Selected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     
-    self.viewControllers = [firstNav, secNav, thirdNav]            //添加至tab
+    
+    self.viewControllers = [firstNav, secNav, thirdNav, fourthNav]            //添加至tab
     
     //底部工具栏背景颜色，
     self.tabBar.barTintColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 0.5)

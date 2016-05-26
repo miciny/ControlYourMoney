@@ -81,8 +81,13 @@ let useNumberFont = UIFont.systemFontOfSize(standardFontNo+35) //文字的字体
 
 let accountListTitleFont = UIFont.systemFontOfSize(standardFontNo-3)//字体大小
 
+let explainFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
+
 let analyseTitleFont = UIFont.boldSystemFontOfSize(standardFontNo+2)//字体大小
 let analyseDataFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
+
+let settingPageNameFont = UIFont.systemFontOfSize(standardFontNo+2) //设置页字体大小
+let settingPageLableFont = UIFont.systemFontOfSize(standardFontNo) //设置页lable字体大小
 
 let myOwnAccount = "招商银行_"
 let myOwnAccountPayDay = Int(21)

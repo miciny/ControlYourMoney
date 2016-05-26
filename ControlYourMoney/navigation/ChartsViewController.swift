@@ -162,7 +162,10 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         let dataDic = GetAnalyseData.getIncomePercent()
         
         let allRealSalary = GetAnalyseData.getAllRealSalary()
-        let strOne = "\(allRealSalary)"
+        var strOne = "\(allRealSalary)"
+        if allRealSalary == 0{
+            strOne = "无数据"
+        }
         
         let viewFrame = CGRect(x: 0, y: 0, width: Width, height: Width*2/3)
         yearIncomePie = MCYPiePolyLineChartView(frame: viewFrame, title: "今年收入比例", holeText: strOne)

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		E126FC0D1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */; };
+		E126FC131CF6D86D00DAFF84 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC121CF6D86D00DAFF84 /* SettingViewController.swift */; };
+		E126FC191CF6D8D500DAFF84 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC181CF6D8D500DAFF84 /* SettingTableViewCell.swift */; };
+		E126FC1C1CF6D92600DAFF84 /* SettingDataModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC1B1CF6D92600DAFF84 /* SettingDataModul.swift */; };
+		E126FC1F1CF6E63C00DAFF84 /* ExplainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC1E1CF6E63C00DAFF84 /* ExplainViewController.swift */; };
 		E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662A11CEB203D00720304 /* ChartsViewController.swift */; };
 		E15662B91CEB225900720304 /* BalloonMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662B81CEB225900720304 /* BalloonMarkerView.swift */; };
 		E15662C41CEC2C4C00720304 /* AddIncomeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */; };
@@ -122,6 +126,10 @@
 
 /* Begin PBXFileReference section */
 		E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYPiePolyLineChartView.swift; sourceTree = "<group>"; };
+		E126FC121CF6D86D00DAFF84 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		E126FC181CF6D8D500DAFF84 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		E126FC1B1CF6D92600DAFF84 /* SettingDataModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDataModul.swift; sourceTree = "<group>"; };
+		E126FC1E1CF6E63C00DAFF84 /* ExplainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplainViewController.swift; sourceTree = "<group>"; };
 		E15662A11CEB203D00720304 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		E15662B81CEB225900720304 /* BalloonMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarkerView.swift; sourceTree = "<group>"; };
 		E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIncomeAccountViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +203,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E126FC171CF6D87B00DAFF84 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				E126FC181CF6D8D500DAFF84 /* SettingTableViewCell.swift */,
+			);
+			name = Setting;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Setting;
+			sourceTree = "<absolute>";
+		};
+		E126FC1A1CF6D8F100DAFF84 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				E126FC1B1CF6D92600DAFF84 /* SettingDataModul.swift */,
+			);
+			name = Setting;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/Setting;
+			sourceTree = "<absolute>";
+		};
+		E126FC1D1CF6E5FF00DAFF84 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				E126FC1E1CF6E63C00DAFF84 /* ExplainViewController.swift */,
+			);
+			name = Setting;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Setting;
+			sourceTree = "<absolute>";
+		};
 		E15662B71CEB220B00720304 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +399,7 @@
 				E15662A11CEB203D00720304 /* ChartsViewController.swift */,
 				E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */,
 				E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */,
+				E126FC121CF6D86D00DAFF84 /* SettingViewController.swift */,
 			);
 			name = navigation;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/navigation;
@@ -389,6 +425,7 @@
 		E19E01E91CE2C6F400A52C04 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E126FC1D1CF6E5FF00DAFF84 /* Setting */,
 				E16A67471CE56DBF005C35D9 /* AnalysePage */,
 				E16A67461CE56DB5005C35D9 /* Universal */,
 				E16A67451CE56DAF005C35D9 /* MainPage */,
@@ -400,6 +437,7 @@
 		E19E01EA1CE2C6FA00A52C04 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				E126FC171CF6D87B00DAFF84 /* Setting */,
 				E15662B71CEB220B00720304 /* Charts */,
 				E16A67441CE56DA2005C35D9 /* Universal */,
 				E16A67401CE56C99005C35D9 /* AnalysePage */,
@@ -422,6 +460,7 @@
 		E19E01EC1CE2C74700A52C04 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E126FC1A1CF6D8F100DAFF84 /* Setting */,
 				E16A67431CE56D8D005C35D9 /* Universal */,
 				E16A67421CE56D82005C35D9 /* AnalysePage */,
 				E16A67411CE56D7A005C35D9 /* MainPage */,
@@ -559,10 +598,13 @@
 				E16A676F1CE56E93005C35D9 /* AccountListTableViewCell.swift in Sources */,
 				E15662CA1CEC3C3A00720304 /* CostNameListViewController.swift in Sources */,
 				E16A67591CE56E52005C35D9 /* SalaryDetailTableViewController.swift in Sources */,
+				E126FC1F1CF6E63C00DAFF84 /* ExplainViewController.swift in Sources */,
 				E1C8CEDA1CEDCA2600452D17 /* RefreshHeaderView.swift in Sources */,
 				E16A67711CE56E93005C35D9 /* MainTableViewCell.swift in Sources */,
 				E1C8CEE51CEE02EF00452D17 /* GetAnalyseDataArray.swift in Sources */,
 				E1F655DB1CF30E91001C480E /* UILabelPadding.swift in Sources */,
+				E126FC1C1CF6D92600DAFF84 /* SettingDataModul.swift in Sources */,
+				E126FC191CF6D8D500DAFF84 /* SettingTableViewCell.swift in Sources */,
 				E18774981CE3289C00CBBBB3 /* Protocol.swift in Sources */,
 				E16A67801CE5730A005C35D9 /* MainTableSalaryModul.swift in Sources */,
 				E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */,
@@ -570,6 +612,7 @@
 				E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */,
 				E1ABCC811CE9C956005A359C /* MonthCostViewController.swift in Sources */,
 				E15662C81CEC38C700720304 /* AddCostNameViewController.swift in Sources */,
+				E126FC131CF6D86D00DAFF84 /* SettingViewController.swift in Sources */,
 				E18774881CE2D6A400CBBBB3 /* MainTableViewController.swift in Sources */,
 				E1F655D61CF2EBE8001C480E /* UILabelExtension.swift in Sources */,
 				E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */,
