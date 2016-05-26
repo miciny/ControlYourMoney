@@ -15,6 +15,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
     var monthCostLine: MCYLineChartView!
     var monthPreLine: MCYLineChartView!
     var dayCostLine: MCYLineChartView!
+    var yearCostPie: MCYPiePolyLineChartView!
+    var yearIncomePie: MCYPiePolyLineChartView!
     
     var isCounting = false
     
@@ -32,6 +34,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         addMonthCostLine()
         addMonthPreLine()
         addDayCostLine()
+        addCostPie()
+        addIncomePie()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -51,11 +55,21 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
                 let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
                 let thisMonthPayTotal = GetAnalyseData.getThisMonthUse()
                 
+                let dataDic1 = GetAnalyseData.getCostPercent()
+                let dataDic2 = GetAnalyseData.getIncomePercent()
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     wiatView.hideView()
                     self.monthCostLine.setLineChartData(self.months, ydata: self.monthsCost)
                     self.monthPreLine.setLineChartData(self.months, ydata: self.monthsPreCost)
                     self.dayCostLine.setLineChartData(self.days, ydata: self.daysCost)
+                    
+                    if dataDic1 != nil {
+                        self.yearCostPie.setPieChartData(dataDic1!)
+                    }
+                    if dataDic2 != nil {
+                        self.yearIncomePie.setPieChartData(dataDic2!)
+                    }
                     
                     self.monthCostLine.lineChart.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
                     self.monthPreLine.lineChart.descriptionText = "预计月支出(\(thisYearPayTotal))"
@@ -64,6 +78,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
                     self.monthCostLine.setNeedsDisplay()
                     self.monthPreLine.setNeedsDisplay()
                     self.dayCostLine.setNeedsDisplay()
+                    self.yearCostPie.setNeedsDisplay()
+                    self.yearIncomePie.setNeedsDisplay()
                     self.isCounting = false
                 })
             })
@@ -121,8 +137,44 @@ class ChartsViewController: UIViewController, ChartViewDelegate{
         dayCostLine.frame = CGRect(x: 0, y: monthPreLine.frame.maxY+20, width: Width, height: Width/2)
         dayCostLine.visibleXRangeMaximum = CGFloat(getTime().currentDay)
         scrollView.addSubview(dayCostLine)
+    }
+    
+    //设置第四个饼状图
+    func addCostPie(){
+        let dataDic = GetAnalyseData.getCostPercent()
         
-        scrollView.contentSize = CGSize(width: Width, height: dayCostLine.frame.maxY+20)
+        let thisYearPayTotal = GetAnalyseData.getThisYearPayTotal() + GetAnalyseData.getCreditThisYearTotalPay()
+        let strOne = "\(thisYearPayTotal)"
+        
+        let viewFrame = CGRect(x: 0, y: 0, width: Width, height: Width*2/3)
+        yearCostPie = MCYPiePolyLineChartView(frame: viewFrame, title: "今年花费比例", holeText: strOne)
+        yearCostPie.frame = CGRect(x: 0, y: dayCostLine.frame.maxY+20, width: Width, height: Width*2/3)
+        
+        if dataDic != nil {
+            yearCostPie.setPieChartData(dataDic!)
+        }
+        
+        self.scrollView.addSubview(yearCostPie)
+    }
+    
+    //设置第五个饼状图
+    func addIncomePie(){
+        let dataDic = GetAnalyseData.getIncomePercent()
+        
+        let allRealSalary = GetAnalyseData.getAllRealSalary()
+        let strOne = "\(allRealSalary)"
+        
+        let viewFrame = CGRect(x: 0, y: 0, width: Width, height: Width*2/3)
+        yearIncomePie = MCYPiePolyLineChartView(frame: viewFrame, title: "今年收入比例", holeText: strOne)
+        yearIncomePie.frame = CGRect(x: 0, y: yearCostPie.frame.maxY+20, width: Width, height: Width*2/3)
+        
+        if dataDic != nil {
+            yearIncomePie.setPieChartData(dataDic!)
+        }
+        
+        self.scrollView.addSubview(yearIncomePie)
+        
+        scrollView.contentSize = CGSize(width: Width, height: yearIncomePie.frame.maxY+20)
     }
     
     

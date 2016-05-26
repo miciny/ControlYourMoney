@@ -228,7 +228,7 @@ class MainTableViewCell: UITableViewCell {
         let avg = Double(modul.useTotalStr)!/Double(dayOffset)
         let values : [Double] = [Double(modul.useTotalDayStr)!, avg]
         let strOne = "今日:\(modul.useTotalDayStr)"
-        let strTwo = "平均:\(avg)"
+        let strTwo = "平均:\(String(format: "%.2f", avg))"
         
         let viewFrame = CGRect(x: 0, y: 0, width: self.creditCellHeight, height: self.creditCellHeight)
         let pie = MCYCreditPieChartView(frame: viewFrame, title: "", holeText: strOne+"\n"+strTwo)

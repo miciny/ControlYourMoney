@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E126FC0D1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */; };
 		E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662A11CEB203D00720304 /* ChartsViewController.swift */; };
 		E15662B91CEB225900720304 /* BalloonMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662B81CEB225900720304 /* BalloonMarkerView.swift */; };
 		E15662C41CEC2C4C00720304 /* AddIncomeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */; };
@@ -120,6 +121,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYPiePolyLineChartView.swift; sourceTree = "<group>"; };
 		E15662A11CEB203D00720304 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		E15662B81CEB225900720304 /* BalloonMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarkerView.swift; sourceTree = "<group>"; };
 		E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIncomeAccountViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				E15662B81CEB225900720304 /* BalloonMarkerView.swift */,
 				E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */,
 				E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */,
+				E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */,
 			);
 			name = Charts;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Charts;
@@ -571,6 +574,7 @@
 				E1F655D61CF2EBE8001C480E /* UILabelExtension.swift in Sources */,
 				E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */,
 				E16A677E1CE5730A005C35D9 /* MainTableCashModul.swift in Sources */,
+				E126FC0D1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift in Sources */,
 				E1C8CEDF1CEDCBC000452D17 /* AutoLayout.swift in Sources */,
 				E16A677F1CE5730A005C35D9 /* MainTableCreditModul.swift in Sources */,
 				E16A67541CE56E52005C35D9 /* AddCreditViewController.swift in Sources */,

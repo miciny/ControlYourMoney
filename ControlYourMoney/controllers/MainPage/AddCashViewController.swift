@@ -149,8 +149,6 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             
             CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
         }else{
-            var isIn = false
-            var index = 0
             let timeNow = getTime()
             var account = String()
             
@@ -166,41 +164,25 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
                 account = myOwnAccount + String(MM) + "月"
             }
             
-            let creditArray = SQLLine.selectAllData(entityNameOfCredit)
-            for i in 0 ..< creditArray.count {
-                let name = creditArray[i].valueForKey(creditNameOfAccount) as! String
-                if name == account{
-                    isIn = true
-                    index = i
-                    break
+            var refundDate = NSDate()
+            if(myOwnAccountBillDay < timeNow.currentDay){
+                let yyyy = timeNow.currentYear
+                let mm = timeNow.currentMonth
+                refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
+            }else{
+                var mm = timeNow.currentMonth-1
+                var yyyy = timeNow.currentYear
+                if mm == 0 {
+                    mm = 12
+                    yyyy -= 1
                 }
+                
+                refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
             }
             
-            if !isIn {
-                var refundDate = NSDate()
-                if(myOwnAccountBillDay < timeNow.currentDay){
-                    let yyyy = timeNow.currentYear
-                    let mm = timeNow.currentMonth
-                    refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
-                }else{
-                    var mm = timeNow.currentMonth-1
-                    var yyyy = timeNow.currentYear
-                    if mm == 0 {
-                        mm = 12
-                        yyyy -= 1
-                    }
-                    
-                    refundDate = stringToDateNoHH(String(yyyy) + "-" + String(mm) + "-" + String(myOwnAccountPayDay+1))
-                }
-                
-                let nextPayDay = CalculateCredit.getFirstPayDate(refundDate, day: myOwnAccountPayDay)
-                
-                SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1, type: self.accountData.text!)
-            }else{
-                let oldNumber = creditArray[index].valueForKey(creditNameOfNumber) as! Float
-                SQLLine.updateCreditDataSortedByTime(index, changeValue: oldNumber+Float(numberUsedData.text!)!, changeEntityName: creditNameOfNumber)
-               
-            }
+            let nextPayDay = CalculateCredit.getFirstPayDate(refundDate, day: myOwnAccountPayDay)
+            
+            SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1, type: self.accountData.text!)
         }
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

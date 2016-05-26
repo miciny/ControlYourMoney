@@ -9,7 +9,91 @@
 import UIKit
 
 class GetAnalyseData: NSObject {
+    //收入比例
+    class func getIncomePercent() -> NSMutableDictionary?{
+        let incomePercent = NSMutableDictionary()
+        let accountArray = SQLLine.selectAllData(entityNameOfIncomeName)
+        var nameArray = [String]()
+        
+        if accountArray.count == 0{
+            return nil
+        }
+        
+        for i in 0 ..< accountArray.count{
+            let name = accountArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
+            nameArray.append(name)
+        }
+        
+        let incomeArray = SQLLine.selectAllData(entityNameOfIncome)
+        if incomeArray.count > 0{
+            for i in 0  ..< incomeArray.count{
+                let type = incomeArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
+                if(nameArray.contains(type)){
+                    let number = incomeArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                    
+                    if let numberTemp = incomePercent.valueForKey(type){
+                        incomePercent.setValue((numberTemp as! Float)+number, forKey: type)
+                    }else{
+                        incomePercent.setValue(number, forKey: type)
+                    }
+                }
+            }
+        }
+        
+        return incomePercent
+    }
+
+    //花费比例
+    class func getCostPercent() -> NSMutableDictionary?{
+        let costPercent = NSMutableDictionary()
+        let accountArray = SQLLine.selectAllData(entityNameOfPayName)
+        var nameArray = [String]()
+        
+        if accountArray.count == 0{
+            return nil
+        }
+        
+        for i in 0 ..< accountArray.count{
+            let name = accountArray.objectAtIndex(i).valueForKey(payNameNameOfName) as! String
+            nameArray.append(name)
+        }
+        
+        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        if cashArray.count > 0{
+            for i in 0  ..< cashArray.count{
+                let type = cashArray.objectAtIndex(i).valueForKey(cashNameOfType) as! String
+                if(nameArray.contains(type)){
+                    let number = cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float
+                    
+                    if let numberTemp = costPercent.valueForKey(type){
+                        costPercent.setValue((numberTemp as! Float)+number, forKey: type)
+                    }else{
+                        costPercent.setValue(number, forKey: type)
+                    }
+                }
+            }
+        }
+        
+        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        if creditArray.count > 0 {
+            for i in 0  ..< creditArray.count{
+                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
+                if nameArray.contains(type){
+                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
+                    let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+                    
+                    if let numberTemp = costPercent.valueForKey(type){
+                        costPercent.setValue((numberTemp as! Float)+number*Float(periods), forKey: type)
+                    }else{
+                        costPercent.setValue(number*Float(periods), forKey: type)
+                    }
+                }
+            }
+        }
+        return costPercent
+    }
     
+/////////////////////////////////////////////////////////////////////////////////////
     //本月目前每日支出
     class func getEveryDayPay() -> [Float]{
         var todayUse = [Float]()

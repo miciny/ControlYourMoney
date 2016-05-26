@@ -11,10 +11,7 @@ import CoreData
 
 class MainTableViewController: UITableViewController, mainHeaderChangeLastDelegate{
     
-    var AllData: NSMutableDictionary!
-    let keyOfCash = "记账"
-    let keyOfCredit = "信用"
-    let keyOfIncome = "收入"
+    var AllData: NSMutableArray!
     var headerView: MainTableHeaderView?
     
     override func viewDidLoad() {
@@ -31,25 +28,26 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //获取数据
     func setUpData(){
-        AllData = NSMutableDictionary()
+        AllData = NSMutableArray()
         let creditModul =  GetDataArray.getCreditShowArray()
         let salaryModul =  GetDataArray.getSalaryShowArray()
         let cashModul =  GetDataArray.getCashShowArray()
         
+        
+        if cashModul != nil {
+            AllData.addObject([keyOfCash: cashModul!])
+        }
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.addObject([keyOfCredit: creditModul!])
         }
         if salaryModul != nil {
-            AllData.setObject(salaryModul!, forKey: keyOfIncome)
-        }
-        if cashModul != nil {
-            AllData.setObject(cashModul!, forKey: keyOfCash)
+            AllData.addObject([keyOfIncome: salaryModul!])
         }
     }
     
     //title,左边按钮和右边按钮
     func setUpTitle(){
-        AllData = NSMutableDictionary()
+        AllData = NSMutableArray()
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         
         self.title = "首页"
@@ -109,31 +107,38 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return AllData.allKeys.count
+        return AllData.count
         
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //行用卡全显示，工资显示一个，记账显示一个
-        return (AllData.allValues[section] as! NSArray).count
+        let dic = AllData[section] as! NSDictionary
+        let key = dic.allKeys[0] as! String
+        let values = dic.valueForKey(key) as! NSArray
+        return values.count
         
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
-            let data = AllData.valueForKey(keyOfCash)?.objectAtIndex(indexPath.row) as! MainTableCashModul
+        let dic = AllData[indexPath.section] as! NSDictionary
+        let key = dic.allKeys[0] as! String
+        let values = dic.valueForKey(key) as! NSArray
+        
+        if(key == keyOfCash){
+            let data = values.objectAtIndex(indexPath.row) as! MainTableCashModul
             let cell = MainTableViewCell(data: data, dataType: dataTpye.cash, reuseIdentifier: "cell")
             return cell
             
-        }else if((AllData.allKeys[indexPath.section] as? String) == keyOfCredit){
-            let data = AllData.valueForKey(keyOfCredit)?.objectAtIndex(indexPath.row) as! MainTableCreditModul
+        }else if(key == keyOfCredit){
+            let data = values.objectAtIndex(indexPath.row) as! MainTableCreditModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.credit, reuseIdentifier: "cell")
             return cell
             
-        }else{ // if((textData.allKeys[indexPath.section] as? String) == keyOfSalary)
-            let data = AllData.valueForKey(keyOfIncome)?.objectAtIndex(indexPath.row) as! MainTableSalaryModul
+        }else{ // if(key == keyOfSalary)
+            let data = values.objectAtIndex(indexPath.row) as! MainTableSalaryModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.salary, reuseIdentifier: "cell")
             return cell
@@ -141,13 +146,15 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
+        let dic = AllData[indexPath.section] as! NSDictionary
+        let key = dic.allKeys[0] as! String
+        if(key == keyOfCash){
             return 130
             
-        }else if((AllData.allKeys[indexPath.section] as? String) == keyOfCredit){
+        }else if(key == keyOfCredit){
             return 130
             
-        }else{ // if((textData.allKeys[indexPath.section] as? String) == keyOfSalary)
+        }else{ // if(key == keyOfSalary)
             return 90
         }
     }
@@ -156,20 +163,23 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     //cell点击事件
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)
+        let dic = AllData[indexPath.section] as! NSDictionary
+        let key = dic.allKeys[0] as! String
         
-        if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
+        if(key == keyOfCash){
             let vc = CashDetailTableViewController()
             vc.showData =  GetDataArray.getCashDetailShowArray()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if((AllData.allKeys[indexPath.section] as? String) == keyOfIncome){
+        }else if(key == keyOfIncome){
             let vc = SalaryDetailTableViewController()
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
+            let values = dic.valueForKey(key) as! NSArray
             let vc = ChangeCreditViewController()
             vc.hidesBottomBarWhenPushed = true
-            let data = AllData.valueForKey(keyOfCredit)?.objectAtIndex(indexPath.row) as! MainTableCreditModul
+            let data = values.objectAtIndex(indexPath.row) as! MainTableCreditModul
             
             vc.recivedData = data
             vc.changeIndex = indexPath.row
@@ -179,7 +189,9 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //section的title
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return AllData.allKeys[section] as? String
+        let dic = AllData[section] as! NSDictionary
+        let key = dic.allKeys[0] as! String
+        return key
     }
 }
 

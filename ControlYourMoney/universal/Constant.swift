@@ -63,9 +63,9 @@ let costNameOfPeriod = "period" //0代表每月，1代表一年
 
 let addArray = ["信用卡（电子分期）","收入"]
 
-let keyOfIncome = "收入"
-let keyOfCash = "记账"
-let keyOfCredit = "信用"
+let keyOfIncome = "收入详情"
+let keyOfCash = "现金记账"
+let keyOfCredit = "信用还款"
 
 let standardFontNo = CGFloat(15)
 let standardFont = UIFont.systemFontOfSize(standardFontNo) //标准字体大小

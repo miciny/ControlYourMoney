@@ -1,15 +1,15 @@
 //
-//  MCYCreditPieChartView.swift
+//  MCYPiePolyLineView.swift
 //  ControlYourMoney
 //
-//  Created by maocaiyuan on 16/5/24.
+//  Created by maocaiyuan on 16/5/26.
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
 import UIKit
 import Charts
 
-class MCYCreditPieChartView: UIView {
+class MCYPiePolyLineChartView: UIView {
     var pieChart: PieChartView!
     
     override init(frame: CGRect) {
@@ -31,10 +31,10 @@ class MCYCreditPieChartView: UIView {
         
         pieChart.usePercentValuesEnabled = true  //百分百显示
         pieChart.drawSlicesUnderHoleEnabled = false
-        pieChart.holeRadiusPercent = 0.9 //图表中间的半径
-        pieChart.transparentCircleRadiusPercent = 0.68
+        pieChart.holeRadiusPercent = 0.5 //图表中间的半径
+        pieChart.transparentCircleRadiusPercent = 0.5
         pieChart.descriptionText = title
-        pieChart.setExtraOffsets(left: -10, top: 0, right: -10, bottom: -10)
+        pieChart.setExtraOffsets(left: 5, top: 5, right: 5, bottom: 5)
         pieChart.noDataText = "无数据"
         pieChart.userInteractionEnabled = false //不影响cell的交互
         
@@ -56,33 +56,54 @@ class MCYCreditPieChartView: UIView {
         l.yEntrySpace = 0.0
         l.yOffset = 0.0
         l.enabled = false //显不显示
-    
+        
         self.addSubview(pieChart)
+        pieChart.animate(xAxisDuration: 1.4, easingOption: ChartEasingOption.EaseOutBack) //动画
     }
     
-    func setPieChartData(titles: [String], values: [Double]){
+    func setPieChartData(dic: NSMutableDictionary){
+        let titles = dic.allKeys
+        let count = titles.count
+    
         var yVals = [ChartDataEntry]()
         var xVals = [String]()
-        let count = titles.count
-        for i in 0 ..< count{
-            yVals.append(ChartDataEntry(value: values[i], xIndex: i))
-        }
     
         for i in 0 ..< count{
-            xVals.append(titles[i])
+            let key = titles[i] as! String
+            let value = dic.valueForKey(key) as! Double
+            
+            yVals.append(ChartDataEntry(value: value, xIndex: i))
+            xVals.append(key)
         }
-    
+        
         let dataSet = PieChartDataSet(yVals: yVals, label: nil)
-        dataSet.sliceSpace = 0 //每个弧度的间隔
+        dataSet.sliceSpace = 0
+    
         var colors = [UIColor]()
         colors.append(UIColor.greenColor())
-        colors.append(UIColor.redColor())
+        colors.append(UIColor.orangeColor())
         colors.append(UIColor.yellowColor())
+        colors.append(UIColor(red: 255/255, green: 192/255, blue: 203/255, alpha: 1))
+        colors.append(UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1))
         dataSet.colors = colors
     
-        let data = PieChartData(xVals: xVals, dataSet: dataSet)
-        data.setDrawValues(false) //不显示每个弧度的values
+        dataSet.valueLinePart1OffsetPercentage = 0.8
+        dataSet.valueLinePart1Length = 0.3
+        dataSet.valueLinePart2Length = 0.4
+        dataSet.yValuePosition = .OutsideSlice
     
+        let data = PieChartData(xVals: xVals, dataSet: dataSet)
+        
+        let pFormatter = NSNumberFormatter()
+        pFormatter.numberStyle = .PercentStyle
+        pFormatter.maximumFractionDigits = 1
+        pFormatter.multiplier = 1
+        pFormatter.percentSymbol = " %"
+        
+        data.setValueFormatter(pFormatter)
+        data.setValueFont(UIFont(name: "HelveticaNeue-Light", size:11))
+        data.setValueTextColor(UIColor.blackColor())
+        
         pieChart.data = data
         pieChart.highlightValues(nil)
     }
