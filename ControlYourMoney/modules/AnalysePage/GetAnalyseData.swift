@@ -24,7 +24,7 @@ class GetAnalyseData: NSObject {
             nameArray.append(name)
         }
         
-        let incomeArray = Income.selectAllData()
+        let incomeArray = Salary.selectAllData()
         if incomeArray.count > 0{
             for i in 0  ..< incomeArray.count{
                 let type = incomeArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
@@ -214,7 +214,7 @@ class GetAnalyseData: NSObject {
     
     //预计每月收入
     class func getEveryMonthSalary() -> Float{
-        let salaryArray = Income.selectAllData()
+        let salaryArray = Salary.selectAllData()
         var salary = Float(8500)
         if salaryArray.count == 0{
             return salary
@@ -237,7 +237,7 @@ class GetAnalyseData: NSObject {
     
     //今年总收入
     class func getAllRealSalary() -> Float{
-        let salaryArray = Income.selectAllData()
+        let salaryArray = Salary.selectAllData()
         var salary = Float(0)
         let timeNow = getTime()
         if salaryArray.count == 0{

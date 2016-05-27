@@ -18,8 +18,8 @@
 		E126FC421CF823DB00DAFF84 /* Cash.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC321CF823DB00DAFF84 /* Cash.swift */; };
 		E126FC431CF823DB00DAFF84 /* Total+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC331CF823DB00DAFF84 /* Total+CoreDataProperties.swift */; };
 		E126FC441CF823DB00DAFF84 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC341CF823DB00DAFF84 /* Total.swift */; };
-		E126FC451CF823DB00DAFF84 /* Income+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC351CF823DB00DAFF84 /* Income+CoreDataProperties.swift */; };
-		E126FC461CF823DB00DAFF84 /* Income.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC361CF823DB00DAFF84 /* Income.swift */; };
+		E126FC451CF823DB00DAFF84 /* Salary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC351CF823DB00DAFF84 /* Salary+CoreDataProperties.swift */; };
+		E126FC461CF823DB00DAFF84 /* Salary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC361CF823DB00DAFF84 /* Salary.swift */; };
 		E126FC471CF823DB00DAFF84 /* Credit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC371CF823DB00DAFF84 /* Credit+CoreDataProperties.swift */; };
 		E126FC481CF823DB00DAFF84 /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC381CF823DB00DAFF84 /* Credit.swift */; };
 		E126FC491CF823DB00DAFF84 /* CreditAccount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC391CF823DB00DAFF84 /* CreditAccount+CoreDataProperties.swift */; };
@@ -28,6 +28,11 @@
 		E126FC4C1CF823DB00DAFF84 /* Cost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC3C1CF823DB00DAFF84 /* Cost.swift */; };
 		E126FC4D1CF823DB00DAFF84 /* IncomeName+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC3D1CF823DB00DAFF84 /* IncomeName+CoreDataProperties.swift */; };
 		E126FC4E1CF823DB00DAFF84 /* IncomeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC3E1CF823DB00DAFF84 /* IncomeName.swift */; };
+		E126FC591CF880C800DAFF84 /* SyncDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC581CF880C800DAFF84 /* SyncDataViewController.swift */; };
+		E126FC611CF895DE00DAFF84 /* DataToDic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FC601CF895DE00DAFF84 /* DataToDic.swift */; };
+		E126FCAB1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */; };
+		E126FCAC1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E126FCB41CF8B25D00DAFF84 /* json.json in Resources */ = {isa = PBXBuildFile; fileRef = E126FCB31CF8B25D00DAFF84 /* json.json */; };
 		E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662A11CEB203D00720304 /* ChartsViewController.swift */; };
 		E15662B91CEB225900720304 /* BalloonMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662B81CEB225900720304 /* BalloonMarkerView.swift */; };
 		E15662C41CEC2C4C00720304 /* AddIncomeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */; };
@@ -88,6 +93,62 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E126FC9D1CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFDB19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
+		E126FC9F1CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFE619575BE100351305;
+			remoteInfo = "SwiftyJSON iOS Tests";
+		};
+		E126FCA11CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC5B1A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX";
+		};
+		E126FCA31CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC651A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX Tests";
+		};
+		E126FCA51CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4D7CCE81B9465A700EE7221;
+			remoteInfo = "SwiftyJSON watchOS";
+		};
+		E126FCA71CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7236B4F61BAC14150020529B;
+			remoteInfo = "SwiftyJSON tvOS";
+		};
+		E126FCA91CF8A4C300DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A8580F741BCF5C5B00DA927B;
+			remoteInfo = "SwiftyJSON tvOS Tests";
+		};
+		E126FCAD1CF8A4DE00DAFF84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
 		E1A209611CF4580D00900A3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E1A2095A1CF4580D00900A3E /* Charts.xcodeproj */;
@@ -132,6 +193,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E126FCAC1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Embed Frameworks */,
 				E1A2096A1CF4582100900A3E /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -151,8 +213,8 @@
 		E126FC321CF823DB00DAFF84 /* Cash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cash.swift; sourceTree = "<group>"; };
 		E126FC331CF823DB00DAFF84 /* Total+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Total+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E126FC341CF823DB00DAFF84 /* Total.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
-		E126FC351CF823DB00DAFF84 /* Income+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Income+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E126FC361CF823DB00DAFF84 /* Income.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Income.swift; sourceTree = "<group>"; };
+		E126FC351CF823DB00DAFF84 /* Salary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Salary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E126FC361CF823DB00DAFF84 /* Salary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Salary.swift; sourceTree = "<group>"; };
 		E126FC371CF823DB00DAFF84 /* Credit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Credit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E126FC381CF823DB00DAFF84 /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		E126FC391CF823DB00DAFF84 /* CreditAccount+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreditAccount+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -161,6 +223,10 @@
 		E126FC3C1CF823DB00DAFF84 /* Cost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cost.swift; sourceTree = "<group>"; };
 		E126FC3D1CF823DB00DAFF84 /* IncomeName+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IncomeName+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E126FC3E1CF823DB00DAFF84 /* IncomeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeName.swift; sourceTree = "<group>"; };
+		E126FC581CF880C800DAFF84 /* SyncDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncDataViewController.swift; sourceTree = "<group>"; };
+		E126FC601CF895DE00DAFF84 /* DataToDic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataToDic.swift; sourceTree = "<group>"; };
+		E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ControlYourMoney/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		E126FCB31CF8B25D00DAFF84 /* json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = json.json; sourceTree = "<group>"; };
 		E15662A11CEB203D00720304 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		E15662B81CEB225900720304 /* BalloonMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarkerView.swift; sourceTree = "<group>"; };
 		E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIncomeAccountViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E126FCAB1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Frameworks */,
 				E1A209691CF4582100900A3E /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				E126FC1B1CF6D92600DAFF84 /* SettingDataModul.swift */,
+				E126FC601CF895DE00DAFF84 /* DataToDic.swift */,
 			);
 			name = Setting;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/Setting;
@@ -255,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				E126FC1E1CF6E63C00DAFF84 /* ExplainViewController.swift */,
+				E126FC581CF880C800DAFF84 /* SyncDataViewController.swift */,
 			);
 			name = Setting;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Setting;
@@ -269,8 +338,8 @@
 				E126FC321CF823DB00DAFF84 /* Cash.swift */,
 				E126FC331CF823DB00DAFF84 /* Total+CoreDataProperties.swift */,
 				E126FC341CF823DB00DAFF84 /* Total.swift */,
-				E126FC351CF823DB00DAFF84 /* Income+CoreDataProperties.swift */,
-				E126FC361CF823DB00DAFF84 /* Income.swift */,
+				E126FC351CF823DB00DAFF84 /* Salary+CoreDataProperties.swift */,
+				E126FC361CF823DB00DAFF84 /* Salary.swift */,
 				E126FC371CF823DB00DAFF84 /* Credit+CoreDataProperties.swift */,
 				E126FC381CF823DB00DAFF84 /* Credit.swift */,
 				E126FC391CF823DB00DAFF84 /* CreditAccount+CoreDataProperties.swift */,
@@ -283,6 +352,20 @@
 			name = coreData;
 			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/coreData;
 			sourceTree = "<absolute>";
+		};
+		E126FC941CF8A4C300DAFF84 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */,
+				E126FCA01CF8A4C300DAFF84 /* SwiftyJSON iOS Tests.xctest */,
+				E126FCA21CF8A4C300DAFF84 /* SwiftyJSON.framework */,
+				E126FCA41CF8A4C300DAFF84 /* SwiftyJSON OSX Tests.xctest */,
+				E126FCA61CF8A4C300DAFF84 /* SwiftyJSON.framework */,
+				E126FCA81CF8A4C300DAFF84 /* SwiftyJSON.framework */,
+				E126FCAA1CF8A4C300DAFF84 /* SwiftyJSON tvOS Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		E15662B71CEB220B00720304 /* Charts */ = {
 			isa = PBXGroup;
@@ -407,6 +490,7 @@
 		E16ED9321C23B8C700D9BFB7 = {
 			isa = PBXGroup;
 			children = (
+				E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */,
 				E1A2095A1CF4580D00900A3E /* Charts.xcodeproj */,
 				E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */,
 				E16ED93C1C23B8C700D9BFB7 /* Products */,
@@ -424,6 +508,7 @@
 		E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */ = {
 			isa = PBXGroup;
 			children = (
+				E126FCB31CF8B25D00DAFF84 /* json.json */,
 				E126FC2E1CF8237F00DAFF84 /* coreData */,
 				E18774821CE2D41600CBBBB3 /* navigation */,
 				E19E01EC1CE2C74700A52C04 /* modules */,
@@ -550,6 +635,7 @@
 			);
 			dependencies = (
 				E1A2096C1CF4582100900A3E /* PBXTargetDependency */,
+				E126FCAE1CF8A4DE00DAFF84 /* PBXTargetDependency */,
 			);
 			name = ControlYourMoney;
 			productName = ControlYourMoney;
@@ -588,6 +674,10 @@
 					ProductGroup = E1A2095B1CF4580D00900A3E /* Products */;
 					ProjectRef = E1A2095A1CF4580D00900A3E /* Charts.xcodeproj */;
 				},
+				{
+					ProductGroup = E126FC941CF8A4C300DAFF84 /* Products */;
+					ProjectRef = E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -597,6 +687,55 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = E126FC9D1CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCA01CF8A4C300DAFF84 /* SwiftyJSON iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON iOS Tests.xctest";
+			remoteRef = E126FC9F1CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCA21CF8A4C300DAFF84 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = E126FCA11CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCA41CF8A4C300DAFF84 /* SwiftyJSON OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON OSX Tests.xctest";
+			remoteRef = E126FCA31CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCA61CF8A4C300DAFF84 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = E126FCA51CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCA81CF8A4C300DAFF84 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = E126FCA71CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E126FCAA1CF8A4C300DAFF84 /* SwiftyJSON tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON tvOS Tests.xctest";
+			remoteRef = E126FCA91CF8A4C300DAFF84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E1A209621CF4580D00900A3E /* Charts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -634,6 +773,7 @@
 			files = (
 				E18774701CE2C96100CBBBB3 /* Assets.xcassets in Resources */,
 				E187747D1CE2CC2600CBBBB3 /* Base.lproj in Resources */,
+				E126FCB41CF8B25D00DAFF84 /* json.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +794,7 @@
 				E15662CA1CEC3C3A00720304 /* CostNameListViewController.swift in Sources */,
 				E16A67591CE56E52005C35D9 /* SalaryDetailTableViewController.swift in Sources */,
 				E126FC1F1CF6E63C00DAFF84 /* ExplainViewController.swift in Sources */,
+				E126FC591CF880C800DAFF84 /* SyncDataViewController.swift in Sources */,
 				E126FC421CF823DB00DAFF84 /* Cash.swift in Sources */,
 				E126FC4C1CF823DB00DAFF84 /* Cost.swift in Sources */,
 				E1C8CEDA1CEDCA2600452D17 /* RefreshHeaderView.swift in Sources */,
@@ -682,7 +823,7 @@
 				E1C8CEDF1CEDCBC000452D17 /* AutoLayout.swift in Sources */,
 				E16A677F1CE5730A005C35D9 /* MainTableCreditModul.swift in Sources */,
 				E16A67541CE56E52005C35D9 /* AddCreditViewController.swift in Sources */,
-				E126FC461CF823DB00DAFF84 /* Income.swift in Sources */,
+				E126FC461CF823DB00DAFF84 /* Salary.swift in Sources */,
 				E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */,
 				E126FC4A1CF823DB00DAFF84 /* CreditAccount.swift in Sources */,
 				E16A67521CE56E52005C35D9 /* AddCashViewController.swift in Sources */,
@@ -710,12 +851,13 @@
 				E16A677C1CE5730A005C35D9 /* AccountListModul.swift in Sources */,
 				E16A67851CE59A0A005C35D9 /* GetDataArray.swift in Sources */,
 				E16A67811CE5730A005C35D9 /* SalaryDetailTableDataModul.swift in Sources */,
+				E126FC611CF895DE00DAFF84 /* DataToDic.swift in Sources */,
 				E1ABCC851CEA10B9005A359C /* EveryMonthSalaryViewController.swift in Sources */,
 				E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */,
 				E187749C1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift in Sources */,
 				E16A676B1CE56E89005C35D9 /* MyWaitView.swift in Sources */,
 				E126FC471CF823DB00DAFF84 /* Credit+CoreDataProperties.swift in Sources */,
-				E126FC451CF823DB00DAFF84 /* Income+CoreDataProperties.swift in Sources */,
+				E126FC451CF823DB00DAFF84 /* Salary+CoreDataProperties.swift in Sources */,
 				E16A67561CE56E52005C35D9 /* CashDetailTableViewController.swift in Sources */,
 				E16A67531CE56E52005C35D9 /* AddCreditAccountViewController.swift in Sources */,
 			);
@@ -724,6 +866,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E126FCAE1CF8A4DE00DAFF84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON iOS";
+			targetProxy = E126FCAD1CF8A4DE00DAFF84 /* PBXContainerItemProxy */;
+		};
 		E1A2096C1CF4582100900A3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Charts-iOS";

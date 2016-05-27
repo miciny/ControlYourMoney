@@ -72,7 +72,7 @@ class GetDataArray: NSObject {
     //工资详细列表页
     class func getSalaryDetailShowArray() -> [SalaryDetailTableDataModul]?{
         
-        var textData = Income.selectAllData()
+        var textData = Salary.selectAllData()
         
         if textData.count == 0 {
             return nil
@@ -122,7 +122,7 @@ class GetDataArray: NSObject {
     
     class func getSalaryShowArray() -> [MainTableSalaryModul]?{
         
-        let salaryArray = Income.selectAllData()
+        let salaryArray = Salary.selectAllData()
         
         if salaryArray.count == 0 {
             return nil

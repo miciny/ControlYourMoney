@@ -100,7 +100,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
             return
         }
         
-        Income.insertIncomeData(getTime(), number: Float(self.numberSalaryData.text!)!, name: self.accountData.text!)
+        Salary.insertIncomeData(getTime(), number: Float(self.numberSalaryData.text!)!, name: self.accountData.text!)
         CalculateCredit.changeTotal(-Float(self.numberSalaryData.text!)!)
         
         MyToastView().showToast("添加成功！")

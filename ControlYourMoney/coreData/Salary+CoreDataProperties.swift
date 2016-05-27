@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-extension Income {
+extension Salary {
 
     @NSManaged var name: String?
     @NSManaged var number: NSNumber?

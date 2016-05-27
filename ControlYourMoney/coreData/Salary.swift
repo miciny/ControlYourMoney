@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class Income: NSManagedObject {
+class Salary: NSManagedObject {
     //所有的数据
     class func selectAllData() -> NSArray{
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -47,7 +47,7 @@ class Income: NSManagedObject {
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfIncome,
-                                                                      inManagedObjectContext: allDataSource) as! Income
+                                                                      inManagedObjectContext: allDataSource) as! Salary
         
         row.name = name
         row.number = number

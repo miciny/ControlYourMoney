@@ -21,7 +21,7 @@ class ExplainViewController: UIViewController {
     
     func setUpTitle(){
         self.title = "说明"
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
     }
     
     func setScroll(){
