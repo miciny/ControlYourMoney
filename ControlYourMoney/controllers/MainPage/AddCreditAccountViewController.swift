@@ -63,7 +63,7 @@ class AddCreditAccountViewController: UIViewController {
         }
         
         let str = self.creditAccountText.text
-        let accountArray = SQLLine.selectAllData(entityNameOfCreditAccount)
+        let accountArray = CreditAccount.selectAllData()
         
         for i in 0 ..< accountArray.count {
             let name = accountArray[i].valueForKey(creditAccountNameOfName) as! String
@@ -73,7 +73,7 @@ class AddCreditAccountViewController: UIViewController {
             }
         }
         
-        SQLLine.insertAccountData(str!, time: getTime())
+        CreditAccount.insertAccountData(str!, time: getTime())
         MyToastView().showToast("添加成功！")
         self.navigationController?.popViewControllerAnimated(true)
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="Cash" representedClassName=".Cash" syncable="YES">
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="useNumber" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="useWhere" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Cost" syncable="YES">
+    <entity name="Cost" representedClassName=".Cost" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="period" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -23,7 +23,7 @@
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CreditAccount" syncable="YES">
+    <entity name="CreditAccount" representedClassName=".CreditAccount" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
@@ -32,15 +32,15 @@
         <attribute name="number" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
-    <entity name="IncomeName" syncable="YES">
+    <entity name="IncomeName" representedClassName=".IncomeName" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
-    <entity name="PayName" syncable="YES">
+    <entity name="PayName" representedClassName=".PayName" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
-    <entity name="Total" syncable="YES">
+    <entity name="Total" representedClassName=".Total" syncable="YES">
         <attribute name="canUse" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
@@ -50,8 +50,8 @@
         <element name="Credit" positionX="-54" positionY="-9" width="128" height="165"/>
         <element name="CreditAccount" positionX="-45" positionY="27" width="128" height="75"/>
         <element name="Income" positionX="-36" positionY="9" width="128" height="90"/>
-        <element name="Total" positionX="-36" positionY="27" width="128" height="75"/>
         <element name="IncomeName" positionX="-45" positionY="36" width="128" height="75"/>
         <element name="PayName" positionX="-36" positionY="45" width="128" height="75"/>
+        <element name="Total" positionX="-36" positionY="27" width="128" height="75"/>
     </elements>
 </model>

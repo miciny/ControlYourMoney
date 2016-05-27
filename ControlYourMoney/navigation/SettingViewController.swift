@@ -29,11 +29,12 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         settingData = NSMutableArray()
         
         let settingOne = SettingDataModul(icon: "DefaultIcon", name: "毛彩元", nickname: "miciny", pic: "TDIcon")
-        let settingTwo = SettingDataModul(icon: nil, name: "设置密码", lable: nil, pic: nil)
-        let settingThree = SettingDataModul(icon: nil, name: "说明", lable: nil, pic: nil)
+        let settingTwo1 = SettingDataModul(icon: nil, name: "修改密码", lable: nil, pic: nil)
+        let settingTwo2 = SettingDataModul(icon: nil, name: "同步数据", lable: nil, pic: nil)
+        let settingThree = SettingDataModul(icon: nil, name: "数据说明", lable: nil, pic: nil)
         
         settingData?.addObject([settingOne])
-        settingData?.addObject([settingTwo])
+        settingData?.addObject([settingTwo1, settingTwo2])
         settingData?.addObject([settingThree])
     }
     

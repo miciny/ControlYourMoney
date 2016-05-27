@@ -168,17 +168,17 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     
     func alreadyPayAllCredit(){
         
-        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
+        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
         let nextTime = stringToDateNoHH(recivedData.time)
         let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!)
         let periods = 0
         
         //由于按nextPayDay排序，必须先保存周期
-        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
-        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
         
-        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
+        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -186,7 +186,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     }
     
     func deleteBtnClicked(){
-        SQLLine.deleteCreditDataSortedByTime(changeIndex)
+        Credit.deleteCreditDataSortedByTime(changeIndex)
         MyToastView().showToast("删除成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -201,10 +201,10 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let periods = Int(recivedData.periods)!-1
         
         //由于按nextPayDay排序，必须先保存周期
-        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
-        SQLLine.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
         
-        SQLLine.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
+        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
         
@@ -220,7 +220,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let date = Int(dateCreditData.text!)!
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
         let periods = Int(periodsCreditData.text!)!
-        SQLLine.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
+        Credit.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
         
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

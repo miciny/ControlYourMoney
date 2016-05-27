@@ -54,7 +54,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
     func setUpData(){
         
         dataAll = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfPayName)
+        let accountTempArray = PayName.selectAllData()
         for i in 0 ..< accountTempArray.count {
             let name = accountTempArray[i].valueForKey(payNameNameOfName) as! String
             dataAll.addObject(name)

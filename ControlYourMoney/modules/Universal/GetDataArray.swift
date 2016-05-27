@@ -12,7 +12,7 @@ class GetDataArray: NSObject {
     //现金详细列表页
     class func getCashDetailShowArray() -> [NSMutableDictionary]{
         //获取数据
-        var textData = SQLLine.selectAllData(entityNameOfCash)
+        var textData = Cash.selectAllData()
         let textDataDic = NSMutableDictionary()
         let textDataTotalDic = NSMutableDictionary()
         
@@ -72,7 +72,7 @@ class GetDataArray: NSObject {
     //工资详细列表页
     class func getSalaryDetailShowArray() -> [SalaryDetailTableDataModul]?{
         
-        var textData = SQLLine.selectAllData(entityNameOfIncome)
+        var textData = Income.selectAllData()
         
         if textData.count == 0 {
             return nil
@@ -95,7 +95,7 @@ class GetDataArray: NSObject {
     
     //首页应该展示的现金列表
     class func getCashShowArray() -> [MainTableCashModul]?{
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         
         if cashArray.count == 0 {
             return nil
@@ -122,7 +122,7 @@ class GetDataArray: NSObject {
     
     class func getSalaryShowArray() -> [MainTableSalaryModul]?{
         
-        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
+        let salaryArray = Income.selectAllData()
         
         if salaryArray.count == 0 {
             return nil
@@ -144,7 +144,7 @@ class GetDataArray: NSObject {
     //首页应该展示的信用卡列表
     class func getCreditShowArray() -> [MainTableCreditModul]?{
         
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil

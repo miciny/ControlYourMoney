@@ -60,7 +60,7 @@ class AddCostNameViewController: UIViewController {
         }
         
         let str = self.accountText.text
-        let accountArray = SQLLine.selectAllData(entityNameOfPayName)
+        let accountArray = PayName.selectAllData()
         
         for i in 0 ..< accountArray.count {
             let name = accountArray[i].valueForKey(payNameNameOfName) as! String
@@ -70,7 +70,7 @@ class AddCostNameViewController: UIViewController {
             }
         }
         
-        SQLLine.insertPayNameData(str!, time: getTime())
+        PayName.insertPayNameData(str!, time: getTime())
         MyToastView().showToast("添加成功！")
         self.navigationController?.popViewControllerAnimated(true)
     }

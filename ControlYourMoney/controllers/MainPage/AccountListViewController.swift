@@ -64,7 +64,7 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
     func setUpData(){
         
         dataAll = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfCreditAccount)
+        let accountTempArray = CreditAccount.selectAllData()
         for i in 0 ..< accountTempArray.count {
             let name = accountTempArray[i].valueForKey(creditAccountNameOfName) as! String
             dataAll.addObject(name)

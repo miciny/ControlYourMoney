@@ -58,7 +58,7 @@ class MonthCostViewController: UIViewController {
         self.lastTag = Int(2)
         self.gap = CGFloat(10)
         
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        let costArray = Cost.selectAllData()
         self.nameArray = NSMutableArray()
         self.numberArray = NSMutableArray()
         if costArray.count == 0{
@@ -157,7 +157,7 @@ class MonthCostViewController: UIViewController {
         for i in 0 ..< nameArray.count {
             let nameStr = nameArray[i] as! String
             let number = Float(numberArray[i] as! String)
-            SQLLine.insertCostData(nameStr, time: timeNow, type: "", number: number!, period: 0)
+            Cost.insertCostData(nameStr, time: timeNow, type: "", number: number!, period: 0)
         }
         let toast = MyToastView()
         toast.showToast("保存成功")
@@ -178,7 +178,7 @@ class MonthCostViewController: UIViewController {
     }
     
     func deleteSQLData(){
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        let costArray = Cost.selectAllData()
         var count = 0
         for i in 0 ..< costArray.count{
             let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
@@ -188,11 +188,11 @@ class MonthCostViewController: UIViewController {
         }
         
         for _ in 0 ..< count {
-            let TempCostArray = SQLLine.selectAllData(entityNameOfCost)
+            let TempCostArray = Cost.selectAllData()
             for j in 0 ..< TempCostArray.count{
                 let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfPeriod) as! Int
                 if type == 0 {
-                    SQLLine.deleteData(entityNameOfCost, indexPath: j)
+                    Cost.deleteData(j)
                     break
                 }
             }

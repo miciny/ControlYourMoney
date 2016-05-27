@@ -40,7 +40,19 @@ class MCYCreditPieChartView: UIView {
         
         pieChart.drawCenterTextEnabled = true
         
+        let strs = holeText.componentsSeparatedByString("\n")
+        let length = (strs[0] as NSString).length
+        
         let centerText = NSMutableAttributedString(string: holeText)
+        
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        paragraphStyle.alignment = .Center
+        paragraphStyle.lineSpacing = 5
+        
+        centerText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, centerText.length))
+        centerText.addAttribute(NSFontAttributeName, value: periodsFont, range: NSMakeRange(0, length))
         
         pieChart.centerAttributedText = centerText
         

@@ -74,6 +74,15 @@ class ExplainViewController: UIViewController {
         for i in 0 ..< single.count {
             allStr.appendAttributedString(single[i] as! NSMutableAttributedString)
         }
+        
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        paragraphStyle.alignment = .Left
+        paragraphStyle.lineSpacing = 5
+        
+        allStr.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, allStr.length))
+        
         return allStr
     }
     

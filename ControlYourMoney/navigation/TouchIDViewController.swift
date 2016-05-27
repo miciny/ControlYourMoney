@@ -74,7 +74,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
 
     //密码验证 可以弄个输入框，输入密码 或者跳到输入密码界面
     func showPasswordAlert() {
-        let passwordAlert : UIAlertView = UIAlertView(title: "TouchID", message: "请输入密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        let passwordAlert = UIAlertView(title: "TouchID", message: "请输入密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
         passwordAlert.show()
     }

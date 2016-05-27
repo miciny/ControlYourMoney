@@ -63,7 +63,7 @@ class AddIncomeAccountViewController: UIViewController {
         }
         
         let str = self.accountText.text
-        let accountArray = SQLLine.selectAllData(entityNameOfIncomeName)
+        let accountArray = IncomeName.selectAllData()
         
         for i in 0 ..< accountArray.count {
             let name = accountArray[i].valueForKey(incomeNameOfName) as! String
@@ -73,7 +73,7 @@ class AddIncomeAccountViewController: UIViewController {
             }
         }
         
-        SQLLine.insertIncomeNameData(getTime(), name: str!)
+        IncomeName.insertIncomeNameData(getTime(), name: str!)
         MyToastView().showToast("添加成功！")
         self.navigationController?.popViewControllerAnimated(true)
     }

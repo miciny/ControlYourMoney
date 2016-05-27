@@ -63,7 +63,7 @@ class IncomeNameListViewController: UIViewController, UITableViewDelegate, UITab
     func setUpData(){
         
         dataAll = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfIncomeName)
+        let accountTempArray = IncomeName.selectAllData()
         for i in 0 ..< accountTempArray.count {
             let name = accountTempArray[i].valueForKey(incomeNameOfName) as! String
             dataAll.addObject(name)

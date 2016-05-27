@@ -28,7 +28,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
     func initData(){
         
         nameArray = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfIncomeName)
+        let accountTempArray = IncomeName.selectAllData()
         
         if accountTempArray.count == 0{
             let alert = textAlertView("请先添加收入类型")
@@ -100,7 +100,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
             return
         }
         
-        SQLLine.insertIncomeData(getTime(), number: Float(self.numberSalaryData.text!)!, name: self.accountData.text!)
+        Income.insertIncomeData(getTime(), number: Float(self.numberSalaryData.text!)!, name: self.accountData.text!)
         CalculateCredit.changeTotal(-Float(self.numberSalaryData.text!)!)
         
         MyToastView().showToast("添加成功！")

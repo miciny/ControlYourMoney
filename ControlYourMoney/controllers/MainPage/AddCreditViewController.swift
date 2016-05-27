@@ -33,7 +33,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
     
     func initData(){
         accountArray = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfCreditAccount)
+        let accountTempArray = CreditAccount.selectAllData()
         
         if accountTempArray.count == 0{
             let alert = textAlertView("请先添加信用卡账户")
@@ -43,7 +43,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         }
         
         typeArray = NSMutableArray()
-        let typeTempArray = SQLLine.selectAllData(entityNameOfPayName)
+        let typeTempArray = PayName.selectAllData()
         
         if typeTempArray.count == 0{
             let alert = textAlertView("请先添加支出类型")
@@ -183,7 +183,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
         let periods = Int(periodsCreditData.text!)!
         
-        SQLLine.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods, type: self.accountData.text!)
+        Credit.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods, type: self.accountData.text!)
         
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

@@ -85,7 +85,7 @@ class CalculateCredit: NSObject {
     }
     
     class func calculateCredit(){
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         let time = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
         creditArray = creditArray.sortedArrayUsingDescriptors([time])
         
@@ -105,14 +105,14 @@ class CalculateCredit: NSObject {
                 if months < leftPeriods && months > 0{
                     
                     let nextPay = calculateTime(nextPayDay, months: months)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: leftPeriods-months, changeEntityName: creditNameOfLeftPeriods)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
+                    Credit.updateCreditDataSortedByTime(i, changeValue: leftPeriods-months, changeEntityName: creditNameOfLeftPeriods)
+                    Credit.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     changeTotal(Float(months)*number)
                     
                 }else if(months >= leftPeriods){
                     let nextPay = calculateTime(nextPayDay, months: leftPeriods)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: 0, changeEntityName: creditNameOfLeftPeriods)
-                    SQLLine.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
+                    Credit.updateCreditDataSortedByTime(i, changeValue: 0, changeEntityName: creditNameOfLeftPeriods)
+                    Credit.updateCreditDataSortedByTime(i, changeValue: nextPay, changeEntityName: creditNameOfNextPayDay)
                     changeTotal(Float(leftPeriods)*number)
                 }
             }
@@ -139,13 +139,13 @@ class CalculateCredit: NSObject {
     
     //改变总剩余
     class func changeTotal(useNumber: Float){
-        let countTmp = SQLLine.selectAllData(entityNameOfTotal).count
+        let countTmp = Total.selectAllData().count
         if(countTmp == 0){
-            SQLLine.insertTotalData(0 - useNumber, time: getTime())
+            Total.insertTotalData(0 - useNumber, time: getTime())
         }else{
             var canTmp = GetAnalyseData.getCanUseToFloat()
             canTmp = canTmp - useNumber
-            SQLLine.insertTotalData(canTmp, time: getTime())
+            Total.insertTotalData(canTmp, time: getTime())
         }
     }
 }

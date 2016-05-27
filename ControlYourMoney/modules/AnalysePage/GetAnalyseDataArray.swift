@@ -12,7 +12,7 @@ class GetAnalyseDataArray: NSObject {
     //根据参数，日 月 年
     class func getCashDetailShowArray(str: String) -> [NSMutableDictionary]{
         //获取数据
-        var textData = SQLLine.selectAllData(entityNameOfCash)
+        var textData = Cash.selectAllData()
         let textDataDic = NSMutableDictionary()
         let textDataTotalDic = NSMutableDictionary()
         
@@ -70,7 +70,7 @@ class GetAnalyseDataArray: NSObject {
     
     //本月信用卡列表，包括还完的  , 下期还款时间是本月（不用判断剩余周期） 或 下期还款时间是下月但剩余周期小于总周期 
     class func getThisMonthCreditListIncludeDone() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil
@@ -113,7 +113,7 @@ class GetAnalyseDataArray: NSObject {
     
     //本月信用卡列表，包括还完的  , 下期还款时间是本月
     class func getThisMonthCreditList() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil
@@ -154,7 +154,7 @@ class GetAnalyseDataArray: NSObject {
     
     //下月信用卡列表，不包括还完的  , 下期还款时间是下月 并 剩余周期大于0  下期还款时间是本月，并剩余周期大于1
     class func getNextMonthCreditList() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil
@@ -197,7 +197,7 @@ class GetAnalyseDataArray: NSObject {
     
     //所有信用卡余还列表，不包括还完的  , 只要剩余周期大于0
     class func getAllCreditLeftpayList() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil
@@ -235,7 +235,7 @@ class GetAnalyseDataArray: NSObject {
     
     //今年信用卡总还列表，包括还完的  , 第一期的还款时间是本年
     class func getThisYearCreditInludeDoneList() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil
@@ -277,7 +277,7 @@ class GetAnalyseDataArray: NSObject {
     
     //今年信用卡余还列表，不包括还完的  , 下期的还款时间是本年 并 剩余周期大于0
     class func getThisYearLeftPayList() -> [MainTableCreditModul]?{
-        var creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        var creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return nil

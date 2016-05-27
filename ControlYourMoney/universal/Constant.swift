@@ -89,6 +89,8 @@ let analyseDataFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
 let settingPageNameFont = UIFont.systemFontOfSize(standardFontNo+2) //设置页字体大小
 let settingPageLableFont = UIFont.systemFontOfSize(standardFontNo) //设置页lable字体大小
 
+let periodsFont = UIFont.systemFontOfSize(standardFontNo+2) //周期字体
+
 let myOwnAccount = "招商银行_"
 let myOwnAccountPayDay = Int(21)
 let myOwnAccountBillDay = Int(3)

@@ -30,7 +30,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     func initData(){
         accountArray = NSMutableArray()
-        let accountTempArray = SQLLine.selectAllData(entityNameOfPayName)
+        let accountTempArray = PayName.selectAllData()
         
         if accountTempArray.count == 0{
             let alert = textAlertView("请先添加支出类型")
@@ -145,7 +145,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         //用的现金
         if !isCreditCheck.selected{
-            SQLLine.insertCashData(whereStr, useNumber: Float(numberStr)!, type: self.accountData.text!, time: getTime())
+            Cash.insertCashData(whereStr, useNumber: Float(numberStr)!, type: self.accountData.text!, time: getTime())
             
             CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
         }else{
@@ -182,7 +182,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             
             let nextPayDay = CalculateCredit.getFirstPayDate(refundDate, day: myOwnAccountPayDay)
             
-            SQLLine.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1, type: self.accountData.text!)
+            Credit.insertCrediData(1, number: Float(numberUsedData.text!)!, time: refundDate, account: account, date: myOwnAccountPayDay, nextPayDay: nextPayDay, leftPeriods: 1, type: self.accountData.text!)
         }
         MyToastView().showToast("添加成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

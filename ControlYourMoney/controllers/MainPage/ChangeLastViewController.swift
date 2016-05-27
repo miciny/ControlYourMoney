@@ -55,7 +55,7 @@ class ChangeLastViewController: UIViewController {
             return
         }
         
-        SQLLine.insertTotalData(Float(totalData.text!)!, time: getTime())
+        Total.insertTotalData(Float(totalData.text!)!, time: getTime())
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
        

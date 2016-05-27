@@ -12,7 +12,7 @@ class GetAnalyseData: NSObject {
     //收入比例
     class func getIncomePercent() -> NSMutableDictionary?{
         let incomePercent = NSMutableDictionary()
-        let accountArray = SQLLine.selectAllData(entityNameOfIncomeName)
+        let accountArray = IncomeName.selectAllData()
         var nameArray = [String]()
         
         if accountArray.count == 0{
@@ -24,7 +24,7 @@ class GetAnalyseData: NSObject {
             nameArray.append(name)
         }
         
-        let incomeArray = SQLLine.selectAllData(entityNameOfIncome)
+        let incomeArray = Income.selectAllData()
         if incomeArray.count > 0{
             for i in 0  ..< incomeArray.count{
                 let type = incomeArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
@@ -46,7 +46,7 @@ class GetAnalyseData: NSObject {
     //花费比例
     class func getCostPercent() -> NSMutableDictionary?{
         let costPercent = NSMutableDictionary()
-        let accountArray = SQLLine.selectAllData(entityNameOfPayName)
+        let accountArray = PayName.selectAllData()
         var nameArray = [String]()
         
         if accountArray.count == 0{
@@ -58,7 +58,7 @@ class GetAnalyseData: NSObject {
             nameArray.append(name)
         }
         
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         if cashArray.count > 0{
             for i in 0  ..< cashArray.count{
                 let type = cashArray.objectAtIndex(i).valueForKey(cashNameOfType) as! String
@@ -74,7 +74,7 @@ class GetAnalyseData: NSObject {
             }
         }
         
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         if creditArray.count > 0 {
             for i in 0  ..< creditArray.count{
                 let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
@@ -146,7 +146,7 @@ class GetAnalyseData: NSObject {
     class func getDayPay(day: Int) -> Float{
         
         var todayUse : Float = 0
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         
         guard cashArray.count > 0 else{
             return todayUse
@@ -167,7 +167,7 @@ class GetAnalyseData: NSObject {
     //某月现金支出
     class func getMonthPay(yyyy: Int, month: Int) -> Float{
         var thisMonthUse : Float = 0
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         
         if cashArray.count == 0 {
             return thisMonthUse
@@ -214,7 +214,7 @@ class GetAnalyseData: NSObject {
     
     //预计每月收入
     class func getEveryMonthSalary() -> Float{
-        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
+        let salaryArray = Income.selectAllData()
         var salary = Float(8500)
         if salaryArray.count == 0{
             return salary
@@ -237,7 +237,7 @@ class GetAnalyseData: NSObject {
     
     //今年总收入
     class func getAllRealSalary() -> Float{
-        let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
+        let salaryArray = Income.selectAllData()
         var salary = Float(0)
         let timeNow = getTime()
         if salaryArray.count == 0{
@@ -257,7 +257,7 @@ class GetAnalyseData: NSObject {
 /////////////////////////////////////////////////////////////////////////////////////
     //每年的一次性开销，如房租，不好记得，只好这样了
     class func getThisYearOnceUse() -> Float{
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        let costArray = Cost.selectAllData()
         var thisYearOnceUse = Float(0)
         
         let timeNow = getTime()
@@ -305,7 +305,7 @@ class GetAnalyseData: NSObject {
     class func getThisMonthUse() -> Float{
         var thisMonthUse: Float = 0
         
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         if cashArray.count == 0 {
             return thisMonthUse
         }
@@ -324,7 +324,7 @@ class GetAnalyseData: NSObject {
     class func getTodayUse() -> Float{
         var todayUse : Float = 0
         
-        let cashArray = SQLLine.selectAllData(entityNameOfCash)
+        let cashArray = Cash.selectAllData()
         if cashArray.count == 0 {
             return todayUse
         }
@@ -342,7 +342,7 @@ class GetAnalyseData: NSObject {
     //预计本月现金开支  cost里type为0 的
     class func getPreThisMonthCashPay() -> Float{
         var thisMonthPay: Float = 0
-        let costArray = SQLLine.selectAllData(entityNameOfCost)
+        let costArray = Cost.selectAllData()
         if costArray.count == 0{
             return thisMonthPay
         }
@@ -361,7 +361,7 @@ class GetAnalyseData: NSObject {
     //信用卡今年所有总应还 到次年的2月
     class func getCreditThisYearTotalPay() -> Float{
         var creditTotal = Float(0)
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return creditTotal
@@ -444,7 +444,7 @@ class GetAnalyseData: NSObject {
     
     //信用卡所有剩余应还
     class func getCreditTotalLeftPay() -> Float{
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         var creditTotal = Float(0)
         
         if creditArray.count == 0 {
@@ -464,7 +464,7 @@ class GetAnalyseData: NSObject {
     class func getWhichMonthCreditPay(strArray: NSMutableArray) -> Float{
         
         var thisMonthPay : Float = 0
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return thisMonthPay
@@ -493,7 +493,7 @@ class GetAnalyseData: NSObject {
     class func getWhichMonthCreditPayIncludeDone(timeArray: NSMutableArray) -> Float{
         
         var thisMonthPay : Float = 0
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return thisMonthPay
@@ -520,7 +520,7 @@ class GetAnalyseData: NSObject {
     //本月信用卡剩余应还
     class func getCreditThisMonthLeftPay() -> Float{
         var shouldPayData : Float = 0
-        let creditArray = SQLLine.selectAllData(entityNameOfCredit)
+        let creditArray = Credit.selectAllData()
         
         if creditArray.count == 0 {
             return shouldPayData
@@ -634,11 +634,11 @@ class GetAnalyseData: NSObject {
     
     //获取可用余额
     class func getCanUseToFloat() -> Float{
-        let data = SQLLine.selectAllData(entityNameOfTotal)
+        let data = Total.selectAllData()
         if(data.count == 0){
             return 0
         }else{
-            return SQLLine.selectAllData(entityNameOfTotal).valueForKey(totalNameOfCanUse).lastObject as! Float
+            return Total.selectAllData().valueForKey(totalNameOfCanUse).lastObject as! Float
         }
     }
 /////////////////////////////////////////////////////////////////////////////////////
