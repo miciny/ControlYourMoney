@@ -223,10 +223,10 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber2222!.text = modul.useTotalStr
         self.dataNumber2222!.textAlignment = .Left
         
-        let titles = ["", ""] //["今日", "平均"]
+        let titles = ["", ""] //["平均", "今日"]
         let dayOffset = getTime().currentDay
         let avg = Double(modul.useTotalStr)!/Double(dayOffset)
-        let values : [Double] = [Double(modul.useTotalDayStr)!, avg]
+        let values : [Double] = [avg, Double(modul.useTotalDayStr)!]
         let strOne = "今日:\(modul.useTotalDayStr)"
         let strTwo = "平均:\(String(format: "%.2f", avg))"
         

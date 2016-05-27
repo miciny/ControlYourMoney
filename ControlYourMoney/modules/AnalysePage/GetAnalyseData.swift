@@ -235,16 +235,20 @@ class GetAnalyseData: NSObject {
         return salary
     }
     
-    //现在总收入
+    //今年总收入
     class func getAllRealSalary() -> Float{
         let salaryArray = SQLLine.selectAllData(entityNameOfIncome)
         var salary = Float(0)
+        let timeNow = getTime()
         if salaryArray.count == 0{
             return salary
         }
         for i in 0 ..< salaryArray.count {
-            let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
-            salary += number
+            let time = salaryArray.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate
+            if time.currentYear == timeNow.currentYear{
+                let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                salary += number
+            }
             
         }
         return salary
@@ -256,6 +260,14 @@ class GetAnalyseData: NSObject {
         let costArray = SQLLine.selectAllData(entityNameOfCost)
         var thisYearOnceUse = Float(0)
         
+        let timeNow = getTime()
+        var months = Int()
+        if timeNow.currentMonth <= 2 {
+            months = 3 - timeNow.currentMonth
+        }else{
+            months = 15 - timeNow.currentMonth
+        }
+        
         if costArray.count == 0{
             return thisYearOnceUse
         }
@@ -266,6 +278,8 @@ class GetAnalyseData: NSObject {
                 thisYearOnceUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
             }
         }
+        
+        thisYearOnceUse = thisYearOnceUse/12*Float(months)
         return thisYearOnceUse
     }
 
@@ -602,10 +616,10 @@ class GetAnalyseData: NSObject {
         return thisYearLeft
     }
     
-    //预计本年支出, 为每月预计的支出＊剩余月份 ＋ 每年一次性支出  ＋ 信用卡今年总应还
+    //预计本年支出（从现在开始算起，到次年2月）, 为每月预计的支出＊剩余月份 ＋ 每年一次性支出  ＋ 信用卡今年剩余应还
     class func getPreThisYearPay() -> Float{
         var thisYearPay: Float = 0
-        thisYearPay = getThisYearEveryMonthsAllUse() + getThisYearOnceUse() + getCreditThisYearTotalPay()
+        thisYearPay = getThisYearEveryMonthsAllUse() + getThisYearOnceUse() + getCreditThisYearLeftPay()
         return thisYearPay
     }
     
