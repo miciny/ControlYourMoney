@@ -97,7 +97,7 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
             let data = AllData.valueForKey(keyOfCredit)?.objectAtIndex(indexPath.row) as! MainTableCreditModul
             
             vc.recivedData = data
-            vc.changeIndex = indexPath.row
+            vc.changeIndex = data.index
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

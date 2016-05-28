@@ -182,7 +182,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
             let data = values.objectAtIndex(indexPath.row) as! MainTableCreditModul
             
             vc.recivedData = data
-            vc.changeIndex = indexPath.row
+            vc.changeIndex = data.index
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -172,7 +172,7 @@ class GetDataArray: NSObject {
             
             if leftPeriods > 0 {
                 let periodsStr = String(leftPeriods) //
-                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: periodsStr, number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }

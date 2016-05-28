@@ -104,7 +104,7 @@ class GetAnalyseDataArray: NSObject {
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }
@@ -144,7 +144,7 @@ class GetAnalyseDataArray: NSObject {
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
                 
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
             
@@ -188,7 +188,7 @@ class GetAnalyseDataArray: NSObject {
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }
@@ -226,7 +226,7 @@ class GetAnalyseDataArray: NSObject {
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
         
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }
@@ -268,7 +268,7 @@ class GetAnalyseDataArray: NSObject {
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }
@@ -306,7 +306,7 @@ class GetAnalyseDataArray: NSObject {
                 let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
                 let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
                 
-                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods))
+                let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
             }
         }

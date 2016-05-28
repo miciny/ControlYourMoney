@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate{
+class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate{
     
     var changeIndex = 0
     var nextPaydayString = String()
@@ -168,34 +168,82 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     
     func alreadyPayAllCredit(){
         
-        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
-        
-        let nextTime = stringToDateNoHH(recivedData.time)
-        let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!)
-        let periods = 0
-        
-        //由于按nextPayDay排序，必须先保存周期
-        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
-        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
-        
-        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
-        
-        MyToastView().showToast("还款成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        let alert = UIAlertView(title: "是否确认全部还完？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        alert.tag = 1
+        alert.show()
 
     }
     
     func deleteBtnClicked(){
-        Credit.deleteCreditDataSortedByTime(changeIndex)
-        MyToastView().showToast("删除成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        let alert = UIAlertView(title: "是否确认删除？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        alert.tag = 2
+        alert.show()
+        
     }
 
     //已还
     func alreadyPayCredit(){
+        
         if !checkData(){
             return
         }
+        
+        let alert = UIAlertView(title: "是否确认本月已还？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        alert.tag = 3
+        alert.show()
+        
+    }
+    
+    //重新保存
+    func saveCredit(){
+        
+        if !checkData(){
+        return
+        }
+        
+        let alert = UIAlertView(title: "是否确认重新保存？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        alert.tag = 4
+        alert.show()
+        
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        switch alertView.tag {
+        case 1:  //全部还完
+            if buttonIndex == 1 {
+                payAll()
+            }
+        case 2:  //删除
+            if buttonIndex == 1 {
+                deleteCredit()
+            }
+        case 3: //本月已还
+            if buttonIndex == 1 {
+                payThisMonth()
+            }
+        case 4: //重新保存
+            if buttonIndex == 1 {
+                reSave()
+            }
+        default:
+            break
+        }
+    }
+    
+    func reSave(){
+        
+        let timeNow = getTime()
+        let date = Int(dateCreditData.text!)!
+        let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
+        let periods = Int(periodsCreditData.text!)!
+        Credit.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
+        
+        MyToastView().showToast("修改成功！")
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func payThisMonth(){
         let thisPayDay = stringToDateNoHH(recivedData.time)
         let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
         let periods = Int(recivedData.periods)!-1
@@ -207,24 +255,28 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
-        
     }
     
-    //重新保存
-    func saveCredit(){
+    func deleteCredit(){
         
-        if !checkData(){
-            return
-        }
-        let timeNow = getTime()
-        let date = Int(dateCreditData.text!)!
-        let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
-        let periods = Int(periodsCreditData.text!)!
-        Credit.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
-        
-        MyToastView().showToast("修改成功！")
+        Credit.deleteCreditDataSortedByTime(changeIndex)
+        MyToastView().showToast("删除成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func payAll(){
+        Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
+        let nextTime = stringToDateNoHH(recivedData.time)
+        let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!)
+        let periods = 0
+        
+        //由于按nextPayDay排序，必须先保存周期
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
+        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        
+        MyToastView().showToast("还款成功！")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func checkData() -> Bool{

@@ -43,7 +43,8 @@ class Credit: NSManagedObject {
     }
     
     //Credit插入一条数据
-    class func insertCrediData(periods: Int, number: Float, time: NSDate, account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int, type: String){
+    class func insertCrediData(periods: Int, number: Float, time: NSDate,
+                               account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int, type: String){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCredit,
                                                                       inManagedObjectContext: allDataSource) as! Credit
@@ -60,11 +61,13 @@ class Credit: NSManagedObject {
     }
     
     //Credit改一条数据
-    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float, date: Int, account: String, time: NSDate, nextPayDay: NSDate, leftPeriods: Int, type: String){
+    class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float,
+                                            date: Int, account: String, time: NSDate,
+                                            nextPayDay: NSDate, leftPeriods: Int, type: String){
         var data = NSArray()
         data = selectAllData()
         
-        let time1 = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        let time1 = NSSortDescriptor(key: creditNameOfNextPayDay, ascending: true)
         data = data.sortedArrayUsingDescriptors([time1])
         
         data[indexPath].setValue(periods, forKey: creditNameOfPeriods)
@@ -82,7 +85,7 @@ class Credit: NSManagedObject {
         var data = NSArray()
         data = selectAllData()
         
-        let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        let time = NSSortDescriptor(key: creditNameOfNextPayDay, ascending: true)
         data = data.sortedArrayUsingDescriptors([time])
         
         data[indexPath].setValue(changeValue, forKey: changeEntityName)
@@ -95,7 +98,7 @@ class Credit: NSManagedObject {
         var data = NSArray()
         data = selectAllData()
         
-        let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        let time = NSSortDescriptor(key: creditNameOfNextPayDay, ascending: true)
         data = data.sortedArrayUsingDescriptors([time])
         
         allDataSource.deleteObject(data[indexPath] as! NSManagedObject)

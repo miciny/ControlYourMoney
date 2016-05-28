@@ -16,11 +16,12 @@ class MainTableCreditModul: NSObject {
     let all: String!  //还款总额
     let time: String!  //下期还款时间
     let date: String!
+    let index: Int! //按时间排序之后的index
     
     let account : String!
     let type: String!
     
-    init(periods: String!, number: String!, title: String!, all: String!, time: String!, date: String!, account: String!, type: String!, allPeriods: String!){
+    init(periods: String!, number: String!, title: String!, all: String!, time: String!, date: String!, account: String!, type: String!, allPeriods: String!, index: Int!){
         self.periods = periods
         self.number = number //
         self.all = all //
@@ -30,6 +31,7 @@ class MainTableCreditModul: NSObject {
         self.account = account
         self.type = type
         self.allPeriods = allPeriods
+        self.index = index
     }
     
 }
