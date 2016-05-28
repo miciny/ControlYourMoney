@@ -48,6 +48,13 @@ func stringToDate(dateStr : String) -> NSDate{
     return dateFormatter.dateFromString(dateStr)!
 }
 
+func stringToDateBySelf(dateStr : String, formate: String) -> NSDate{
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = formate
+    // String to Date
+    return dateFormatter.dateFromString(dateStr)!
+}
+
 func stringToDateNoHH(dateStr : String) -> NSDate{
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"

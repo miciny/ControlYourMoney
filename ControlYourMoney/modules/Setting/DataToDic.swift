@@ -152,7 +152,7 @@ class DataToArray: NSObject {
         for i in 0 ..< allArray.count {
             let dataDic = NSMutableDictionary()
             let row = allArray.objectAtIndex(i) as! Salary
-            dataDic.setValue(dateToStringBySelf(row.time!, str: "yyyy-MM-dd HH:mm:ss.ssss"), forKey: incomeOfName)
+            dataDic.setValue(dateToStringBySelf(row.time!, str: "yyyy-MM-dd HH:mm:ss.ssss"), forKey: incomeOfTime)
             dataDic.setValue(String(row.number!), forKey: incomeOfNumber)
             dataDic.setValue(row.name!, forKey: incomeOfName)
             
