@@ -105,6 +105,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
             switch indexPath.row {
             case 0: //设置密码
                 break
+                
             case 1: //同步数据
                 let vc = SyncDataViewController()
                 vc.hidesBottomBarWhenPushed = true

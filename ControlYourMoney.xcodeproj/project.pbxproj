@@ -33,7 +33,9 @@
 		E126FCAB1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */; };
 		E126FCAC1CF8A4DE00DAFF84 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E126FC9E1CF8A4C300DAFF84 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E126FCB41CF8B25D00DAFF84 /* json.json in Resources */ = {isa = PBXBuildFile; fileRef = E126FCB31CF8B25D00DAFF84 /* json.json */; };
-		E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662A11CEB203D00720304 /* ChartsViewController.swift */; };
+		E126FCC51CF97C1300DAFF84 /* ChartsRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FCC41CF97C1300DAFF84 /* ChartsRootViewController.swift */; };
+		E126FCD51CF99D7600DAFF84 /* LineChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FCD41CF99D7600DAFF84 /* LineChartsViewController.swift */; };
+		E126FCD71CF99DDE00DAFF84 /* PieChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126FCD61CF99DDE00DAFF84 /* PieChartsViewController.swift */; };
 		E15662B91CEB225900720304 /* BalloonMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662B81CEB225900720304 /* BalloonMarkerView.swift */; };
 		E15662C41CEC2C4C00720304 /* AddIncomeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */; };
 		E15662C61CEC360400720304 /* IncomeNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15662C51CEC360400720304 /* IncomeNameListViewController.swift */; };
@@ -227,7 +229,9 @@
 		E126FC601CF895DE00DAFF84 /* DataToDic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataToDic.swift; sourceTree = "<group>"; };
 		E126FC931CF8A4C300DAFF84 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ControlYourMoney/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		E126FCB31CF8B25D00DAFF84 /* json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = json.json; sourceTree = "<group>"; };
-		E15662A11CEB203D00720304 /* ChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
+		E126FCC41CF97C1300DAFF84 /* ChartsRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsRootViewController.swift; sourceTree = "<group>"; };
+		E126FCD41CF99D7600DAFF84 /* LineChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartsViewController.swift; sourceTree = "<group>"; };
+		E126FCD61CF99DDE00DAFF84 /* PieChartsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartsViewController.swift; sourceTree = "<group>"; };
 		E15662B81CEB225900720304 /* BalloonMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarkerView.swift; sourceTree = "<group>"; };
 		E15662C31CEC2C4C00720304 /* AddIncomeAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIncomeAccountViewController.swift; sourceTree = "<group>"; };
 		E15662C51CEC360400720304 /* IncomeNameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomeNameListViewController.swift; sourceTree = "<group>"; };
@@ -366,6 +370,16 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		E126FCD31CF99D3E00DAFF84 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				E126FCD41CF99D7600DAFF84 /* LineChartsViewController.swift */,
+				E126FCD61CF99DDE00DAFF84 /* PieChartsViewController.swift */,
+			);
+			name = Charts;
+			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Charts;
+			sourceTree = "<absolute>";
 		};
 		E15662B71CEB220B00720304 /* Charts */ = {
 			isa = PBXGroup;
@@ -534,10 +548,10 @@
 		E18774821CE2D41600CBBBB3 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */,
 				E18774871CE2D6A400CBBBB3 /* MainTableViewController.swift */,
 				E187749B1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift */,
-				E15662A11CEB203D00720304 /* ChartsViewController.swift */,
-				E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */,
+				E126FCC41CF97C1300DAFF84 /* ChartsRootViewController.swift */,
 				E126FC121CF6D86D00DAFF84 /* SettingViewController.swift */,
 				E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */,
 			);
@@ -564,6 +578,7 @@
 		E19E01E91CE2C6F400A52C04 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E126FCD31CF99D3E00DAFF84 /* Charts */,
 				E126FC1D1CF6E5FF00DAFF84 /* Setting */,
 				E16A67471CE56DBF005C35D9 /* AnalysePage */,
 				E16A67461CE56DB5005C35D9 /* Universal */,
@@ -788,6 +803,7 @@
 				E15662C61CEC360400720304 /* IncomeNameListViewController.swift in Sources */,
 				E1ABCC831CEA0919005A359C /* YearCostViewController.swift in Sources */,
 				E16A676A1CE56E89005C35D9 /* MyToastView.swift in Sources */,
+				E126FCC51CF97C1300DAFF84 /* ChartsRootViewController.swift in Sources */,
 				E16A67831CE58347005C35D9 /* GetAnalyseData.swift in Sources */,
 				E16A67731CE571CD005C35D9 /* AnalyseMainViewCollectionViewCell.swift in Sources */,
 				E16A676F1CE56E93005C35D9 /* AccountListTableViewCell.swift in Sources */,
@@ -804,6 +820,7 @@
 				E126FC1C1CF6D92600DAFF84 /* SettingDataModul.swift in Sources */,
 				E126FC3F1CF823DB00DAFF84 /* PayName+CoreDataProperties.swift in Sources */,
 				E126FC191CF6D8D500DAFF84 /* SettingTableViewCell.swift in Sources */,
+				E126FCD51CF99D7600DAFF84 /* LineChartsViewController.swift in Sources */,
 				E18774981CE3289C00CBBBB3 /* Protocol.swift in Sources */,
 				E16A67801CE5730A005C35D9 /* MainTableSalaryModul.swift in Sources */,
 				E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */,
@@ -811,6 +828,7 @@
 				E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */,
 				E1ABCC811CE9C956005A359C /* MonthCostViewController.swift in Sources */,
 				E126FC481CF823DB00DAFF84 /* Credit.swift in Sources */,
+				E126FCD71CF99DDE00DAFF84 /* PieChartsViewController.swift in Sources */,
 				E126FC431CF823DB00DAFF84 /* Total+CoreDataProperties.swift in Sources */,
 				E15662C81CEC38C700720304 /* AddCostNameViewController.swift in Sources */,
 				E126FC131CF6D86D00DAFF84 /* SettingViewController.swift in Sources */,
@@ -853,7 +871,6 @@
 				E16A67811CE5730A005C35D9 /* SalaryDetailTableDataModul.swift in Sources */,
 				E126FC611CF895DE00DAFF84 /* DataToDic.swift in Sources */,
 				E1ABCC851CEA10B9005A359C /* EveryMonthSalaryViewController.swift in Sources */,
-				E15662A21CEB203D00720304 /* ChartsViewController.swift in Sources */,
 				E187749C1CE32B9D00CBBBB3 /* DataAnalyseViewController.swift in Sources */,
 				E16A676B1CE56E89005C35D9 /* MyWaitView.swift in Sources */,
 				E126FC471CF823DB00DAFF84 /* Credit+CoreDataProperties.swift in Sources */,

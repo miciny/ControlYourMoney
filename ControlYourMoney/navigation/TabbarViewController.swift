@@ -34,7 +34,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     secNav.tabBarItem.selectedImage=UIImage(named: "Chat_Selected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     
     //添加第三个试图,图表
-    let thirdVC = ChartsViewController()
+    let thirdVC = ChartsRootViewController()
     let thirdNav = UINavigationController(rootViewController: thirdVC)
     thirdNav.tabBarItem.title = "图表"
     thirdNav.tabBarItem.image=UIImage(named: "Chat")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
