@@ -17,12 +17,14 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
     
     let lineTab = UIButton()  //显示line的按钮
     let pieTab = UIButton()  //显示pie的按钮
+    let animationLine = UIView() //显示在title按钮底下的线
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
         setUpTop()
         setUpScrollView()
+        setAnimationLine()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,31 +69,33 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
     
     //设置顶部title按钮
     func setUpTop(){
-        lineTab.frame = CGRect(x: 20, y: 70, width: Width/2-20, height: 34)
+        lineTab.frame = CGRect(x: 0, y: 70, width: Width/2-1, height: 34)
         lineTab.setTitle("支出", forState: .Normal)
-        lineTab.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        lineTab.backgroundColor = UIColor.blueColor()
+        lineTab.setTitleColor(UIColor.redColor(), forState: .Normal)
+        lineTab.backgroundColor = UIColor.clearColor()
         lineTab.tag = 0
         lineTab.addTarget(self, action: #selector(selTitleBtn(_:)), forControlEvents: .TouchUpInside)
-        
-        lineTab.layer.cornerRadius = 5
-        lineTab.layer.borderWidth = 1
-        lineTab.layer.borderColor = UIColor.blueColor().CGColor
-        
         self.view.addSubview(lineTab)
         
-        pieTab.frame = CGRect(x: Width/2, y: 70, width: Width/2-20, height: 34)
+        let gapLine = UIView(frame: CGRect(x: Width/2, y: 67, width: 1, height: 40))
+        gapLine.backgroundColor = UIColor.grayColor()
+        self.view.addSubview(gapLine)
+        
+        pieTab.frame = CGRect(x: Width/2+1, y: 70, width: Width/2, height: 34)
         pieTab.setTitle("比例", forState: .Normal)
         pieTab.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        pieTab.backgroundColor = UIColor.whiteColor()
+        pieTab.backgroundColor = UIColor.clearColor()
         pieTab.tag = 1
         pieTab.addTarget(self, action: #selector(selTitleBtn(_:)), forControlEvents: .TouchUpInside)
-        
-        pieTab.layer.cornerRadius = 5
-        pieTab.layer.borderWidth = 1
-        pieTab.layer.borderColor = UIColor.blueColor().CGColor
-        
         self.view.addSubview(pieTab)
+    }
+    
+    //设置animationLine
+    func setAnimationLine(){
+        animationLine.frame = CGRect(x: lineTab.frame.minX + 10, y: mainScroll.frame.minY-2,
+                                     width: lineTab.frame.width-20, height: 2)
+        animationLine.backgroundColor = UIColor.redColor()
+        self.view.addSubview(animationLine)
     }
     
     /**  添加子控制器  */
@@ -129,19 +133,25 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         setUpOneChildViewController(i)
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x //偏移量
+        let realOffsetX = pieTab.frame.minX -  lineTab.frame.minX //总移动距离
+        
+        let x = offsetX * realOffsetX / Width //x坐标
+        
+        animationLine.frame = CGRect(x: x + 10, y: mainScroll.frame.minY-2,
+                                     width: pieTab.frame.width-20, height: 2)
+    }
+    
     //改变title的颜色啥的
     func changeBtn(index: Int){
         switch index{
         case 0:
-            lineTab.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            lineTab.backgroundColor = UIColor.blueColor()
+            lineTab.setTitleColor(UIColor.redColor(), forState: .Normal)
             pieTab.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            pieTab.backgroundColor = UIColor.whiteColor()
         case 1:
-            pieTab.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            pieTab.backgroundColor = UIColor.blueColor()
+            pieTab.setTitleColor(UIColor.redColor(), forState: .Normal)
             lineTab.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            lineTab.backgroundColor = UIColor.whiteColor()
         default:
             break
         }
