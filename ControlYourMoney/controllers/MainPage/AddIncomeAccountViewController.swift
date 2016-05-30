@@ -9,7 +9,7 @@
 import UIKit
 
 class AddIncomeAccountViewController: UIViewController {
-    var accountText: UITextField!
+    var accountText: UITextField! //输入框
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,14 +23,14 @@ class AddIncomeAccountViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightBarBtn
         
         setupLable()
-
-        // Do any additional setup after loading the view.
     }
     
+    //退出页面
     func backToPrevious(){
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //设置label
     func setupLable(){
         let gap = CGFloat(10)
         
@@ -56,7 +56,9 @@ class AddIncomeAccountViewController: UIViewController {
         self.view.addSubview(save)
     }
     
+    //保存
     func saveAccount(){
+        //检查数据
         if(self.accountText.text == ""){
             textAlertView("请输入内容！")
             return
@@ -73,15 +75,14 @@ class AddIncomeAccountViewController: UIViewController {
             }
         }
         
+        //保存数据
         IncomeName.insertIncomeNameData(getTime(), name: str!)
         MyToastView().showToast("添加成功！")
         self.navigationController?.popViewControllerAnimated(true)
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }

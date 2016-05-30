@@ -60,6 +60,7 @@ class MainTableHeaderView: UIView {
         self.setUpView()
     }
     
+    //显示数据
     func setUpLabelData(){
         
         self.totalText.text = "财产："
@@ -75,6 +76,7 @@ class MainTableHeaderView: UIView {
         self.shouldPayLabel.text = self.shouldPay
     }
     
+    //设置元素
     func setUpView(){
         
         self.frame = CGRectMake(0, 0, Width, headerViewHeight)

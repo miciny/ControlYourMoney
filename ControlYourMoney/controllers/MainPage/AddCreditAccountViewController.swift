@@ -10,10 +10,11 @@ import UIKit
 
 class AddCreditAccountViewController: UIViewController {
 
-    var creditAccountText = UITextField()
+    var creditAccountText = UITextField() //输入框
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "信用帐号"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         
@@ -23,13 +24,14 @@ class AddCreditAccountViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightBarBtn
 
         setupLable()
-        // Do any additional setup after loading the view.
     }
     
+    //退出页面
     func backToPrevious(){
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //设置页面元素
     func setupLable(){
         let gap = CGFloat(10)
         
@@ -55,8 +57,9 @@ class AddCreditAccountViewController: UIViewController {
         self.view.addSubview(save)
     }
 
-    
+    //保存数据
     func saveAccount(){
+        //检查输入框
         if(self.creditAccountText.text == ""){
             textAlertView("请输入内容！")
             return
@@ -65,6 +68,7 @@ class AddCreditAccountViewController: UIViewController {
         let str = self.creditAccountText.text
         let accountArray = CreditAccount.selectAllData()
         
+        //是否已存在
         for i in 0 ..< accountArray.count {
             let name = accountArray[i].valueForKey(creditAccountNameOfName) as! String
             if name == str {
@@ -78,21 +82,9 @@ class AddCreditAccountViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

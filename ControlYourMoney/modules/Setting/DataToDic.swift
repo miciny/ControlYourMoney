@@ -6,9 +6,18 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+
+//=====================================================================================================
+/**
+ MARK: - 用于将数据库里的数据，导出成dic类型的，用于数据导出
+ **/
+//=====================================================================================================
+
 import UIKit
 
 class DataToArray: NSObject {
+    
+    //现金
     class func setCashDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -31,6 +40,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //支出类型
     class func setPayNameDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -51,6 +61,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //添加的每月支出和每年支出
     class func setCostDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -74,6 +85,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //信用
     class func setCreditDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -100,6 +112,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //信用账号
     class func setCreditAccountDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -120,6 +133,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //总额度
     class func setTotalDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -140,6 +154,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //收入
     class func setIncomeDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
@@ -161,6 +176,7 @@ class DataToArray: NSObject {
         return dic
     }
     
+    //收入来源
     class func setIncomeNameDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         

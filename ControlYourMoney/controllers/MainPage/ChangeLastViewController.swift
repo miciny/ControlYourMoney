@@ -10,25 +10,30 @@ import UIKit
 
 class ChangeLastViewController: UIViewController {
     
-    var totalData = UITextField()
-    var lastStr: String?
+    var totalData = UITextField()  //总额度的输入框
+    var lastStr: String? //进入页面 传入的值
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "修改可用余额"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
+        
         self.setUpLabel()
     }
     
+    //设置页面元素
     func setUpLabel(){
         let gap = CGFloat(10)
         
+        //label
         let totlaSize = sizeWithText("可用总额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
         let total = UILabel.introduceLabel()
         total.frame = CGRectMake(20, 90, totlaSize.width, 30)
         total.text = "可用总额："
         self.view.addSubview(total)
         
+        //输入框
         self.totalData = UITextField.inputTextField()
         self.totalData.frame = CGRectMake(total.frame.maxX, total.frame.minY, self.view.frame.size.width-total.frame.maxX-20, 30)
         self.totalData.placeholder = "请输入金额..."
@@ -44,7 +49,9 @@ class ChangeLastViewController: UIViewController {
         self.view.addSubview(save)
     }
 
+    //保存数据
     func saveLast(){
+        //检查数据
         if(totalData.text == "" ){
             textAlertView("请输入内容！")
             return
@@ -55,6 +62,7 @@ class ChangeLastViewController: UIViewController {
             return
         }
         
+        //保存数据
         Total.insertTotalData(Float(totalData.text!)!, time: getTime())
         MyToastView().showToast("修改成功！")
         self.navigationController?.popToRootViewControllerAnimated(true)

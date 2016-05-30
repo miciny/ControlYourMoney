@@ -9,12 +9,12 @@
 import UIKit
 
 class MonthCostViewController: UIViewController {
-    var nameArray : NSMutableArray?
-    var numberArray : NSMutableArray?
-    var saveBtn: UIButton?
-    var lastY: CGFloat?
-    var gap: CGFloat?
-    var lastTag: Int?
+    var nameArray : NSMutableArray? //保存已保存的数据的名字
+    var numberArray : NSMutableArray? //保存已保存数据的额度
+    var saveBtn: UIButton? //保存按钮
+    var lastY: CGFloat? //最后的Y，用于点击添加按钮，输入框的位置
+    var gap: CGFloat? //每个栏的间隔
+    var lastTag: Int? //最后的tag，用于点击添加按钮，输入框的tag
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ class MonthCostViewController: UIViewController {
         setUpElesCon()
     }
     
+    //设置title
     func setUpTitle(){
         self.title = "设置每月花费"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
@@ -33,6 +34,7 @@ class MonthCostViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = addItem
     }
     
+    //设置固定显示的本月已用
     func setUpElesCon(){
         let nameUsed = "本月已用"
         let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
@@ -53,6 +55,7 @@ class MonthCostViewController: UIViewController {
         
     }
     
+    //设置数据，提取已经保存的月消费名字和额度
     func setUpData(){
         self.lastY = CGFloat(120)
         self.lastTag = Int(2)
@@ -74,6 +77,7 @@ class MonthCostViewController: UIViewController {
         }
     }
     
+    //显示已保存的数据
     func setUpEles(){
         
         let count = nameArray!.count
@@ -111,6 +115,7 @@ class MonthCostViewController: UIViewController {
         self.view.addSubview(self.saveBtn!)
     }
     
+    //保存数据，先检查数据，再数据库全删除，再全部显示
     func saveData(){
         let nameViewArray = NSMutableArray()
         let numberViewArray = NSMutableArray()
@@ -165,8 +170,9 @@ class MonthCostViewController: UIViewController {
         rebuildFace()
     }
     
+    //重新显示界面
     func rebuildFace(){
-        
+        //删除页面元素
         let uiViews = self.view.subviews
         for view in uiViews{
             view.removeFromSuperview()
@@ -177,6 +183,7 @@ class MonthCostViewController: UIViewController {
         setUpElesCon()
     }
     
+    //删除数据库，type＝0的，＝1的是年消费的
     func deleteSQLData(){
         let costArray = Cost.selectAllData()
         var count = 0
@@ -199,6 +206,7 @@ class MonthCostViewController: UIViewController {
         }
     }
     
+    //添加数据时，显示的两个输入框，用tag区分
     func addCost(){
         let nameTextSize = sizeWithText("本月已用", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
         let nameText = UITextField.inputTextField()

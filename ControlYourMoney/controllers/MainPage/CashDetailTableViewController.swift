@@ -9,11 +9,10 @@
 import UIKit
 
 class CashDetailTableViewController: UITableViewController {
-    private var textData = NSArray()
-    private var textDataTitle = NSMutableArray()
-    var showData: [NSMutableDictionary]?
-    private var textDataDic = NSMutableDictionary()
-    private var textDataTotalDic = NSMutableDictionary()
+    var showData: [NSMutableDictionary]?  //传入的数据，根据传入的数据显示cell 和 title
+    
+    private var textDataDic = NSMutableDictionary() //cell显示的数据
+    private var textDataTotalDic = NSMutableDictionary() //每月显示的总额
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +22,14 @@ class CashDetailTableViewController: UITableViewController {
         // Do any additional setup after loading the view.
     }
     
+    //设置title 等
     func setUpTitle(){
         self.title = "记账列表"
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
     }
     
+    //获取数据
     func setupData(){
         self.textDataTotalDic = NSMutableDictionary()
         self.textDataDic = NSMutableDictionary()

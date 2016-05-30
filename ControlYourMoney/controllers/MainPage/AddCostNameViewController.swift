@@ -10,7 +10,7 @@ import UIKit
 
 class AddCostNameViewController: UIViewController {
     
-    var accountText: UITextField!
+    var accountText: UITextField! //添加支出类型的输入框
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +24,9 @@ class AddCostNameViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightBarBtn
         
         setupLable()
-
-        // Do any additional setup after loading the view.
     }
     
+    //配置页面元素
     func setupLable(){
         let gap = CGFloat(10)
         
@@ -53,7 +52,9 @@ class AddCostNameViewController: UIViewController {
         self.view.addSubview(save)
     }
     
+    //保存数据
     func saveAccount(){
+        //检查
         if(self.accountText.text == ""){
             textAlertView("请输入内容！")
             return
@@ -62,6 +63,7 @@ class AddCostNameViewController: UIViewController {
         let str = self.accountText.text
         let accountArray = PayName.selectAllData()
         
+        //判断是否已存在
         for i in 0 ..< accountArray.count {
             let name = accountArray[i].valueForKey(payNameNameOfName) as! String
             if name == str {
@@ -70,12 +72,13 @@ class AddCostNameViewController: UIViewController {
             }
         }
         
+        //保存输入
         PayName.insertPayNameData(str!, time: getTime())
         MyToastView().showToast("添加成功！")
         self.navigationController?.popViewControllerAnimated(true)
     }
 
-    
+    //退出页面
     func backToPrevious(){
         self.navigationController?.popToRootViewControllerAnimated(true)
     }

@@ -11,6 +11,7 @@ import UIKit
 
 extension UILabel{
     
+    //自定义的介绍label样式
     public class func introduceLabel() -> UILabel{
         let label = UILabel()
         label.font = introduceFont
@@ -20,6 +21,7 @@ extension UILabel{
         return label
     }
     
+    //自定义的输入label样式
     public class func inputLabel() -> UILabel{
         let label = UILabelPadding()
         label.textAlignment = NSTextAlignment.Left
@@ -31,6 +33,7 @@ extension UILabel{
         return label
     }
     
+    //自定义的选择的label样式
     public class func selectLabel(target: UIViewController,selector: Selector) -> UILabel{
         let label = UILabelPadding()
         label.textAlignment = NSTextAlignment.Left
@@ -47,6 +50,7 @@ extension UILabel{
 }
 
 extension UIButton{
+    //自定义的check样式btn
     public class func checkButton(target: UIViewController, selector: Selector) -> UIButton{
         let btn = UIButton(type: UIButtonType.Custom)
         btn.setImage(UIImage(named: "CheckOff"), forState:UIControlState.Normal)
@@ -58,7 +62,7 @@ extension UIButton{
 }
 
 extension UITextField{
-    
+    //自定义的textField样式
     public class func inputTextField() -> UITextField{
         let textField = UITextField()
         

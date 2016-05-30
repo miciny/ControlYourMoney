@@ -6,6 +6,13 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+
+//=====================================================================================================
+/**
+ MARK: - 同步数据使
+ **/
+//=====================================================================================================
+
 import UIKit
 import SwiftyJSON
 
@@ -26,6 +33,7 @@ class SyncDataViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
     }
     
+    //设置按钮
     func setUpBtn(){
         let upLoad = UIButton()
         upLoad.frame = CGRect(x: 20, y: 80, width: Width-40, height: 50)
@@ -51,7 +59,7 @@ class SyncDataViewController: UIViewController {
         copyBtn.addTarget(self, action: #selector(copyText), forControlEvents: .TouchUpInside)
         copyBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
         copyBtn.enabled = false
-        copyBtn.hidden = true
+        copyBtn.hidden = true //一开始不显示复制按钮
         self.view.addSubview(copyBtn)
         
         textView.frame = CGRect(x: 20, y: downLoad.frame.maxY+40, width: Width-40, height: Height-downLoad.frame.maxY-40)
@@ -69,8 +77,8 @@ class SyncDataViewController: UIViewController {
         }
     }
     
+    //复制文本
     func copyText(){
-        
         let toast = MyToastView()
         guard let str = textView.text where str != "" else{
             toast.showToast("无数据")
@@ -81,8 +89,8 @@ class SyncDataViewController: UIViewController {
         toast.showToast("复制成功")
     }
     
+    //下载数据，就是导入数据到数据库
     func downLoadData(){
-        
         let wiatView = MyWaitToast()
         wiatView.title = "计算中..."
         wiatView.showWait(self.view)
@@ -229,6 +237,7 @@ class SyncDataViewController: UIViewController {
         }
     }
     
+    //上传数据
     func upLoadData(){
         let allDic = NSMutableDictionary()
         allDic.setValue(DataToArray.setCashDataToArray(), forKey: entityNameOfCash)

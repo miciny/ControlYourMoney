@@ -6,6 +6,13 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+
+//=====================================================================================================
+/**
+ MARK: - 只是显示每月收入
+ **/
+//=====================================================================================================
+
 import UIKit
 
 class EveryMonthSalaryViewController: UIViewController {
@@ -23,6 +30,7 @@ class EveryMonthSalaryViewController: UIViewController {
         
     }
     
+    // 显示元素
     func setUpElesCon(){
         let nameUsed = "每月收入"
         let namelbSize = sizeWithText("每月收入：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
@@ -47,16 +55,4 @@ class EveryMonthSalaryViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

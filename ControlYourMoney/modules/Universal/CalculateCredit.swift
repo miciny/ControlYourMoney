@@ -84,13 +84,13 @@ class CalculateCredit: NSObject {
         }
     }
     
+    //根据现在时间，计算每个信用卡的还款情况
     class func calculateCredit(){
         var creditArray = Credit.selectAllData()
         let time = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
         creditArray = creditArray.sortedArrayUsingDescriptors([time])
         
         guard creditArray.count > 0 else{
-            print("excute guard")
             return
         }
         

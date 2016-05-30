@@ -6,11 +6,17 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+//=====================================================================================================
+/**
+ MARK: 主要用于dataAnalyse页，进入的信用详细页
+ **/
+//=====================================================================================================
+
 import UIKit
 
 class CreditDetailListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var tableView: UITableView!
-    var AllData: NSMutableDictionary!
+    var AllData: NSMutableDictionary! //用于显示的数据，进入页面之前给定
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +24,8 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
         setUpTitle()
     }
     
+    
+    //配置tableView
     func setUpTable(){
         tableView = UITableView()
         tableView.frame = CGRect(x: 0, y: 0, width: Width, height: Height)
@@ -37,6 +45,7 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     // MARK: - Table view data source
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return AllData.allKeys.count

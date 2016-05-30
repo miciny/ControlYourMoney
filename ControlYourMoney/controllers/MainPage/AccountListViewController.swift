@@ -39,15 +39,18 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchTable.reloadData()
     }
     
+    //退出页面
     func backToPrevious(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //进入添加信用卡账号页
     func goAddCreditAccount(){
         let vc = AddCreditAccountViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //配置tabel
     func setUpTable(){
         searchTable.frame = CGRect(x: 0, y: 0, width: Width, height: Height)  //为普通模式
         searchTable.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
@@ -61,6 +64,7 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.addSubview(searchTable)
     }
     
+    //获取数据
     func setUpData(){
         
         dataAll = NSMutableArray()
@@ -81,7 +85,7 @@ class AccountListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     /*
-     // MARK: - uitabelview
+     // MARK: - tabel view delegate
      */
     //section个数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

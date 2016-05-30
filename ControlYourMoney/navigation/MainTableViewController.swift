@@ -11,24 +11,37 @@ import CoreData
 
 class MainTableViewController: UITableViewController, mainHeaderChangeLastDelegate{
     
-    var AllData: NSMutableArray!
-    var headerView: MainTableHeaderView?
+    var AllData: NSMutableArray!  //页面显示的data
+    var headerView: MainTableHeaderView? //头图
+    var isCounting = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AllData = NSMutableArray()
         self.setUpTitle()
     }
     
     override func viewWillAppear(animated: Bool) {
-        CalculateCredit.calculateCredit()
-        self.setUpData()
-        setUpHeaderView()
-        self.tableView.reloadData()
+        if isCounting {
+            return
+        }
+        
+        let MainPageQueue: dispatch_queue_t = dispatch_queue_create("MainPageQueue", DISPATCH_QUEUE_SERIAL)
+        dispatch_async(MainPageQueue) {
+            self.isCounting = true
+            CalculateCredit.calculateCredit()  //计算信用账号的时间
+            self.setUpData()
+            self.setUpHeaderView()
+            
+            dispatch_async(mainQueue, {
+                self.isCounting = false
+                self.tableView.reloadData()
+            })
+        }
     }
     
     //获取数据
     func setUpData(){
-        AllData = NSMutableArray()
         let creditModul =  GetDataArray.getCreditShowArray()
         let salaryModul =  GetDataArray.getSalaryShowArray()
         let cashModul =  GetDataArray.getCashShowArray()
@@ -89,6 +102,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         
     }
     
+    //进入改剩余用额的页面
     func buttonClicked(lastStr: String) {
         let vc = ChangeLastViewController()
         vc.hidesBottomBarWhenPushed = true
@@ -102,8 +116,11 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
 
     
-    // MARK: - Table view data source
-    
+    //=====================================================================================================
+    /**
+     MARK: - Table view data source
+    **/
+    //=====================================================================================================
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -195,7 +212,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
 }
 
-//选择的协议
+//actionView选择的协议
 extension MainTableViewController: bottomMenuViewDelegate{
     func buttonClicked(tag: Int, eventFlag: Int) {
         switch eventFlag{

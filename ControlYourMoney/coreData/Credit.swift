@@ -42,7 +42,7 @@ class Credit: NSManagedObject {
         }catch _ as NSError{}
     }
     
-    //Credit插入一条数据
+    //Credit插入一条数据 ，
     class func insertCrediData(periods: Int, number: Float, time: NSDate,
                                account: String, date: Int, nextPayDay: NSDate, leftPeriods: Int, type: String){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -60,7 +60,7 @@ class Credit: NSManagedObject {
         saveData()
     }
     
-    //Credit改一条数据
+    //Credit改一条数据， SortedByTime都是根据下次还款时间排序
     class func updateCreditDataSortedByTime(indexPath: Int, periods: Int, number: Float,
                                             date: Int, account: String, time: NSDate,
                                             nextPayDay: NSDate, leftPeriods: Int, type: String){

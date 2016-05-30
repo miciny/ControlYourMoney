@@ -10,7 +10,7 @@ import UIKit
 
 class AccountListModul: NSObject {
     var name : String!
-    var type: Int! //0代表title 2 代表底下晴空按钮
+    var type: Int! //0代表title 2 代表底下清空按钮
     
     init(name: String!, type: Int!) {
         self.name = name

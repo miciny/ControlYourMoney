@@ -8,14 +8,14 @@
 
 import UIKit
 
-class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, accountListViewDelegate{
+class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate{
     var numberSalaryData = UITextField()
     var nameArray: NSMutableArray!
     var accountData = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "工资"
+        self.title = "收入"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         setupSalaryLable()
     }
@@ -25,6 +25,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         initData()
     }
     
+    //获取数据
     func initData(){
         
         nameArray = NSMutableArray()
@@ -46,10 +47,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         }
     }
     
-    func buttonClicked(name: String) {
-        self.accountData.text = name
-    }
-    
+    //设置label
     func setupSalaryLable(){
         let gap = CGFloat(10)
         
@@ -84,12 +82,15 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         self.view.addSubview(save)
     }
     
+    //确认框代理
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         let vc = AddIncomeAccountViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //保存
     func saveSalary(){
+        //检查数据
         if(self.numberSalaryData.text == ""){
             textAlertView("请输入内容！")
             return
@@ -100,6 +101,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
             return
         }
         
+        //保存
         Salary.insertIncomeData(getTime(), number: Float(self.numberSalaryData.text!)!, name: self.accountData.text!)
         CalculateCredit.changeTotal(-Float(self.numberSalaryData.text!)!)
         
@@ -107,6 +109,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
+    //进入选择账号页
     func goSelectAccount(){
         let vc = IncomeNameListViewController()
         vc.delegate = self
@@ -119,5 +122,11 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
+//账号选择的代理
+extension AddIncomeViewController: accountListViewDelegate{
+    func buttonClicked(name: String) {
+        self.accountData.text = name
+    }
 }

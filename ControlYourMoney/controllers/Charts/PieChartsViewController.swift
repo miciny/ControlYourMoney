@@ -11,10 +11,10 @@ import UIKit
 class PieChartsViewController: UIViewController {
     
     var scrollView: UIScrollView!
-    var yearCostPie: MCYPiePolyLineChartView!
-    var yearIncomePie: MCYPiePolyLineChartView!
-    var isCounting = false
-    var isIn = false
+    var yearCostPie: MCYPiePolyLineChartView!  //支出百分比
+    var yearIncomePie: MCYPiePolyLineChartView! //收入百分比
+    var isCounting = false  //是否正在计算，在计算中就不重新加载数据了
+    var isIn = false //是否已经加载了视图
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,8 @@ class PieChartsViewController: UIViewController {
         setData()
     }
     
+    
+    //计算数据并显示
     func setData(){
         let wiatView = MyWaitToast()
         
@@ -38,12 +40,14 @@ class PieChartsViewController: UIViewController {
             isIn = true
         }
         if !isCounting {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+            let PieChartPageQueue: dispatch_queue_t = dispatch_queue_create("PieChartPageQueue", DISPATCH_QUEUE_SERIAL)
+            
+            dispatch_async(PieChartPageQueue,{
                 self.isCounting = true
                 let dataDic1 = GetAnalyseData.getCostPercent()
                 let dataDic2 = GetAnalyseData.getIncomePercent()
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(mainQueue, {
                     wiatView.hideView()
                     
                     if dataDic1 != nil {
@@ -61,6 +65,7 @@ class PieChartsViewController: UIViewController {
         }
     }
     
+    //设置ScrollView
     func setScroll(){
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: Width, height: Height-100-60))
         scrollView.backgroundColor = UIColor.whiteColor()
@@ -114,6 +119,4 @@ class PieChartsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
 }

@@ -40,7 +40,7 @@ class MyWaitToast: UIView{
         self.addSubview(tmpView)
         
         //转圈的动画
-        let activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.hidden = true
         activityIndicator.startAnimating()
@@ -73,7 +73,6 @@ class MyWaitToast: UIView{
         if timer != nil {
             NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         }
-        MyWaitToast.showNetIndicator()
     }
     
     //请求超时时显示
@@ -92,9 +91,10 @@ class MyWaitToast: UIView{
                 self.removeView()
             })
         }
-        MyWaitToast.hidenNetIndicator()
+        hidenNetIndicator()
     }
     
+    //移除view
     func removeView(){
         if mask != nil {
             mask.hidden = true
@@ -117,11 +117,11 @@ class MyWaitToast: UIView{
     }
     
     //系统栏的转圈动画
-    class func showNetIndicator(){
+    func showNetIndicator(){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     }
     
-    class func hidenNetIndicator(){
+    func hidenNetIndicator(){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 }

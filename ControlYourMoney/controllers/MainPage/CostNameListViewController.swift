@@ -10,10 +10,10 @@ import UIKit
 
 class CostNameListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
-    var searchTable = UITableView()
-    var dataAll: NSMutableArray!
-    var dataShow: [AccountListModul]!
-    var delegate: costNameListViewDelegate?
+    var searchTable = UITableView() //整个table
+    var dataAll: NSMutableArray! //数据
+    var dataShow: [AccountListModul]! //显示的model
+    var delegate: costNameListViewDelegate? //代理
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
                                          action: #selector(backToPrevious))
         self.navigationItem.leftBarButtonItem = leftBarBtn
         
-        //+按钮
+        //右上角+按钮
         let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(goAddPayName))
         self.navigationItem.rightBarButtonItem = addItem
         
@@ -38,6 +38,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         self.searchTable.reloadData()
     }
     
+    //配置tabel
     func setUpTable(){
         searchTable.frame = CGRect(x: 0, y: 0, width: Width, height: Height)  //为普通模式
         searchTable.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
@@ -51,6 +52,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         self.view.addSubview(searchTable)
     }
     
+    //设置数据
     func setUpData(){
         
         dataAll = NSMutableArray()
@@ -71,8 +73,9 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     /*
-     // MARK: - uitabelview
+     // MARK: - tabel view delegate
      */
+    
     //section个数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -81,12 +84,12 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
+    
     //每个section的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
         count = dataShow.count
         return count
-        
     }
     
     //计算每个cell高度,固定44
@@ -94,7 +97,6 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         let height  = CGFloat(44)
         return height
     }
-    
     
     //每个cell内容
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -118,14 +120,16 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         
         let data = dataShow[indexPath.row]
         let labelText = data.name
-        self.delegate?.costNameClicked(labelText)
+        self.delegate?.costNameClicked(labelText)  //代理传值
         self.backToPrevious()
     }
 
+    //退出页面
     func backToPrevious(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //进入添加支出类型的页面
     func goAddPayName(){
         let vc = AddCostNameViewController()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -135,16 +139,4 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

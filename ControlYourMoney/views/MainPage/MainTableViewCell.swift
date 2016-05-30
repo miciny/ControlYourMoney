@@ -25,9 +25,6 @@ class MainTableViewCell: UITableViewCell {
     var dataNumber22: UILabel?
     var dataNumber111: UILabel?
     var dataNumber222: UILabel?
-    var dataNumber1111: UILabel?
-    var dataNumber2222: UILabel?
-    var dataNumber111111: UILabel?
     
     var creditCellHeight = CGFloat(130)
     var cashDetailCellHeight = CGFloat(120)
@@ -102,28 +99,16 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber222!.textAlignment = NSTextAlignment.Right
         self.dataNumber222!.backgroundColor = UIColor.clearColor()
         self.dataNumber222!.textColor = UIColor.redColor()
-        
-        self.dataNumber1111 = UILabel(frame: CGRectZero)
-        self.dataNumber1111!.font = detailFont
-        self.dataNumber1111!.textAlignment = NSTextAlignment.Left
-        self.dataNumber1111!.backgroundColor = UIColor.clearColor()
-        self.dataNumber1111!.textColor = UIColor.blackColor()
-        
-        self.dataNumber2222 = UILabel(frame: CGRectZero)
-        self.dataNumber2222!.font = detailFont
-        self.dataNumber2222!.textAlignment = NSTextAlignment.Right
-        self.dataNumber2222!.backgroundColor = UIColor.clearColor()
-        self.dataNumber2222!.textColor = UIColor.redColor()
     }
     
     //设置信用卡的label
     func setUpCreditLabel(){
         
         self.addSubview(self.dataLable!)
-        self.addSubview(self.dataNumber111!)
-        self.addSubview(self.dataNumber222!)
-        self.addSubview(self.dataNumber1111!)
-        self.addSubview(self.dataNumber2222!)
+        self.addSubview(self.dataNumber1!)
+        self.addSubview(self.dataNumber2!)
+        self.addSubview(self.dataNumber11!)
+        self.addSubview(self.dataNumber22!)
         
         let modul = self.dataModul as! MainTableCreditModul
         
@@ -131,17 +116,17 @@ class MainTableViewCell: UITableViewCell {
         let size1 = sizeWithText("剩余周期：", font: detailFont, maxSize: CGSizeMake(Width, 30))
         self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, creditCellHeight/3)
         
-        self.dataNumber111!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, Width*2/3-self.dataNumber111!.frame.maxX-10, self.dataLable!.frame.height)
+        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataNumber1!.frame.minY, Width*2/3-self.dataNumber1!.frame.maxX-10, self.dataLable!.frame.height)
 
-        self.dataNumber1111!.frame = CGRectMake(20, self.dataNumber111!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataNumber1111!.frame.minY, Width*2/3-self.dataNumber1111!.frame.maxX-10, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, Width*2/3-self.dataNumber11!.frame.maxX-10, self.dataLable!.frame.height)
         
         self.dataLable!.text = modul.title
-        self.dataNumber111!.text = "还款时间："
-        self.dataNumber222!.text = modul.time
-        self.dataNumber1111!.text = "还款总额："
-        self.dataNumber2222!.text = modul.all
+        self.dataNumber1!.text = "还款时间："
+        self.dataNumber2!.text = modul.time
+        self.dataNumber11!.text = "还款总额："
+        self.dataNumber22!.text = modul.all
         
         let titles = ["", ""] //["已还周期", "未还周期"]
         let values : [Double] = [Double(modul.allPeriods)!-Double(modul.periods)!, Double(modul.periods)!]
@@ -158,8 +143,6 @@ class MainTableViewCell: UITableViewCell {
     
     //设置工资的label
     func setUpSalaryLabel(){
-        
-        
         self.addSubview(self.dataLable!)
         self.addSubview(self.dataNumber1!)
         self.addSubview(self.dataNumber2!)
@@ -196,8 +179,8 @@ class MainTableViewCell: UITableViewCell {
         self.addSubview(self.dataLable!)
         self.addSubview(self.dataNumber1!)
         self.addSubview(self.dataNumber2!)
-        self.addSubview(self.dataNumber1111!)
-        self.addSubview(self.dataNumber2222!)
+        self.addSubview(self.dataNumber11!)
+        self.addSubview(self.dataNumber22!)
         
         let modul = self.dataModul as! MainTableCashModul
         
@@ -210,8 +193,8 @@ class MainTableViewCell: UITableViewCell {
         
         self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
         
-        self.dataNumber1111!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size2.width, self.dataLable!.frame.height)
-        self.dataNumber2222!.frame = CGRectMake(self.dataNumber1111!.frame.maxX, self.dataNumber1111!.frame.minY, size3.width, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size2.width, self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size3.width, self.dataLable!.frame.height)
         
         self.dataNumber2!.frame = CGRectMake(Width*5/6-self.creditCellHeight/2-10-size4.width, self.dataNumber1!.frame.minY, size4.width, size4.height)
         
@@ -219,9 +202,9 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber1!.text = "金额："
         self.dataNumber2!.text = modul.useNumber
         self.dataNumber2!.font = useNumberFont
-        self.dataNumber1111!.text = "月总额："
-        self.dataNumber2222!.text = modul.useTotalStr
-        self.dataNumber2222!.textAlignment = .Left
+        self.dataNumber11!.text = "月总额："
+        self.dataNumber22!.text = modul.useTotalStr
+        self.dataNumber22!.textAlignment = .Left
         
         let titles = ["", ""] //["平均", "今日"]
         let dayOffset = getTime().currentDay
@@ -313,7 +296,6 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber22!.text = modul.type
         
     }
-    
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

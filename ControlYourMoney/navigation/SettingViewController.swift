@@ -22,9 +22,9 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         self.title = "设置"
-        
     }
     
+    //设置数据
     func setData(){
         settingData = NSMutableArray()
         
@@ -54,6 +54,12 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.view.addSubview(mainTabelView!)
     }
     
+    //=====================================================================================================
+    /**
+     MARK: - Table view delegate
+     **/
+    //=====================================================================================================
+    
     //section个数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return settingData!.count
@@ -73,6 +79,13 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return height
     }
+    
+    //=====================================================================================================
+    /**
+     MARK: - Table view data source
+     **/
+    //=====================================================================================================
+    
     
     //每个cell内容
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -129,26 +142,13 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
 
-    
+    //一个section头部的高度
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

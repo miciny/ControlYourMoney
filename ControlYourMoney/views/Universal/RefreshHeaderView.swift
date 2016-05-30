@@ -9,12 +9,12 @@
 import UIKit
 
 enum RefreshState{
-    case  RefreshStateNormal
-    case  RefreshStatePulling
-    case  RefreshStateLoading
+    case  RefreshStateNormal //正常
+    case  RefreshStatePulling //正在下啦
+    case  RefreshStateLoading //正在加载
 }
 
-let RefreshHeaderHeight: CGFloat = 64
+let RefreshHeaderHeight: CGFloat = 64 //高度
 
 class RefreshHeaderView: UIView, UIScrollViewDelegate{
 
@@ -41,12 +41,14 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
     func designKFC(){
         scrollView.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: nil)
     }
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "contentOffset"){
             scrollViewContentOffsetDidChange(scrollView);
         }
     }
     
+    //设置页面
     func initUI(){
         
         headerView = UIView(frame: CGRectMake(0, -RefreshHeaderHeight, scrollView.frame.width, RefreshHeaderHeight))
@@ -92,7 +94,7 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
-    //
+    //delegate
     func scrollViewContentOffsetDidChange(scrollView: UIScrollView) {
         
         if(dragHeight() < 0 || refreshState == RefreshState.RefreshStateLoading ){
@@ -145,6 +147,7 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
         return  (scrollView.contentOffset.y + scrollView.contentInset.top) *  -1.0;
     }
     
+    //结束刷新
     func endRefresh(){
         setRrefreshState(.RefreshStateNormal)
     }

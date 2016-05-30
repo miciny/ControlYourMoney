@@ -67,7 +67,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     
     /**
      设置状态栏风格,系统栏白色文字 info中 View controller-based status bar appearance设置为no才能用
-     */
+    **/
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }

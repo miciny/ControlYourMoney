@@ -38,15 +38,18 @@ class IncomeNameListViewController: UIViewController, UITableViewDelegate, UITab
         self.searchTable.reloadData()
     }
     
+    // 退出页面
     func backToPrevious(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //进入添加页面
     func goAddIncomeName(){
         let vc = AddIncomeAccountViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //哦配置tabel
     func setUpTable(){
         searchTable.frame = CGRect(x: 0, y: 0, width: Width, height: Height)  //为普通模式
         searchTable.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
@@ -60,6 +63,7 @@ class IncomeNameListViewController: UIViewController, UITableViewDelegate, UITab
         self.view.addSubview(searchTable)
     }
     
+    //获取数据
     func setUpData(){
         
         dataAll = NSMutableArray()
@@ -80,8 +84,9 @@ class IncomeNameListViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     /*
-     // MARK: - uitabelview
+     // MARK: - tabel view delegate
      */
+    
     //section个数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

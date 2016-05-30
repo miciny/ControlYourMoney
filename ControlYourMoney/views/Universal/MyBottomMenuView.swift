@@ -36,12 +36,18 @@ class MyBottomMenuView: UIView{
     
     var centerPosition = CGPoint()
     
+    private var title: String!
+    private var cancel: String!
+    private var object: NSArray!
     final let gap : CGFloat = 7  // 取消与上面按钮的间隔
     
-    func showBottomMenu(title: String, cancel: String, object: NSArray,eventFlag: Int , target: bottomMenuViewDelegate){
+    func showBottomMenu(title: String, cancel: String, object: NSArray, eventFlag: Int ,target: bottomMenuViewDelegate){
+        self.title = title
+        self.cancel = cancel
+        self.object = object
+        
         centerPosition = CGPoint(x: Width/2, y: Height/2)
-        var totalHeight : CGFloat = 0 //总高度
-        let osHeight = CGFloat(object.count) * objectHeight
+        let totalHeight = calculateheight()
         
         self.frame = CGRectMake(0, 0, Width, Height)
         self.backgroundColor = UIColor.clearColor()  //背景色
@@ -50,47 +56,16 @@ class MyBottomMenuView: UIView{
         self.eventFlag = eventFlag
         self.delegate = target
         
-        if(title == "" && cancel == ""){
-            titleHeight = 0
-            cancelHeight = 0
-            totalHeight = osHeight + gap
-        }else if(title == "" && cancel != ""){
-            titleHeight = 0
-            totalHeight = osHeight + gap + cancelHeight
-        }else if(title != "" && cancel == ""){
-            cancelHeight = 0
-            totalHeight = osHeight + titleHeight + gap
-        }else{
-            totalHeight = osHeight + titleHeight + gap + cancelHeight //总高度
-        }
-        
         buttonView.frame = CGRect(x: 0, y: Height-totalHeight , width: Width, height: totalHeight)
         buttonView.backgroundColor = UIColor.whiteColor()
         buttonView.alpha = 1
         
         if(title != ""){
-            let titleLb = UILabel(frame: CGRect(x: 0, y: 0, width: Width, height: titleHeight))
-            titleLb.backgroundColor = UIColor.whiteColor()
-            titleLb.text = title
-            titleLb.textAlignment = .Center
-            titleLb.font = UIFont.systemFontOfSize(titleFont)
-            titleLb.textColor = titleColor
-            buttonView.addSubview(titleLb)
+            setTitle()
         }
         
         if(cancel != ""){
-            let cancelLine = UIView(frame: CGRect(x: 0, y: totalHeight-cancelHeight-gap, width: Width, height: gap))
-            cancelLine.backgroundColor = UIColor.grayColor()
-            cancelLine.alpha = 0.6
-            buttonView.addSubview(cancelLine)
-            
-            let cancelBtn = UIButton(frame: CGRect(x: 0, y: totalHeight-cancelHeight, width: Width, height: cancelHeight))
-            cancelBtn.backgroundColor = UIColor.whiteColor()
-            cancelBtn.setTitle(cancel, forState: .Normal)
-            cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(cancelFont)
-            cancelBtn.setTitleColor(cancelColor, forState: .Normal)
-            cancelBtn.addTarget(self, action: #selector(MyBottomMenuView.hideView), forControlEvents: .TouchUpInside)
-            buttonView.addSubview(cancelBtn)
+            setCancel(totalHeight)
         }
         
         if(object.count > 0){
@@ -112,12 +87,8 @@ class MyBottomMenuView: UIView{
                 buttonView.addSubview(objectBtn)
             }
         }
-        //在整个页面的空余地方添加一个button，点击移除view
-        let removeBtn = UIButton(frame: CGRect(x: 0, y: 0, width: Width, height: Height))
-        removeBtn.backgroundColor = UIColor.blackColor()
-        removeBtn.alpha = 0.5
-        removeBtn.addTarget(self, action: #selector(MyBottomMenuView.hideView), forControlEvents: .TouchUpInside)
-        self.addSubview(removeBtn)
+        
+        addRemoveBtn()
         
         //为什么用uicontroller加，我也不知道
         if mainView == nil {
@@ -127,20 +98,82 @@ class MyBottomMenuView: UIView{
             self.center = CGPoint(x: centerPosition.x, y: centerPosition.y)
             mainView.alpha = 1
             
-            
             UIApplication.sharedApplication().keyWindow?.addSubview(self.mainView)
-            
-            //动画
-            let animation = CATransition()
-            animation.type = kCATransitionPush
-            animation.subtype = kCATransitionFromTop
-            animation.duration = 0.2
-            
+    
             self.addSubview(buttonView)
-            self.buttonView.layer.addAnimation(animation, forKey: "")
+            self.buttonView.layer.addAnimation(presentAnimation(), forKey: "")
         }
     }
     
+    //计算总高度
+    func calculateheight() -> CGFloat{
+        var totalHeight : CGFloat = 0 //总高度
+        let osHeight = CGFloat(self.object.count) * self.objectHeight
+        
+        if(self.title == "" && self.cancel == ""){
+            titleHeight = 0
+            cancelHeight = 0
+            totalHeight = osHeight + gap
+        }else if(self.title == "" && self.cancel != ""){
+            titleHeight = 0
+            totalHeight = osHeight + gap + cancelHeight
+        }else if(self.title != "" && self.cancel == ""){
+            cancelHeight = 0
+            totalHeight = osHeight + titleHeight + gap
+        }else{
+            totalHeight = osHeight + titleHeight + gap + cancelHeight //总高度
+        }
+        
+        return totalHeight
+    }
+    
+    //设置cancel按钮
+    func setCancel(totalHeight: CGFloat){
+        let cancelLine = UIView(frame: CGRect(x: 0, y: totalHeight-cancelHeight-gap, width: Width, height: gap))
+        cancelLine.backgroundColor = UIColor.grayColor()
+        cancelLine.alpha = 0.6
+        buttonView.addSubview(cancelLine)
+        
+        let cancelBtn = UIButton(frame: CGRect(x: 0, y: totalHeight-cancelHeight, width: Width, height: cancelHeight))
+        cancelBtn.backgroundColor = UIColor.whiteColor()
+        cancelBtn.setTitle(self.cancel, forState: .Normal)
+        cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(cancelFont)
+        cancelBtn.setTitleColor(cancelColor, forState: .Normal)
+        cancelBtn.addTarget(self, action: #selector(MyBottomMenuView.hideView), forControlEvents: .TouchUpInside)
+        buttonView.addSubview(cancelBtn)
+    }
+    
+    //设置title按钮
+    func setTitle(){
+        let titleLb = UILabel(frame: CGRect(x: 0, y: 0, width: Width, height: titleHeight))
+        titleLb.backgroundColor = UIColor.whiteColor()
+        titleLb.text = self.title
+        titleLb.textAlignment = .Center
+        titleLb.font = UIFont.systemFontOfSize(titleFont)
+        titleLb.textColor = titleColor
+        buttonView.addSubview(titleLb)
+    }
+    
+    //在整个页面的空余地方添加一个button，点击移除view
+    func addRemoveBtn(){
+        let removeBtn = UIButton(frame: CGRect(x: 0, y: 0, width: Width, height: Height))
+        removeBtn.backgroundColor = UIColor.blackColor()
+        removeBtn.alpha = 0.5
+        removeBtn.addTarget(self, action: #selector(MyBottomMenuView.hideView), forControlEvents: .TouchUpInside)
+        self.addSubview(removeBtn)
+    }
+    
+    // 显示的动画
+    func presentAnimation() -> CATransition{
+        let animation = CATransition()
+        animation.type = kCATransitionPush
+        animation.subtype = kCATransitionFromTop
+        animation.duration = 0.2
+        
+        return animation
+    }
+    
+    //隐藏view
     func hideView(){
         UIView.animateWithDuration(0.2, animations: {
             () -> ()in
@@ -149,9 +182,9 @@ class MyBottomMenuView: UIView{
                 (Boolean) -> ()in
                 self.mainView.removeFromSuperview()
         })
-        
     }
     
+    //点击按钮 事件
     func buttonClicked(sender : UIButton){
         hideView()
         let oBtn = sender as UIButton

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-
+let mainQueue = dispatch_get_main_queue() //主线程
 let Width = UIScreen.mainScreen().bounds.width
 let Height = UIScreen.mainScreen().bounds.height
 

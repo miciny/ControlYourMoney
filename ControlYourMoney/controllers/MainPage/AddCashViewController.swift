@@ -8,12 +8,12 @@
 
 import UIKit
 
-class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, costNameListViewDelegate{
-    var numberUsedData = UITextField()
-    var whereUsedData = UITextField()
-    var isCreditCheck: UIButton! //
-    var accountData = UILabel()
-    var accountArray = NSMutableArray()
+class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate{
+    var numberUsedData = UITextField()  //现金额度的输入框
+    var whereUsedData = UITextField()  //现金用处的输入框
+    var isCreditCheck: UIButton! //是否用的信用卡按钮
+    var accountData = UILabel() //是否用的信用卡的label，因为点击label，也要选中信用卡
+    var accountArray = NSMutableArray() //保存支出类型的数组
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         initData()
     }
     
+    //初始化数据
     func initData(){
         accountArray = NSMutableArray()
         let accountTempArray = PayName.selectAllData()
@@ -43,6 +44,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             accountArray.addObject(name)
         }
         
+        //优先选择早中晚餐
         if self.accountData.text == nil {
             if accountArray.containsObject("早中晚餐"){
                 self.accountData.text = "早中晚餐"
@@ -52,14 +54,17 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         }
     }
     
+    //提示框
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         let vc = AddCostNameViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //配置页面元素
     func setupCashLable(){
         let gap = CGFloat(10)
         
+        //三个label
         let numberUsedSize = sizeWithText("支出类型：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
         let numberUsed = UILabel.introduceLabel()
         numberUsed.frame = CGRectMake(20, 90, numberUsedSize.width, 30)
@@ -71,6 +76,12 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         whereUsed.text = "用处："
         self.view.addSubview(whereUsed)
         
+        let account = UILabel.introduceLabel()
+        account.frame = CGRectMake(20, whereUsed.frame.maxY+gap, numberUsedSize.width, 30)
+        account.text = "支出类型："
+        self.view.addSubview(account)
+        
+        //两个输入框
         self.numberUsedData = UITextField.inputTextField()
         self.numberUsedData.frame = CGRectMake(numberUsed.frame.maxX, numberUsed.frame.minY, self.view.frame.size.width-numberUsed.frame.maxX-20, 30)
         self.numberUsedData.placeholder = "请输入金额..."
@@ -84,15 +95,12 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.whereUsedData.placeholder = "请输入用处..."
         self.view.addSubview(self.whereUsedData)
         
-        let account = UILabel.introduceLabel()
-        account.frame = CGRectMake(20, whereUsed.frame.maxY+gap, numberUsedSize.width, 30)
-        account.text = "支出类型："
-        self.view.addSubview(account)
-        
+        //支出类型的label
         self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
         self.accountData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountData)
         
+        //是否是信用卡的按钮和label
         isCreditCheck = UIButton.checkButton(self, selector: #selector(isCreditSeleted))
         isCreditCheck.frame = CGRect(x: 20, y: account.frame.maxY+gap+5, width: 20, height: 20)
         isCreditCheck.selected = false
@@ -107,6 +115,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         isCreditCheckButtonText.addGestureRecognizer(tap1)
         self.view.addSubview(isCreditCheckButtonText)
         
+        //保存按钮
         let save = UIButton(frame: CGRectMake(20, isCreditCheckButtonText.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.layer.cornerRadius = 3
@@ -115,6 +124,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.view.addSubview(save)
     }
     
+    //进入选择支出类型的页面
     func goSelectAccount(){
         let vc = CostNameListViewController()
         vc.delegate = self
@@ -122,12 +132,10 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
     }
     
-    func costNameClicked(name: String) {
-        self.accountData.text = name
-    }
-    
+    //保存
     func saveCash(){
         
+        //判断输入的数据
         guard let numberStr = self.numberUsedData.text where numberStr != "" else{
             textAlertView("请输入金额！")
             return
@@ -148,13 +156,13 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             Cash.insertCashData(whereStr, useNumber: Float(numberStr)!, type: self.accountData.text!, time: getTime())
             
             CalculateCredit.changeTotal(Float(self.numberUsedData.text!)!)
-        }else{
+        }else{ //用的信用卡
             let timeNow = getTime()
             var account = String()
             
             var MM = timeNow.currentMonth
             
-            if(myOwnAccountBillDay <= timeNow.currentDay){
+            if(myOwnAccountBillDay <= timeNow.currentDay){  //3号的账单日，21号的还还款日
                 MM += 1
                 if MM+1 == 13{
                     MM = 1
@@ -188,6 +196,7 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //选择了是否是信用卡按钮事件
     func isCreditSeleted(){
         isCreditCheck.selected = !isCreditCheck.selected
     }
@@ -195,5 +204,12 @@ class AddCashViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension AddCashViewController: costNameListViewDelegate{
+    //支出类型列表页，选择一个类型后的传值
+    func costNameClicked(name: String) {
+        self.accountData.text = name
     }
 }

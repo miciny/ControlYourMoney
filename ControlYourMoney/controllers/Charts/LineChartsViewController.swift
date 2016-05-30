@@ -10,17 +10,17 @@ import UIKit
 
 class LineChartsViewController: UIViewController {
     
-    var isCounting = false
+    var isCounting = false //是否正在计算，在计算中就不重新加载数据了
     
     var scrollView: UIScrollView!
-    var monthCostLine: MCYLineChartView!
-    var monthPreLine: MCYLineChartView!
-    var dayCostLine: MCYLineChartView!
+    var monthCostLine: MCYLineChartView!  //月支出表
+    var monthPreLine: MCYLineChartView! //月预计支出表
+    var dayCostLine: MCYLineChartView! //日支出表
     
+    //五项数据源
     var months = NSArray()
     var monthsCost = NSArray()
     var monthsPreCost = NSArray()
-    
     var days = [String]()
     var daysCost = NSArray()
 
@@ -34,6 +34,7 @@ class LineChartsViewController: UIViewController {
         
     }
     
+    //进入页面就计算数据
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
@@ -45,7 +46,9 @@ class LineChartsViewController: UIViewController {
         }
         
         if !isCounting {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+            let LineChartPageQueue: dispatch_queue_t = dispatch_queue_create("LineChartPageQueue", DISPATCH_QUEUE_SERIAL)
+            
+            dispatch_async(LineChartPageQueue,{
                 self.getData()
                 self.isCounting = true
                 
@@ -54,7 +57,7 @@ class LineChartsViewController: UIViewController {
                 let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
                 let thisMonthPayTotal = GetAnalyseData.getThisMonthUse()
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(mainQueue, {
                     wiatView.hideView()
                     
                     self.monthCostLine.lineChart.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
@@ -82,6 +85,7 @@ class LineChartsViewController: UIViewController {
         daysCost = GetAnalyseData.getEveryDayPay()
     }
     
+    //设置显示数据
     func setData(){
         
         self.monthCostLine.setLineChartData(self.months, ydata: self.monthsCost)
@@ -93,6 +97,7 @@ class LineChartsViewController: UIViewController {
         self.dayCostLine.setNeedsDisplay()
     }
     
+    // 设置整个scrollView
     func setScroll(){
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: Width, height: Height-100-60))
         scrollView.backgroundColor = UIColor.whiteColor()

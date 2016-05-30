@@ -12,7 +12,7 @@ class AnalyseMainViewCollectionViewCell: UICollectionViewCell {
     
     var dataLable: UILabel! //cell上title
     var dataPic: UIImageView? //cell上的图片
-    var data: UILabel!
+    var data: UILabel!  //cell上的数据
     private let picHeight = CGFloat(20)
     
     override init(frame: CGRect) {
@@ -29,7 +29,6 @@ class AnalyseMainViewCollectionViewCell: UICollectionViewCell {
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.backgroundColor = UIColor.whiteColor()
-        
         
         self.dataPic = UIImageView()
         self.dataPic?.frame = CGRectMake(10, (self.frame.height-picHeight)/2, 20, 20)

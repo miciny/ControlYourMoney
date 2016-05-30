@@ -11,7 +11,7 @@ import CoreData
 
 class SalaryDetailTableViewController: UITableViewController {
     
-    var AllData = [SalaryDetailTableDataModul]()
+    var AllData = [SalaryDetailTableDataModul]() //需要现实的数据
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +19,7 @@ class SalaryDetailTableViewController: UITableViewController {
         setupData()
     }
 
+    //设置title等
     func setUpTitle(){
         self.title = "收入列表"
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -26,6 +27,7 @@ class SalaryDetailTableViewController: UITableViewController {
         
     }
     
+    //获得数据
     func setupData(){
         
         let aa = GetDataArray.getSalaryDetailShowArray()

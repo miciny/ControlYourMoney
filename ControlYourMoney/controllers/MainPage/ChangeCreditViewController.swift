@@ -11,25 +11,26 @@ import CoreData
 
 class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate{
     
-    var changeIndex = 0
-    var nextPaydayString = String()
-    var recivedData: MainTableCreditModul!
+    var changeIndex = 0 //改变的数据，在数据库的位置
+    var nextPaydayString = String() //下期还款的时间
+    var recivedData: MainTableCreditModul! //列表点击的，传进来的数据
     
-    var numberUsedData = UITextField()
+    //六个输入框
     var whereUsedData = UITextField()
-    
     var numberSalaryData = UITextField()
-    
     var nextPaydayText = UITextField()
     var periodsCreditData = UITextField()
     var numberCreditData = UITextField()
     var dateCreditData = UITextField()
-    var accountCreditData = UILabel()
-    var typeData = UILabel()
     
-    var save = UIButton()
-    var alreadyPay = UIButton()
-    var alreadyPayAll = UIButton()
+    //两个选择label
+    var accountCreditData = UILabel() //账户
+    var typeData = UILabel() //支出类型
+    
+    //三个按钮
+    var save = UIButton() //保存按钮
+    var alreadyPay = UIButton() //本月已还
+    var alreadyPayAll = UIButton() //全部已还
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.setUpText()
     }
     
+    //设置显示的数据
     func setUpText(){
         self.periodsCreditData.text = self.recivedData.periods
         self.numberCreditData.text = self.recivedData.number
@@ -56,6 +58,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         }
     }
     
+    //设置title
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         self.title = "修改信用卡（电子分期）"
@@ -68,8 +71,11 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         // Dispose of any resources that can be recreated.
     }
     
+    //设置页面元素
     func setupCreditLable(){
         let gap = CGFloat(10)
+        
+        //六个label
         let nextPaydaySize = sizeWithText("下期还款：", font: introduceFont, maxSize: CGSizeMake(Width, 30))
         let nextPayday = UILabel.introduceLabel()
         nextPayday.frame = CGRectMake(20, 90, nextPaydaySize.width, 30)
@@ -101,6 +107,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         type.text = "支出类型："
         self.view.addSubview(type)
         
+        //四个输入框
         self.nextPaydayText = UITextField.inputTextField()
         self.nextPaydayText.frame = CGRectMake(nextPayday.frame.maxX, nextPayday.frame.minY, self.view.frame.size.width-nextPayday.frame.maxX-20, 30)
         self.nextPaydayText.text = self.nextPaydayString
@@ -122,6 +129,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.dateCreditData.placeholder = "还款日期..."
         self.view.addSubview(dateCreditData)
         
+        //两个选择label
         self.accountCreditData = UILabel.inputLabel()
         self.accountCreditData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
         self.view.addSubview(self.accountCreditData)
@@ -130,6 +138,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.typeData.frame = CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30)
         self.view.addSubview(self.typeData)
         
+        //四个按钮
         save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
         save.layer.backgroundColor = UIColor.redColor().CGColor
         save.setTitle("保  存", forState: UIControlState.Normal)
@@ -166,23 +175,21 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         return true
     }
     
+    //已还全部
     func alreadyPayAllCredit(){
-        
         let alert = UIAlertView(title: "是否确认全部还完？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         alert.tag = 1
         alert.show()
-
     }
     
+    //删除
     func deleteBtnClicked(){
-        
         let alert = UIAlertView(title: "是否确认删除？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         alert.tag = 2
         alert.show()
-        
     }
 
-    //已还
+    //已还本月
     func alreadyPayCredit(){
         
         if !checkData(){
@@ -192,12 +199,11 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let alert = UIAlertView(title: "是否确认本月已还？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         alert.tag = 3
         alert.show()
-        
     }
     
     //重新保存
     func saveCredit(){
-        
+
         if !checkData(){
         return
         }
@@ -205,9 +211,9 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let alert = UIAlertView(title: "是否确认重新保存？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         alert.tag = 4
         alert.show()
-        
     }
     
+    //确认框的代理
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         switch alertView.tag {
         case 1:  //全部还完
@@ -231,8 +237,8 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         }
     }
     
+    //重新保存
     func reSave(){
-        
         let timeNow = getTime()
         let date = Int(dateCreditData.text!)!
         let nextPayDay = CalculateCredit.getFirstPayDate(timeNow, day: date)
@@ -243,6 +249,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //本月已还
     func payThisMonth(){
         let thisPayDay = stringToDateNoHH(recivedData.time)
         let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
@@ -257,6 +264,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //删除，不需要改变余额
     func deleteCredit(){
         
         Credit.deleteCreditDataSortedByTime(changeIndex)
@@ -264,6 +272,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //全部还款，需要改变剩余额度
     func payAll(){
         Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
@@ -279,6 +288,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    //检查输入的数据
     func checkData() -> Bool{
         
         if(periodsCreditData.text == "" || numberCreditData.text == "" ||  dateCreditData.text == "" || accountCreditData.text == ""){
@@ -305,7 +315,6 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
             textAlertView("请输入正确还款日期！")
             return false
         }
-        
         return true
     }
 }

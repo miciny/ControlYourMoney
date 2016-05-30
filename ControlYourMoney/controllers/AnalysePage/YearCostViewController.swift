@@ -6,6 +6,13 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+
+//=====================================================================================================
+/**
+ MARK: - 代码注释可参考MonthCostViewController
+ **/
+//=====================================================================================================
+
 import UIKit
 
 class YearCostViewController: UIViewController {
@@ -228,21 +235,8 @@ class YearCostViewController: UIViewController {
         self.saveBtn!.frame = CGRectMake(20, lastY!+gap!*3, self.view.frame.size.width-40, 44)
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

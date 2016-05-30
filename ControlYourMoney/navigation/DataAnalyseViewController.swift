@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, isRefreshingDelegate{
+class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
-    private var collectionView : UICollectionView?
+    private var collectionView : UICollectionView?  //整个集合视图
     private let cellReuseIdentifier = "analyseCell"
     private var cellData: NSMutableDictionary?
     private var refreshView: RefreshHeaderView? //自己写的
@@ -42,7 +42,6 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         setUpCollection()
     }
     
-    
     //初始化collectionView
     func setUpCollection(){
         
@@ -64,17 +63,20 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         setUpData()
     }
     
-    
+    //获取数据
     let wiatView = MyWaitToast()
     func setUpData(){
         self.cellData = NSMutableDictionary()
         wiatView.title = "计算中..."
         wiatView.showWait(self.view)
+//        wiatView.showNetIndicator()
         calculateData()
     }
     
+    //计算数据
     func calculateData(){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 2),{
+        let DataAnalysePageQueue: dispatch_queue_t = dispatch_queue_create("DataAnalysePageQueue", DISPATCH_QUEUE_SERIAL)
+        dispatch_async(DataAnalysePageQueue,{
             //这里写需要放到子线程做的耗时的代码
             let thisMonthPay = GetAnalyseData.getPreThisMonthPay()
             let thisYearPay = GetAnalyseData.getPreThisYearPay()
@@ -119,7 +121,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let IncomeOne = AnalysePageDataModul(pic: nil, name: self.incomeOneStr, data: "\(allRealSalary)")
             let IncomeTwo = AnalysePageDataModul(pic: nil, name: self.incomeTwoStr, data: "\(allPropety)")
             
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(mainQueue, {
                 self.cellData = NSMutableDictionary()
                 self.cellData?.setValue([preOne, preTow, preThree, preFour], forKey: "预计")
                 self.cellData?.setValue([creditOne, creditTwo, creditThree, creditFour, creditfive, creditSix], forKey: "信用")
@@ -136,17 +138,9 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         self.title = "分析"
-        
     }
     
-    //isfreshing中的代理方法
-    func reFreshing(){
-        collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight*2), animated: true)
-        collectionView!.scrollEnabled = false
-        //这里做你想做的事
-        self.calculateData()
-    }
-    
+    //结束刷新时调用
     func endFresh(){
         self.collectionView!.scrollEnabled = true
         self.collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
@@ -156,7 +150,12 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         toast.showToast("刷新完成！")
     }
     
-    // MARK: UICollectionViewDataSource
+    
+    //=====================================================================================================
+    /**
+     MARK: UICollectionViewDataSource
+     **/
+    //=====================================================================================================
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -283,7 +282,16 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+extension DataAnalyseViewController: isRefreshingDelegate{
+    //isfreshing中的代理方法
+    func reFreshing(){
+        collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight*2), animated: true)
+        collectionView!.scrollEnabled = false
+        //这里做你想做的事
+        self.calculateData()
+    }
     
-
-
+    
 }

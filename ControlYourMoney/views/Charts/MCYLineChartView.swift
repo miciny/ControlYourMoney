@@ -6,13 +6,19 @@
 //  Copyright © 2016年 maocaiyuan. All rights reserved.
 //
 
+//=====================================================================================================
+/**
+ MARK: - 自己定义的line图表的样式
+ **/
+//=====================================================================================================
+
 import UIKit
 import Charts
 
 class MCYLineChartView: UIView {
     var lineChart: LineChartView!
     var delegate: ChartViewDelegate?
-    var visibleXRangeMaximum = CGFloat(12)
+    var visibleXRangeMaximum = CGFloat(12) //设置的最大显示x
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,13 +41,13 @@ class MCYLineChartView: UIView {
         lineChart.descriptionText = title
         lineChart.descriptionTextColor = UIColor.whiteColor()
         lineChart.noDataTextDescription = "无数据"
-        lineChart.dragEnabled = true
+        lineChart.dragEnabled = false //不允许拖动
         lineChart.descriptionFont = UIFont.systemFontOfSize(20)
         lineChart.descriptionTextPosition = CGPoint(x: lineChart.frame.width-20, y: 0)
         lineChart.layer.masksToBounds = true
         lineChart.layer.cornerRadius = 5
         lineChart.setScaleEnabled(scaleEnabled) //是否可放大
-        lineChart.drawGridBackgroundEnabled = false
+        lineChart.drawGridBackgroundEnabled = false //是否显示网格
         lineChart.pinchZoomEnabled = false //是否可放大
         lineChart.autoScaleMinMaxEnabled = false
         lineChart.delegate = delegate
@@ -90,7 +96,7 @@ class MCYLineChartView: UIView {
         }
         
         for i in 0 ..< count{
-            yVals.append(ChartDataEntry(value: ydata[i] as! Double, xIndex:index))
+            yVals.append(ChartDataEntry(value: ydata[i] as! Double, xIndex: index))
             index += 1
         }
         

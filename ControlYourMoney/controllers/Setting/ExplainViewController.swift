@@ -24,6 +24,7 @@ class ExplainViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
     }
     
+    // 设置scroll
     func setScroll(){
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: Width, height: Height))
         scrollView.backgroundColor = UIColor.whiteColor()
@@ -32,6 +33,7 @@ class ExplainViewController: UIViewController {
         self.view.addSubview(scrollView)
     }
     
+    // 设置label，用于显示文字
     func setUpLabel(){
         let str = getStr()
         let label = UILabel(frame: CGRect(x: 10, y: 10, width: Width-20, height: 44))
@@ -45,6 +47,7 @@ class ExplainViewController: UIViewController {
         scrollView.contentSize = CGSize(width: Width, height: label.frame.maxY+20)
     }
     
+    //获取富文本
     func getStr() -> NSMutableAttributedString{
         let allStr = NSMutableAttributedString()
         let single = NSMutableArray()
@@ -78,14 +81,15 @@ class ExplainViewController: UIViewController {
         var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        paragraphStyle.alignment = .Left
-        paragraphStyle.lineSpacing = 5
+        paragraphStyle.alignment = .Left  //靠左
+        paragraphStyle.lineSpacing = 5 //行间距
         
         allStr.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, allStr.length))
         
         return allStr
     }
     
+    // 设置富文本，前7个字是蓝色的
     func getArrtibuteStr(str: String, rang: NSRange) -> NSMutableAttributedString{
         let strB = NSMutableAttributedString(string: str)
         strB.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: rang)

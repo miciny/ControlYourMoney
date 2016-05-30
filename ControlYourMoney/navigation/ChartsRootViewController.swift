@@ -10,13 +10,13 @@ import UIKit
 
 class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
     
-    var mainScroll: UIScrollView!
+    var mainScroll: UIScrollView! //用于加载视图的scrollView
     
-    var currentPage:Int = 0
-    var viewControllers = NSMutableArray()
+    var currentPage: Int = 0 //当前页
+    var viewControllers = NSMutableArray() //用于存储所需要显示的视图
     
-    let lineTab = UIButton()
-    let pieTab = UIButton()
+    let lineTab = UIButton()  //显示line的按钮
+    let pieTab = UIButton()  //显示pie的按钮
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,7 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         self.title = "图表"
     }
     
+    //设置scrollView
     func setUpScrollView(){
         let y:CGFloat = CGRectGetMaxY(pieTab.frame) + 6
         let rect:CGRect = CGRectMake(0, y, Width, Height - 64)
@@ -46,18 +47,15 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         addChildViewController()
         
         automaticallyAdjustsScrollViewInsets = false
-        // 设置内容视图的 contentSize
         mainScroll.contentSize = CGSizeMake(CGFloat(childViewControllers.count) * Width, 0)
-        // 设置整屏滑动
-        mainScroll.pagingEnabled = true
-        // 隐藏滚动条
-        mainScroll.showsHorizontalScrollIndicator = false
-        // 设置代理(必须先遵守协议!)
+        mainScroll.pagingEnabled = true // 设置整屏滑动
+        mainScroll.showsHorizontalScrollIndicator = false // 隐藏滚动条
         mainScroll.delegate = self
         
         setUpOneChildViewController(0)
     }
     
+    //顶部title按钮的点击事件
     func selTitleBtn(btn: UIButton){
         let tag = btn.tag
         changeBtn(tag)
@@ -67,6 +65,7 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         setUpOneChildViewController(tag)
     }
     
+    //设置顶部title按钮
     func setUpTop(){
         lineTab.frame = CGRect(x: 20, y: 70, width: Width/2-20, height: 34)
         lineTab.setTitle("支出", forState: .Normal)
@@ -104,21 +103,24 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         addChildViewController(vc2)
     }
     
+    //添加视图到scrollView
     func setUpOneChildViewController(i: Int){
-        // 显示当前 btn 个数对应的偏移量
-        let x:CGFloat = CGFloat(i) * Width
-        // 得到 btn 对应的控制器
-        let vc = childViewControllers[i]
-        // 如果视图存在结束函数
-        if vc.view.superview != nil{
+        let x:CGFloat = CGFloat(i) * Width  // 显示当前 btn 个数对应的偏移量
+        let vc = childViewControllers[i] // 得到 btn 对应的控制器
+        
+        if vc.view.superview != nil{ // 如果视图存在结束函数
             return
         }
-        // 设置当前视图控制器视图的 frame
-        vc.view.frame = CGRectMake(x, 0, Width, Height - self.mainScroll.frame.origin.y)
-        // 添加当前视图控制器的视图
-        mainScroll.addSubview(vc.view)
+        
+        vc.view.frame = CGRectMake(x, 0, Width, Height - self.mainScroll.frame.origin.y) // 设置当前视图控制器视图的 frame
+        mainScroll.addSubview(vc.view) // 添加当前视图控制器的视图
     }
     
+    //=====================================================================================================
+    /**
+     MARK: - ScrollView delegate
+     **/
+    //=====================================================================================================
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
@@ -127,6 +129,7 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
         setUpOneChildViewController(i)
     }
     
+    //改变title的颜色啥的
     func changeBtn(index: Int){
         switch index{
         case 0:
