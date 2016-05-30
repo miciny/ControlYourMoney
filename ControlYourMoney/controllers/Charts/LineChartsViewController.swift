@@ -28,10 +28,9 @@ class LineChartsViewController: UIViewController {
         super.viewDidLoad()
 
         setScroll()
+        addDayCostLine()
         addMonthCostLine()
         addMonthPreLine()
-        addDayCostLine()
-        
     }
     
     //进入页面就计算数据
@@ -107,32 +106,32 @@ class LineChartsViewController: UIViewController {
     }
     
     //设置第一个表格
-    func addMonthCostLine(){
+    func addDayCostLine(){
+        dayCostLine = MCYLineChartView()
         let viewFrame = CGRect(x: 5, y: 0, width: Width-10, height: Width/2)
-        monthCostLine = MCYLineChartView(frame: viewFrame, title: "月现金支出", scaleEnabled: false)
-        monthCostLine.frame = CGRect(x: 0, y: 5, width: Width, height: Width/2)
-        scrollView.addSubview(monthCostLine)
+        dayCostLine = MCYLineChartView(frame: viewFrame, title: "日现金支出", scaleEnabled: false)
+        dayCostLine.frame = CGRect(x: 0, y: 5, width: Width, height: Width/2)
+        dayCostLine.visibleXRangeMaximum = CGFloat(getTime().currentDay)
+        scrollView.addSubview(dayCostLine)
     }
     
     //设置第二个表格
+    func addMonthCostLine(){
+        let viewFrame = CGRect(x: 5, y: 0, width: Width-10, height: Width/2)
+        monthCostLine = MCYLineChartView(frame: viewFrame, title: "月现金支出", scaleEnabled: false)
+        monthCostLine.frame = CGRect(x: 0, y: dayCostLine.frame.maxY+20, width: Width, height: Width/2)
+        scrollView.addSubview(monthCostLine)
+    }
+    
+    //设置第三个表格
     func addMonthPreLine(){
         monthPreLine = MCYLineChartView()
         let viewFrame = CGRect(x: 5, y: 0, width: Width-10, height: Width/2)
         monthPreLine = MCYLineChartView(frame: viewFrame, title: "预计月支出", scaleEnabled: false)
         monthPreLine.frame = CGRect(x: 0, y: monthCostLine.frame.maxY+20, width: Width, height: Width/2)
         scrollView.addSubview(monthPreLine)
-    }
-    
-    //设置第三个表格
-    func addDayCostLine(){
-        dayCostLine = MCYLineChartView()
-        let viewFrame = CGRect(x: 5, y: 0, width: Width-10, height: Width/2)
-        dayCostLine = MCYLineChartView(frame: viewFrame, title: "日现金支出", scaleEnabled: false)
-        dayCostLine.frame = CGRect(x: 0, y: monthPreLine.frame.maxY+20, width: Width, height: Width/2)
-        dayCostLine.visibleXRangeMaximum = CGFloat(getTime().currentDay)
-        scrollView.addSubview(dayCostLine)
         
-        scrollView.contentSize = CGSize(width: Width, height: dayCostLine.frame.maxY+20)
+        scrollView.contentSize = CGSize(width: Width, height: monthPreLine.frame.maxY+20)
     }
 
     override func didReceiveMemoryWarning() {
