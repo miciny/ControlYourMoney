@@ -177,7 +177,7 @@ class MyBottomMenuView: UIView{
     func hideView(){
         UIView.animateWithDuration(0.2, animations: {
             () -> ()in
-            self.mainView.alpha = 0
+            self.buttonView.frame = CGRectMake(0, self.Height, self.Width, self.buttonView.frame.height)
             }, completion: {
                 (Boolean) -> ()in
                 self.mainView.removeFromSuperview()

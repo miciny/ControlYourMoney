@@ -17,7 +17,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AllData = NSMutableArray()
+        self.setUpData()
         self.setUpTitle()
     }
     
@@ -42,6 +42,8 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //获取数据
     func setUpData(){
+        AllData = NSMutableArray()
+        
         let creditModul =  GetDataArray.getCreditShowArray()
         let salaryModul =  GetDataArray.getSalaryShowArray()
         let cashModul =  GetDataArray.getCashShowArray()
@@ -129,6 +131,10 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard AllData.count > 0 else{
+            return 0
+        }
+        
         //行用卡全显示，工资显示一个，记账显示一个
         let dic = AllData[section] as! NSDictionary
         let key = dic.allKeys[0] as! String
@@ -138,6 +144,11 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        guard AllData.count > 0 else{
+            let cell = UITableViewCell(frame: CGRectZero)
+            return cell
+        }
         
         let dic = AllData[indexPath.section] as! NSDictionary
         let key = dic.allKeys[0] as! String
@@ -163,6 +174,11 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        guard AllData.count > 0 else{
+            return 0
+        }
+        
         let dic = AllData[indexPath.section] as! NSDictionary
         let key = dic.allKeys[0] as! String
         if(key == keyOfCash){
@@ -206,6 +222,10 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     //section的title
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard AllData.count > 0 else{
+            return nil
+        }
+        
         let dic = AllData[section] as! NSDictionary
         let key = dic.allKeys[0] as! String
         return key

@@ -62,7 +62,7 @@ class SyncDataViewController: UIViewController {
         copyBtn.hidden = true //一开始不显示复制按钮
         self.view.addSubview(copyBtn)
         
-        textView.frame = CGRect(x: 20, y: downLoad.frame.maxY+40, width: Width-40, height: Height-downLoad.frame.maxY-40)
+        textView.frame = CGRect(x: 20, y: copyBtn.frame.maxY+10, width: Width-40, height: Height-copyBtn.frame.maxY-20)
         textView.backgroundColor = UIColor.clearColor()
         textView.font = standardFont
         textView.textColor = UIColor.blackColor()
