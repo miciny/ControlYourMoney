@@ -310,7 +310,7 @@
 				E126FC181CF6D8D500DAFF84 /* SettingTableViewCell.swift */,
 			);
 			name = Setting;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Setting;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views/Setting;
 			sourceTree = "<absolute>";
 		};
 		E126FC1A1CF6D8F100DAFF84 /* Setting */ = {
@@ -320,7 +320,7 @@
 				E126FC601CF895DE00DAFF84 /* DataToDic.swift */,
 			);
 			name = Setting;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/Setting;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/modules/Setting;
 			sourceTree = "<absolute>";
 		};
 		E126FC1D1CF6E5FF00DAFF84 /* Setting */ = {
@@ -330,7 +330,7 @@
 				E126FC581CF880C800DAFF84 /* SyncDataViewController.swift */,
 			);
 			name = Setting;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Setting;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/Setting;
 			sourceTree = "<absolute>";
 		};
 		E126FC2E1CF8237F00DAFF84 /* coreData */ = {
@@ -354,7 +354,7 @@
 				E126FC3E1CF823DB00DAFF84 /* IncomeName.swift */,
 			);
 			name = coreData;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/coreData;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/coreData;
 			sourceTree = "<absolute>";
 		};
 		E126FC941CF8A4C300DAFF84 /* Products */ = {
@@ -378,7 +378,7 @@
 				E126FCD61CF99DDE00DAFF84 /* PieChartsViewController.swift */,
 			);
 			name = Charts;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Charts;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/Charts;
 			sourceTree = "<absolute>";
 		};
 		E15662B71CEB220B00720304 /* Charts */ = {
@@ -390,7 +390,7 @@
 				E126FC0C1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift */,
 			);
 			name = Charts;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Charts;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views/Charts;
 			sourceTree = "<absolute>";
 		};
 		E16A673F1CE56C8A005C35D9 /* MainPage */ = {
@@ -401,7 +401,7 @@
 				E16A676E1CE56E93005C35D9 /* MainTableViewCell.swift */,
 			);
 			name = MainPage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/MainPage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views/MainPage;
 			sourceTree = "<absolute>";
 		};
 		E16A67401CE56C99005C35D9 /* AnalysePage */ = {
@@ -410,7 +410,7 @@
 				E16A67721CE571CD005C35D9 /* AnalyseMainViewCollectionViewCell.swift */,
 			);
 			name = AnalysePage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/AnalysePage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views/AnalysePage;
 			sourceTree = "<absolute>";
 		};
 		E16A67411CE56D7A005C35D9 /* MainPage */ = {
@@ -424,7 +424,7 @@
 				E16A677B1CE5730A005C35D9 /* SalaryDetailTableDataModul.swift */,
 			);
 			name = MainPage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/MainPage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/modules/MainPage;
 			sourceTree = "<absolute>";
 		};
 		E16A67421CE56D82005C35D9 /* AnalysePage */ = {
@@ -435,7 +435,7 @@
 				E1C8CEE41CEE02EF00452D17 /* GetAnalyseDataArray.swift */,
 			);
 			name = AnalysePage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/AnalysePage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/modules/AnalysePage;
 			sourceTree = "<absolute>";
 		};
 		E16A67431CE56D8D005C35D9 /* Universal */ = {
@@ -445,7 +445,7 @@
 				E1ABCC761CE9646D005A359C /* CalculateCredit.swift */,
 			);
 			name = Universal;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules/Universal;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/modules/Universal;
 			sourceTree = "<absolute>";
 		};
 		E16A67441CE56DA2005C35D9 /* Universal */ = {
@@ -457,7 +457,7 @@
 				E1C8CED91CEDCA2600452D17 /* RefreshHeaderView.swift */,
 			);
 			name = Universal;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views/Universal;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views/Universal;
 			sourceTree = "<absolute>";
 		};
 		E16A67451CE56DAF005C35D9 /* MainPage */ = {
@@ -478,7 +478,7 @@
 				E16A674F1CE56E52005C35D9 /* ChangeLastViewController.swift */,
 			);
 			name = MainPage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/MainPage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/MainPage;
 			sourceTree = "<absolute>";
 		};
 		E16A67461CE56DB5005C35D9 /* Universal */ = {
@@ -486,7 +486,7 @@
 			children = (
 			);
 			name = Universal;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/Universal;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/Universal;
 			sourceTree = "<absolute>";
 		};
 		E16A67471CE56DBF005C35D9 /* AnalysePage */ = {
@@ -498,7 +498,7 @@
 				E1C8CEEA1CEEA2F500452D17 /* CreditDetailListViewController.swift */,
 			);
 			name = AnalysePage;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers/AnalysePage;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/AnalysePage;
 			sourceTree = "<absolute>";
 		};
 		E16ED9321C23B8C700D9BFB7 = {
@@ -542,7 +542,7 @@
 				E187747C1CE2CC2600CBBBB3 /* Base.lproj */,
 			);
 			name = lproj;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/lproj;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/lproj;
 			sourceTree = "<absolute>";
 		};
 		E18774821CE2D41600CBBBB3 /* navigation */ = {
@@ -556,7 +556,7 @@
 				E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */,
 			);
 			name = navigation;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/navigation;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/navigation;
 			sourceTree = "<absolute>";
 		};
 		E19E01E81CE2C6E700A52C04 /* universal */ = {
@@ -572,7 +572,7 @@
 				E1F655DA1CF30E91001C480E /* UILabelPadding.swift */,
 			);
 			name = universal;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/universal;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/universal;
 			sourceTree = "<absolute>";
 		};
 		E19E01E91CE2C6F400A52C04 /* controllers */ = {
@@ -585,7 +585,7 @@
 				E16A67451CE56DAF005C35D9 /* MainPage */,
 			);
 			name = controllers;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/controllers;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers;
 			sourceTree = "<absolute>";
 		};
 		E19E01EA1CE2C6FA00A52C04 /* views */ = {
@@ -598,7 +598,7 @@
 				E16A673F1CE56C8A005C35D9 /* MainPage */,
 			);
 			name = views;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/views;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/views;
 			sourceTree = "<absolute>";
 		};
 		E19E01EB1CE2C70100A52C04 /* resources */ = {
@@ -608,7 +608,7 @@
 				E19E01FF1CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld */,
 			);
 			name = resources;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/resources;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/resources;
 			sourceTree = "<absolute>";
 		};
 		E19E01EC1CE2C74700A52C04 /* modules */ = {
@@ -620,7 +620,7 @@
 				E16A67411CE56D7A005C35D9 /* MainPage */,
 			);
 			name = modules;
-			path = /Users/miciny/GitHub/ControlYourMoney/ControlYourMoney/modules;
+			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/modules;
 			sourceTree = "<absolute>";
 		};
 		E1A2095B1CF4580D00900A3E /* Products */ = {
