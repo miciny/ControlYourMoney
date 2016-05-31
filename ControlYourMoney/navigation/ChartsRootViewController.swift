@@ -39,20 +39,19 @@ class ChartsRootViewController: UIViewController, UIScrollViewDelegate{
     
     //设置scrollView
     func setUpScrollView(){
-        let y:CGFloat = CGRectGetMaxY(pieTab.frame) + 6
-        let rect:CGRect = CGRectMake(0, y, Width, Height - 64)
-        let scrollView = UIScrollView()
-        scrollView.frame = rect
-        view.addSubview(scrollView)
-        mainScroll = scrollView
-        
-        addChildViewController()
-        
         automaticallyAdjustsScrollViewInsets = false
-        mainScroll.contentSize = CGSizeMake(CGFloat(childViewControllers.count) * Width, 0)
+        
+        let y = CGRectGetMaxY(pieTab.frame) + 6
+        let rect = CGRectMake(0, y, Width, Height - 64)
+        mainScroll = UIScrollView()
+        mainScroll.frame = rect
         mainScroll.pagingEnabled = true // 设置整屏滑动
         mainScroll.showsHorizontalScrollIndicator = false // 隐藏滚动条
         mainScroll.delegate = self
+        self.view.addSubview(mainScroll)
+        
+        addChildViewController()
+        mainScroll.contentSize = CGSizeMake(CGFloat(childViewControllers.count) * Width, 0)
         
         setUpOneChildViewController(0)
     }

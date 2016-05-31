@@ -25,12 +25,12 @@ class MCYPiePolyLineChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(frame: CGRect, title: String, holeText: String) {
+    convenience init(frame: CGRect, title: String) {
         self.init()
-        setUpPieChart(frame, title: title, holeText: holeText)
+        setUpPieChart(frame, title: title)
     }
     
-    func setUpPieChart(frame: CGRect, title: String, holeText:String){
+    func setUpPieChart(frame: CGRect, title: String){
         pieChart = PieChartView()
         pieChart.frame = frame
         
@@ -44,10 +44,6 @@ class MCYPiePolyLineChartView: UIView {
         pieChart.userInteractionEnabled = false //不影响cell的交互
         
         pieChart.drawCenterTextEnabled = true
-        
-        let centerText = NSMutableAttributedString(string: holeText)
-        
-        pieChart.centerAttributedText = centerText
         
         pieChart.drawHoleEnabled = true //允许中间的文字
         pieChart.rotationAngle = 270 //开始的角度
@@ -66,7 +62,11 @@ class MCYPiePolyLineChartView: UIView {
         pieChart.animate(xAxisDuration: 1.4, easingOption: ChartEasingOption.EaseOutBack) //动画
     }
     
-    func setPieChartData(dic: NSMutableDictionary){
+    func setPieChartData(dic: NSMutableDictionary, holeText: String){
+        
+        let centerText = NSMutableAttributedString(string: holeText)
+        pieChart.centerAttributedText = centerText
+        
         let titles = dic.allKeys
         let count = titles.count
     

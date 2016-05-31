@@ -150,14 +150,20 @@ class MainTableHeaderView: UIView {
             dispatch_async(dispatch_get_main_queue(), {
                 if self.creditTotal > 3000{
                     self.shouldPayLabel.textColor = UIColor.redColor()
+                }else{
+                    self.shouldPayLabel.textColor = UIColor.greenColor()
                 }
                 
                 if lastData < 1000{
                     self.lastLabel.textColor = UIColor.redColor()
+                }else{
+                    self.lastLabel.textColor = UIColor.greenColor()
                 }
                 
                 if -self.creditTotal + lastData < 1000{
                     self.totalLabel.textColor = UIColor.redColor()
+                }else{
+                    self.totalLabel.textColor = UIColor.greenColor()
                 }
                 
                 self.total = String(-self.creditTotal + lastData)

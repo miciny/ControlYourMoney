@@ -77,7 +77,6 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     func calculateData(){
         let DataAnalysePageQueue: dispatch_queue_t = dispatch_queue_create("DataAnalysePageQueue", DISPATCH_QUEUE_SERIAL)
         dispatch_async(DataAnalysePageQueue,{
-            //这里写需要放到子线程做的耗时的代码
             let thisMonthPay = GetAnalyseData.getPreThisMonthPay()
             let thisYearPay = GetAnalyseData.getPreThisYearPay()
             let nowLeft = GetAnalyseData.getPreNowLeft()
@@ -292,6 +291,4 @@ extension DataAnalyseViewController: isRefreshingDelegate{
         //这里做你想做的事
         self.calculateData()
     }
-    
-    
 }

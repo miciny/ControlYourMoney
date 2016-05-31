@@ -10,12 +10,13 @@ import UIKit
 
 class LineChartsViewController: UIViewController {
     
-    var isCounting = false //是否正在计算，在计算中就不重新加载数据了
-    
     var scrollView: UIScrollView!
     var monthCostLine: MCYLineChartView!  //月支出表
     var monthPreLine: MCYLineChartView! //月预计支出表
     var dayCostLine: MCYLineChartView! //日支出表
+    
+    private var refreshView: RefreshHeaderView? //自己写的
+    let wiatView = MyWaitToast()
     
     //五项数据源
     var months = NSArray()
@@ -31,44 +32,37 @@ class LineChartsViewController: UIViewController {
         addDayCostLine()
         addMonthCostLine()
         addMonthPreLine()
+        
+        calculateData()
+        
     }
     
-    //进入页面就计算数据
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        
-        let wiatView = MyWaitToast()
-        
+    func calculateData(){
         if days.count == 0 {
             wiatView.title = "计算中..."
             wiatView.showWait(self.view)
         }
         
-        if !isCounting {
-            let LineChartPageQueue: dispatch_queue_t = dispatch_queue_create("LineChartPageQueue", DISPATCH_QUEUE_SERIAL)
+        let LinePageQueue: dispatch_queue_t = dispatch_queue_create("LinePageQueue", DISPATCH_QUEUE_SERIAL)
+        dispatch_async(LinePageQueue,{
+            self.getData()
             
-            dispatch_async(LineChartPageQueue,{
-                self.getData()
-                self.isCounting = true
+            let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
+            let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
+            let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
+            let thisMonthPayTotal = GetAnalyseData.getThisMonthUse()
+            
+            dispatch_async(mainQueue, {
+                self.monthCostLine.lineChart.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
+                self.monthPreLine.lineChart.descriptionText = "预计月支出(\(thisYearPayTotal))"
+                self.dayCostLine.lineChart.descriptionText = "日现金支出(\(thisMonthPayTotal))"
                 
-                let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
-                let thisYearCashPayTotal = GetAnalyseData.getThisYearPayTotal()
-                let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
-                let thisMonthPayTotal = GetAnalyseData.getThisMonthUse()
+                self.setData()
                 
-                dispatch_async(mainQueue, {
-                    wiatView.hideView()
-                    
-                    self.monthCostLine.lineChart.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
-                    self.monthPreLine.lineChart.descriptionText = "预计月支出(\(thisYearPayTotal))"
-                    self.dayCostLine.lineChart.descriptionText = "日现金支出(\(thisMonthPayTotal))"
-                    
-                    self.setData()
-                    
-                    self.isCounting = false
-                })
+                self.wiatView.hideView()
+                self.endFresh()
             })
-        }
+        })
     }
     
     //初始化数据
@@ -86,7 +80,6 @@ class LineChartsViewController: UIViewController {
     
     //设置显示数据
     func setData(){
-        
         self.monthCostLine.setLineChartData(self.months, ydata: self.monthsCost)
         self.monthPreLine.setLineChartData(self.months, ydata: self.monthsPreCost)
         self.dayCostLine.setLineChartData(self.days, ydata: self.daysCost)
@@ -103,6 +96,8 @@ class LineChartsViewController: UIViewController {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         self.view.addSubview(scrollView)
+        
+        refreshView =  RefreshHeaderView(frame: scrollView.frame, subView: scrollView, target: self)  //添加下拉刷新
     }
     
     //设置第一个表格
@@ -133,11 +128,29 @@ class LineChartsViewController: UIViewController {
         
         scrollView.contentSize = CGSize(width: Width, height: monthPreLine.frame.maxY+20)
     }
+    
+    //结束刷新时调用
+    func endFresh(){
+        self.scrollView.scrollEnabled = true
+        self.scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+        
+        self.refreshView?.endRefresh()
+        let toast = MyToastView()
+        toast.showToast("刷新完成！")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
-
+extension LineChartsViewController: isRefreshingDelegate{
+    //isfreshing中的代理方法
+    func reFreshing(){
+        scrollView.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
+        scrollView.scrollEnabled = false
+        //这里做你想做的事
+        self.calculateData()
+    }
 }
