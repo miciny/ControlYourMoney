@@ -81,14 +81,14 @@ class Credit: NSManagedObject {
         saveData()
     }
     
-    class func updateCreditDataSortedByTime(indexPath: Int, changeValue: AnyObject, changeEntityName: String){
+    class func updateCreditDataSortedByTime(indexPath: Int, changeValue: AnyObject, changeFieldName: String){
         var data = NSArray()
         data = selectAllData()
         
         let time = NSSortDescriptor(key: creditNameOfNextPayDay, ascending: true)
         data = data.sortedArrayUsingDescriptors([time])
         
-        data[indexPath].setValue(changeValue, forKey: changeEntityName)
+        data[indexPath].setValue(changeValue, forKey: changeFieldName)
         saveData()
     }
     

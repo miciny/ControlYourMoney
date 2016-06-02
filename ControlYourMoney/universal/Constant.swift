@@ -16,6 +16,7 @@ let Height = UIScreen.mainScreen().bounds.height
 let rowHeight: CGFloat = 120
 let mainViewTitle = "MyMoney"
 
+let entityNameOfInternetSetting = "InternetSetting"
 let entityNameOfCash = "Cash"
 let entityNameOfCredit = "Credit"
 let entityNameOfIncome = "Income"
@@ -24,6 +25,7 @@ let entityNameOfTotal = "Total"
 let entityNameOfCreditAccount = "CreditAccount"
 let entityNameOfCost = "Cost"
 let entityNameOfPayName = "PayName"
+let entityNameOfUser = "User" //个人信息表
 
 let cashNameOfUseWhere = "useWhere"
 let cashNameOfUseNumber = "useNumber"
@@ -60,6 +62,22 @@ let costNameOfNumber = "number"
 let costNameOfTime = "time"
 let costNameOfType = "type"
 let costNameOfPeriod = "period" //0代表每月，1代表一年
+
+let userNameOfAccount = "account"
+let userNameOfName = "name"
+let userNameOfNickname = "nickname"
+let userNameOfPW = "pw"
+let userNameOfSex = "sex"
+let userNameOfPic = "pic"
+let userNameOfAddress = "address"
+let userNameOfMotto = "motto"
+let userNameOfHttp = "http"
+let userNameOfTime = "create_time"
+let userNameOfLocation = "location"
+
+let internetSettingNameOfIP = "ip"
+let internetSettingNameOfPort = "port"
+let internetSettingNameOfInternet = "internet"
 
 let addArray = ["信用卡（电子分期）","收入"]
 

@@ -28,7 +28,9 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setData(){
         settingData = NSMutableArray()
         
-        let settingOne = SettingDataModul(icon: "DefaultIcon", name: "毛彩元", nickname: "miciny", pic: "TDIcon")
+        let userInfoModel = InitData.getUserDataToModel()
+        
+        let settingOne = SettingDataModul(icon: "DefaultIcon", name: userInfoModel.name, nickname: userInfoModel.nickname, pic: "TDIcon")
         let settingTwo1 = SettingDataModul(icon: "", name: "修改密码", lable: nil, pic: nil)
         let settingTwo2 = SettingDataModul(icon: "", name: "同步数据", lable: nil, pic: nil)
         let settingThree = SettingDataModul(icon: "", name: "数据说明", lable: nil, pic: nil)
@@ -110,7 +112,9 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
             switch indexPath.row {
             //个人信息页
             case 0:
-                break
+                let vc = UserInfoViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             default:
                 break
             }

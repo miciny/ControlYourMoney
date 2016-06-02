@@ -23,7 +23,7 @@ class SettingTableViewCell: UITableViewCell {
         rebuildCell()
     }
     
-    //设置元素
+    //设置元素，1设置页个人栏，2普通栏，3带开关的普通栏，4个人信息页的个人栏
     func rebuildCell(){
         if(settingItem.type == 1){
             buildPersonInfo()
@@ -35,6 +35,10 @@ class SettingTableViewCell: UITableViewCell {
         
         if(settingItem.type == 3){
             buildNormalWithSwitch()
+        }
+        
+        if settingItem.type == 4 {
+            buildInfoPageFirst()
         }
     }
     
@@ -81,19 +85,31 @@ class SettingTableViewCell: UITableViewCell {
     //设置普通栏
     func buildNormal(){
         let maxX = setNormalTitle()
-        
+        var minX = CGFloat(10)
         if let labelStr = settingItem.lable{
             let lableSize = sizeWithText(labelStr, font: settingPageLableFont, maxSize: CGSize(width: Width-maxX-50, height: self.frame.height))
             let myLabel = UILabel(frame: CGRect(x: Width-lableSize.width-40, y: 0, width: lableSize.width, height: self.frame.height))
             myLabel.backgroundColor = UIColor.clearColor()  //没有背景色，不然重新调整位置后会显示多余的竖线
             myLabel.font = settingPageLableFont
             myLabel.textAlignment = .Right
+            myLabel.textColor = UIColor.grayColor()
             myLabel.text = labelStr
             self.addSubview(myLabel)
+            
+            minX = myLabel.frame.minX
+        }
+        
+        if let tdicon = settingItem.pic{
+            //个人信息页-二维码
+            let myIcon = UIImageView(frame: CGRect(x: Width-minX-50, y: self.frame.height/2-10, width: 20, height: 20))
+            myIcon.backgroundColor = UIColor.clearColor()
+            myIcon.image = UIImage(named: tdicon)
+            myIcon.layer.cornerRadius = 5
+            self.addSubview(myIcon)
         }
     }
     
-    //设置普通栏带按钮
+    //设置普通栏带开关
     func buildNormalWithSwitch(){
         setNormalTitle()
         
@@ -107,21 +123,35 @@ class SettingTableViewCell: UITableViewCell {
         self.addSubview(switchBtn!)
     }
     
+    //个人信息页，个人栏
+    func buildInfoPageFirst(){
+        setNormalTitle()
+        
+        //个人信息页-图像
+        let myIcon = UIImageView(frame: CGRect(x: Width-100, y: 20, width: 60, height: 60))
+        myIcon.backgroundColor = UIColor.grayColor()
+        myIcon.layer.masksToBounds = true  //不然设置边角没用
+        myIcon.layer.cornerRadius = 5
+        myIcon.image = UIImage(named: settingItem.pic!)
+        self.addSubview(myIcon)
+    }
+    
     //设置前面公用的
     func setNormalTitle() -> CGFloat{
         //普通设置栏-头像
         
         let lableSize = sizeWithText(settingItem.name, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: 30))
-        var titleFrame = CGRect(x: 20, y: 7, width: lableSize.width, height: 30)
+        var titleFrame = CGRect(x: 20, y: settingItem.cellHeigth/2-15, width: lableSize.width, height: 30)
         
         if let icon =  settingItem.icon{
+            
             let myIcon = UIImageView(frame: CGRect(x: 20, y: 7, width: 30, height: 30))
             myIcon.backgroundColor = UIColor.clearColor()
             myIcon.image = UIImage(named: icon)
             myIcon.layer.cornerRadius = 0
             self.addSubview(myIcon)
             
-            titleFrame.origin = CGPoint(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y)
+            titleFrame.origin.x = myIcon.frame.maxX+10
         }
         
         //普通设置栏-title

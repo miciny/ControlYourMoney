@@ -13,7 +13,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     var AllData: NSMutableArray!  //页面显示的data
     var headerView: MainTableHeaderView? //头图
-    var isCounting = false
+    var isCounting = false  //正在计算
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,6 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         let MainPageQueue: dispatch_queue_t = dispatch_queue_create("MainPageQueue", DISPATCH_QUEUE_SERIAL)
         dispatch_async(MainPageQueue) {
             self.isCounting = true
-            CalculateCredit.calculateCredit()  //计算信用账号的时间
             self.setUpData()
             self.setUpHeaderView()
             

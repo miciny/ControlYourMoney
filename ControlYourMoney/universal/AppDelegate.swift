@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,13 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backTime: NSDate?
     var foreTime: NSDate?
     var vc: TabbarViewController?
+    
+    var manage: Manager?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         setUpWindow()
+        manage = InitData.getDefaultAlamofireManage()
 //        touchID()
+        InitData.calculateCredit()
+        getUserInfoFromDB()
         return true
     }
     
+    //设置主页
     func setUpWindow(){
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor()
@@ -32,9 +41,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
+    //进入touch ID页
     func touchID(){
         let vcc = TouchIDViewController()
         vc!.presentViewController(vcc, animated: false, completion: nil)
+    }
+    
+    //从db获取数据
+    func getUserInfoFromDB(){
+        let baseUrl = InitData.getBaseUrl()
+        let url = baseUrl + "/api/user"
+        
+        let paras = ["account": "15201114041", "token": "111", "time": "111"]
+        
+        manage!.request(.GET, url, parameters: paras)
+            .responseJSON { response in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if a == "2"{
+                        let data = JSON(response.result.value!)
+                        let json = data["data"][0]
+                        
+                        let accout = json[userNameOfAccount].stringValue
+                        let nickname = json[userNameOfNickname].stringValue
+                        let name = json[userNameOfName].stringValue
+                        let address = json[userNameOfAddress].stringValue
+                        let location = json[userNameOfLocation].stringValue
+                        let pw = json[userNameOfPW].stringValue
+                        let sex = json[userNameOfSex].stringValue
+                        let timeData = stringToDateBySelf(json[userNameOfTime].stringValue, formate: "yyyy-MM-dd HH:mm:ss.ssss")
+                        let motto = json[userNameOfMotto].stringValue
+//                        let pic = json[userNameOfPic]
+                        let http = json[userNameOfHttp].stringValue
+                        
+                        let dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: timeData, motto: motto, pic: nil, http: http)
+                        
+                        InitData.initUserData(dataModel)
+                    }
+                    
+                case .Failure:
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }
+                    print(response.response)
+                }
+        }
     }
     
     func applicationWillResignActive(application: UIApplication) {

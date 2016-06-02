@@ -55,7 +55,7 @@ class SyncDataExplainViewController: UIViewController {
         
         single.addObject(getArrtibuteStr("上传数据：本地导出时，数据会显示在本页，复制之后可以手动添加到json文件里，进行本地导入数据\n                网络上传数据，配置好地址和端口号后，连接服务器上传数据，上传失败或者成功都会提示！上传时，会将服务器里的数据全部清空，然后写入本地数据！！！\n\n", rang: NSMakeRange(0, 5)))
         single.addObject(getArrtibuteStr("下载数据：本地导入时，是从本地的json文件里导入\n                网络导入数据，配置好地址和端口号后，从服务器下载数据，失败成功都会提示！！！\n\n", rang: NSMakeRange(0, 5)))
-        single.addObject(getArrtibuteStr("注意：导入数据只能导入一次，如果本地有数据了，就无法导入，只能删除客户端之后再次导入！！！", rang: NSMakeRange(0, 3)))
+        single.addObject(getArrtibuteStr("注意：导入数据只能导入一次，如果本地有数据了，就无法导入，只能清除本地数据之后再次导入！！！", rang: NSMakeRange(0, 3)))
         
         for i in 0 ..< single.count {
             allStr.appendAttributedString(single[i] as! NSMutableAttributedString)

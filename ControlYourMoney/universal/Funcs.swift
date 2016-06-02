@@ -15,6 +15,18 @@ import UIKit
  **/
 //=====================================================================================================
 
+//根据服务器给的状态码，返回一个字符串
+func getErrorCodeToString(code: String) -> String{
+    switch code {
+    case "3":
+        return "参数错误"
+    case "4":
+        return "服务器连接错误"
+    default:
+        return "错误"
+    }
+}
+
 // 处理数据成json格式
 func dicToJson(dic: NSMutableDictionary) -> String {
     let dataArray = dic

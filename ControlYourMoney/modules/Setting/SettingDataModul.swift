@@ -14,7 +14,7 @@ class SettingDataModul: NSObject {
     var nickname: String? //可能有的昵称
     var lable: String? //右边的文字
     var pic: String? //右边的图片
-    var type: Int! //1个人信息栏，进入个人信息页， 2其他页
+    var type: Int! //1个人信息栏，进入个人信息页， 2普通栏，3带开关的普通栏，4个人信息页的个人栏
     var cellHeigth: CGFloat! //高度
     
     init(icon: String?, name: String!, nickname: String?, lable: String?, pic: String?, type: Int!, cellHeigth: CGFloat!){
@@ -53,5 +53,13 @@ class SettingDataModul: NSObject {
         let name = name
         
         self.init(icon: icon, name: name, nickname: nil, lable: nil, pic: nil, type: 3, cellHeigth: 44)
+    }
+    
+    //个人信息页的个人栏
+    convenience init(name: String!, pic: String!){
+        let pic = pic
+        let name = name
+        
+        self.init(icon: nil, name: name, nickname: nil, lable: nil, pic: pic, type: 4, cellHeigth: 100)
     }
 }

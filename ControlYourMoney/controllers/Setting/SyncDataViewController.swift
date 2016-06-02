@@ -29,6 +29,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     var syncBaseURL = "http://10.69.9.17:8181/api/sync"
     var switchBtn: UISwitch? //网络下载数据开关
+    var switchIsOn: Bool!
     var netManager: Manager?
     
     var json: JSON = JSON.null //保存下载的数据
@@ -39,6 +40,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         initNetManager()
         setData()
         setUpTable()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        InternetSetting.updateuserData(0, changeValue: (self.switchBtn?.on)!, changeFieldName: internetSettingNameOfInternet)
     }
     
     func setUpTitle(){
@@ -58,10 +65,14 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //设置数据
     func setData(){
         settingData = NSMutableArray()
+        let data = InitData.getURLModel()
+        let ip = data.ip
+        let port = data.port
+        self.switchIsOn = data.internet
         
         let settingOne = SettingDataModul(icon: nil, name: "网络下载数据")
-        let settingTwo1 = SettingDataModul(icon: nil, name: "IP地址", lable: "10.69.9.17", pic: nil)
-        let settingTwo2 = SettingDataModul(icon: nil, name: "端口", lable: "8181", pic: nil)
+        let settingTwo1 = SettingDataModul(icon: nil, name: "IP地址", lable: ip, pic: nil)
+        let settingTwo2 = SettingDataModul(icon: nil, name: "端口", lable: port, pic: nil)
         
         settingData?.addObject([settingOne])
         settingData?.addObject([settingTwo1, settingTwo2])
@@ -174,6 +185,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         if indexPath.section == 0 {
             cell.selectionStyle = .None
             self.switchBtn = cell.switchBtn
+            self.switchBtn?.setOn(self.switchIsOn, animated: true)
         }
         
         return cell
@@ -199,6 +211,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 let indexPath = NSIndexPath(forRow: 0, inSection: 1)
                 mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                
+                InternetSetting.updateuserData(0, changeValue: text!, changeFieldName: internetSettingNameOfIP)
             }
         case 1:
             if buttonIndex == 1 {
@@ -212,6 +226,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 let indexPath = NSIndexPath(forRow: 1, inSection: 1)
                 mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                
+                InternetSetting.updateuserData(0, changeValue: text!, changeFieldName: internetSettingNameOfPort)
             }
         case 2:
             if buttonIndex == 1 {
@@ -287,10 +303,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //获得url
     func getURL(){
-        let section : NSArray =  self.settingData![1] as! NSArray
-        let ipData = section[0] as! SettingDataModul
-        let portData = section[1] as! SettingDataModul
-        syncBaseURL = "http://\(ipData.lable! as String):\(portData.lable! as String)/api/sync"
+        let baseURL = InitData.getBaseUrl()
+        syncBaseURL = baseURL + "/api/sync"
         
         print(syncBaseURL)
     }
@@ -302,9 +316,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //=====================================================================================================
     
     func initNetManager(){
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 15 //超时时间
-        netManager = Alamofire.Manager(configuration: configuration)
+        netManager = InitData.getDefaultAlamofireManage()
     }
     
     //下载数据，就是导入数据到数据库
@@ -338,8 +350,18 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 switch response.result{
                     
                 case .Success:
-                    self.json = JSON(response.result.value!)
-                    self.insertData()
+                    
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if a == "2"{
+                        self.json = JSON(response.result.value!)
+                        self.insertData()
+                    }else{
+                        self.downWiatView.hideView()
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
+                    }
                     
                 case .Failure:
                     self.downWiatView.hideView()
