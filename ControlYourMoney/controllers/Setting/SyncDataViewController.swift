@@ -15,34 +15,220 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 
-class SyncDataViewController: UIViewController {
-    let downLoad = UIButton()
-    let textView = UITextView()
-    let copyBtn = UIButton()
+class SyncDataViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
+    private var mainTabelView: UITableView? //整个table
+    private var settingData : NSMutableArray? //数据
+    
+    let downLoad = UIButton() //下载按钮
+    let textView = UITextView() //显示上传数据的textview
+    let copyBtn = UIButton() //复制按钮
+    let upWiatView = MyWaitToast() //toast
+    let downWiatView = MyWaitToast()
+    
+    var syncBaseURL = "http://10.69.9.17:8181/api/sync"
+    var switchBtn: UISwitch? //网络下载数据开关
+    
+    var json: JSON = JSON.null //保存下载的数据
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
-        setUpBtn()
-        // Do any additional setup after loading the view.
+        setData()
+        setUpTable()
     }
     
     func setUpTitle(){
-        self.title = "说明"
+        self.title = "同步数据"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
+        
+        let addItemFast = UIBarButtonItem(title: "说明", style: .Plain, target: self, action:
+            #selector(SyncDataViewController.goExplainPage))
+        self.navigationItem.rightBarButtonItem = addItemFast
     }
     
-    //设置按钮
-    func setUpBtn(){
+    func goExplainPage(){
+        let vc = SyncDataExplainViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //设置数据
+    func setData(){
+        settingData = NSMutableArray()
+        
+        let settingOne = SettingDataModul(icon: nil, name: "网络下载数据")
+        let settingTwo1 = SettingDataModul(icon: nil, name: "IP地址", lable: "10.69.9.17", pic: nil)
+        let settingTwo2 = SettingDataModul(icon: nil, name: "端口", lable: "8181", pic: nil)
+        
+        settingData?.addObject([settingOne])
+        settingData?.addObject([settingTwo1, settingTwo2])
+    }
+    
+    //设置tableView
+    func setUpTable(){
+        mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
+        mainTabelView?.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        
+        mainTabelView?.showsVerticalScrollIndicator = false
+        mainTabelView?.showsHorizontalScrollIndicator = false
+        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine //是否显示线条
+        mainTabelView?.sectionFooterHeight = 5  //每个section的间距
+        
+        mainTabelView?.delegate = self
+        mainTabelView?.dataSource = self
+        
+        mainTabelView?.tableFooterView = setFooterView() // 设置footerView,设置代理之后再设置foot，不然会出问题
+        
+        self.view.addSubview(mainTabelView!)
+    }
+    
+    //=====================================================================================================
+    /**
+     MARK: - Table view delegate
+     **/
+    //=====================================================================================================
+    
+    //section个数
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return settingData!.count
+    }
+    
+    //每个section的行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settingData![section].count
+    }
+    
+    //计算每个cell高度
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let section: [AnyObject]  =  self.settingData![indexPath.section] as! [AnyObject] //获取section里的对象
+        let data = section[indexPath.row]
+        let item =  data as! SettingDataModul
+        let height  = item.cellHeigth
+        
+        return height
+    }
+    
+    //一个section头部的高度
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 15
+    }
+    
+    //选择了row
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        mainTabelView!.deselectRowAtIndexPath(indexPath, animated: true)  //被选择后，会变灰，这么做还原
+        switch indexPath.section{
+        //ip 端口
+        case 1:
+            switch indexPath.row {
+            case 0: //ip
+                let ipAlert = UIAlertView(title: "修改IP地址", message: "请输入IP", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+                ipAlert.tag = 0
+                ipAlert.alertViewStyle = .PlainTextInput
+                
+                let section : NSArray =  self.settingData![1] as! NSArray
+                let data = section[0] as! SettingDataModul
+                ipAlert.textFieldAtIndex(0)!.text = data.lable
+                
+                ipAlert.show()
+                
+            case 1: //端口
+                let portAlert = UIAlertView(title: "修改端口", message: "请输入端口号", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+                portAlert.tag = 1
+                portAlert.alertViewStyle = .PlainTextInput
+                
+                let section : NSArray =  self.settingData![1] as! NSArray
+                let data = section[1] as! SettingDataModul
+                portAlert.textFieldAtIndex(0)!.text = data.lable
+                
+                portAlert.show()
+            default:
+                break
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    //=====================================================================================================
+    /**
+     MARK: - Table view data source
+     **/
+    //=====================================================================================================
+    
+    
+    //每个cell内容
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellId = "SettingCell"
+        let section : NSArray =  self.settingData![indexPath.section] as! NSArray
+        let data = section[indexPath.row] as! SettingDataModul
+        let cell =  SettingTableViewCell(data: data , reuseIdentifier:cellId)
+        
+        if indexPath.section > 0 {
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator  //显示后面的小箭头
+        }
+        
+        if indexPath.section == 0 {
+            cell.selectionStyle = .None
+            self.switchBtn = cell.switchBtn
+        }
+        
+        return cell
+    }
+    
+    //=====================================================================================================
+    /**
+     MARK: - alert delegate
+     **/
+    //=====================================================================================================
+    
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        switch alertView.tag{
+        case 0:
+            if buttonIndex == 1 {
+                let section : NSArray =  self.settingData![1] as! NSArray
+                let data = section[0] as! SettingDataModul
+                
+                let text = alertView.textFieldAtIndex(0)!.text
+                
+                data.lable = text
+                
+                let indexPath = NSIndexPath(forRow: 0, inSection: 1)
+                mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            }
+        case 1:
+            if buttonIndex == 1 {
+                
+                let section : NSArray =  self.settingData![1] as! NSArray
+                let data = section[1] as! SettingDataModul
+                
+                let text = alertView.textFieldAtIndex(0)!.text
+                
+                data.lable = text
+                
+                let indexPath = NSIndexPath(forRow: 1, inSection: 1)
+                mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            }
+        default:
+            break
+        }
+    }
+    
+    //footerView
+    func setFooterView() -> UIView{
+        let footerView = UIView()
+        footerView.backgroundColor = UIColor.clearColor()
+        
         let upLoad = UIButton()
-        upLoad.frame = CGRect(x: 20, y: 80, width: Width-40, height: 50)
+        upLoad.frame = CGRect(x: 20, y: 20, width: Width-40, height: 50)
         upLoad.backgroundColor = UIColor(red: 0/255, green: 205/255, blue: 0/255, alpha: 1.0)
         upLoad.setTitle("上传数据", forState: .Normal)
         upLoad.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         upLoad.layer.cornerRadius = 5
-        upLoad.addTarget(self, action: #selector(upLoadData), forControlEvents: .TouchUpInside)
-        self.view.addSubview(upLoad)
+        upLoad.addTarget(self, action: #selector(controlUpData), forControlEvents: .TouchUpInside)
+        footerView.addSubview(upLoad)
         
         downLoad.frame = CGRect(x: 20, y: upLoad.frame.maxY+20, width: Width-40, height: 50)
         downLoad.backgroundColor = UIColor.whiteColor()
@@ -50,7 +236,7 @@ class SyncDataViewController: UIViewController {
         downLoad.setTitleColor(UIColor.blackColor(), forState: .Normal)
         downLoad.addTarget(self, action: #selector(downLoadData), forControlEvents: .TouchUpInside)
         downLoad.layer.cornerRadius = 5
-        self.view.addSubview(downLoad)
+        footerView.addSubview(downLoad)
         
         copyBtn.frame = CGRect(x: 20, y: downLoad.frame.maxY+10, width: 40, height: 20)
         copyBtn.setTitle("复制", forState: .Normal)
@@ -60,14 +246,16 @@ class SyncDataViewController: UIViewController {
         copyBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
         copyBtn.enabled = false
         copyBtn.hidden = true //一开始不显示复制按钮
-        self.view.addSubview(copyBtn)
+        footerView.addSubview(copyBtn)
         
-        textView.frame = CGRect(x: 20, y: copyBtn.frame.maxY+10, width: Width-40, height: Height-copyBtn.frame.maxY-20)
+        textView.frame = CGRect(x: 20, y: copyBtn.frame.maxY+10, width: Width-40, height: 200)
         textView.backgroundColor = UIColor.clearColor()
         textView.font = standardFont
         textView.textColor = UIColor.blackColor()
         textView.editable = false
-        self.view.addSubview(textView)
+        footerView.addSubview(textView)
+        
+        footerView.frame = CGRect(x: 0, y: 0, width: Width, height: textView.frame.maxY+10)
         
         //这种判断有点问题，先这样吧
         let cash = Cash.selectAllData()
@@ -75,6 +263,8 @@ class SyncDataViewController: UIViewController {
             downLoad.enabled = false
             downLoad.backgroundColor = UIColor.lightGrayColor()
         }
+        
+        return footerView
     }
     
     //复制文本
@@ -89,176 +279,168 @@ class SyncDataViewController: UIViewController {
         toast.showToast("复制成功")
     }
     
-    //下载数据，就是导入数据到数据库
-    func downLoadData(){
-        let wiatView = MyWaitToast()
-        wiatView.title = "计算中..."
-        wiatView.showWait(self.view)
+    //获得url
+    func getURL(){
+        let section : NSArray =  self.settingData![1] as! NSArray
+        let ipData = section[0] as! SettingDataModul
+        let portData = section[1] as! SettingDataModul
+        syncBaseURL = "http://\(ipData.lable! as String):\(portData.lable! as String)/api/sync"
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            self.insertData()
-            dispatch_async(dispatch_get_main_queue(), {
-                wiatView.hideView()
-                let toast = MyToastView()
-                toast.showToast("导入成功！")
-                
-                self.downLoad.enabled = false
-                self.downLoad.backgroundColor = UIColor.lightGrayColor()
-            })
-        })
+        print(syncBaseURL)
     }
     
-    //只能导入一次
-    func insertData(){
-        var json: JSON = JSON.null
+    //=====================================================================================================
+    /**
+     MARK: - 下载数据
+     **/
+    //=====================================================================================================
+    
+    //下载数据，就是导入数据到数据库
+    func downLoadData(){
+        getURL()
+        downWiatView.title = "下载中..."
+        downWiatView.showWait(self.view)
         
+        if (self.switchBtn?.on == true) {
+            downWiatView.showNetIndicator()
+            
+            self.downloadDataFromDB()
+        }else{
+            downloadDataFromJsonFile()
+        }
+        
+        
+    }
+    
+    //下载数据 必须使用https
+    
+//    在Info.plist中添加NSAppTransportSecurity类型Dictionary。
+//    在NSAppTransportSecurity下添加NSAllowsArbitraryLoads类型Boolean,值设为YES
+    
+    func downloadDataFromDB(){
+        let paras = ["name": "111", "token": "111", "time": "111"]
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 15 //超时时间
+        let netManager = Alamofire.Manager(configuration: configuration)
+        
+        netManager.request(.GET, syncBaseURL, parameters: paras)
+            .responseJSON { response in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    self.json = JSON(response.result.value!)
+                    self.insertData()
+                    
+                case .Failure:
+                    self.downWiatView.hideView()
+                    
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("上传数据失败！")
+                    }
+                    
+                    print(response.response)
+                    print(response.description)
+                }
+        }
+    }
+    
+    //下载数据
+    func downloadDataFromJsonFile() -> Bool{
         if let file = NSBundle.mainBundle().pathForResource("json", ofType: "json") {
             let data = NSData(contentsOfFile: file)!
             json = JSON(data: data)
-        }
-        
-        let cashDic = json[entityNameOfCash]
-        if cashDic != nil{
-            for i in 0 ..< cashDic.count {
-                let row = cashDic[i]
-                
-                let time = row[cashNameOfTime].stringValue
-                let type = row[cashNameOfType].stringValue
-                let useWhere = row[cashNameOfUseWhere].stringValue
-                let useNumber = row[cashNameOfUseNumber].stringValue
-                
-                Cash.insertCashData(useWhere, useNumber: Float(useNumber)!, type: type,
-                                    time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"))
-            }
-        }
-        
-        let incomeDic = json[entityNameOfIncome]
-        if incomeDic != nil{
-            for i in 0 ..< incomeDic.count {
-                let row = incomeDic[i]
-                
-                let time = row[incomeOfTime].stringValue
-                let name = row[incomeOfName].stringValue
-                let number = row[incomeOfNumber].stringValue
-                
-                Salary.insertIncomeData(stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"),
-                                        number: Float(number)!, name: name)
-            }
-        }
-        
-        let incomeNameDic = json[entityNameOfIncomeName]
-        if incomeNameDic != nil{
-            for i in 0 ..< incomeNameDic.count {
-                let row = incomeNameDic[i]
-                
-                let time = row[incomeNameOfTime].stringValue
-                let name = row[incomeNameOfName].stringValue
-                
-                IncomeName.insertIncomeNameData(stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"), name: name)
-            }
-        }
-        
-        let costDic = json[entityNameOfCost]
-        if costDic != nil{
-            for i in 0 ..< costDic.count {
-                let row = costDic[i]
-                
-                let time = row[costNameOfTime].stringValue
-                let name = row[costNameOfName].stringValue
-                let type = row[costNameOfType].stringValue
-                let number = row[costNameOfNumber].stringValue
-                let period = row[costNameOfPeriod].stringValue
-                
-                Cost.insertCostData(name, time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"),
-                                    type: type, number: Float(number)!, period: Int(period)!)
-            }
-        }
-        
-        let totalDic = json[entityNameOfTotal]
-        if totalDic != nil{
-            for i in 0 ..< totalDic.count {
-                let row = totalDic[i]
-                
-                let time = row[totalNameOfTime].stringValue
-                let canUse = row[totalNameOfCanUse].stringValue
-                
-                Total.insertTotalData(Float(canUse)!, time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"))
-            }
-        }
-        
-        let payNameDic = json[entityNameOfPayName]
-        if payNameDic != nil{
-            for i in 0 ..< payNameDic.count {
-                let row = payNameDic[i]
-                
-                let time = row[payNameNameOfTime].stringValue
-                let name = row[payNameNameOfName].stringValue
-                
-                PayName.insertPayNameData(name, time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"))
-            }
-        }
-        
-        let creditAccountDic = json[entityNameOfCreditAccount]
-        if creditAccountDic != nil{
-            for i in 0 ..< creditAccountDic.count {
-                let row = creditAccountDic[i]
-                
-                let time = row[creditAccountNameOfTime].stringValue
-                let name = row[creditAccountNameOfName].stringValue
-                
-                CreditAccount.insertAccountData(name, time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"))
-            }
-        }
-        
-        let creditDic = json[entityNameOfCredit]
-        if creditDic != nil{
-            for i in 0 ..< creditDic.count {
-                let row = creditDic[i]
-                
-                let time = row[creditNameOfTime].stringValue
-                let account = row[creditNameOfAccount].stringValue
-                let date = row[creditNameOfDate].stringValue
-                let type = row[creditNameOfType].stringValue
-                let number = row[creditNameOfNumber].stringValue
-                let periods = row[creditNameOfPeriods].stringValue
-                let nextpayDay = row[creditNameOfNextPayDay].stringValue
-                let leftPeriods = row[creditNameOfLeftPeriods].stringValue
-                
-                Credit.insertCrediData(Int(periods)!,
-                                       number: Float(number)!,
-                                       time: stringToDateBySelf(time, formate: "yyyy-MM-dd HH:mm:ss.ssss"),
-                                       account: account,
-                                       date: Int(date)!,
-                                       nextPayDay: stringToDateBySelf(nextpayDay, formate: "yyyy-MM-dd HH:mm:ss.ssss"),
-                                       leftPeriods: Int(leftPeriods)!,
-                                       type: type
-                )
-            }
+            
+            insertData()
+            
+            return true
+        }else{
+            self.downWiatView.hideView()
+            let toast = MyToastView()
+            toast.showToast("导入数据失败！")
+            return false
         }
     }
     
+    
+    //
+    func insertData(){
+        
+        let cashDic = json[entityNameOfCash]
+        InsertData.insertCashData(cashDic)
+        
+        let incomeDic = json[entityNameOfIncome]
+        InsertData.insertIncomeData(incomeDic)
+        
+        let incomeNameDic = json[entityNameOfIncomeName]
+        InsertData.insertIncomeNameData(incomeNameDic)
+        
+        let costDic = json[entityNameOfCost]
+        InsertData.insertCostData(costDic)
+        
+        let totalDic = json[entityNameOfTotal]
+        InsertData.insertTotalData(totalDic)
+        
+        let payNameDic = json[entityNameOfPayName]
+        InsertData.insertPayNameData(payNameDic)
+        
+        let creditAccountDic = json[entityNameOfCreditAccount]
+        InsertData.insertCreditAccountData(creditAccountDic)
+        
+        let creditDic = json[entityNameOfCredit]
+        InsertData.insertCreditData(creditDic)
+        
+        self.downWiatView.hideView()
+        
+        let toast = MyToastView()
+        toast.showToast("导入数据成功！")
+        
+        self.downLoad.enabled = false
+        self.downLoad.backgroundColor = UIColor.lightGrayColor()
+        
+    }
+
+    //=====================================================================================================
+    /**
+     MARK: - 上传数据
+     **/
+    //=====================================================================================================
+    
+    //本地时只是显示，网络时才连接网络
+    func controlUpData(){
+        
+        if self.switchBtn?.on == true{
+            getURL()
+            upWiatView.title = "上传中..."
+            upWiatView.showWait(self.view)
+            upWiatView.showNetIndicator()
+            
+            let jsonStr = self.upLoadData()
+            self.upLoadDataToDB(jsonStr) //上传数据到服务器
+        }else{
+            self.upLoadData()
+        }
+        
+    }
+    
     //上传数据
-    func upLoadData(){
+    func upLoadData() -> String{
+        
         let allDic = NSMutableDictionary()
         allDic.setValue(DataToArray.setCashDataToArray(), forKey: entityNameOfCash)
-        
         allDic.setValue(DataToArray.setCostDataToArray(), forKey: entityNameOfCost)
-        
         allDic.setValue(DataToArray.setCreditAccountDataToArray(), forKey: entityNameOfCreditAccount)
-
         allDic.setValue(DataToArray.setCreditDataToArray(), forKey: entityNameOfCredit)
-        
         allDic.setValue(DataToArray.setIncomeDataToArray(), forKey: entityNameOfIncome)
-        
         allDic.setValue(DataToArray.setIncomeNameDataToArray(), forKey: entityNameOfIncomeName)
-        
         allDic.setValue(DataToArray.setPayNameDataToArray(), forKey: entityNameOfPayName)
-        
         allDic.setValue(DataToArray.setTotalDataToArray(), forKey: entityNameOfTotal)
-        
+    
         let jsonStr = dicToJson(allDic)
-        print(jsonStr)
-        
         textView.text = ""
         textView.text = jsonStr
         textView.backgroundColor = UIColor.whiteColor()
@@ -267,22 +449,48 @@ class SyncDataViewController: UIViewController {
         copyBtn.enabled = true
         copyBtn.hidden = false
         
+        return jsonStr
     }
-
-    // 处理数据成json格式
-    func dicToJson(dic: NSMutableDictionary) -> String {
-        let dataArray = dic
-        var str = String()
+    
+    //上传数据到服务器
+    func upLoadDataToDB(str: String){
         
-        do {
-            let dataFinal = try NSJSONSerialization.dataWithJSONObject(dataArray, options:NSJSONWritingOptions(rawValue:0))
-            let string = NSString(data: dataFinal, encoding: NSUTF8StringEncoding)
-            str = string as! String
-            
-        }catch{
-            
+        let paras = [
+            "data": strToJson(str)
+        ]
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 15 //超时时间
+        let netManager = Alamofire.Manager(configuration: configuration)
+        
+        netManager.request(.POST, syncBaseURL, parameters: paras, encoding: .JSON)
+            .responseJSON { response in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    self.upWiatView.hideView()
+                    
+                    if a == "2"{
+                        toast.showToast("上传数据成功！")
+                    }else{
+                        toast.showToast("数据有误，不影响！")
+                    }
+                    
+                case .Failure:
+                    self.upWiatView.hideView()
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("上传数据失败！")
+                    }
+                    
+                    print(response.response)
+                }
         }
-        return str
     }
 
     override func didReceiveMemoryWarning() {

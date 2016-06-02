@@ -11,6 +11,7 @@ import UIKit
 class SettingTableViewCell: UITableViewCell {
 
     var settingItem: SettingDataModul! //设置的数据模型，type为1 表示 个人信息栏  2表示普通栏
+    var switchBtn: UISwitch? //如果有开关
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -31,6 +32,10 @@ class SettingTableViewCell: UITableViewCell {
         if(settingItem.type == 2){
             buildNormal()
         }
+        
+        if(settingItem.type == 3){
+            buildNormalWithSwitch()
+        }
     }
     
     //设置个人信息栏
@@ -48,7 +53,7 @@ class SettingTableViewCell: UITableViewCell {
         //个人设置栏-名字
         let nameSize = sizeWithText(settingItem.name, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
         let myName = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y, width: nameSize.width, height: myIcon.frame.height/2))
-        myName.backgroundColor = UIColor.whiteColor()
+        myName.backgroundColor = UIColor.clearColor()
         myName.font = settingPageNameFont
         myName.textAlignment = .Left
         myName.text = settingItem.name
@@ -75,22 +80,58 @@ class SettingTableViewCell: UITableViewCell {
     
     //设置普通栏
     func buildNormal(){
-        //普通设置栏-头像
-        let myIcon = UIImageView(frame: CGRect(x: 20, y: 7, width: 30, height: 30))
-        myIcon.backgroundColor = UIColor.clearColor()
-        if let icon =  settingItem.icon{
-            myIcon.image = UIImage(named: icon)
+        let maxX = setNormalTitle()
+        
+        if let labelStr = settingItem.lable{
+            let lableSize = sizeWithText(labelStr, font: settingPageLableFont, maxSize: CGSize(width: Width-maxX-50, height: self.frame.height))
+            let myLabel = UILabel(frame: CGRect(x: Width-lableSize.width-40, y: 0, width: lableSize.width, height: self.frame.height))
+            myLabel.backgroundColor = UIColor.clearColor()  //没有背景色，不然重新调整位置后会显示多余的竖线
+            myLabel.font = settingPageLableFont
+            myLabel.textAlignment = .Right
+            myLabel.text = labelStr
+            self.addSubview(myLabel)
         }
-        myIcon.layer.cornerRadius = 0
-        self.addSubview(myIcon)
+    }
+    
+    //设置普通栏带按钮
+    func buildNormalWithSwitch(){
+        setNormalTitle()
+        
+        switchBtn = UISwitch(frame: CGRect(x: Width-70, y: 7, width: 51, height: 31))
+        switchBtn!.backgroundColor = UIColor.clearColor()
+        switchBtn!.tintColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
+        switchBtn!.onTintColor = UIColor.greenColor()
+        
+        //不能设置frame，只能缩放 iOS7的UISwitch是51x31
+        switchBtn!.transform = CGAffineTransformMakeScale(1, 1)
+        self.addSubview(switchBtn!)
+    }
+    
+    //设置前面公用的
+    func setNormalTitle() -> CGFloat{
+        //普通设置栏-头像
+        
+        let lableSize = sizeWithText(settingItem.name, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: 30))
+        var titleFrame = CGRect(x: 20, y: 7, width: lableSize.width, height: 30)
+        
+        if let icon =  settingItem.icon{
+            let myIcon = UIImageView(frame: CGRect(x: 20, y: 7, width: 30, height: 30))
+            myIcon.backgroundColor = UIColor.clearColor()
+            myIcon.image = UIImage(named: icon)
+            myIcon.layer.cornerRadius = 0
+            self.addSubview(myIcon)
+            
+            titleFrame.origin = CGPoint(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y)
+        }
         
         //普通设置栏-title
-        let lableSize = sizeWithText(settingItem.name, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height))
-        let title = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y, width: lableSize.width, height: myIcon.frame.height))
-        title.backgroundColor = UIColor.whiteColor()
+        let title = UILabel(frame: titleFrame)
+        title.backgroundColor = UIColor.clearColor()
         title.font = settingPageNameFont
         title.textAlignment = .Left
         title.text = settingItem.name
         self.addSubview(title)
+        
+        return title.frame.maxX
     }
 }

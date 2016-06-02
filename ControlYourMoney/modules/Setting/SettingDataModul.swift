@@ -46,4 +46,12 @@ class SettingDataModul: NSObject {
         
         self.init(icon: icon, name: name, nickname: nil, lable: lable, pic: pic, type: 2, cellHeigth: 44)
     }
+    
+    //普通设置栏 带按钮的
+    convenience init(icon: String?, name: String!){
+        let icon = icon
+        let name = name
+        
+        self.init(icon: icon, name: name, nickname: nil, lable: nil, pic: nil, type: 3, cellHeigth: 44)
+    }
 }

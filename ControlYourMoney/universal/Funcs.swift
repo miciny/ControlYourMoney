@@ -9,6 +9,40 @@
 import Foundation
 import UIKit
 
+//=====================================================================================================
+/**
+ MARK: - 公共函数
+ **/
+//=====================================================================================================
+
+// 处理数据成json格式
+func dicToJson(dic: NSMutableDictionary) -> String {
+    let dataArray = dic
+    var str = String()
+    
+    do {
+        let dataFinal = try NSJSONSerialization.dataWithJSONObject(dataArray, options:NSJSONWritingOptions(rawValue:0))
+        let string = NSString(data: dataFinal, encoding: NSUTF8StringEncoding)
+        str = string as! String
+        
+    }catch{
+        
+    }
+    return str
+}
+
+//字符串转成json
+func strToJson(str: String) -> AnyObject{
+    let data = str.dataUsingEncoding(NSUTF8StringEncoding)
+    
+    let deserialized = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+    
+    //        let data = NSData(contentsOfFile: file)!
+    //        json = JSON(data: data)
+    
+    return deserialized
+}
+
 //获取当前时间
 func getTime() -> NSDate{
     let now = NSDate()
