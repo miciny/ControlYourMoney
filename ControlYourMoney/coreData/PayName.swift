@@ -28,6 +28,15 @@ class PayName: NSManagedObject {
         return textData
     }
     
+    //删一条数据
+    class func deleteData(indexPath: Int){
+        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        var data = NSArray()
+        data = selectAllData()
+        allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+        saveData()
+    }
+    
     //save
     class func saveData(){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext

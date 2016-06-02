@@ -32,10 +32,12 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         let settingTwo1 = SettingDataModul(icon: "", name: "修改密码", lable: nil, pic: nil)
         let settingTwo2 = SettingDataModul(icon: "", name: "同步数据", lable: nil, pic: nil)
         let settingThree = SettingDataModul(icon: "", name: "数据说明", lable: nil, pic: nil)
+        let settingFour = SettingDataModul(icon: "", name: "高级设置", lable: nil, pic: nil)
         
         settingData?.addObject([settingOne])
         settingData?.addObject([settingTwo1, settingTwo2])
         settingData?.addObject([settingThree])
+        settingData?.addObject([settingFour])
     }
     
     //设置tableView
@@ -127,11 +129,19 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
                 break
             }
             
-        //设置
         case 2:
             switch indexPath.row {
             case 0: //说明
                 let vc = ExplainViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
+        case 3:
+            switch indexPath.row {
+            case 0: //高级设置
+                let vc = AdvanceSettingViewController()
                 vc.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc, animated: true)
             default:

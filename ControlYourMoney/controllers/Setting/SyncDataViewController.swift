@@ -29,12 +29,14 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     var syncBaseURL = "http://10.69.9.17:8181/api/sync"
     var switchBtn: UISwitch? //网络下载数据开关
+    var netManager: Manager?
     
     var json: JSON = JSON.null //保存下载的数据
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
+        initNetManager()
         setData()
         setUpTable()
     }
@@ -211,6 +213,10 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 let indexPath = NSIndexPath(forRow: 1, inSection: 1)
                 mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             }
+        case 2:
+            if buttonIndex == 1 {
+                downloadDataFromJsonFile()
+            }
         default:
             break
         }
@@ -295,21 +301,26 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
      **/
     //=====================================================================================================
     
+    func initNetManager(){
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 15 //超时时间
+        netManager = Alamofire.Manager(configuration: configuration)
+    }
+    
     //下载数据，就是导入数据到数据库
     func downLoadData(){
-        getURL()
-        downWiatView.title = "下载中..."
-        downWiatView.showWait(self.view)
-        
         if (self.switchBtn?.on == true) {
+            getURL()
+            downWiatView.title = "下载中..."
+            downWiatView.showWait(self.view)
             downWiatView.showNetIndicator()
             
             self.downloadDataFromDB()
         }else{
-            downloadDataFromJsonFile()
+            let localAlert = UIAlertView(title: "从本地导入？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+            localAlert.tag = 2
+            localAlert.show()
         }
-        
-        
     }
     
     //下载数据 必须使用https
@@ -320,11 +331,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func downloadDataFromDB(){
         let paras = ["name": "111", "token": "111", "time": "111"]
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 15 //超时时间
-        let netManager = Alamofire.Manager(configuration: configuration)
-        
-        netManager.request(.GET, syncBaseURL, parameters: paras)
+        netManager!.request(.GET, syncBaseURL, parameters: paras)
             .responseJSON { response in
                 let toast = MyToastView()
                 
@@ -340,11 +347,10 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                     if response.response == nil{
                         toast.showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("上传数据失败！")
+                        toast.showToast("下载数据失败！")
                     }
                     
                     print(response.response)
-                    print(response.description)
                 }
         }
     }
@@ -459,11 +465,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
             "data": strToJson(str)
         ]
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 15 //超时时间
-        let netManager = Alamofire.Manager(configuration: configuration)
-        
-        netManager.request(.POST, syncBaseURL, parameters: paras, encoding: .JSON)
+        netManager!.request(.POST, syncBaseURL, parameters: paras, encoding: .JSON)
             .responseJSON { response in
                 let toast = MyToastView()
                 

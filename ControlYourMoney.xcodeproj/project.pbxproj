@@ -44,6 +44,7 @@
 		E15B2AF31CFED2C6009590DB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E15B2ADD1CFED2B4009590DB /* Alamofire.framework */; };
 		E15B2AF41CFED2C6009590DB /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E15B2ADD1CFED2B4009590DB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E15B2B111CFFDFDE009590DB /* SyncDataExplainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B101CFFDFDE009590DB /* SyncDataExplainViewController.swift */; };
+		E15B2B171D000DE2009590DB /* AdvanceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B161D000DE2009590DB /* AdvanceSettingViewController.swift */; };
 		E160C4401CF3F2A9008B445A /* MCYLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */; };
 		E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */; };
 		E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67481CE56E52005C35D9 /* AccountListViewController.swift */; };
@@ -300,6 +301,7 @@
 		E15662C91CEC3C3A00720304 /* CostNameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CostNameListViewController.swift; sourceTree = "<group>"; };
 		E15B2AD21CFED2B4009590DB /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "ControlYourMoney/Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		E15B2B101CFFDFDE009590DB /* SyncDataExplainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncDataExplainViewController.swift; sourceTree = "<group>"; };
+		E15B2B161D000DE2009590DB /* AdvanceSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvanceSettingViewController.swift; sourceTree = "<group>"; };
 		E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYLineChartView.swift; sourceTree = "<group>"; };
 		E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYCreditPieChartView.swift; sourceTree = "<group>"; };
 		E16A67481CE56E52005C35D9 /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				E126FC1E1CF6E63C00DAFF84 /* ExplainViewController.swift */,
 				E126FC581CF880C800DAFF84 /* SyncDataViewController.swift */,
 				E15B2B101CFFDFDE009590DB /* SyncDataExplainViewController.swift */,
+				E15B2B161D000DE2009590DB /* AdvanceSettingViewController.swift */,
 			);
 			name = Setting;
 			path = /Users/miciny/ToGitHub/ControlYourMoney/ControlYourMoney/controllers/Setting;
@@ -990,6 +993,7 @@
 				E19E01FA1CE2C89B00A52C04 /* AppDelegate.swift in Sources */,
 				E1ABCC771CE9646D005A359C /* CalculateCredit.swift in Sources */,
 				E19E01FB1CE2C89B00A52C04 /* Funcs.swift in Sources */,
+				E15B2B171D000DE2009590DB /* AdvanceSettingViewController.swift in Sources */,
 				E126FC4E1CF823DB00DAFF84 /* IncomeName.swift in Sources */,
 				E16A67581CE56E52005C35D9 /* ChangeLastViewController.swift in Sources */,
 				E16A677D1CE5730A005C35D9 /* CashDetailTableDataModul.swift in Sources */,

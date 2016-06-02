@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ControlYourMoney/coreData/Total.swift"
-            timestampString = "486028076.961962"
+            timestampString = "486543777.799781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "insertTotalData(_:time:)"
             landmarkType = "5">
          </BreakpointContent>
