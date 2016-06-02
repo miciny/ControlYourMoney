@@ -251,13 +251,17 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     
     //本月已还
     func payThisMonth(){
-        let thisPayDay = stringToDateNoHH(recivedData.time)
-        let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
         let periods = Int(recivedData.periods)!-1
-        
-        //由于按nextPayDay排序，必须先保存周期
         Credit.updateCreditDataSortedByTime(changeIndex, changeValue: periods, changeEntityName: creditNameOfLeftPeriods)
-        Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        
+        //如果剩余周期为0 了 就不保存下期还款时间了
+        if periods > 0 {
+            let thisPayDay = stringToDateNoHH(recivedData.time)
+            let nextPayDay = CalculateCredit.calculateTime(thisPayDay, months: 1)
+            //由于按nextPayDay排序，必须先保存周期
+            
+            Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeEntityName: creditNameOfNextPayDay)
+        }
         
         Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")
@@ -277,7 +281,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)! * Float(recivedData.periods)!, time: getTime())
         
         let nextTime = stringToDateNoHH(recivedData.time)
-        let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!)
+        let nextPayDay = CalculateCredit.getLastPayDate(nextTime, leftPeriods: Int(recivedData.periods)!-1)
         let periods = 0
         
         //由于按nextPayDay排序，必须先保存周期

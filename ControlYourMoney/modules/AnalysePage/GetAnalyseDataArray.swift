@@ -68,7 +68,8 @@ class GetAnalyseDataArray: NSObject {
         return data
     }
     
-    //本月信用卡列表，包括还完的  , 下期还款时间是本月（不用判断剩余周期） 或 下期还款时间是下月但剩余周期小于总周期 
+    //因为自动还款的时间是
+    //本月信用卡列表，包括还完的  , 下期还款时间是本月（不用判断剩余周期） 或 下期还款时间是下月但剩余周期小于总周期 (剩余周期此时不会为0)
     class func getThisMonthCreditListIncludeDone() -> [MainTableCreditModul]?{
         var creditArray = Credit.selectAllData()
         

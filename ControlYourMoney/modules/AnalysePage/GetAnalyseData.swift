@@ -521,6 +521,7 @@ class GetAnalyseData: NSObject {
             for j in 0 ..< periods {
                 let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
                 let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
+                
                 if timeArray.containsObject(lastStr){
                     let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
                     thisMonthPay += number
