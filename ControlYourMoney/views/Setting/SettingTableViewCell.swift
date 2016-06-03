@@ -50,7 +50,7 @@ class SettingTableViewCell: UITableViewCell {
         myIcon.layer.masksToBounds = true //不然设置边角没用
         myIcon.layer.cornerRadius = 5
         if let icon = settingItem.icon{
-            myIcon.image = UIImage(named: icon)
+            myIcon.image = icon
         }
         self.addSubview(myIcon)
         
@@ -76,7 +76,7 @@ class SettingTableViewCell: UITableViewCell {
         if let pic = settingItem.pic{
             let my2DIcon = UIImageView(frame: CGRect(x: Width-60, y: myIcon.frame.height/2+10, width: 20, height: 20))
             my2DIcon.backgroundColor = UIColor.clearColor()
-            my2DIcon.image = UIImage(named: pic)
+            my2DIcon.image = pic
             my2DIcon.layer.cornerRadius = 1
             self.addSubview(my2DIcon)
         }
@@ -103,7 +103,7 @@ class SettingTableViewCell: UITableViewCell {
             //个人信息页-二维码
             let myIcon = UIImageView(frame: CGRect(x: Width-minX-50, y: self.frame.height/2-10, width: 20, height: 20))
             myIcon.backgroundColor = UIColor.clearColor()
-            myIcon.image = UIImage(named: tdicon)
+            myIcon.image = tdicon
             myIcon.layer.cornerRadius = 5
             self.addSubview(myIcon)
         }
@@ -132,7 +132,7 @@ class SettingTableViewCell: UITableViewCell {
         myIcon.backgroundColor = UIColor.grayColor()
         myIcon.layer.masksToBounds = true  //不然设置边角没用
         myIcon.layer.cornerRadius = 5
-        myIcon.image = UIImage(named: settingItem.pic!)
+        myIcon.image = settingItem.pic!
         self.addSubview(myIcon)
     }
     
@@ -144,10 +144,9 @@ class SettingTableViewCell: UITableViewCell {
         var titleFrame = CGRect(x: 20, y: settingItem.cellHeigth/2-15, width: lableSize.width, height: 30)
         
         if let icon =  settingItem.icon{
-            
             let myIcon = UIImageView(frame: CGRect(x: 20, y: 7, width: 30, height: 30))
             myIcon.backgroundColor = UIColor.clearColor()
-            myIcon.image = UIImage(named: icon)
+            myIcon.image = icon
             myIcon.layer.cornerRadius = 0
             self.addSubview(myIcon)
             

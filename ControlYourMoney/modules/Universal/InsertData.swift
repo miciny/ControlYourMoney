@@ -16,7 +16,45 @@ import UIKit
 import SwiftyJSON
 
 class InsertData: NSObject {
-
+    
+    //插入所有money数据
+    class func insertAllMoneyData(json: JSON){
+        let cashDic = json[entityNameOfCash]
+        InsertData.insertCashData(cashDic)
+        
+        let incomeDic = json[entityNameOfIncome]
+        InsertData.insertIncomeData(incomeDic)
+        
+        let incomeNameDic = json[entityNameOfIncomeName]
+        InsertData.insertIncomeNameData(incomeNameDic)
+        
+        let costDic = json[entityNameOfCost]
+        InsertData.insertCostData(costDic)
+        
+        let totalDic = json[entityNameOfTotal]
+        InsertData.insertTotalData(totalDic)
+        
+        let payNameDic = json[entityNameOfPayName]
+        InsertData.insertPayNameData(payNameDic)
+        
+        let creditAccountDic = json[entityNameOfCreditAccount]
+        InsertData.insertCreditAccountData(creditAccountDic)
+        
+        let creditDic = json[entityNameOfCredit]
+        InsertData.insertCreditData(creditDic)
+    }
+    
+    //初始化user数据
+    class func initUserData(data: UserInfoModel){
+        let dataTemp = User.selectAllData()
+        if dataTemp.count == 0 {
+            User.insertUserData(data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http)
+        }else{
+            User.updateUserData(0, account: data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http)
+        }
+    }
+    
+    
     //现金
     class func insertCashData(cashDic: JSON){
         if cashDic != nil{

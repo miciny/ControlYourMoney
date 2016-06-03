@@ -27,7 +27,6 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     let upWiatView = MyWaitToast() //toast
     let downWiatView = MyWaitToast()
     
-    var syncBaseURL = "http://10.69.9.17:8181/api/sync"
     var switchBtn: UISwitch? //网络下载数据开关
     var switchIsOn: Bool!
     var netManager: Manager?
@@ -65,12 +64,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //设置数据
     func setData(){
         settingData = NSMutableArray()
-        let data = InitData.getURLModel()
+        let data = DataToModel.getURLModel()
         let ip = data.ip
         let port = data.port
         self.switchIsOn = data.internet
         
-        let settingOne = SettingDataModul(icon: nil, name: "网络下载数据")
+        let settingOne = SettingDataModul(icon: nil, name: "网络同步")
         let settingTwo1 = SettingDataModul(icon: nil, name: "IP地址", lable: ip, pic: nil)
         let settingTwo2 = SettingDataModul(icon: nil, name: "端口", lable: port, pic: nil)
         
@@ -301,28 +300,20 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         toast.showToast("复制成功")
     }
     
-    //获得url
-    func getURL(){
-        let baseURL = InitData.getBaseUrl()
-        syncBaseURL = baseURL + "/api/sync"
-        
-        print(syncBaseURL)
-    }
-    
     //=====================================================================================================
     /**
      MARK: - 下载数据
      **/
     //=====================================================================================================
     
+    //初始化网络请求的manager
     func initNetManager(){
-        netManager = InitData.getDefaultAlamofireManage()
+        netManager = NetWork.getDefaultAlamofireManager()
     }
     
     //下载数据，就是导入数据到数据库
     func downLoadData(){
         if (self.switchBtn?.on == true) {
-            getURL()
             downWiatView.title = "下载中..."
             downWiatView.showWait(self.view)
             downWiatView.showNetIndicator()
@@ -341,14 +332,10 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
 //    在NSAppTransportSecurity下添加NSAllowsArbitraryLoads类型Boolean,值设为YES
     
     func downloadDataFromDB(){
-        let paras = ["name": "111", "token": "111", "time": "111"]
-        
-        netManager!.request(.GET, syncBaseURL, parameters: paras)
+        netManager!.request(.GET, NetWork.moneyUrl, parameters: NetWork.moneyGetParas)
             .responseJSON { response in
                 let toast = MyToastView()
-                
                 switch response.result{
-                    
                 case .Success:
                     
                     let code = String((response.response?.statusCode)!)
@@ -381,7 +368,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func downloadDataFromJsonFile() -> Bool{
         if let file = NSBundle.mainBundle().pathForResource("json", ofType: "json") {
             let data = NSData(contentsOfFile: file)!
-            json = JSON(data: data)
+            self.json = JSON(data: data)
             
             insertData()
             
@@ -398,35 +385,14 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //
     func insertData(){
         
-        let cashDic = json[entityNameOfCash]
-        InsertData.insertCashData(cashDic)
-        
-        let incomeDic = json[entityNameOfIncome]
-        InsertData.insertIncomeData(incomeDic)
-        
-        let incomeNameDic = json[entityNameOfIncomeName]
-        InsertData.insertIncomeNameData(incomeNameDic)
-        
-        let costDic = json[entityNameOfCost]
-        InsertData.insertCostData(costDic)
-        
-        let totalDic = json[entityNameOfTotal]
-        InsertData.insertTotalData(totalDic)
-        
-        let payNameDic = json[entityNameOfPayName]
-        InsertData.insertPayNameData(payNameDic)
-        
-        let creditAccountDic = json[entityNameOfCreditAccount]
-        InsertData.insertCreditAccountData(creditAccountDic)
-        
-        let creditDic = json[entityNameOfCredit]
-        InsertData.insertCreditData(creditDic)
+        InsertData.insertAllMoneyData(self.json)
         
         self.downWiatView.hideView()
         
         let toast = MyToastView()
         toast.showToast("导入数据成功！")
         
+        //下载按钮不可用
         self.downLoad.enabled = false
         self.downLoad.backgroundColor = UIColor.lightGrayColor()
         
@@ -442,7 +408,6 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func controlUpData(){
         
         if self.switchBtn?.on == true{
-            getURL()
             upWiatView.title = "上传中..."
             upWiatView.showWait(self.view)
             upWiatView.showNetIndicator()
@@ -455,20 +420,10 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    //上传数据
+    //显示上传的数据
     func upLoadData() -> String{
+        let jsonStr = ArrayToJsonStr.getMoneyDataArrayToJsonStr()
         
-        let allDic = NSMutableDictionary()
-        allDic.setValue(DataToArray.setCashDataToArray(), forKey: entityNameOfCash)
-        allDic.setValue(DataToArray.setCostDataToArray(), forKey: entityNameOfCost)
-        allDic.setValue(DataToArray.setCreditAccountDataToArray(), forKey: entityNameOfCreditAccount)
-        allDic.setValue(DataToArray.setCreditDataToArray(), forKey: entityNameOfCredit)
-        allDic.setValue(DataToArray.setIncomeDataToArray(), forKey: entityNameOfIncome)
-        allDic.setValue(DataToArray.setIncomeNameDataToArray(), forKey: entityNameOfIncomeName)
-        allDic.setValue(DataToArray.setPayNameDataToArray(), forKey: entityNameOfPayName)
-        allDic.setValue(DataToArray.setTotalDataToArray(), forKey: entityNameOfTotal)
-    
-        let jsonStr = dicToJson(allDic)
         textView.text = ""
         textView.text = jsonStr
         textView.backgroundColor = UIColor.whiteColor()
@@ -487,7 +442,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
             "data": strToJson(str)
         ]
         
-        netManager!.request(.POST, syncBaseURL, parameters: paras, encoding: .JSON)
+        netManager!.request(.POST, NetWork.moneyUrl, parameters: paras, encoding: .JSON)
             .responseJSON { response in
                 let toast = MyToastView()
                 
@@ -501,7 +456,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                     if a == "2"{
                         toast.showToast("上传数据成功！")
                     }else{
-                        toast.showToast("数据有误，不影响！")
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
                     }
                     
                 case .Failure:

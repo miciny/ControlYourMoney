@@ -19,7 +19,7 @@ import UIKit
 func getErrorCodeToString(code: String) -> String{
     switch code {
     case "3":
-        return "参数错误"
+        return "参数或数据错误"
     case "4":
         return "服务器连接错误"
     default:
@@ -27,7 +27,7 @@ func getErrorCodeToString(code: String) -> String{
     }
 }
 
-// 处理数据成json格式
+// dic处理数据成json格式
 func dicToJson(dic: NSMutableDictionary) -> String {
     let dataArray = dic
     var str = String()
@@ -64,6 +64,7 @@ func getTime() -> NSDate{
     return now
 }
 
+//=====================================================================================================
 //时间转为字符串
 func dateToString(date : NSDate) -> String{
     let dateFormatter = NSDateFormatter()
@@ -87,10 +88,12 @@ func dateToStringBySelf(date : NSDate, str:String) -> String{
     return dateFormatter.stringFromDate(date)
 }
 
+
+//=====================================================================================================
+// String to Date
 func stringToDate(dateStr : String) -> NSDate{
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-    // String to Date
     return dateFormatter.dateFromString(dateStr)!
 }
 
@@ -108,6 +111,8 @@ func stringToDateNoHH(dateStr : String) -> NSDate{
     return dateFormatter.dateFromString(dateStr)!
 }
 
+
+//=====================================================================================================
 //判断字符串为数字
 func stringIsInt(str: String) -> Bool{
     let scan = NSScanner(string: str)
@@ -122,16 +127,7 @@ func stringIsFloat(str: String) -> Bool{
     return scan.scanFloat(&f) && scan.atEnd
 }
 
-//设置系统栏颜色
-func setStatusBarColor(color: Bool){
-    if(color == true){
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated:true)
-        //系统栏白色文字 info中 View controller-based status bar appearance设置为no才能用
-    }else{
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default //系统栏黑色文字
-    }
-}
-
+//返回一个简单的alert
 func textAlertView(str :String) -> UIAlertView{
     let alert = UIAlertView()
     alert.message = str

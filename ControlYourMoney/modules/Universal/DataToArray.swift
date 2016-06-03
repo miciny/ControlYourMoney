@@ -9,7 +9,7 @@
 
 //=====================================================================================================
 /**
- MARK: - 用于将数据库里的数据，导出成dic类型的，用于数据导出
+ MARK: - 用于将数据库里的数据，导出成Array类型的，用于数据导出
  **/
 //=====================================================================================================
 
@@ -17,19 +17,51 @@ import UIKit
 
 class DataToArray: NSObject {
     
+    //userInfo
+    class func setUserDataToArray() -> NSMutableArray{
+        let dic = NSMutableArray()
+        
+        let allArray = User.selectAllData()
+        
+        if allArray.count == 0{
+            return dic
+        }
+        
+        for i in 0 ..< allArray.count {
+            let dataDic = NSMutableDictionary()
+            let row = allArray.objectAtIndex(i) as! User
+            
+            dataDic.setValue(dateToStringBySelf(row.create_time!, str: "yyyy-MM-dd HH:mm:ss.ssss"), forKey: userNameOfTime)
+            dataDic.setValue(row.name, forKey: userNameOfName)
+            dataDic.setValue(row.nickname, forKey: userNameOfNickname)
+            dataDic.setValue(row.pw, forKey: userNameOfPW)
+//            dataDic.setValue(row.pic, forKey: userNameOfPic) //这里不上传图片
+            dataDic.setValue(row.address, forKey: userNameOfAddress)
+            dataDic.setValue(row.account, forKey: userNameOfAccount)
+            dataDic.setValue(row.http, forKey: userNameOfHttp)
+            dataDic.setValue(row.motto, forKey: userNameOfMotto)
+            dataDic.setValue(row.location, forKey: userNameOfLocation)
+            dataDic.setValue(row.sex, forKey: userNameOfSex)
+            
+            dic.addObject(dataDic)
+        }
+        return dic
+    }
+    
+    
     //现金
     class func setCashDataToArray() -> NSMutableArray{
         let dic = NSMutableArray()
         
-        let cashArray = Cash.selectAllData()
+        let allArray = Cash.selectAllData()
         
-        if cashArray.count == 0{
+        if allArray.count == 0{
             return dic
         }
         
-        for i in 0 ..< cashArray.count {
+        for i in 0 ..< allArray.count {
             let dataDic = NSMutableDictionary()
-            let row = cashArray.objectAtIndex(i) as! Cash
+            let row = allArray.objectAtIndex(i) as! Cash
             dataDic.setValue(dateToStringBySelf(row.time!, str: "yyyy-MM-dd HH:mm:ss.ssss"), forKey: cashNameOfTime)
             dataDic.setValue(String(row.useNumber!), forKey: cashNameOfUseNumber)
             dataDic.setValue(row.useWhere!, forKey: cashNameOfUseWhere)

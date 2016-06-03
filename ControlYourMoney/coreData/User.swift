@@ -36,12 +36,15 @@ class User: NSManagedObject {
     }
     
     //save
-    class func saveData(){
+    class func saveData() -> Bool{
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         do {
             _ = try
                 allDataSource.save()
-        }catch _ as NSError{}
+            return true
+        }catch _ as NSError{
+            return false
+        }
     }
     
     //插入一条数据
@@ -87,12 +90,12 @@ class User: NSManagedObject {
     }
     
     //改一条数据
-    class func updateuserData(indexPath: Int, changeValue: AnyObject, changeFieldName: String){
+    class func updateuserData(indexPath: Int, changeValue: AnyObject, changeFieldName: String) -> Bool{
         var data = NSArray()
         data = selectAllData()
         
         data[indexPath].setValue(changeValue, forKey: changeFieldName)
-        saveData()
+        return saveData()
     }
 
 }

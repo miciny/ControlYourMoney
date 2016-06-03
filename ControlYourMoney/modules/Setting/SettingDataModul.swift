@@ -9,15 +9,15 @@
 import UIKit
 
 class SettingDataModul: NSObject {
-    var icon: String?  //前面的图片
+    var icon: UIImage?  //前面的图片
     var name: String!  //图片后面的文案
     var nickname: String? //可能有的昵称
     var lable: String? //右边的文字
-    var pic: String? //右边的图片
+    var pic: UIImage? //右边的图片
     var type: Int! //1个人信息栏，进入个人信息页， 2普通栏，3带开关的普通栏，4个人信息页的个人栏
     var cellHeigth: CGFloat! //高度
     
-    init(icon: String?, name: String!, nickname: String?, lable: String?, pic: String?, type: Int!, cellHeigth: CGFloat!){
+    init(icon: UIImage?, name: String!, nickname: String?, lable: String?, pic: UIImage?, type: Int!, cellHeigth: CGFloat!){
         self.icon = icon
         self.name = name
         self.nickname = nickname
@@ -28,7 +28,7 @@ class SettingDataModul: NSObject {
     }
     
     //个人设置栏
-    convenience init(icon: String?, name: String!, nickname: String!, pic: String?){
+    convenience init(icon: UIImage?, name: String!, nickname: String!, pic: UIImage?){
         let icon = icon
         let name = name
         let pic = pic
@@ -38,7 +38,7 @@ class SettingDataModul: NSObject {
     }
     
     //普通设置栏
-    convenience init(icon: String?, name: String!, lable: String?, pic: String?){
+    convenience init(icon: UIImage?, name: String!, lable: String?, pic: UIImage?){
         let icon = icon
         let name = name
         let lable = lable
@@ -48,7 +48,7 @@ class SettingDataModul: NSObject {
     }
     
     //普通设置栏 带按钮的
-    convenience init(icon: String?, name: String!){
+    convenience init(icon: UIImage?, name: String!){
         let icon = icon
         let name = name
         
@@ -56,7 +56,7 @@ class SettingDataModul: NSObject {
     }
     
     //个人信息页的个人栏
-    convenience init(name: String!, pic: String!){
+    convenience init(name: String!, pic: UIImage!){
         let pic = pic
         let name = name
         

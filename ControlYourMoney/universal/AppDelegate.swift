@@ -19,15 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var foreTime: NSDate?
     var vc: TabbarViewController?
     
-    var manage: Manager?
+    var manager: Manager?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        setUpWindow()
-        manage = InitData.getDefaultAlamofireManage()
-//        touchID()
-        InitData.calculateCredit()
-        getUserInfoFromDB()
+        
+        setUpWindow()  //初始化界面
+        manager = NetWork.getDefaultAlamofireManager() //初始化manager
+        touchID()
+        InitData.calculateCredit() // 计算信息还款信息
+        
+        initUserInfo()
+        
         return true
     }
     
@@ -47,14 +49,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         vc!.presentViewController(vcc, animated: false, completion: nil)
     }
     
+    
+    //初始化用户信息
+    func initUserInfo(){
+        if InitData.userExsit() {
+            let userStr = ArrayToJsonStr.getUserDataArrayToJsonStr()
+            postUserInfoToDB(userStr)
+        }else{
+            getUserInfoFromDB()
+        }
+    }
+    
     //从db获取数据
     func getUserInfoFromDB(){
-        let baseUrl = InitData.getBaseUrl()
-        let url = baseUrl + "/api/user"
-        
-        let paras = ["account": "15201114041", "token": "111", "time": "111"]
-        
-        manage!.request(.GET, url, parameters: paras)
+        manager!.request(.GET, NetWork.userUrl , parameters: NetWork.userGetParas)
             .responseJSON { response in
                 let toast = MyToastView()
                 
@@ -68,28 +76,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let data = JSON(response.result.value!)
                         let json = data["data"][0]
                         
-                        let accout = json[userNameOfAccount].stringValue
-                        let nickname = json[userNameOfNickname].stringValue
-                        let name = json[userNameOfName].stringValue
-                        let address = json[userNameOfAddress].stringValue
-                        let location = json[userNameOfLocation].stringValue
-                        let pw = json[userNameOfPW].stringValue
-                        let sex = json[userNameOfSex].stringValue
-                        let timeData = stringToDateBySelf(json[userNameOfTime].stringValue, formate: "yyyy-MM-dd HH:mm:ss.ssss")
-                        let motto = json[userNameOfMotto].stringValue
-//                        let pic = json[userNameOfPic]
-                        let http = json[userNameOfHttp].stringValue
-                        
-                        let dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: timeData, motto: motto, pic: nil, http: http)
-                        
-                        InitData.initUserData(dataModel)
+                        let dataModel = JsonToModel.getUserJsonDataToModel(json)
+                        InsertData.initUserData(dataModel)
+                        print("下载用户信息成功！")
+                    }else{
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
                     }
                     
                 case .Failure:
                     if response.response == nil{
                         toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("上传数据失败！")
                     }
-                    print(response.response)
+                }
+        }
+    }
+    
+    //post用户信息数据到db
+    func postUserInfoToDB(str: String){
+        
+        let paras = [
+            "data": strToJson(str)
+        ]
+        
+        self.manager!.request(.POST, NetWork.userUrl, parameters: paras, encoding: .JSON)
+            .responseJSON { response in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if a == "2"{
+                        print("上传用户信息成功！")
+                    }else{
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
+                    }
+                    
+                case .Failure:
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("上传数据失败！")
+                    }
                 }
         }
     }

@@ -11,7 +11,7 @@ import LocalAuthentication
 
 class TouchIDViewController: UIViewController, UIAlertViewDelegate{
     
-    let passwdString = "zhangxue"
+    var passwdString = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +31,9 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         tipLabel.sizeToFit()
         tipLabel.center = CGPointMake(Width * 0.5, CGRectGetMaxY(imgView.frame) + 30)
         self.view.addSubview(tipLabel)
+        
+        let data = DataToModel.getUserDataToModel()
+        passwdString = data.pw
         
     }
     
@@ -58,14 +61,13 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
                 })
             })
         }else{
-            switch error!.code
-            {
+            switch error!.code{
             case LAError.TouchIDNotEnrolled.rawValue:
-                UIAlertView(title: "提示", message: "您还没有保存过Touch ID", delegate: nil, cancelButtonTitle: "好的").show()
+                UIAlertView(title: "提示", message: "您还没有保存过Touch ID", delegate: self, cancelButtonTitle: "好的").show()
             case LAError.PasscodeNotSet.rawValue:
-                UIAlertView(title: "提示", message: "您还没有设置密码", delegate: nil, cancelButtonTitle: "好的").show()
+                UIAlertView(title: "提示", message: "您还没有设置密码", delegate: self, cancelButtonTitle: "好的").show()
             default:
-                UIAlertView(title: "提示", message: "TouchID不可用", delegate: nil, cancelButtonTitle: "好的").show()
+                UIAlertView(title: "提示", message: "TouchID不可用", delegate: self, cancelButtonTitle: "好的").show()
             }
             // Optionally the error description can be displayed on the console.
             print(error?.localizedDescription)
@@ -76,20 +78,25 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
     func showPasswordAlert() {
         let passwordAlert = UIAlertView(title: "TouchID", message: "请输入密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
+        passwordAlert.tag = 5
         passwordAlert.show()
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
-        if buttonIndex == 1{
-            if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
-                if alertView.textFieldAtIndex(0)!.text == passwdString {
-                    self.dismissViewControllerAnimated(false, completion: nil)
+        if alertView.tag == 5 {
+            if buttonIndex == 1{
+                if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
+                    if alertView.textFieldAtIndex(0)!.text == passwdString {
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                    }else{
+                        showPasswordAlert()
+                    }
                 }else{
                     showPasswordAlert()
                 }
-            }else{
-                showPasswordAlert()
             }
+        }else{
+            self.showPasswordAlert()
         }
     }
 
@@ -98,16 +105,5 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

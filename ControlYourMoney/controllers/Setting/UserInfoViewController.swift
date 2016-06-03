@@ -21,6 +21,12 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        setData()
+        mainTabelView?.reloadData()
+    }
+    
     func setUpEles(){
         self.title = "个人信息"                        //页面title和底部title
         self.view.backgroundColor = UIColor.whiteColor() //背景色
@@ -30,12 +36,14 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         infoData = NSMutableArray()
         
         //从CoreData里读取数据
-        let userData = InitData.getUserDataToModel()
+        let userData = DataToModel.getUserDataToModel()
+        let userIcon = ChangeValue.dataToImage(userData.pic)
+        let tdIcon = UIImage(named: "TDIcon")
         
-        let infoOne1 = SettingDataModul(name: "头像", pic: "DefaultIcon")
+        let infoOne1 = SettingDataModul(name: "头像", pic: userIcon)
         let infoOne2 = SettingDataModul(icon: nil, name: "名字", lable: userData.name, pic: nil)
         let infoOne3 = SettingDataModul(icon: nil, name: "昵称", lable: userData.nickname, pic: nil)
-        let infoOne4 = SettingDataModul(icon: nil, name: "我的二维码", lable: nil, pic: "TDIcon")
+        let infoOne4 = SettingDataModul(icon: nil, name: "我的二维码", lable: nil, pic: tdIcon)
         let infoOne5 = SettingDataModul(icon: nil, name: "我的地址", lable: userData.address, pic: nil)
         
         let infoTwo1 = SettingDataModul(icon: nil, name: "性别", lable: userData.sex, pic: nil)
@@ -46,7 +54,6 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         infoData?.addObject([infoTwo1, infoTwo2, infoTwo3])
     }
 
-    
     //设置tableView
     func setUpTable(){
         mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
@@ -109,18 +116,17 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         switch indexPath.section{
         case 0:
             switch indexPath.row {
-                
             //头像页
             case 0:
-//                let myIconVc = MyIconViewController()
-//                myIconVc.image = item.pic
-//                self.navigationController?.pushViewController(myIconVc, animated: true)
+                let myIconVc = MyIconViewController()
+                myIconVc.image = item.pic
+                self.navigationController?.pushViewController(myIconVc, animated: true)
                 break
             //名字页
             case 1:
-//                let myNameVc = PersonInfoChangeNameViewController()
-//                myNameVc.name = item.lable
-//                self.navigationController?.pushViewController(myNameVc, animated: true)
+                let myNameVc = ChangeNameViewController()
+                myNameVc.name = item.lable!
+                self.navigationController?.pushViewController(myNameVc, animated: true)
                 break
             //二维码页
             case 3:

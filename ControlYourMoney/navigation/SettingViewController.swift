@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
     private var mainTabelView: UITableView? //整个table
     private var settingData : NSMutableArray? //数据
 
@@ -24,17 +24,25 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.title = "设置"
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        setData()
+        mainTabelView?.reloadData()
+    }
+    
     //设置数据
     func setData(){
         settingData = NSMutableArray()
         
-        let userInfoModel = InitData.getUserDataToModel()
+        let userInfoModel = DataToModel.getUserDataToModel()
+        let userIcon = ChangeValue.dataToImage(userInfoModel.pic)
+        let tdIcon = UIImage(named: "TDIcon")
         
-        let settingOne = SettingDataModul(icon: "DefaultIcon", name: userInfoModel.name, nickname: userInfoModel.nickname, pic: "TDIcon")
-        let settingTwo1 = SettingDataModul(icon: "", name: "修改密码", lable: nil, pic: nil)
-        let settingTwo2 = SettingDataModul(icon: "", name: "同步数据", lable: nil, pic: nil)
-        let settingThree = SettingDataModul(icon: "", name: "数据说明", lable: nil, pic: nil)
-        let settingFour = SettingDataModul(icon: "", name: "高级设置", lable: nil, pic: nil)
+        let settingOne = SettingDataModul(icon: userIcon, name: userInfoModel.name, nickname: userInfoModel.nickname, pic: tdIcon)
+        let settingTwo1 = SettingDataModul(icon: nil, name: "修改密码", lable: nil, pic: nil)
+        let settingTwo2 = SettingDataModul(icon: nil, name: "同步数据", lable: nil, pic: nil)
+        let settingThree = SettingDataModul(icon: nil, name: "数据说明", lable: nil, pic: nil)
+        let settingFour = SettingDataModul(icon: nil, name: "高级设置", lable: nil, pic: nil)
         
         settingData?.addObject([settingOne])
         settingData?.addObject([settingTwo1, settingTwo2])
@@ -123,7 +131,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         case 1:
             switch indexPath.row {
             case 0: //设置密码
-                break
+                showPasswordAlert()
                 
             case 1: //同步数据
                 let vc = SyncDataViewController()
@@ -159,6 +167,42 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     //一个section头部的高度
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
+    }
+    
+    func showPasswordAlert() {
+        let passwordAlert = UIAlertView(title: "密码验证", message: "请输入原始密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
+        passwordAlert.tag = 5
+        passwordAlert.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        let data = DataToModel.getUserDataToModel()
+        let passwdString = data.pw
+        print(passwdString)
+        if alertView.tag == 5 {
+            if buttonIndex == 1{
+                if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
+                    if alertView.textFieldAtIndex(0)!.text == passwdString {
+                        //成功
+                        goChangePWPage()
+                    }else{
+                        showPasswordAlert()
+                    }
+                }else{
+                    showPasswordAlert()
+                }
+            }
+        }
+    }
+    
+    func goChangePWPage(){
+        
+        delay(0.2) {
+            let vc = ChangePWViewController()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
