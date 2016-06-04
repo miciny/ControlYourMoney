@@ -24,8 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         setUpWindow()  //初始化界面
-        manager = NetWork.getDefaultAlamofireManager() //初始化manager
         touchID()
+        manager = NetWork.getDefaultAlamofireManager() //初始化manager
+        
         InitData.calculateCredit() // 计算信息还款信息
         
         initUserInfo()
@@ -49,85 +50,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         vc!.presentViewController(vcc, animated: false, completion: nil)
     }
     
-    
     //初始化用户信息
     func initUserInfo(){
         if InitData.userExsit() {
             let userStr = ArrayToJsonStr.getUserDataArrayToJsonStr()
-            postUserInfoToDB(userStr)
+            PostData.postUserInfoToDB(userStr, manager: self.manager!)
         }else{
-            getUserInfoFromDB()
+            DownLoadData.getUserInfoFromDB(self.manager!)
         }
     }
     
-    //从db获取数据
-    func getUserInfoFromDB(){
-        manager!.request(.GET, NetWork.userUrl , parameters: NetWork.userGetParas)
-            .responseJSON { response in
-                let toast = MyToastView()
-                
-                switch response.result{
-                    
-                case .Success:
-                    let code = String((response.response?.statusCode)!)
-                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
-                    
-                    if a == "2"{
-                        let data = JSON(response.result.value!)
-                        let json = data["data"][0]
-                        
-                        let dataModel = JsonToModel.getUserJsonDataToModel(json)
-                        InsertData.initUserData(dataModel)
-                        print("下载用户信息成功！")
-                    }else{
-                        let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
-                    }
-                    
-                case .Failure:
-                    if response.response == nil{
-                        toast.showToast("无法连接服务器！")
-                    }else{
-                        toast.showToast("上传数据失败！")
-                    }
-                }
-        }
-    }
-    
-    //post用户信息数据到db
-    func postUserInfoToDB(str: String){
         
-        let paras = [
-            "data": strToJson(str)
-        ]
-        
-        self.manager!.request(.POST, NetWork.userUrl, parameters: paras, encoding: .JSON)
-            .responseJSON { response in
-                let toast = MyToastView()
-                
-                switch response.result{
-                    
-                case .Success:
-                    let code = String((response.response?.statusCode)!)
-                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
-                    
-                    if a == "2"{
-                        print("上传用户信息成功！")
-                    }else{
-                        let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
-                    }
-                    
-                case .Failure:
-                    if response.response == nil{
-                        toast.showToast("无法连接服务器！")
-                    }else{
-                        toast.showToast("上传数据失败！")
-                    }
-                }
-        }
-    }
-    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

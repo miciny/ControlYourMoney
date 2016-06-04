@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class NetWork: NSObject {
     var manager: Manager?
@@ -51,8 +52,9 @@ class NetWork: NSObject {
     //获得manage
     class func getDefaultAlamofireManager() -> Manager{
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 15 //超时时间
+        configuration.timeoutIntervalForRequest = 7 //超时时间
         let netManager = Alamofire.Manager(configuration: configuration)
         return netManager
     }
+
 }

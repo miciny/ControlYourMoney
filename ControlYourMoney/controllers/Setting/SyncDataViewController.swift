@@ -326,8 +326,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    //下载数据 必须使用https
-    
+    //从网络下载数据 必须使用https
 //    在Info.plist中添加NSAppTransportSecurity类型Dictionary。
 //    在NSAppTransportSecurity下添加NSAllowsArbitraryLoads类型Boolean,值设为YES
     
@@ -417,7 +416,6 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
             self.upLoadData()
         }
-        
     }
     
     //显示上传的数据

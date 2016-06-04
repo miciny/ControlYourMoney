@@ -17,8 +17,8 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setUpData()
         self.setUpTitle()
+        self.setUpData()
     }
     
     override func viewWillAppear(animated: Bool) {

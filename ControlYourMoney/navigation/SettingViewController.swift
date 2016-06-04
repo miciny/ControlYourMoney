@@ -177,18 +177,12 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
-        let data = DataToModel.getUserDataToModel()
-        let passwdString = data.pw
-        print(passwdString)
+
         if alertView.tag == 5 {
             if buttonIndex == 1{
                 if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
-                    if alertView.textFieldAtIndex(0)!.text == passwdString {
-                        //成功
-                        goChangePWPage()
-                    }else{
-                        showPasswordAlert()
-                    }
+                    let str = alertView.textFieldAtIndex(0)!.text
+                    assertPW(str!)
                 }else{
                     showPasswordAlert()
                 }
@@ -196,13 +190,35 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func goChangePWPage(){
+    //验证密码
+    func assertPW(str: String){
         
-        delay(0.2) {
-            let vc = ChangePWViewController()
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
+        let waitView = MyWaitToast()
+        waitView.title = "验证中..."
+        waitView.showWait(self.view)
+        
+        delay(0.5) {
+            let toast = MyToastView()
+            
+            let data = DataToModel.getUserDataToModel()
+            let passwdString = data.pw
+            
+            if str == passwdString {
+                //成功
+                self.goChangePWPage()
+            }else{
+                toast.showToast("验证失败！")
+            }
+            waitView.hideView()
         }
+    }
+    
+    //进入改密码页
+    func goChangePWPage(){
+        let vc = ChangePWViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 
     override func didReceiveMemoryWarning() {

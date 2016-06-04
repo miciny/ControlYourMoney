@@ -56,7 +56,6 @@
 		E15B2B661D014038009590DB /* InsertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B651D014038009590DB /* InsertData.swift */; };
 		E15B2B681D01406A009590DB /* DataToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B671D01406A009590DB /* DataToArray.swift */; };
 		E15B2B6A1D0140CF009590DB /* DataToModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B691D0140CF009590DB /* DataToModel.swift */; };
-		E15B2B6C1D0141E5009590DB /* NetWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B6B1D0141E5009590DB /* NetWork.swift */; };
 		E15B2B711D014320009590DB /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B6D1D014320009590DB /* AutoLayout.swift */; };
 		E15B2B721D014320009590DB /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B6E1D014320009590DB /* NSDateExtension.swift */; };
 		E15B2B731D014320009590DB /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B6F1D014320009590DB /* UILabelExtension.swift */; };
@@ -69,6 +68,10 @@
 		E15B2B811D015D70009590DB /* MyIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B801D015D70009590DB /* MyIconViewController.swift */; };
 		E15B2B831D015EB1009590DB /* ChangeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B821D015EB1009590DB /* ChangeValue.swift */; };
 		E15B2B851D018FDD009590DB /* ChangePWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B841D018FDD009590DB /* ChangePWViewController.swift */; };
+		E15B2B8A1D01AEEF009590DB /* MyTDCodeImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2B891D01AEEF009590DB /* MyTDCodeImageViewController.swift */; };
+		E15B2BB21D028850009590DB /* DownLoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB11D028850009590DB /* DownLoadData.swift */; };
+		E15B2BB41D0288B2009590DB /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB31D0288B2009590DB /* PostData.swift */; };
+		E15B2BB61D0288E8009590DB /* NetWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB51D0288E8009590DB /* NetWork.swift */; };
 		E160C4401CF3F2A9008B445A /* MCYLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */; };
 		E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */; };
 		E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67481CE56E52005C35D9 /* AccountListViewController.swift */; };
@@ -331,7 +334,6 @@
 		E15B2B651D014038009590DB /* InsertData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertData.swift; sourceTree = "<group>"; };
 		E15B2B671D01406A009590DB /* DataToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataToArray.swift; sourceTree = "<group>"; };
 		E15B2B691D0140CF009590DB /* DataToModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataToModel.swift; sourceTree = "<group>"; };
-		E15B2B6B1D0141E5009590DB /* NetWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWork.swift; sourceTree = "<group>"; };
 		E15B2B6D1D014320009590DB /* AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayout.swift; sourceTree = "<group>"; };
 		E15B2B6E1D014320009590DB /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		E15B2B6F1D014320009590DB /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
@@ -344,6 +346,10 @@
 		E15B2B801D015D70009590DB /* MyIconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyIconViewController.swift; sourceTree = "<group>"; };
 		E15B2B821D015EB1009590DB /* ChangeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeValue.swift; sourceTree = "<group>"; };
 		E15B2B841D018FDD009590DB /* ChangePWViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePWViewController.swift; sourceTree = "<group>"; };
+		E15B2B891D01AEEF009590DB /* MyTDCodeImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTDCodeImageViewController.swift; sourceTree = "<group>"; };
+		E15B2BB11D028850009590DB /* DownLoadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownLoadData.swift; sourceTree = "<group>"; };
+		E15B2BB31D0288B2009590DB /* PostData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
+		E15B2BB51D0288E8009590DB /* NetWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWork.swift; sourceTree = "<group>"; };
 		E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYLineChartView.swift; sourceTree = "<group>"; };
 		E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYCreditPieChartView.swift; sourceTree = "<group>"; };
 		E16A67481CE56E52005C35D9 /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
@@ -523,12 +529,24 @@
 		E15B2B7B1D0158C3009590DB /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
+				E15B2B891D01AEEF009590DB /* MyTDCodeImageViewController.swift */,
 				E15B2B7C1D015908009590DB /* ChangeNameViewController.swift */,
 				E15B2B801D015D70009590DB /* MyIconViewController.swift */,
 				E15B2B841D018FDD009590DB /* ChangePWViewController.swift */,
 			);
 			name = UserInfo;
 			path = ControlYourMoney/controllers/Setting/UserInfo;
+			sourceTree = SOURCE_ROOT;
+		};
+		E15B2BA11D0287F0009590DB /* internet */ = {
+			isa = PBXGroup;
+			children = (
+				E15B2BB51D0288E8009590DB /* NetWork.swift */,
+				E15B2BB11D028850009590DB /* DownLoadData.swift */,
+				E15B2BB31D0288B2009590DB /* PostData.swift */,
+			);
+			name = internet;
+			path = ControlYourMoney/internet;
 			sourceTree = SOURCE_ROOT;
 		};
 		E16A673F1CE56C8A005C35D9 /* MainPage */ = {
@@ -672,6 +690,7 @@
 		E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */ = {
 			isa = PBXGroup;
 			children = (
+				E15B2BA11D0287F0009590DB /* internet */,
 				E126FCB31CF8B25D00DAFF84 /* json.json */,
 				E126FC2E1CF8237F00DAFF84 /* coreData */,
 				E18774821CE2D41600CBBBB3 /* navigation */,
@@ -714,7 +733,6 @@
 			children = (
 				E19E01F71CE2C89B00A52C04 /* AppDelegate.swift */,
 				E15B2B301D003EB9009590DB /* InitData.swift */,
-				E15B2B6B1D0141E5009590DB /* NetWork.swift */,
 				E19E01F81CE2C89B00A52C04 /* Funcs.swift */,
 				E18774851CE2D57000CBBBB3 /* Constant.swift */,
 				E18774971CE3289C00CBBBB3 /* Protocol.swift */,
@@ -1026,7 +1044,6 @@
 				E126FC1C1CF6D92600DAFF84 /* SettingDataModul.swift in Sources */,
 				E15B2B731D014320009590DB /* UILabelExtension.swift in Sources */,
 				E15B2B831D015EB1009590DB /* ChangeValue.swift in Sources */,
-				E15B2B6C1D0141E5009590DB /* NetWork.swift in Sources */,
 				E15B2B351D00417D009590DB /* InternetSetting.swift in Sources */,
 				E126FC3F1CF823DB00DAFF84 /* PayName+CoreDataProperties.swift in Sources */,
 				E126FC191CF6D8D500DAFF84 /* SettingTableViewCell.swift in Sources */,
@@ -1053,13 +1070,16 @@
 				E15B2B711D014320009590DB /* AutoLayout.swift in Sources */,
 				E126FC0D1CF68DCF00DAFF84 /* MCYPiePolyLineChartView.swift in Sources */,
 				E16A677F1CE5730A005C35D9 /* MainTableCreditModul.swift in Sources */,
+				E15B2BB21D028850009590DB /* DownLoadData.swift in Sources */,
 				E16A67541CE56E52005C35D9 /* AddCreditViewController.swift in Sources */,
+				E15B2B8A1D01AEEF009590DB /* MyTDCodeImageViewController.swift in Sources */,
 				E126FC461CF823DB00DAFF84 /* Salary.swift in Sources */,
 				E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */,
 				E126FC4A1CF823DB00DAFF84 /* CreditAccount.swift in Sources */,
 				E15B2B781D0152BD009590DB /* DeleteCoreData.swift in Sources */,
 				E15B2B341D00417D009590DB /* InternetSetting+CoreDataProperties.swift in Sources */,
 				E16A67521CE56E52005C35D9 /* AddCashViewController.swift in Sources */,
+				E15B2BB41D0288B2009590DB /* PostData.swift in Sources */,
 				E15662C41CEC2C4C00720304 /* AddIncomeAccountViewController.swift in Sources */,
 				E15B2B721D014320009590DB /* NSDateExtension.swift in Sources */,
 				E16A67571CE56E52005C35D9 /* ChangeCreditViewController.swift in Sources */,
@@ -1085,6 +1105,7 @@
 				E16A67701CE56E93005C35D9 /* MainTableHeaderView.swift in Sources */,
 				E160C4401CF3F2A9008B445A /* MCYLineChartView.swift in Sources */,
 				E126FC401CF823DB00DAFF84 /* PayName.swift in Sources */,
+				E15B2BB61D0288E8009590DB /* NetWork.swift in Sources */,
 				E15B2B681D01406A009590DB /* DataToArray.swift in Sources */,
 				E16A67751CE572EF005C35D9 /* AnalysePageDataModul.swift in Sources */,
 				E15B2B7A1D015714009590DB /* GetDataArray.swift in Sources */,

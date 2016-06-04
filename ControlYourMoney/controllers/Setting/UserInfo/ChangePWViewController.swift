@@ -52,6 +52,7 @@ class ChangePWViewController: UIViewController, UITextFieldDelegate{
         pwTextField.returnKeyType = UIReturnKeyType.Done //表示完成输入
         pwTextField.clearButtonMode=UITextFieldViewMode.WhileEditing  //编辑时出现清除按钮
         pwTextField.delegate = self
+        pwTextField.placeholder = "请输入密码"
         nameTextView.addSubview(pwTextField)
     }
     

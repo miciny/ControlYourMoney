@@ -96,11 +96,11 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         let section : NSArray =  self.infoData![indexPath.section] as! NSArray
         let data = section[indexPath.row]
         let cell =  SettingTableViewCell(data: data as! SettingDataModul, reuseIdentifier: cellId)
-        //寻宠好不能变
+        //昵称不能变
         if indexPath.section != 0 || indexPath.row != 2 {
             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.selectionStyle = .None
         }
-        
         return cell
     }
     
@@ -130,8 +130,8 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
                 break
             //二维码页
             case 3:
-//                let myTDIcon = MyTDCodeImageViewController()
-//                self.navigationController?.pushViewController(myTDIcon, animated: true)
+                let myTDIcon = MyTDCodeImageViewController()
+                self.navigationController?.pushViewController(myTDIcon, animated: true)
                 break
             default:
                 break
