@@ -11,7 +11,7 @@ import UIKit
 class UserInfoModel: NSObject {
     var account: String!
     var name: String?
-    var nickname: String!
+    var nickname: String?
     var address: String?
     var location: String?
     var pw: String!
@@ -22,7 +22,7 @@ class UserInfoModel: NSObject {
     var http: String?
     var picPath: String?
     
-    init(account: String!, nickname: String!, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?){
+    init(account: String!, nickname: String?, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?){
         self.account = account
         self.name = name
         self.nickname = nickname

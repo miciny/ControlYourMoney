@@ -55,22 +55,27 @@ class SettingTableViewCell: UITableViewCell {
         self.addSubview(myIcon)
         
         //个人设置栏-名字
-        let nameSize = sizeWithText(settingItem.name, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
-        let myName = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y, width: nameSize.width, height: myIcon.frame.height/2))
-        myName.backgroundColor = UIColor.clearColor()
-        myName.font = settingPageNameFont
-        myName.textAlignment = .Left
-        myName.text = settingItem.name
-        self.addSubview(myName)
+        if let nameStr = settingItem.name{
+            let nameSize = sizeWithText(nameStr, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
+            let myName = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y, width: nameSize.width, height: myIcon.frame.height/2))
+            myName.backgroundColor = UIColor.clearColor()
+            myName.font = settingPageNameFont
+            myName.textAlignment = .Left
+            myName.text = nameStr
+            self.addSubview(myName)
+        }
         
         //个人设置栏-昵称
-        let nicknameSize = sizeWithText("昵称："+settingItem.nickname!, font: settingPageLableFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
-        let myNickname = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y+myIcon.frame.height/2, width: nicknameSize.width, height: myIcon.frame.height/2))
-        myNickname.backgroundColor = UIColor.whiteColor()
-        myNickname.font = settingPageLableFont
-        myNickname.textAlignment = .Left
-        myNickname.text = "昵称："+settingItem.nickname!
-        self.addSubview(myNickname)
+        if let nicknameStr = settingItem.nickname {
+            let nicknameSize = sizeWithText("昵称："+nicknameStr, font: settingPageLableFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
+            let myNickname = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y+myIcon.frame.height/2, width: nicknameSize.width, height: myIcon.frame.height/2))
+            myNickname.backgroundColor = UIColor.whiteColor()
+            myNickname.font = settingPageLableFont
+            myNickname.textAlignment = .Left
+            myNickname.text = "昵称："+nicknameStr
+            self.addSubview(myNickname)
+        }
+        
         
         //个人设置栏-二维码图片
         if let pic = settingItem.pic{

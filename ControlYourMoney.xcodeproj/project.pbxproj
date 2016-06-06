@@ -72,6 +72,8 @@
 		E15B2BB21D028850009590DB /* DownLoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB11D028850009590DB /* DownLoadData.swift */; };
 		E15B2BB41D0288B2009590DB /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB31D0288B2009590DB /* PostData.swift */; };
 		E15B2BB61D0288E8009590DB /* NetWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BB51D0288E8009590DB /* NetWork.swift */; };
+		E15B2BF61D05C615009590DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BF51D05C615009590DB /* LoginViewController.swift */; };
+		E15B2C071D05CDC8009590DB /* SettingNetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2C061D05CDC8009590DB /* SettingNetViewController.swift */; };
 		E160C4401CF3F2A9008B445A /* MCYLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */; };
 		E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */; };
 		E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67481CE56E52005C35D9 /* AccountListViewController.swift */; };
@@ -350,6 +352,8 @@
 		E15B2BB11D028850009590DB /* DownLoadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownLoadData.swift; sourceTree = "<group>"; };
 		E15B2BB31D0288B2009590DB /* PostData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
 		E15B2BB51D0288E8009590DB /* NetWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWork.swift; sourceTree = "<group>"; };
+		E15B2BF51D05C615009590DB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E15B2C061D05CDC8009590DB /* SettingNetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNetViewController.swift; sourceTree = "<group>"; };
 		E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYLineChartView.swift; sourceTree = "<group>"; };
 		E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYCreditPieChartView.swift; sourceTree = "<group>"; };
 		E16A67481CE56E52005C35D9 /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
@@ -651,6 +655,7 @@
 		E16A67461CE56DB5005C35D9 /* Universal */ = {
 			isa = PBXGroup;
 			children = (
+				E15B2C061D05CDC8009590DB /* SettingNetViewController.swift */,
 			);
 			name = Universal;
 			path = ControlYourMoney/controllers/Universal;
@@ -723,6 +728,7 @@
 				E126FCC41CF97C1300DAFF84 /* ChartsRootViewController.swift */,
 				E126FC121CF6D86D00DAFF84 /* SettingViewController.swift */,
 				E1ABCC891CEABA3B005A359C /* TouchIDViewController.swift */,
+				E15B2BF51D05C615009590DB /* LoginViewController.swift */,
 			);
 			name = navigation;
 			path = ControlYourMoney/navigation;
@@ -1048,6 +1054,7 @@
 				E126FC3F1CF823DB00DAFF84 /* PayName+CoreDataProperties.swift in Sources */,
 				E126FC191CF6D8D500DAFF84 /* SettingTableViewCell.swift in Sources */,
 				E126FCD51CF99D7600DAFF84 /* LineChartsViewController.swift in Sources */,
+				E15B2C071D05CDC8009590DB /* SettingNetViewController.swift in Sources */,
 				E18774981CE3289C00CBBBB3 /* Protocol.swift in Sources */,
 				E16A67801CE5730A005C35D9 /* MainTableSalaryModul.swift in Sources */,
 				E16A67691CE56E89005C35D9 /* MyBottomMenuView.swift in Sources */,
@@ -1055,6 +1062,7 @@
 				E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */,
 				E1ABCC811CE9C956005A359C /* MonthCostViewController.swift in Sources */,
 				E15B2B371D00430A009590DB /* URLModel.swift in Sources */,
+				E15B2BF61D05C615009590DB /* LoginViewController.swift in Sources */,
 				E126FC481CF823DB00DAFF84 /* Credit.swift in Sources */,
 				E15B2B741D014320009590DB /* UILabelPadding.swift in Sources */,
 				E126FCD71CF99DDE00DAFF84 /* PieChartsViewController.swift in Sources */,

@@ -11,7 +11,13 @@ import Alamofire
 import SwiftyJSON
 
 class NetWork: NSObject {
-    var manager: Manager?
+    
+    //user的URl
+    class var loginUrl: String{
+        get{
+            return NetWork.getBaseUrl() + "/api/login"
+        }
+    }
     
     //user的URl
     class var userUrl: String{

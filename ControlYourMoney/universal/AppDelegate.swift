@@ -24,12 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         setUpWindow()  //初始化界面
-        touchID()
-        manager = NetWork.getDefaultAlamofireManager() //初始化manager
         
-        InitData.calculateCredit() // 计算信息还款信息
-        
-        initUserInfo()
+        //是否登录
+        if InitData.userExsit(){
+            touchID()
+            manager = NetWork.getDefaultAlamofireManager() //初始化manager
+            InitData.calculateCredit() // 计算信息还款信息
+            initUserInfo()
+        }else{
+            loginPage()
+        }
         
         return true
     }
@@ -50,6 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         vc!.presentViewController(vcc, animated: false, completion: nil)
     }
     
+    func loginPage(){
+        let vcc = LoginViewController()
+        let vccNavigationController = UINavigationController(rootViewController: vcc) //带导航栏
+        
+        vc!.presentViewController(vccNavigationController, animated: true, completion: nil)
+        
+    }
+    
     //初始化用户信息,本地有就上传
     func initUserInfo(){
         //存在用户 并且改过数据
@@ -62,8 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let imageData = userData.pic {
                 PostData.postUserIconToDB(imageData, manager: self.manager!)
             }
-        }else if !InitData.userExsit(){
-            DownLoadData.getUserInfoFromDB(self.manager!)
         }
     }
     

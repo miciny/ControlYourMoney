@@ -37,8 +37,12 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     func downLoadUserIcon(){
         let userInfoModel = DataToModel.getUserDataToModel()
         
+        if userInfoModel.name == nil {
+            DownLoadData.getUserInfoFromDB(userInfoModel.account, manager: self.manager!)
+        }
+    
         if userInfoModel.pic == nil &&  userInfoModel.picPath != nil{
-            print(userInfoModel.picPath)
+           
             DownLoadData.getUserIconFromDB(userInfoModel.picPath!, manager: self.manager)
         }
     }

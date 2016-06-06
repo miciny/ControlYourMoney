@@ -16,11 +16,11 @@ class DataToModel: NSObject {
         var dataModel: UserInfoModel!
         
         if data.count == 0 {
-            dataModel = UserInfoModel(account: "15201114041", nickname: "Xue", name: "毛彩元", address: nil, location: nil, pw: "zhangxue", sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
+            dataModel = UserInfoModel(account: "15201114041", nickname: "Xue", name: nil, address: nil, location: nil, pw: "zhangxue", sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
         }else{
             let accout = data.lastObject?.valueForKey(userNameOfAccount) as! String
-            let nickname = data.lastObject?.valueForKey(userNameOfNickname) as! String
-            let name = data.lastObject?.valueForKey(userNameOfName) as! String
+            let nickname = data.lastObject?.valueForKey(userNameOfNickname) as? String
+            let name = data.lastObject?.valueForKey(userNameOfName) as? String
             let address = data.lastObject?.valueForKey(userNameOfAddress) as? String
             let location = data.lastObject?.valueForKey(userNameOfLocation) as? String
             let pw = data.lastObject?.valueForKey(userNameOfPW) as! String

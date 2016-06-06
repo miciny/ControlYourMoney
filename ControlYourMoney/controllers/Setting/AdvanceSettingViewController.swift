@@ -28,11 +28,36 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     //设置数据
     func setData(){
         settingData = NSMutableArray()
-        
         let settingOne = SettingDataModul(icon: nil, name: "清空本地数据", lable: nil, pic: nil)
         
         settingData?.addObject([settingOne])
     }
+    
+    //footerView
+    func setFooterView() -> UIView{
+        let footerView = UIView()
+        footerView.backgroundColor = UIColor.clearColor()
+        
+        let logout = UIButton()
+        logout.frame = CGRect(x: 20, y: 20, width: Width-40, height: 50)
+        logout.backgroundColor = UIColor(red: 0/255, green: 205/255, blue: 0/255, alpha: 1.0)
+        logout.setTitle("退出登录", forState: .Normal)
+        logout.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        logout.layer.cornerRadius = 5
+        logout.addTarget(self, action: #selector(self.logout), forControlEvents: .TouchUpInside)
+        footerView.addSubview(logout)
+        
+        footerView.frame = CGRect(x: 0, y: 0, width: Width, height: logout.frame.maxY+10)
+        
+        return footerView
+    }
+    
+    func logout(){
+        let localAlert = UIAlertView(title: "退出登录？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        localAlert.tag = 1
+        localAlert.show()
+    }
+
     
     //设置tableView
     func setUpTable(){
@@ -46,6 +71,8 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
         
         mainTabelView?.delegate = self
         mainTabelView?.dataSource = self
+        
+        mainTabelView?.tableFooterView = setFooterView()
         
         self.view.addSubview(mainTabelView!)
     }
@@ -131,6 +158,12 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
             if buttonIndex == 1 {
                 deleteAllData()
             }
+        case 1:
+            if buttonIndex == 1 {
+                DeleteCoreData.deleteUserData()
+                DeleteCoreData.deleteAllMoneyData()
+                loginPage()
+            }
         default:
             break
         }
@@ -138,9 +171,16 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     
     func deleteAllData(){
         DeleteCoreData.deleteAllMoneyData()
-        
         let toast = MyToastView()
         toast.showToast("删除成功！")
+    }
+    
+    func loginPage(){
+        let vcc = LoginViewController()
+        let vccNavigationController = UINavigationController(rootViewController: vcc) //带导航栏
+        
+        self.presentViewController(vccNavigationController, animated: true, completion: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {

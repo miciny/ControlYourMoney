@@ -9,6 +9,15 @@
 import UIKit
 
 class DeleteCoreData: NSObject {
+    //删除用户信息
+    class func deleteUserData(){
+        let array = User.selectAllData()
+        if array.count > 0 {
+            for _ in 0 ..< array.count{
+                User.deleteData(0)
+            }
+        }
+    }
     //删除所有money
     class func deleteAllMoneyData(){
         var array = Cash.selectAllData()

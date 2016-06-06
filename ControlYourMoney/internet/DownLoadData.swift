@@ -12,8 +12,14 @@ import Alamofire
 
 class DownLoadData: NSObject {    
     //从db获取user数据
-    class func getUserInfoFromDB(manager: Manager){
-        manager.request(.GET, NetWork.userUrl , parameters: NetWork.userGetParas)
+    class func getUserInfoFromDB(account: String, manager: Manager){
+        let userInfoPara = [
+            "account": "\(account)",
+            "token": "111",
+            "time": "111"
+        ]
+        
+        manager.request(.GET, NetWork.userUrl , parameters: userInfoPara)
             .responseJSON { response in
                 let toast = MyToastView()
                 
