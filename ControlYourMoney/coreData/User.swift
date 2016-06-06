@@ -48,7 +48,7 @@ class User: NSManagedObject {
     }
     
     //插入一条数据
-    class func insertUserData(account: String!, name: String?, nickname: String!, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?){
+    class func insertUserData(account: String!, name: String?, nickname: String!, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?){
         let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfUser,
@@ -64,12 +64,14 @@ class User: NSManagedObject {
         row.pic = pic
         row.http = http
         row.create_time = time
+        row.picPath = picPath
+        row.changed = true // 插入数据，自动变为变过
         
         saveData()
     }
     
     //改一条数据
-    class func updateUserData(indexPath: Int, account: String!, name: String?, nickname: String!, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?){
+    class func updateUserData(indexPath: Int, account: String!, name: String?, nickname: String!, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?, changed: Bool!){
         var data = NSArray()
         data = selectAllData()
         
@@ -85,6 +87,8 @@ class User: NSManagedObject {
         row.motto = motto
         row.pic = pic
         row.http = http
+        row.picPath = picPath
+        row.changed = changed
         
         saveData()
     }

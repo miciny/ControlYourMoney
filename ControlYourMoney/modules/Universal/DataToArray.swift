@@ -35,7 +35,6 @@ class DataToArray: NSObject {
             dataDic.setValue(row.name, forKey: userNameOfName)
             dataDic.setValue(row.nickname, forKey: userNameOfNickname)
             dataDic.setValue(row.pw, forKey: userNameOfPW)
-//            dataDic.setValue(row.pic, forKey: userNameOfPic) //这里不上传图片
             dataDic.setValue(row.address, forKey: userNameOfAddress)
             dataDic.setValue(row.account, forKey: userNameOfAccount)
             dataDic.setValue(row.http, forKey: userNameOfHttp)

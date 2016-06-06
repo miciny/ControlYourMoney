@@ -22,10 +22,11 @@ class JsonToModel: NSObject {
         let sex = json[userNameOfSex].stringValue
         let timeData = stringToDateBySelf(json[userNameOfTime].stringValue, formate: "yyyy-MM-dd HH:mm:ss.ssss")
         let motto = json[userNameOfMotto].stringValue
-        //                        let pic = json[userNameOfPic]
+        let picPath = json[userNameOfPic].stringValue
         let http = json[userNameOfHttp].stringValue
         
-        let dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: timeData, motto: motto, pic: nil, http: http)
+        let dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: timeData, motto: motto, pic: nil, http: http, picPath: picPath)
         return dataModel
     }
+    
 }

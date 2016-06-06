@@ -82,6 +82,7 @@ class ChangePWViewController: UIViewController, UITextFieldDelegate{
     func saveName() {
         let pwTemp = pwTextField.text!
         User.updateuserData(0, changeValue: pwTemp, changeFieldName: userNameOfPW)
+        User.updateuserData(0, changeValue: true, changeFieldName: userNameOfChanged)
         backToPrevious()
         let toast = MyToastView()
         toast.showToast("修改成功！")

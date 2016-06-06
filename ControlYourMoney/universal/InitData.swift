@@ -58,4 +58,19 @@ class InitData: NSObject {
             return true
         }
     }
+    
+    //用户信息是否改过
+    class func userInfoChanged() -> Bool{
+        let data = User.selectAllData()
+        if data.count == 0 {
+            return false
+        }else{
+            if (data.lastObject?.valueForKey(userNameOfChanged) as! Bool){
+                return true
+            }else{
+                return false
+            }
+            
+        }
+    }
 }

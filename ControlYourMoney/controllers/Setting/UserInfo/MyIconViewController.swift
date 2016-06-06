@@ -99,7 +99,12 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
             //保存到最后一行
             let result = User.updateuserData(0, changeValue: imageData, changeFieldName: userNameOfPic)
             //给出提示
-            result ? MyToastView().showToast("保存成功！") : MyToastView().showToast("保存失败！")
+            if result{
+                MyToastView().showToast("保存成功！")
+                User.updateuserData(0, changeValue: true, changeFieldName: userNameOfChanged)
+            }else{
+                MyToastView().showToast("保存失败！")   
+            }
             
             imageView!.image = image    //展示
             picker.dismissViewControllerAnimated(true, completion:nil)

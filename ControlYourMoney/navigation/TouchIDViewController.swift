@@ -34,7 +34,6 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         
         let data = DataToModel.getUserDataToModel()
         passwdString = data.pw
-        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

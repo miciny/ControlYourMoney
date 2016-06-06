@@ -50,12 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         vc!.presentViewController(vcc, animated: false, completion: nil)
     }
     
-    //初始化用户信息
+    //初始化用户信息,本地有就上传
     func initUserInfo(){
-        if InitData.userExsit() {
+        //存在用户 并且改过数据
+        if InitData.userInfoChanged(){
+            //基本信息
             let userStr = ArrayToJsonStr.getUserDataArrayToJsonStr()
             PostData.postUserInfoToDB(userStr, manager: self.manager!)
-        }else{
+            //头像
+            let userData = DataToModel.getUserDataToModel()
+            if let imageData = userData.pic {
+                PostData.postUserIconToDB(imageData, manager: self.manager!)
+            }
+        }else if !InitData.userExsit(){
             DownLoadData.getUserInfoFromDB(self.manager!)
         }
     }

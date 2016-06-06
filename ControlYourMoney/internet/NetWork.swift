@@ -20,6 +20,13 @@ class NetWork: NSObject {
         }
     }
     
+    //user icon的URl
+    class var userIconUrl: String{
+        get{
+            return NetWork.getBaseUrl() + "/api/user/icon"
+        }
+    }
+    
     //user的get请求的参数
     class var userGetParas: [String: String]{
         get{

@@ -48,12 +48,11 @@ class InsertData: NSObject {
     class func initUserData(data: UserInfoModel){
         let dataTemp = User.selectAllData()
         if dataTemp.count == 0 {
-            User.insertUserData(data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http)
+            User.insertUserData(data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http, picPath: data.picPath)
         }else{
-            User.updateUserData(0, account: data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http)
+            User.updateUserData(0, account: data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http, picPath: data.picPath, changed: false)
         }
     }
-    
     
     //现金
     class func insertCashData(cashDic: JSON){

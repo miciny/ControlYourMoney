@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Alamofire
 
 class UserInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     private var mainTabelView: UITableView? //整个table
     private var infoData : NSMutableArray? //数据
+    private var manager: Manager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initManager()
         setUpEles()
         setData()
         setUpTable()
@@ -37,7 +40,10 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         //从CoreData里读取数据
         let userData = DataToModel.getUserDataToModel()
-        let userIcon = ChangeValue.dataToImage(userData.pic)
+        var userIcon = ChangeValue.dataToImage(nil)
+        if let iconData = userData.pic{
+            userIcon = ChangeValue.dataToImage(iconData)
+        }
         let tdIcon = UIImage(named: "TDIcon")
         
         let infoOne1 = SettingDataModul(name: "头像", pic: userIcon)
@@ -52,6 +58,11 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         infoData?.addObject([infoOne1, infoOne2, infoOne3, infoOne4, infoOne5])
         infoData?.addObject([infoTwo1, infoTwo2, infoTwo3])
+    }
+    
+    //初始化manager
+    func initManager(){
+        self.manager = NetWork.getDefaultAlamofireManager()
     }
 
     //设置tableView

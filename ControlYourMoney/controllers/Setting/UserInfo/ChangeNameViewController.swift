@@ -85,6 +85,7 @@ class ChangeNameViewController: UIViewController, UITextFieldDelegate{
     func saveName() {
         let name = nameTextField.text!
         User.updateuserData(0, changeValue: name, changeFieldName: userNameOfName)
+        User.updateuserData(0, changeValue: true, changeFieldName: userNameOfChanged)
         backToPrevious()
         let toast = MyToastView()
         toast.showToast("保存成功！")

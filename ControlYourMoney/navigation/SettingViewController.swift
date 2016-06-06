@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Alamofire
 
 class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
     private var mainTabelView: UITableView? //整个table
     private var settingData : NSMutableArray? //数据
+    private var manager: Manager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.manager = NetWork.getDefaultAlamofireManager()
         setUpTitle()
         setData()
         setUpTable()
@@ -27,7 +30,17 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         setData()
+        downLoadUserIcon()
         mainTabelView?.reloadData()
+    }
+    
+    func downLoadUserIcon(){
+        let userInfoModel = DataToModel.getUserDataToModel()
+        
+        if userInfoModel.pic == nil &&  userInfoModel.picPath != nil{
+            print(userInfoModel.picPath)
+            DownLoadData.getUserIconFromDB(userInfoModel.picPath!, manager: self.manager)
+        }
     }
     
     //设置数据
@@ -35,7 +48,11 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         settingData = NSMutableArray()
         
         let userInfoModel = DataToModel.getUserDataToModel()
-        let userIcon = ChangeValue.dataToImage(userInfoModel.pic)
+        var userIcon = ChangeValue.dataToImage(nil)
+        if let iconData = userInfoModel.pic{
+            userIcon = ChangeValue.dataToImage(iconData)
+        }
+        
         let tdIcon = UIImage(named: "TDIcon")
         
         let settingOne = SettingDataModul(icon: userIcon, name: userInfoModel.name, nickname: userInfoModel.nickname, pic: tdIcon)

@@ -27,6 +27,7 @@ class PostData: NSObject {
                     let a = code.substringToIndex(code.startIndex.advancedBy(1))
                     
                     if a == "2"{
+                        User.updateuserData(0, changeValue: false, changeFieldName: userNameOfChanged)
                         print("上传用户信息成功！")
                     }else{
                         let str = getErrorCodeToString(a)
@@ -40,6 +41,38 @@ class PostData: NSObject {
                         toast.showToast("上传数据失败！")
                     }
                 }
+        }
+    }
+    
+    //post user icon
+    //
+    class func postUserIconToDB(imageData: NSData, manager: Manager){
+        let url = NetWork.userIconUrl
+        
+        manager.upload(.POST, url, data: imageData)
+        .responseJSON { (response) in
+            let toast = MyToastView()
+            
+            switch response.result{
+                
+            case .Success:
+                let code = String((response.response?.statusCode)!)
+                let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                
+                if a == "2"{
+                    print("上传用户头像成功！")
+                }else{
+                    let str = getErrorCodeToString(a)
+                    toast.showToast("\(str)")
+                }
+                
+            case .Failure:
+                if response.response == nil{
+                    toast.showToast("无法连接服务器！")
+                }else{
+                    toast.showToast("上传数据失败！")
+                }
+            }
         }
     }
 }

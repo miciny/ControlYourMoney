@@ -39,9 +39,43 @@ class DownLoadData: NSObject {
                     if response.response == nil{
                         toast.showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("上传数据失败！")
+                        toast.showToast("获取数据失败！")
                     }
                 }
         }
+    }
+    
+    //获取用户头像
+    class func getUserIconFromDB(path: String, manager: Manager){
+        manager.request(.GET, NetWork.userIconUrl , parameters: NetWork.userGetParas)
+            .responseData { (response) in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if a == "2"{
+//                        let nsdata : NSData = (response.result.value)!
+                        
+//                        User.updateuserData(0, changeValue: nsdata, changeFieldName: userNameOfPic)
+                        print("下载用户头像成功！")
+                    }else{
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
+                    }
+                    
+                case .Failure:
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("获取数据失败！")
+                    }
+                    print(response.description)
+                }
+        }
+        
     }
 }

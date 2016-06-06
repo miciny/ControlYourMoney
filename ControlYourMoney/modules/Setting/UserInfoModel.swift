@@ -20,8 +20,9 @@ class UserInfoModel: NSObject {
     var motto: String?
     var pic: NSData?
     var http: String?
+    var picPath: String?
     
-    init(account: String!, nickname: String!, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?){
+    init(account: String!, nickname: String!, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?){
         self.account = account
         self.name = name
         self.nickname = nickname
@@ -32,6 +33,7 @@ class UserInfoModel: NSObject {
         self.time = time
         self.motto = motto
         self.pic = pic
+        self.picPath = picPath
         self.http = http
     }
 }

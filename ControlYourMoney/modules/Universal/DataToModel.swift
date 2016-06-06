@@ -16,7 +16,7 @@ class DataToModel: NSObject {
         var dataModel: UserInfoModel!
         
         if data.count == 0 {
-            dataModel = UserInfoModel(account: "15201114041", nickname: "Xue", name: "毛彩元", address: nil, location: nil, pw: "zhangxue", sex: nil, time: getTime(), motto: nil, pic: nil, http: nil)
+            dataModel = UserInfoModel(account: "15201114041", nickname: "Xue", name: "毛彩元", address: nil, location: nil, pw: "zhangxue", sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
         }else{
             let accout = data.lastObject?.valueForKey(userNameOfAccount) as! String
             let nickname = data.lastObject?.valueForKey(userNameOfNickname) as! String
@@ -29,8 +29,9 @@ class DataToModel: NSObject {
             let motto = data.lastObject?.valueForKey(userNameOfMotto) as? String
             let pic = data.lastObject?.valueForKey(userNameOfPic) as? NSData
             let http = data.lastObject?.valueForKey(userNameOfHttp) as? String
+            let picPath = data.lastObject?.valueForKey(userNameOfPicPath) as? String
             
-            dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: time, motto: motto, pic: pic, http: http)
+            dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: time, motto: motto, pic: pic, http: http, picPath: picPath)
         }
         return dataModel
     }

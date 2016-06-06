@@ -25,5 +25,7 @@ extension User {
     @NSManaged var motto: String?
     @NSManaged var pic: NSData?
     @NSManaged var http: String?
+    @NSManaged var picPath: String?
+    @NSManaged var changed: NSNumber? //0没改过 1改过
 
 }
