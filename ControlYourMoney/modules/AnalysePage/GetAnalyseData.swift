@@ -241,8 +241,9 @@ class GetAnalyseData: NSObject {
         for i in 0 ..< salaryArray.count {
             let dateOne = salaryArray.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate
             let dateOneStr = dateToStringBySelf(dateOne, str: "yyyy-MM")
+            let salaryName = salaryArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
             
-            if dateStr == dateOneStr{
+            if dateStr == dateOneStr && salaryName == "工资"{
                 let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
                 salary += number
             }

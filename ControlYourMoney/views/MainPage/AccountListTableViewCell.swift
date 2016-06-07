@@ -28,7 +28,7 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: accountListTitleFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: 10, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.whiteColor()
+            searchRecodeLabel.backgroundColor = UIColor.clearColor()
             searchRecodeLabel.textColor = UIColor.lightGrayColor()
             searchRecodeLabel.font = accountListTitleFont
             searchRecodeLabel.textAlignment = .Left
@@ -39,7 +39,7 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: standardFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: 20, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.whiteColor()
+            searchRecodeLabel.backgroundColor = UIColor.clearColor()
             searchRecodeLabel.font = standardFont
             searchRecodeLabel.textAlignment = .Left
             searchRecodeLabel.text = accountList.name
@@ -49,7 +49,7 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: standardFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: Width/2-searchRecodeSize.width/2, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.whiteColor()
+            searchRecodeLabel.backgroundColor = UIColor.clearColor()
             searchRecodeLabel.font = standardFont
             searchRecodeLabel.textAlignment = .Center
             searchRecodeLabel.text = accountList.name

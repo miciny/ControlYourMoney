@@ -149,7 +149,7 @@ class SettingTableViewCell: UITableViewCell {
         var titleFrame = CGRect(x: 20, y: settingItem.cellHeigth/2-15, width: lableSize.width, height: 30)
         
         if let icon =  settingItem.icon{
-            let myIcon = UIImageView(frame: CGRect(x: 20, y: 7, width: 30, height: 30))
+            let myIcon = UIImageView(frame: CGRect(x: 20, y: (settingItem.cellHeigth-25)/2, width: 25, height: 25))
             myIcon.backgroundColor = UIColor.clearColor()
             myIcon.image = icon
             myIcon.layer.cornerRadius = 0

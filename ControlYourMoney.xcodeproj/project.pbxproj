@@ -74,6 +74,7 @@
 		E15B2BF61D05C615009590DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2BF51D05C615009590DB /* LoginViewController.swift */; };
 		E15B2C071D05CDC8009590DB /* SettingNetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2C061D05CDC8009590DB /* SettingNetViewController.swift */; };
 		E15B2C391D06CC23009590DB /* SaveDataToCacheDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2C381D06CC23009590DB /* SaveDataToCacheDir.swift */; };
+		E15B2C421D071C0A009590DB /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2C411D071C0A009590DB /* Cache.swift */; };
 		E160C4401CF3F2A9008B445A /* MCYLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */; };
 		E160C4451CF405CF008B445A /* MCYCreditPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */; };
 		E16A67511CE56E52005C35D9 /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67481CE56E52005C35D9 /* AccountListViewController.swift */; };
@@ -354,6 +355,7 @@
 		E15B2BF51D05C615009590DB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E15B2C061D05CDC8009590DB /* SettingNetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNetViewController.swift; sourceTree = "<group>"; };
 		E15B2C381D06CC23009590DB /* SaveDataToCacheDir.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveDataToCacheDir.swift; sourceTree = "<group>"; };
+		E15B2C411D071C0A009590DB /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		E160C43F1CF3F2A9008B445A /* MCYLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYLineChartView.swift; sourceTree = "<group>"; };
 		E160C4441CF405CF008B445A /* MCYCreditPieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCYCreditPieChartView.swift; sourceTree = "<group>"; };
 		E16A67481CE56E52005C35D9 /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				E19E01F81CE2C89B00A52C04 /* Funcs.swift */,
 				E18774851CE2D57000CBBBB3 /* Constant.swift */,
 				E18774971CE3289C00CBBBB3 /* Protocol.swift */,
+				E15B2C411D071C0A009590DB /* Cache.swift */,
 			);
 			name = universal;
 			path = ControlYourMoney/universal;
@@ -1116,6 +1119,7 @@
 				E15B2B681D01406A009590DB /* DataToArray.swift in Sources */,
 				E16A67751CE572EF005C35D9 /* AnalysePageDataModul.swift in Sources */,
 				E15B2C391D06CC23009590DB /* SaveDataToCacheDir.swift in Sources */,
+				E15B2C421D071C0A009590DB /* Cache.swift in Sources */,
 				E15B2B7A1D015714009590DB /* GetDataArray.swift in Sources */,
 				E16A677C1CE5730A005C35D9 /* AccountListModul.swift in Sources */,
 				E16A67811CE5730A005C35D9 /* SalaryDetailTableDataModul.swift in Sources */,

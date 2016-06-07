@@ -67,10 +67,10 @@ class SaveDataToCacheDir: NSObject {
         return imagePath
     }
     
-    // 从chat读取image
-    class func loadIconFromCacheDir(imageName: String) -> NSData {
+    // 从cache读取image
+    class func loadIconFromCacheDir(imageName: String) -> NSData?{
         let imagePath = getDirInCache(tempPicDir).stringByAppendingPathComponent(imageName+".png")
-        var imageData = NSData()
+        var imageData: NSData?
         if NSFileManager.defaultManager().fileExistsAtPath(imagePath) {
             imageData = NSData(contentsOfFile: imagePath)!
         }

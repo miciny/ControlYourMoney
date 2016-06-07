@@ -36,7 +36,8 @@ class NetWork: NSObject {
     //user的get请求的参数
     class var userGetParas: [String: String]{
         get{
-            return ["account": "15201114041", "token": "111", "time": "111"]
+            let data = DataToModel.getUserDataToModel()
+            return ["account": "\(data.account)", "token": "111", "time": "111"]
         }
     }
     

@@ -13,6 +13,8 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     var account = UITextField()
     var pw = UITextField()
     var manager: Manager!
+    
+    var userIcon = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +46,10 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         self.view.addSubview(settingBtn)
         
         
-        let userIcon = UIImageView(frame: CGRect(x: Width/2-50, y: 100, width: 100, height: 100))
-        userIcon.image = UIImage(named: "DefaultIcon")
+        userIcon.frame = CGRect(x: Width/2-50, y: 100, width: 100, height: 100)
+        userIcon.image = ChangeValue.dataToImage(nil)
+        userIcon.layer.masksToBounds = true
+        userIcon.layer.cornerRadius = 5
         self.view.addSubview(userIcon)
         
         let nameLabelSize = sizeWithText("账号", font: standardFont, maxSize: CGSize(width: Width, height: Height))
@@ -58,6 +62,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         account.placeholder = "请输入账号"
         account.font = standardFont
         account.delegate = self
+        account.tag = 1
         account.clearButtonMode = .WhileEditing
         self.view.addSubview(account)
         
@@ -74,6 +79,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: account.frame.width, height: 44)
         pw.placeholder = "请输入登录密码"
         pw.font = standardFont
+        pw.tag = 2
         pw.delegate = self
         pw.clearButtonMode = .WhileEditing
         pw.secureTextEntry = true
@@ -109,6 +115,33 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //键盘上的完成按钮 相应事件 收起键盘
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        //收起键盘
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //输入框字符改变了
+    //    要获取最新内容，则需要String的 stringByReplacingCharactersInRange 方法，但这个方法在Swift的String中又不支持。
+    //    要解决这个问题，就要先替 NSRange 做个扩展。
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
+                   replacementString string: String) -> Bool {
+        if textField.tag == 1 {
+            let newText = textField.text!.stringByReplacingCharactersInRange(
+                range.toRange(textField.text!), withString: string)
+            //加载图片
+            if let imageData = SaveDataToCacheDir.loadIconFromCacheDir(newText){
+                userIcon.image = ChangeValue.dataToImage(imageData)
+            }else{
+                userIcon.image = ChangeValue.dataToImage(nil)
+            }
+        }
+        
+        return true
+    }
+
+    
     //login
     func login(){
         account.resignFirstResponder()
@@ -133,6 +166,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         let waitView = MyWaitToast()
         waitView.title = "登录中"
         waitView.showWait(self.view)
+        
         manager.request(.GET, NetWork.loginUrl, parameters: para)
             .responseJSON { response in
                 

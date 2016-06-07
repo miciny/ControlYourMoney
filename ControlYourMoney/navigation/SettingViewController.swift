@@ -25,7 +25,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func setUpTitle(){
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
-        self.title = "设置"
+        self.title = "我"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -43,8 +43,8 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
             getUserInfoFromDB(userInfoModel.account, manager: self.manager!)
         }
     
-        if userInfoModel.pic == nil && userInfoModel.picPath != nil && userInfoModel.picPath != ""{
-            getUserIconFromDB(userInfoModel.picPath!, manager: self.manager)
+        if userInfoModel.pic == nil{
+            getUserIconFromDB(self.manager)
         }
     }
     
@@ -59,12 +59,13 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         let tdIcon = UIImage(named: "TDIcon")
+        let settingIcon = UIImage(named: "Setting")
         
         let settingOne = SettingDataModul(icon: userIcon, name: userInfoModel.name, nickname: userInfoModel.nickname, pic: tdIcon)
         let settingTwo1 = SettingDataModul(icon: nil, name: "修改密码", lable: nil, pic: nil)
         let settingTwo2 = SettingDataModul(icon: nil, name: "同步数据", lable: nil, pic: nil)
         let settingThree = SettingDataModul(icon: nil, name: "数据说明", lable: nil, pic: nil)
-        let settingFour = SettingDataModul(icon: nil, name: "高级设置", lable: nil, pic: nil)
+        let settingFour = SettingDataModul(icon: settingIcon, name: "高级设置", lable: nil, pic: nil)
         
         settingData?.addObject([settingOne])
         settingData?.addObject([settingTwo1, settingTwo2])
@@ -297,7 +298,8 @@ extension SettingViewController{
     
     
     //获取用户头像
-    func getUserIconFromDB(path: String, manager: Manager){
+    func getUserIconFromDB(manager: Manager){
+        
         manager.request(.GET, NetWork.userIconUrl , parameters: NetWork.userGetParas)
             .responseData { (response) in
                 let toast = MyToastView()
@@ -309,8 +311,13 @@ extension SettingViewController{
                     let a = code.substringToIndex(code.startIndex.advancedBy(1))
                     
                     if a == "2"{
-//                        let nsdata : NSData = (response.result.value)!
-//                        User.updateuserData(0, changeValue: nsdata, changeFieldName: userNameOfPic)
+                        let nsdata : NSData = (response.result.value)!
+                        
+                        User.updateuserData(0, changeValue: nsdata, changeFieldName: userNameOfPic)
+                        
+                        //保存到本地,图片
+                        let data = DataToModel.getUserDataToModel()
+                        SaveDataToCacheDir.savaUserIconToCacheDir(nsdata, imageName: "\(data.account)")
                         
                         self.reloadUserIcon()
                         

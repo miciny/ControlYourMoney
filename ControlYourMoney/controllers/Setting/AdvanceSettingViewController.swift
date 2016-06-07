@@ -29,8 +29,10 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     func setData(){
         settingData = NSMutableArray()
         let settingOne = SettingDataModul(icon: nil, name: "清空本地数据", lable: nil, pic: nil)
+        let settingTwo = SettingDataModul(icon: nil, name: "清空本地缓存", lable: Cache.cacheSize, pic: nil)
         
         settingData?.addObject([settingOne])
+        settingData?.addObject([settingTwo])
     }
     
     //footerView
@@ -39,8 +41,8 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
         footerView.backgroundColor = UIColor.clearColor()
         
         let logout = UIButton()
-        logout.frame = CGRect(x: 20, y: 20, width: Width-40, height: 50)
-        logout.backgroundColor = UIColor(red: 0/255, green: 205/255, blue: 0/255, alpha: 1.0)
+        logout.frame = CGRect(x: 20, y: 20, width: Width-40, height: 44)
+        logout.backgroundColor = UIColor.redColor()
         logout.setTitle("退出登录", forState: .Normal)
         logout.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         logout.layer.cornerRadius = 5
@@ -121,6 +123,15 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
             default:
                 break
             }
+        case 1:
+            switch indexPath.row {
+            case 0: //清空本地缓存
+                let localAlert = UIAlertView(title: "清空本地缓存？", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+                localAlert.tag = 2
+                localAlert.show()
+            default:
+                break
+            }
             
         default:
             break
@@ -164,6 +175,22 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
                 DeleteCoreData.deleteUserData()
                 DeleteCoreData.deleteAllMoneyData()
                 loginPage()
+            }
+        case 2:
+            if buttonIndex == 1 {
+                let wait = MyWaitToast()
+                wait.title = "清除中"
+                wait.showWait(self.view)
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+                    Cache.clearCache()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        wait.hideView()
+                        self.setData()
+                        self.mainTabelView?.reloadData()
+                        MyToastView().showToast("清除成功")
+                    })
+                })
+
             }
         default:
             break
