@@ -16,6 +16,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: false)
         manager = NetWork.getDefaultAlamofireManager()
         setUpEles()
         
@@ -42,13 +43,18 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         settingBtn.addTarget(self, action: #selector(self.settingNet), forControlEvents: .TouchUpInside)
         self.view.addSubview(settingBtn)
         
+        
+        let userIcon = UIImageView(frame: CGRect(x: Width/2-50, y: 100, width: 100, height: 100))
+        userIcon.image = UIImage(named: "DefaultIcon")
+        self.view.addSubview(userIcon)
+        
         let nameLabelSize = sizeWithText("账号", font: standardFont, maxSize: CGSize(width: Width, height: Height))
-        let nameLabel = UILabel(frame: CGRect(x: 10, y: 100, width: nameLabelSize.width, height: 44))
+        let nameLabel = UILabel(frame: CGRect(x: 10, y: userIcon.frame.maxY+20, width: nameLabelSize.width, height: 44))
         nameLabel.font = standardFont
         nameLabel.text = "账号"
         self.view.addSubview(nameLabel)
         
-        account.frame = CGRect(x: nameLabel.frame.maxX + 30, y: nameLabel.frame.minY, width: Width-nameLabel.frame.maxX - 30, height: 44)
+        account.frame = CGRect(x: nameLabel.frame.maxX + 50, y: nameLabel.frame.minY, width: Width-nameLabel.frame.maxX - 50, height: 44)
         account.placeholder = "请输入账号"
         account.font = standardFont
         account.delegate = self
@@ -65,7 +71,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         pwLabel.text = "密码"
         self.view.addSubview(pwLabel)
         
-        pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: Width-pwLabel.frame.maxX - 30, height: 44)
+        pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: account.frame.width, height: 44)
         pw.placeholder = "请输入登录密码"
         pw.font = standardFont
         pw.delegate = self

@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
     private var mainTabelView: UITableView? //整个table
@@ -29,21 +30,21 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        setData()
-        downLoadUserIcon()
-        mainTabelView?.reloadData()
+        downLoadUserInfo()
+        reloadUserIcon()
+        reloadUserInfo()
     }
     
-    func downLoadUserIcon(){
+    //从服务器下载数据
+    func downLoadUserInfo(){
         let userInfoModel = DataToModel.getUserDataToModel()
         
         if userInfoModel.name == nil {
-            DownLoadData.getUserInfoFromDB(userInfoModel.account, manager: self.manager!)
+            getUserInfoFromDB(userInfoModel.account, manager: self.manager!)
         }
     
-        if userInfoModel.pic == nil &&  userInfoModel.picPath != nil{
-           
-            DownLoadData.getUserIconFromDB(userInfoModel.picPath!, manager: self.manager)
+        if userInfoModel.pic == nil && userInfoModel.picPath != nil && userInfoModel.picPath != ""{
+            getUserIconFromDB(userInfoModel.picPath!, manager: self.manager)
         }
     }
     
@@ -246,4 +247,121 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+//网络请求
+extension SettingViewController{
+    //从db获取user数据
+    func getUserInfoFromDB(account: String, manager: Manager){
+        let userInfoPara = [
+            "account": "\(account)",
+            "token": "111",
+            "time": "111"
+        ]
+        
+        manager.request(.GET, NetWork.userUrl , parameters: userInfoPara)
+            .responseJSON { response in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if code == "200"{
+                        let data = JSON(response.result.value!)
+                        let json = data["data"][0]
+                        
+                        let dataModel = JsonToModel.getUserJsonDataToModel(json)
+                        InsertData.initUserData(dataModel)
+                        
+                        self.reloadUserInfo()
+                        
+                        print("下载用户信息成功！")
+                        
+                    }else{
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
+                    }
+                    
+                case .Failure:
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("获取数据失败！")
+                    }
+                }
+        }
+    }
+    
+    
+    //获取用户头像
+    func getUserIconFromDB(path: String, manager: Manager){
+        manager.request(.GET, NetWork.userIconUrl , parameters: NetWork.userGetParas)
+            .responseData { (response) in
+                let toast = MyToastView()
+                
+                switch response.result{
+                    
+                case .Success:
+                    let code = String((response.response?.statusCode)!)
+                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
+                    
+                    if a == "2"{
+//                        let nsdata : NSData = (response.result.value)!
+//                        User.updateuserData(0, changeValue: nsdata, changeFieldName: userNameOfPic)
+                        
+                        self.reloadUserIcon()
+                        
+                        print("下载用户头像成功！")
+                    }else{
+                        let str = getErrorCodeToString(a)
+                        toast.showToast("\(str)")
+                    }
+                    
+                case .Failure:
+                    if response.response == nil{
+                        toast.showToast("无法连接服务器！")
+                    }else{
+                        toast.showToast("获取数据失败！")
+                    }
+                    print(response.description)
+                }
+        }
+        
+    }
+    
+    //重新加载头像
+    func reloadUserIcon(){
+        let userInfoModel = DataToModel.getUserDataToModel()
+        var userIcon = ChangeValue.dataToImage(nil)
+        if let iconData = userInfoModel.pic{
+            userIcon = ChangeValue.dataToImage(iconData)
+        }
+        
+        let section : NSArray =  self.settingData![0] as! NSArray
+        let data = section[0] as! SettingDataModul
+        data.icon = userIcon
+        reloadTable(0, row: 0)
+    }
+    
+    //刷新个人信息
+    func reloadUserInfo(){
+        let userInfoModel = DataToModel.getUserDataToModel()
+        
+        let section : NSArray =  self.settingData![0] as! NSArray
+        let data = section[0] as! SettingDataModul
+        
+        data.name = userInfoModel.name
+        data.nickname = userInfoModel.nickname
+        reloadTable(0, row: 0)
+    }
+    
+    
+    func reloadTable(section: Int, row: Int){
+        let indexPath = NSIndexPath(forRow: row, inSection: section)
+        mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+    }
+
 }

@@ -102,6 +102,10 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
             if result{
                 MyToastView().showToast("保存成功！")
                 User.updateuserData(0, changeValue: true, changeFieldName: userNameOfChanged)
+                
+                //保存到本地,图片
+                let data = DataToModel.getUserDataToModel()
+                SaveDataToCacheDir.savaUserIconToCacheDir(imageData, imageName: "\(data.account)")
             }else{
                 MyToastView().showToast("保存失败！")   
             }

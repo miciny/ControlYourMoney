@@ -22,15 +22,16 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     override func viewWillAppear(animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
         if isCounting {
             return
         }
+        self.setUpHeaderView()
         
         let MainPageQueue: dispatch_queue_t = dispatch_queue_create("MainPageQueue", DISPATCH_QUEUE_SERIAL)
         dispatch_async(MainPageQueue) {
             self.isCounting = true
             self.setUpData()
-            self.setUpHeaderView()
             
             dispatch_async(mainQueue, {
                 self.isCounting = false

@@ -56,12 +56,15 @@ class MainTableHeaderView: UIView {
         self.init()
         self.delegate = target
         self.headerViewHeight = viewHeight
-        self.setUpData()
         self.setUpView()
+        self.setUpData()
     }
     
     //显示数据
     func setUpLabelData(){
+        self.shouldPayText.text = ""
+        self.lastText.text = ""
+        self.totalText.text = ""
         
         self.totalText.text = "财产："
         self.lastText.text = "可用："

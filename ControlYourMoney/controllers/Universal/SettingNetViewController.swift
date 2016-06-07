@@ -34,7 +34,7 @@ class SettingNetViewController: UIViewController{
         nameLabel.text = "IP"
         self.view.addSubview(nameLabel)
         
-        account.frame = CGRect(x: nameLabel.frame.maxX + 30, y: nameLabel.frame.minY, width: Width-nameLabel.frame.maxX - 30, height: 44)
+        account.frame = CGRect(x: nameLabel.frame.maxX + 50, y: nameLabel.frame.minY, width: Width-nameLabel.frame.maxX - 60, height: 44)
         account.placeholder = "请输入IP地址"
         account.font = standardFont
         account.clearButtonMode = .WhileEditing
@@ -50,7 +50,7 @@ class SettingNetViewController: UIViewController{
         pwLabel.text = "Port"
         self.view.addSubview(pwLabel)
         
-        pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: Width-pwLabel.frame.maxX - 30, height: 44)
+        pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: account.frame.width, height: 44)
         pw.placeholder = "请输入Port"
         pw.font = standardFont
         pw.clearButtonMode = .WhileEditing

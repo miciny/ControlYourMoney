@@ -71,8 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PostData.postUserInfoToDB(userStr, manager: self.manager!)
             //头像
             let userData = DataToModel.getUserDataToModel()
-            if let imageData = userData.pic {
-                PostData.postUserIconToDB(imageData, manager: self.manager!)
+            let path = SaveDataToCacheDir.getUserIconPath("\(userData.account)")
+            if let imagePath = path {
+                PostData.postUserIconToDB(imagePath, manager: self.manager!)
             }
         }
     }

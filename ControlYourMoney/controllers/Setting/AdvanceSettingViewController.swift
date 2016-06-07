@@ -160,6 +160,7 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
             }
         case 1:
             if buttonIndex == 1 {
+                //先删除数据，再进入登录页
                 DeleteCoreData.deleteUserData()
                 DeleteCoreData.deleteAllMoneyData()
                 loginPage()
@@ -169,17 +170,29 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    //删除所有money数据
     func deleteAllData(){
         DeleteCoreData.deleteAllMoneyData()
         let toast = MyToastView()
         toast.showToast("删除成功！")
     }
     
+    //进入登录页
     func loginPage(){
+        //导航
+        let viewArray = NSMutableArray()
+        viewArray.addObjectsFromArray((self.navigationController?.viewControllers)!)
+        //删一次
+        viewArray.removeObjectAtIndex(1)
+        
+        let rootView = viewArray.objectAtIndex(0) as! UIViewController
+        rootView.tabBarController?.selectedIndex = 0
+        //重新设置导航器，执行动画
+        self.navigationController?.setViewControllers(viewArray as NSArray as! [UIViewController], animated: true)
+        //进入登录页
         let vcc = LoginViewController()
         let vccNavigationController = UINavigationController(rootViewController: vcc) //带导航栏
-        
-        self.presentViewController(vccNavigationController, animated: true, completion: nil)
+        rootView.presentViewController(vccNavigationController, animated: true, completion: nil)
         
     }
 

@@ -23,7 +23,7 @@ func getErrorCodeToString(code: String) -> String{
     case "4":
         return "服务器连接错误"
     default:
-        return "错误"
+        return "信息错误"
     }
 }
 
