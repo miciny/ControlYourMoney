@@ -64,12 +64,10 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     //获取数据
-    let wiatView = MyWaitToast()
+    let wiatView = MyWaitView()
     func setUpData(){
         self.cellData = NSMutableDictionary()
-        wiatView.title = "计算中..."
-        wiatView.showWait(self.view)
-//        wiatView.showNetIndicator()
+        wiatView.showWait("计算中...")
         calculateData()
     }
     
@@ -145,8 +143,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         self.collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
         
         self.refreshView?.endRefresh()
-        let toast = MyToastView()
-        toast.showToast("刷新完成！")
+        MyToastView().showToast("刷新完成！")
     }
     
     

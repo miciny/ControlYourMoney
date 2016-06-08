@@ -178,9 +178,8 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
             }
         case 2:
             if buttonIndex == 1 {
-                let wait = MyWaitToast()
-                wait.title = "清除中"
-                wait.showWait(self.view)
+                let wait = MyWaitView()
+                wait.showWait("清除中")
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
                     Cache.clearCache()
                     dispatch_async(dispatch_get_main_queue(), {
@@ -190,7 +189,6 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
                         MyToastView().showToast("清除成功")
                     })
                 })
-
             }
         default:
             break

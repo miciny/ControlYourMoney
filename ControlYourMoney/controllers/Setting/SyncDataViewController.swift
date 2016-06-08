@@ -24,8 +24,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     let downLoad = UIButton() //下载按钮
     let textView = UITextView() //显示上传数据的textview
     let copyBtn = UIButton() //复制按钮
-    let upWiatView = MyWaitToast() //toast
-    let downWiatView = MyWaitToast()
+    let upWiatView = MyWaitView() //toast
+    let downWiatView = MyWaitView()
     
     var switchBtn: UISwitch? //网络下载数据开关
     var switchIsOn: Bool!
@@ -290,14 +290,13 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //复制文本
     func copyText(){
-        let toast = MyToastView()
         guard let str = textView.text where str != "" else{
-            toast.showToast("无数据")
+            MyToastView().showToast("无数据")
             return
         }
         
         UIPasteboard.generalPasteboard().string = str
-        toast.showToast("复制成功")
+        MyToastView().showToast("复制成功")
     }
     
     //=====================================================================================================
@@ -314,9 +313,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //下载数据，就是导入数据到数据库
     func downLoadData(){
         if (self.switchBtn?.on == true) {
-            downWiatView.title = "下载中..."
-            downWiatView.showWait(self.view)
-            downWiatView.showNetIndicator()
+            downWiatView.showWait("下载中...")
+            NetWork.showNetIndicator()
             
             self.downloadDataFromDB()
         }else{
@@ -333,7 +331,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func downloadDataFromDB(){
         netManager!.request(.GET, NetWork.moneyUrl, parameters: NetWork.moneyGetParas)
             .responseJSON { response in
-                let toast = MyToastView()
+                NetWork.hidenNetIndicator()
                 switch response.result{
                 case .Success:
                     
@@ -346,16 +344,16 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                     }else{
                         self.downWiatView.hideView()
                         let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
+                        MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
                     self.downWiatView.hideView()
                     
                     if response.response == nil{
-                        toast.showToast("无法连接服务器！")
+                        MyToastView().showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("下载数据失败！")
+                        MyToastView().showToast("下载数据失败！")
                     }
                     
                     print(response.response)
@@ -374,8 +372,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
             return true
         }else{
             self.downWiatView.hideView()
-            let toast = MyToastView()
-            toast.showToast("导入数据失败！")
+            MyToastView().showToast("导入数据失败！")
             return false
         }
     }
@@ -407,9 +404,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func controlUpData(){
         
         if self.switchBtn?.on == true{
-            upWiatView.title = "上传中..."
-            upWiatView.showWait(self.view)
-            upWiatView.showNetIndicator()
+            upWiatView.showWait("上传中...")
+            NetWork.showNetIndicator()
             
             let jsonStr = self.upLoadData()
             self.upLoadDataToDB(jsonStr) //上传数据到服务器
@@ -435,35 +431,36 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //上传数据到服务器
     func upLoadDataToDB(str: String){
+        let data = DataToModel.getUserDataToModel()
         
         let paras = [
-            "data": strToJson(str)
+            "data": strToJson(str),
+            "account": data.account
         ]
         
         netManager!.request(.POST, NetWork.moneyUrl, parameters: paras, encoding: .JSON)
             .responseJSON { response in
-                let toast = MyToastView()
+                
+                NetWork.hidenNetIndicator()
+                self.upWiatView.hideView()
                 
                 switch response.result{
-                    
                 case .Success:
                     let code = String((response.response?.statusCode)!)
                     let a = code.substringToIndex(code.startIndex.advancedBy(1))
-                    self.upWiatView.hideView()
                     
                     if a == "2"{
-                        toast.showToast("上传数据成功！")
+                        MyToastView().showToast("上传数据成功！")
                     }else{
                         let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
+                        MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
-                    self.upWiatView.hideView()
                     if response.response == nil{
-                        toast.showToast("无法连接服务器！")
+                        MyToastView().showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("上传数据失败！")
+                        MyToastView().showToast("上传数据失败！")
                     }
                     
                     print(response.response)

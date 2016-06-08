@@ -140,7 +140,6 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         
         return true
     }
-
     
     //login
     func login(){
@@ -162,38 +161,38 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
             "pw": "\(pwStr)"
         ]
         
-        let toast = MyToastView()
-        let waitView = MyWaitToast()
-        waitView.title = "登录中"
-        waitView.showWait(self.view)
+        let waitView = MyWaitView()
+        waitView.showWait("登录中")
+        NetWork.showNetIndicator()
         
         manager.request(.GET, NetWork.loginUrl, parameters: para)
             .responseJSON { response in
                 
+                waitView.hideView()
+                NetWork.hidenNetIndicator()
+                
                 switch response.result{
                 case .Success:
-                    waitView.hideView()
                     let code = String((response.response?.statusCode)!)
                     if code == "200"{
-                        toast.showToast("登录成功")
+                        MyToastView().showToast("登录成功")
                         User.insertUserData(accountStr, name: nil, nickname: nil, address: nil, location: nil, pw: pwStr, sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
                         self.dismissViewControllerAnimated(false, completion: nil)
                         
                     }else if code == "201"{
-                        toast.showToast("用户名或密码错误")
+                        MyToastView().showToast("用户名或密码错误")
                     }else {
                         let a = code.substringToIndex(code.startIndex.advancedBy(1))
                         let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
+                        MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
-                    waitView.hideView()
                     
                     if response.response == nil{
-                        toast.showToast("无法连接服务器！")
+                        MyToastView().showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("同步数据失败！")
+                        MyToastView().showToast("同步数据失败！")
                     }
                     
                     print(response.response)

@@ -16,7 +16,7 @@ class LineChartsViewController: UIViewController {
     var dayCostLine: MCYLineChartView! //日支出表
     
     private var refreshView: RefreshHeaderView? //自己写的
-    let wiatView = MyWaitToast()
+    let wiatView = MyWaitView()
     
     //五项数据源
     var months = NSArray()
@@ -39,8 +39,7 @@ class LineChartsViewController: UIViewController {
     
     func calculateData(){
         if days.count == 0 {
-            wiatView.title = "计算中..."
-            wiatView.showWait(self.view)
+            wiatView.showWait("计算中...")
         }
         
         let LinePageQueue: dispatch_queue_t = dispatch_queue_create("LinePageQueue", DISPATCH_QUEUE_SERIAL)

@@ -16,7 +16,7 @@ class PieChartsViewController: UIViewController {
     var isIn = false //是否已经加载了视图
     
     private var refreshView: RefreshHeaderView? //自己写的
-    let wiatView = MyWaitToast()
+    let wiatView = MyWaitView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +32,7 @@ class PieChartsViewController: UIViewController {
     func setData(){
         
         if !isIn {
-            wiatView.title = "计算中..."
-            wiatView.showWait(self.view)
+            wiatView.showWait("计算中...")
             isIn = true
         }
         

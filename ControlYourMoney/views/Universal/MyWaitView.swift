@@ -10,37 +10,37 @@ import UIKit
 import Foundation
 
 //等待效果
-class MyWaitToast: UIView{
+class MyWaitView: UIView{
     
-    var loadingLab:UILabel!
-    var mask:UIControl!
-    var timer:NSTimer!
+    //私有变量，不可改
+    private var mask: UIControl! //把视图加到主窗口
+    private var timer: NSTimer! //定时器，可以设置几秒后消失
     
-    var title = "Waiting..." //显示的文案
-    var viewAlpha : CGFloat = 1
-    var timeOut : NSTimeInterval = 30
-    var centerPosition = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
+    //可以修改，改变属性
+    var viewAlpha : CGFloat = 1 //透明度
+    var timeOut : NSTimeInterval = 30 //超时时长
+    var centerPosition = CGPoint(x: Width/2, y: Height/2) //中点位置
     
-    func showWait(view: UIView){
+    func showWait(title: String){
         
-        self.alpha = viewAlpha //透明
+        //控制器
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 10 //边角
-        self.layer.borderColor = UIColor.grayColor().CGColor //边框颜色
+        self.layer.borderColor = UIColor.clearColor().CGColor //边框颜色
         self.backgroundColor = UIColor.clearColor()  //背景色
-        
-        let position : CGPoint = self.center
+        let position: CGPoint = self.center
         self.frame = CGRectMake(position.x-50, position.y-50, 100, 100)
         
+        //view
         let tmpView = UIView(frame: CGRectMake(0, 0, 100, 100))
         tmpView.backgroundColor = UIColor.blackColor()
-        tmpView.alpha = 0.5
-        tmpView.layer.masksToBounds = true;
-        tmpView.layer.cornerRadius = 10;
+        tmpView.alpha = viewAlpha   //透明度
+        tmpView.layer.masksToBounds = true
+        tmpView.layer.cornerRadius = 10
         self.addSubview(tmpView)
         
         //转圈的动画
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        let activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.hidden = true
         activityIndicator.startAnimating()
@@ -48,7 +48,7 @@ class MyWaitToast: UIView{
         self.addSubview(activityIndicator)
         
         //显示的文案
-        loadingLab = UILabel(frame: CGRectMake(0, 70, 100, 20));
+        let loadingLab = UILabel(frame: CGRectMake(0, 70, 100, 20));
         loadingLab.backgroundColor = UIColor.clearColor();
         loadingLab.textAlignment = NSTextAlignment.Center
         loadingLab.textColor = UIColor.whiteColor()
@@ -57,9 +57,9 @@ class MyWaitToast: UIView{
         self.addSubview(loadingLab)
         
         // 添加超时定时器
-        timer = NSTimer(timeInterval: timeOut, target: self, selector: #selector(timerDeadLine), userInfo: nil, repeats: false)
+        timer = NSTimer(timeInterval: timeOut, target: self, selector: #selector(MyWaitView.timerDeadLine), userInfo: nil, repeats: false)
         
-         //显示toast的View
+        //显示toast的View
         if mask==nil {
             mask = UIControl(frame: UIScreen.mainScreen().bounds)
             mask.backgroundColor = UIColor.clearColor()
@@ -69,6 +69,7 @@ class MyWaitToast: UIView{
             mask.alpha = 1
         }
         mask.hidden = false
+        
         // 添加定时器
         if timer != nil {
             NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
@@ -76,52 +77,40 @@ class MyWaitToast: UIView{
     }
     
     //请求超时时显示
-    func timerDeadLine(){
+    @objc private func timerDeadLine(){
         self.hideView()
-        MyWaitToast.makeToast("请求超时")
+        MyWaitView.makeToast("请求超时")
     }
     
     //隐藏
     func hideView() {
         if NSThread.currentThread().isMainThread{
             self.removeView()
-        }
-        else {
+        }else {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.removeView()
             })
         }
-        hidenNetIndicator()
     }
     
     //移除view
-    func removeView(){
+    private func removeView(){
         if mask != nil {
             mask.hidden = true
             timer.invalidate()
         }
     }
     
-    //这个用法可以学习
+    //这个用法可以学习，显示toast
     class func makeToast(strTitle:String) {
-        NSThread.sleepForTimeInterval(0.4)
+        NSThread.sleepForTimeInterval(0.3)
         let toast = MyToastView()
         if NSThread.currentThread().isMainThread{
             toast.showToast(strTitle)
-        }
-        else {
+        }else {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 toast.showToast(strTitle)
             })
         }
-    }
-    
-    //系统栏的转圈动画
-    func showNetIndicator(){
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-    }
-    
-    func hidenNetIndicator(){
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 }

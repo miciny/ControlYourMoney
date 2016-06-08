@@ -216,12 +216,10 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     //验证密码
     func assertPW(str: String){
         
-        let waitView = MyWaitToast()
-        waitView.title = "验证中..."
-        waitView.showWait(self.view)
+        let waitView = MyWaitView()
+        waitView.showWait("验证中...")
         
         delay(0.5) {
-            let toast = MyToastView()
             
             let data = DataToModel.getUserDataToModel()
             let passwdString = data.pw
@@ -230,7 +228,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
                 //成功
                 self.goChangePWPage()
             }else{
-                toast.showToast("验证失败！")
+                MyToastView().showToast("验证失败！")
             }
             waitView.hideView()
         }

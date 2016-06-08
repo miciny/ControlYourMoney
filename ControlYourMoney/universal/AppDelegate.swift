@@ -66,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initUserInfo(){
         //存在用户 并且改过数据
         if InitData.userInfoChanged(){
+            NetWork.showNetIndicator()
             //基本信息
             let userStr = ArrayToJsonStr.getUserDataArrayToJsonStr()
             PostData.postUserInfoToDB(userStr, manager: self.manager!)
@@ -75,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let imagePath = path {
                 PostData.postUserIconToDB(imagePath, manager: self.manager!)
             }
+            NetWork.hidenNetIndicator()
         }
     }
     

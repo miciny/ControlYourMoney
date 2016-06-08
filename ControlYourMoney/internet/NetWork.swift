@@ -51,7 +51,8 @@ class NetWork: NSObject {
     //user的get请求的参数
     class var moneyGetParas: [String: String]{
         get{
-            return ["name": "111", "token": "111", "time": "111"]
+            let data = DataToModel.getUserDataToModel()
+            return ["account": "\(data.account)", "token": "111", "time": "111"]
         }
     }
     
@@ -69,6 +70,15 @@ class NetWork: NSObject {
         configuration.timeoutIntervalForRequest = 7 //超时时间
         let netManager = Alamofire.Manager(configuration: configuration)
         return netManager
+    }
+    
+    //系统栏的转圈动画
+    class func showNetIndicator(){
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    }
+    
+    class func hidenNetIndicator(){
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 
 }

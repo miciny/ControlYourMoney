@@ -18,10 +18,8 @@ class PostData: NSObject {
         ]
         manager.request(.POST, NetWork.userUrl, parameters: paras, encoding: .JSON)
             .responseJSON { response in
-                let toast = MyToastView()
                 
                 switch response.result{
-                    
                 case .Success:
                     let code = String((response.response?.statusCode)!)
                     let a = code.substringToIndex(code.startIndex.advancedBy(1))
@@ -31,14 +29,14 @@ class PostData: NSObject {
                         print("上传用户信息成功！")
                     }else{
                         let str = getErrorCodeToString(a)
-                        toast.showToast("\(str)")
+                        MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
                     if response.response == nil{
-                        toast.showToast("无法连接服务器！")
+                        MyToastView().showToast("无法连接服务器！")
                     }else{
-                        toast.showToast("上传数据失败！")
+                        MyToastView().showToast("上传数据失败！")
                     }
                 }
         }
@@ -60,8 +58,6 @@ class PostData: NSObject {
                 upload.responseJSON {
                     response in
                     //成功
-                    let toast = MyToastView()
-                    
                     switch response.result{
                     case .Success:
                         let code = String((response.response?.statusCode)!)
@@ -71,14 +67,14 @@ class PostData: NSObject {
                             print("上传用户头像成功！")
                         }else{
                             let str = getErrorCodeToString(a)
-                            toast.showToast("\(str)")
+                            MyToastView().showToast("\(str)")
                         }
                         
                     case .Failure:
                         if response.response == nil{
-                            toast.showToast("无法连接服务器！")
+                            MyToastView().showToast("无法连接服务器！")
                         }else{
-                            toast.showToast("上传数据失败！")
+                            MyToastView().showToast("上传数据失败！")
                         }
                     }
                 }
