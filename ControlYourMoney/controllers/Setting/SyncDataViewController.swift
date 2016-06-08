@@ -336,25 +336,21 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 case .Success:
                     
                     let code = String((response.response?.statusCode)!)
-                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
                     
-                    if a == "2"{
+                    if code == "200"{
                         self.json = JSON(response.result.value!)
                         self.insertData()
                     }else{
                         self.downWiatView.hideView()
-                        let str = getErrorCodeToString(a)
+                        let str = getErrorCodeToString(code)
                         MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
+                    let code = String((response.response?.statusCode)!)
                     self.downWiatView.hideView()
-                    
-                    if response.response == nil{
-                        MyToastView().showToast("无法连接服务器！")
-                    }else{
-                        MyToastView().showToast("下载数据失败！")
-                    }
+                    let str = getErrorCodeToString(code)
+                    MyToastView().showToast("\(str)")
                     
                     print(response.response)
                 }
@@ -447,21 +443,17 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 switch response.result{
                 case .Success:
                     let code = String((response.response?.statusCode)!)
-                    let a = code.substringToIndex(code.startIndex.advancedBy(1))
-                    
-                    if a == "2"{
+                    if code == "200"{
                         MyToastView().showToast("上传数据成功！")
                     }else{
-                        let str = getErrorCodeToString(a)
+                        let str = getErrorCodeToString(code)
                         MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
-                    if response.response == nil{
-                        MyToastView().showToast("无法连接服务器！")
-                    }else{
-                        MyToastView().showToast("上传数据失败！")
-                    }
+                    let code = String((response.response?.statusCode)!)
+                    let str = getErrorCodeToString(code)
+                    MyToastView().showToast("\(str)")
                     
                     print(response.response)
                 }

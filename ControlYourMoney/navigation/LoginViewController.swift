@@ -179,22 +179,17 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
                         User.insertUserData(accountStr, name: nil, nickname: nil, address: nil, location: nil, pw: pwStr, sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
                         self.dismissViewControllerAnimated(false, completion: nil)
                         
-                    }else if code == "201"{
+                    }else if code == "201" || code == "202"{
                         MyToastView().showToast("用户名或密码错误")
                     }else {
-                        let a = code.substringToIndex(code.startIndex.advancedBy(1))
-                        let str = getErrorCodeToString(a)
+                        let str = getErrorCodeToString(code)
                         MyToastView().showToast("\(str)")
                     }
                     
                 case .Failure:
-                    
-                    if response.response == nil{
-                        MyToastView().showToast("无法连接服务器！")
-                    }else{
-                        MyToastView().showToast("同步数据失败！")
-                    }
-                    
+                    let code = String((response.response?.statusCode)!)
+                    let str = getErrorCodeToString(code)
+                    MyToastView().showToast("\(str)")
                     print(response.response)
                 }
         }

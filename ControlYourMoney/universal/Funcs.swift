@@ -18,12 +18,31 @@ import UIKit
 //根据服务器给的状态码，返回一个字符串
 func getErrorCodeToString(code: String) -> String{
     switch code {
-    case "3":
-        return "参数或数据错误"
-    case "4":
-        return "服务器连接错误"
+    case "301":
+        return "参数为空"
+    case "303":
+        return "参数为空"
+    case "302":
+        return "参数错误"
+    case "304":
+        return "参数错误"
+        
+    case "400":
+        return "连接数据库出错"
+    case "401":
+        return "连接数据库出错"
+        
+    case "201":
+        return "信息出错"
+    case "202":
+        return "查询出错"
+        
+    case "305":
+        return "没有上传数据"
+    case "306":
+        return "上传失败"
     default:
-        return "信息错误"
+        return "错误"
     }
 }
 
