@@ -187,9 +187,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
                     }
                     
                 case .Failure:
-                    let code = String((response.response?.statusCode)!)
-                    let str = getErrorCodeToString(code)
-                    MyToastView().showToast("\(str)")
+                    NetWork.networkFailed(response.response)
                     print(response.response)
                 }
         }

@@ -72,6 +72,17 @@ class NetWork: NSObject {
         return netManager
     }
     
+    //失败的显示
+    class func networkFailed(response: NSHTTPURLResponse?){
+        if response == nil {
+            MyToastView().showToast("无法连接服务器")
+            return
+        }
+        let code = String((response?.statusCode)!)
+        let str = getErrorCodeToString(code)
+        MyToastView().showToast("\(str)")
+    }
+    
     //系统栏的转圈动画
     class func showNetIndicator(){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true

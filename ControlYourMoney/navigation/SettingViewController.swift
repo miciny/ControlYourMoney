@@ -284,9 +284,7 @@ extension SettingViewController{
                     }
                     
                 case .Failure:
-                    let code = String((response.response?.statusCode)!)
-                    let str = getErrorCodeToString(code)
-                    toast.showToast("\(str)")
+                    NetWork.networkFailed(response.response)
                 }
         }
     }
@@ -322,9 +320,7 @@ extension SettingViewController{
                     }
                     
                 case .Failure:
-                    let code = String((response.response?.statusCode)!)
-                    let str = getErrorCodeToString(code)
-                    toast.showToast("\(str)")
+                    NetWork.networkFailed(response.response)
                     print(response.description)
                 }
         }

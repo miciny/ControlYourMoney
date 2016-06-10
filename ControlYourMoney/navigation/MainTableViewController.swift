@@ -48,7 +48,6 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         let salaryModul =  GetDataArray.getSalaryShowArray()
         let cashModul =  GetDataArray.getCashShowArray()
         
-        
         if cashModul != nil {
             AllData.addObject([keyOfCash: cashModul!])
         }

@@ -347,10 +347,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                 case .Failure:
-                    let code = String((response.response?.statusCode)!)
                     self.downWiatView.hideView()
-                    let str = getErrorCodeToString(code)
-                    MyToastView().showToast("\(str)")
+                    NetWork.networkFailed(response.response)
                     
                     print(response.response)
                 }
@@ -451,9 +449,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                 case .Failure:
-                    let code = String((response.response?.statusCode)!)
-                    let str = getErrorCodeToString(code)
-                    MyToastView().showToast("\(str)")
+                    NetWork.networkFailed(response.response)
                     
                     print(response.response)
                 }
