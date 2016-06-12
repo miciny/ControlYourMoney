@@ -234,7 +234,7 @@ class GetAnalyseData: NSObject {
         if salaryArray.count == 0{
             return salary
         }
-        salary = Float(0)
+        
         let date = salaryArray.lastObject!.valueForKey(incomeOfTime) as! NSDate
         let dateStr = dateToStringBySelf(date, str: "yyyy-MM")
         
@@ -248,6 +248,11 @@ class GetAnalyseData: NSObject {
                 salary += number
             }
         }
+        
+        if salary > 8500 {
+            salary -= 8500
+        }
+        
         return salary
     }
     

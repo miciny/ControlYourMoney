@@ -67,7 +67,7 @@ class NetWork: NSObject {
     //获得manage
     class func getDefaultAlamofireManager() -> Manager{
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 7 //超时时间
+        configuration.timeoutIntervalForRequest = 5 //超时时间
         let netManager = Alamofire.Manager(configuration: configuration)
         return netManager
     }
