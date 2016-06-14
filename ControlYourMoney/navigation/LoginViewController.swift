@@ -143,6 +143,12 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     
     //login
     func login(){
+        
+        if checkNet() != networkType.wifi{
+            textAlertView("请连接Wi-Fi登录")
+            return
+        }
+        
         account.resignFirstResponder()
         pw.resignFirstResponder()
         

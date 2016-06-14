@@ -65,6 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //初始化用户信息,本地有就上传
     func initUserInfo(){
+        
+        if checkNet() != networkType.wifi{
+            return
+        }
+        
         //存在用户 并且改过数据
         if InitData.userInfoChanged(){
             NetWork.showNetIndicator()

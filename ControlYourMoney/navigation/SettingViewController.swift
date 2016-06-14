@@ -37,6 +37,11 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //从服务器下载数据
     func downLoadUserInfo(){
+        
+        if checkNet() != networkType.wifi{
+            return
+        }
+        
         let userInfoModel = DataToModel.getUserDataToModel()
         
         if userInfoModel.name == nil {

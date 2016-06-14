@@ -101,6 +101,7 @@
 		E16A67801CE5730A005C35D9 /* MainTableSalaryModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A677A1CE5730A005C35D9 /* MainTableSalaryModul.swift */; };
 		E16A67811CE5730A005C35D9 /* SalaryDetailTableDataModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A677B1CE5730A005C35D9 /* SalaryDetailTableDataModul.swift */; };
 		E16A67831CE58347005C35D9 /* GetAnalyseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A67821CE58347005C35D9 /* GetAnalyseData.swift */; };
+		E17D9C1A1D1011D20056244A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17D9C191D1011D20056244A /* Reachability.swift */; };
 		E18774701CE2C96100CBBBB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E187746F1CE2C96100CBBBB3 /* Assets.xcassets */; };
 		E187747D1CE2CC2600CBBBB3 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E187747C1CE2CC2600CBBBB3 /* Base.lproj */; };
 		E18774841CE2D4C200CBBBB3 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18774831CE2D4C200CBBBB3 /* TabbarViewController.swift */; };
@@ -383,6 +384,7 @@
 		E16A677B1CE5730A005C35D9 /* SalaryDetailTableDataModul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalaryDetailTableDataModul.swift; sourceTree = "<group>"; };
 		E16A67821CE58347005C35D9 /* GetAnalyseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAnalyseData.swift; sourceTree = "<group>"; };
 		E16ED93B1C23B8C700D9BFB7 /* MakeMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E17D9C191D1011D20056244A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		E187746F1CE2C96100CBBBB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E187747C1CE2CC2600CBBBB3 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
 		E18774801CE2CDDC00CBBBB3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ControlYourMoney/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -739,6 +741,7 @@
 		E19E01E81CE2C6E700A52C04 /* universal */ = {
 			isa = PBXGroup;
 			children = (
+				E17D9C191D1011D20056244A /* Reachability.swift */,
 				E19E01F71CE2C89B00A52C04 /* AppDelegate.swift */,
 				E15B2B301D003EB9009590DB /* InitData.swift */,
 				E19E01F81CE2C89B00A52C04 /* Funcs.swift */,
@@ -1086,6 +1089,7 @@
 				E126FC461CF823DB00DAFF84 /* Salary.swift in Sources */,
 				E19E02031CE2C8A700A52C04 /* ControlYourMoney.xcdatamodeld in Sources */,
 				E126FC4A1CF823DB00DAFF84 /* CreditAccount.swift in Sources */,
+				E17D9C1A1D1011D20056244A /* Reachability.swift in Sources */,
 				E15B2B781D0152BD009590DB /* DeleteCoreData.swift in Sources */,
 				E15B2B341D00417D009590DB /* InternetSetting+CoreDataProperties.swift in Sources */,
 				E16A67521CE56E52005C35D9 /* AddCashViewController.swift in Sources */,

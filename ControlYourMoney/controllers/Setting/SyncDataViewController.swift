@@ -313,6 +313,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //下载数据，就是导入数据到数据库
     func downLoadData(){
         if (self.switchBtn?.on == true) {
+            
+            if checkNet() != networkType.wifi{
+                textAlertView("请连接Wi-Fi进行同步")
+                return
+            }
+            
             downWiatView.showWait("下载中...")
             NetWork.showNetIndicator()
             
@@ -398,6 +404,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     func controlUpData(){
         
         if self.switchBtn?.on == true{
+            
+            if checkNet() != networkType.wifi{
+                textAlertView("请连接Wi-Fi进行同步")
+                return
+            }
+            
             upWiatView.showWait("上传中...")
             NetWork.showNetIndicator()
             

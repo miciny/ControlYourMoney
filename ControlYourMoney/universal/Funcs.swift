@@ -62,6 +62,26 @@ func dicToJson(dic: NSMutableDictionary) -> String {
     return str
 }
 
+//判断网络
+enum networkType{
+    case cell
+    case wifi
+    case nonet
+}
+
+func checkNet() -> networkType{
+    let reachability = Reachability.reachabilityForInternetConnection()
+    
+    //判断连接类型
+    if reachability!.isReachableViaWiFi() {
+        return networkType.wifi
+    }else if reachability!.isReachableViaWWAN() {
+        return networkType.cell
+    }else {
+        return networkType.nonet
+    }
+}
+
 //字符串转成json
 func strToJson(str: String) -> AnyObject{
     let data = str.dataUsingEncoding(NSUTF8StringEncoding)
