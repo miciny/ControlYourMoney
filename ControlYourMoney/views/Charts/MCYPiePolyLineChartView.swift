@@ -103,7 +103,7 @@ class MCYPiePolyLineChartView: UIView {
         pFormatter.numberStyle = .PercentStyle
         pFormatter.maximumFractionDigits = 1
         pFormatter.multiplier = 1
-        pFormatter.percentSymbol = " %"
+        pFormatter.percentSymbol = "%"
         
         data.setValueFormatter(pFormatter)
         data.setValueFont(UIFont(name: "HelveticaNeue-Light", size:11))

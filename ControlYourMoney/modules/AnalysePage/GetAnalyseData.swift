@@ -59,12 +59,12 @@ class GetAnalyseData: NSObject {
         if accountArray.count == 0{
             return nil
         }
-        
+        //首先获取所有支出的名字
         for i in 0 ..< accountArray.count{
             let name = accountArray.objectAtIndex(i).valueForKey(payNameNameOfName) as! String
             nameArray.append(name)
         }
-        
+        //根据名字，添加数据
         let cashArray = Cash.selectAllData()
         if cashArray.count > 0{
             for i in 0  ..< cashArray.count{
@@ -80,7 +80,7 @@ class GetAnalyseData: NSObject {
                 }
             }
         }
-        
+        //根据名字，添加数据
         let creditArray = Credit.selectAllData()
         if creditArray.count > 0 {
             for i in 0  ..< creditArray.count{

@@ -51,7 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //进入touch ID页
     func touchID(){
         let vcc = TouchIDViewController()
-        vc!.presentViewController(vcc, animated: false, completion: nil)
+        let vccNavigationController = UINavigationController(rootViewController: vcc) //带导航栏
+        vc!.presentViewController(vccNavigationController, animated: false, completion: nil)
     }
     
     func loginPage(){

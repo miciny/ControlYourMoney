@@ -105,7 +105,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         registBtn.layer.borderColor = UIColor.grayColor().CGColor
         registBtn.layer.cornerRadius = 5
         registBtn.backgroundColor = UIColor.whiteColor()
-        registBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        registBtn.setTitleColor(UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1), forState: .Normal)
         self.view.addSubview(registBtn)
     }
     
