@@ -31,6 +31,8 @@ func getErrorCodeToString(code: String) -> String{
         return "连接数据库出错"
     case "401":
         return "连接数据库出错"
+    case "404":
+        return "无法连接服务器"
         
     case "201":
         return "信息出错"
