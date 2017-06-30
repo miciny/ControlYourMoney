@@ -30,7 +30,7 @@ class MCYPiePolyLineChartView: UIView {
         setUpPieChart(frame, title: title)
     }
     
-    func setUpPieChart(frame: CGRect, title: String){
+    func setUpPieChart(_ frame: CGRect, title: String){
         pieChart = PieChartView()
         pieChart.frame = frame
         
@@ -62,7 +62,7 @@ class MCYPiePolyLineChartView: UIView {
         pieChart.animate(xAxisDuration: 1.4, easingOption: ChartEasingOption.EaseOutBack) //动画
     }
     
-    func setPieChartData(dic: NSMutableDictionary, holeText: String){
+    func setPieChartData(_ dic: NSMutableDictionary, holeText: String){
         
         let centerText = NSMutableAttributedString(string: holeText)
         pieChart.centerAttributedText = centerText
@@ -75,7 +75,7 @@ class MCYPiePolyLineChartView: UIView {
     
         for i in 0 ..< count{
             let key = titles[i] as! String
-            let value = dic.valueForKey(key) as! Double
+            let value = dic.value(forKey: key) as! Double
             
             yVals.append(ChartDataEntry(value: value, xIndex: i))
             xVals.append(key)
@@ -85,9 +85,9 @@ class MCYPiePolyLineChartView: UIView {
         dataSet.sliceSpace = 0
     
         var colors = [UIColor]()
-        colors.append(UIColor.greenColor())
-        colors.append(UIColor.orangeColor())
-        colors.append(UIColor.yellowColor())
+        colors.append(UIColor.green)
+        colors.append(UIColor.orange)
+        colors.append(UIColor.yellow)
         colors.append(UIColor(red: 255/255, green: 192/255, blue: 203/255, alpha: 1))
         colors.append(UIColor(red: 255/255, green: 218/255, blue: 185/255, alpha: 1))
         dataSet.colors = colors
@@ -99,8 +99,8 @@ class MCYPiePolyLineChartView: UIView {
     
         let data = PieChartData(xVals: xVals, dataSet: dataSet)
         
-        let pFormatter = NSNumberFormatter()
-        pFormatter.numberStyle = .PercentStyle
+        let pFormatter = NumberFormatter()
+        pFormatter.numberStyle = .percent
         pFormatter.maximumFractionDigits = 1
         pFormatter.multiplier = 1
         pFormatter.percentSymbol = "%"

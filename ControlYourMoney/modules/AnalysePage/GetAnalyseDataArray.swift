@@ -10,7 +10,7 @@ import UIKit
 
 class GetAnalyseDataArray: NSObject {
     //根据参数，日 月 年
-    class func getCashDetailShowArray(str: String) -> [NSMutableDictionary]{
+    class func getCashDetailShowArray(_ str: String) -> [NSMutableDictionary]{
         //获取数据
         var textData = Cash.selectAllData()
         let textDataDic = NSMutableDictionary()
@@ -21,34 +21,34 @@ class GetAnalyseDataArray: NSObject {
         }
         //排序
         let time = NSSortDescriptor(key: cashNameOfTime, ascending: false)
-        textData = textData.sortedArrayUsingDescriptors([time])
+        textData = textData.sortedArray(using: [time])
         
         //获取时间今天时间
         let textDataTitle = NSMutableArray()
         let timeNow = getTime()
-        textDataTitle.addObject(dateToStringBySelf(timeNow, str: str))
+        textDataTitle.add(dateToStringBySelf(timeNow, str: str))
         
         //计算今天总额总额
         let textDataTmp = NSMutableArray()
         var dayTotal: Float = 0
         
         for j in 0 ..< textData.count{
-            if(dateToStringBySelf(textData.objectAtIndex(j).valueForKey(cashNameOfTime) as! NSDate, str: str) == textDataTitle[0] as! String){
+            if(dateToStringBySelf(textData.object(at: j).value(forKey: cashNameOfTime) as! Date, str: str) == textDataTitle[0] as! String){
                 
-                let useWhere = (textData.objectAtIndex(j).valueForKey(cashNameOfUseWhere) as! String)
-                let useNumber = "-" + String(textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float)
-                let useTime = dateToString(textData.objectAtIndex(j).valueForKey(cashNameOfTime) as! NSDate)
-                let type = (textData.objectAtIndex(j).valueForKey(cashNameOfType) as! String)
+                let useWhere = ((textData.object(at: j) as AnyObject).value(forKey: cashNameOfUseWhere) as! String)
+                let useNumber = "-" + String((textData.object(at: j) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float)
+                let useTime = dateToString(textData.object(at: j).value(forKey: cashNameOfTime) as! Date)
+                let type = ((textData.object(at: j) as AnyObject).value(forKey: cashNameOfType) as! String)
                 let TempModul = CashDetailTableDataModul(useWhere: useWhere, useNumber: useNumber, useTime: useTime, type: type)
-                textDataTmp.addObject(TempModul)
+                textDataTmp.add(TempModul)
                 
-                if(textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float > 0){
-                    dayTotal += textData.objectAtIndex(j).valueForKey(cashNameOfUseNumber) as! Float
+                if((textData.object(at: j) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float > 0){
+                    dayTotal += (textData.object(at: j) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float
                 }
             }
         }
-        textDataTotalDic.setObject(dayTotal, forKey: textDataTitle[0] as! String)
-        textDataDic.setObject(textDataTmp.copy(), forKey: textDataTitle[0] as! String)
+        textDataTotalDic.setObject(dayTotal, forKey: textDataTitle[0] as! String as NSCopying)
+        textDataDic.setObject(textDataTmp.copy(), forKey: textDataTitle[0] as! String as NSCopying)
         return [textDataDic, textDataTotalDic]
     }
     
@@ -82,28 +82,28 @@ class GetAnalyseDataArray: NSObject {
         let nextTimeStr = dateToStringBySelf(CalculateCredit.calculateTime(timeNow, months: 1), str: "yyyy-MM")
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
             
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
-            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
             let nextStr = dateToStringBySelf(nextPayDay, str: "yyyy-MM")
             
             if timeStr == nextStr || (nextTimeStr == nextStr && leftPeriods < periods){
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
                 
                 let title = accout! + "—" + type
                 
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
                 
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -124,26 +124,26 @@ class GetAnalyseDataArray: NSObject {
         let timeStr = dateToStringBySelf(timeNow, str: "yyyy-MM")
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
             
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             let nextStr = dateToStringBySelf(nextPayDay, str: "yyyy-MM")
             
             if timeStr == nextStr{
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
                 let title = accout! + "—" + type
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
                 
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -166,28 +166,28 @@ class GetAnalyseDataArray: NSObject {
         let nextTimeStr = dateToStringBySelf(CalculateCredit.calculateTime(timeNow, months: 1), str: "yyyy-MM")
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
             
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             let nextStr = dateToStringBySelf(nextPayDay, str: "yyyy-MM")
             
             if (timeStr == nextStr && leftPeriods > 1) || (nextTimeStr == nextStr && leftPeriods > 0){
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
                 
                 let title = accout! + "—" + type
                 
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
                 
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -205,27 +205,27 @@ class GetAnalyseDataArray: NSObject {
         }
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
             
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             
             if leftPeriods > 0{
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
                 
                 let title = accout! + "—" + type
                 
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
         
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -245,29 +245,29 @@ class GetAnalyseDataArray: NSObject {
         let timeNow = getTime()
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
-            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate  // 记账日期
-            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int  // 还款日
+            let time = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfTime) as! Date  // 记账日期
+            let date = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int  // 还款日
             let firstPayDay = CalculateCredit.getFirstPayDate(time, day: date)
             
             if timeNow.currentYear == firstPayDay.currentYear{
-                let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-                let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+                let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
                 
                 let title = accout! + "—" + type
                 
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
                 
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -285,27 +285,27 @@ class GetAnalyseDataArray: NSObject {
         }
         
         let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        creditArray = creditArray.sortedArray(using: [time])
         
         var creditModul = [MainTableCreditModul]()
         let creditArrayCount = creditArray.count
         
         for i in 0 ..< creditArrayCount {
             
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             
             if nextPayDay.currentYear == getTime().currentYear && leftPeriods > 0{
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float // 每期还款金额
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float // 每期还款金额
                 let all = "-" + String(Float(leftPeriods) * number) // 总还款金额
-                let accout = creditArray.objectAtIndex(i).valueForKey(creditNameOfAccount)  as? String  // 账户
+                let accout = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfAccount)  as? String  // 账户
                 
                 let title = accout! + "—" + type
                 
                 let timeStr = dateToStringNoHH(nextPayDay) // 下期还款时间
-                let dateStr = String(creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int)  // 每期还款日期
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int  // 还款期数
+                let dateStr = String((creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int)  // 每期还款日期
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int  // 还款期数
                 
                 let tempCreditModul = MainTableCreditModul(periods: String(leftPeriods), number: String(number), title: title, all: all, time: timeStr, date: dateStr, account: accout, type: type, allPeriods: String(periods), index: i)
                 creditModul.append(tempCreditModul)
@@ -322,10 +322,10 @@ class GetAnalyseDataArray: NSObject {
         let cashModul =  GetDataArray.getCashShowArray()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         if cashModul != nil {
-            AllData.setObject(cashModul!, forKey: keyOfCash)
+            AllData.setObject(cashModul!, forKey: keyOfCash as NSCopying)
         }
         return AllData
     }
@@ -336,7 +336,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getThisMonthCreditListIncludeDone()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }
@@ -347,7 +347,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getThisMonthCreditList()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }
@@ -358,7 +358,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getNextMonthCreditList()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }
@@ -369,7 +369,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getAllCreditLeftpayList()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }
@@ -380,7 +380,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getThisYearCreditInludeDoneList()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }
@@ -391,7 +391,7 @@ class GetAnalyseDataArray: NSObject {
         let creditModul =  GetAnalyseDataArray.getThisYearLeftPayList()
         
         if creditModul != nil {
-            AllData.setObject(creditModul!, forKey: keyOfCredit)
+            AllData.setObject(creditModul!, forKey: keyOfCredit as NSCopying)
         }
         return AllData
     }

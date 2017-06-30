@@ -11,7 +11,7 @@ import Foundation
 class CalculateCredit: NSObject {
     
     //获取第一期还款时间
-    class func getFirstPayDate(time: NSDate, day: Int) -> NSDate{
+    class func getFirstPayDate(_ time: Date, day: Int) -> Date{
         var yyyy = time.currentYear
         var MM = time.currentMonth
         let dd = time.currentDay
@@ -28,20 +28,20 @@ class CalculateCredit: NSObject {
     }
     
     //获取最后一期还款时间
-    class func getLastPayDate(time: NSDate, day: Int, periods: Int) -> NSDate{
+    class func getLastPayDate(_ time: Date, day: Int, periods: Int) -> Date{
         let first = getFirstPayDate(time, day: day)
         let last = calculateTime(first, months: periods-1)
         return last
     }
     
     //获取最后一期还款时间
-    class func getLastPayDate(nextTime: NSDate, leftPeriods: Int) -> NSDate{
+    class func getLastPayDate(_ nextTime: Date, leftPeriods: Int) -> Date{
         let last = calculateTime(nextTime, months: leftPeriods)
         return last
     }
     
     //获取信用卡的月份差，与日也有关系
-    class func getMonthOffset(time1: NSDate, time2: NSDate) -> Int{
+    class func getMonthOffset(_ time1: Date, time2: Date) -> Int{
         
         let yyyy1 = time1.currentYear
         let MM1 = time1.currentMonth
@@ -76,7 +76,7 @@ class CalculateCredit: NSObject {
     }
     
     //是否本月已换,已还返回true
-    class func isThisMonthPaied(dd1: Int, dd2: Int) -> Bool{
+    class func isThisMonthPaied(_ dd1: Int, dd2: Int) -> Bool{
         if dd1 < dd2 {
             return false
         }else{
@@ -85,7 +85,7 @@ class CalculateCredit: NSObject {
     }
     
     //给定时间 和 月份差（大于0），返回一个时间
-    class func calculateTime(time: NSDate, months: Int) -> NSDate{
+    class func calculateTime(_ time: Date, months: Int) -> Date{
         var yyyy = time.currentYear
         var MM = time.currentMonth
         let dd = time.currentDay
@@ -103,7 +103,7 @@ class CalculateCredit: NSObject {
     }
     
     //改变总剩余
-    class func changeTotal(useNumber: Float){
+    class func changeTotal(_ useNumber: Float){
         let countTmp = Total.selectAllData().count
         if(countTmp == 0){
             Total.insertTotalData(0 - useNumber, time: getTime())

@@ -16,7 +16,7 @@ import UIKit
 //=====================================================================================================
 
 //根据服务器给的状态码，返回一个字符串
-func getErrorCodeToString(code: String) -> String{
+func getErrorCodeToString(_ code: String) -> String{
     switch code {
     case "301":
         return "参数为空"
@@ -49,13 +49,13 @@ func getErrorCodeToString(code: String) -> String{
 }
 
 // dic处理数据成json格式
-func dicToJson(dic: NSMutableDictionary) -> String {
+func dicToJson(_ dic: NSMutableDictionary) -> String {
     let dataArray = dic
     var str = String()
     
     do {
-        let dataFinal = try NSJSONSerialization.dataWithJSONObject(dataArray, options:NSJSONWritingOptions(rawValue:0))
-        let string = NSString(data: dataFinal, encoding: NSUTF8StringEncoding)
+        let dataFinal = try JSONSerialization.data(withJSONObject: dataArray, options:JSONSerialization.WritingOptions(rawValue:0))
+        let string = NSString(data: dataFinal, encoding: String.Encoding.utf8.rawValue)
         str = string as! String
         
     }catch{
@@ -85,20 +85,20 @@ func checkNet() -> networkType{
 }
 
 //字符串转成json
-func strToJson(str: String) -> AnyObject{
-    let data = str.dataUsingEncoding(NSUTF8StringEncoding)
+func strToJson(_ str: String) -> AnyObject{
+    let data = str.data(using: String.Encoding.utf8)
     
-    let deserialized = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+    let deserialized = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
     
     //        let data = NSData(contentsOfFile: file)!
     //        json = JSON(data: data)
     
-    return deserialized
+    return deserialized as AnyObject
 }
 
 //获取当前时间
-func getTime() -> NSDate{
-    let now = NSDate()
+func getTime() -> Date{
+    let now = Date()
     //        let zoon = NSTimeZone.systemTimeZone()
     //        let interval : NSInteger = zoon.secondsFromGMTForDate(now)
     //        return now.dateByAddingTimeInterval(Double(interval))
@@ -107,80 +107,80 @@ func getTime() -> NSDate{
 
 //=====================================================================================================
 //时间转为字符串
-func dateToString(date : NSDate) -> String{
-    let dateFormatter = NSDateFormatter()
+func dateToString(_ date : Date) -> String{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
     // Date 转 String
-    return dateFormatter.stringFromDate(date)
+    return dateFormatter.string(from: date)
 }
 
-func dateToStringNoHH(date : NSDate) -> String{
-    let dateFormatter = NSDateFormatter()
+func dateToStringNoHH(_ date : Date) -> String{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     // Date 转 String
-    return dateFormatter.stringFromDate(date)
+    return dateFormatter.string(from: date)
 }
 
 //自定义的dateToString
-func dateToStringBySelf(date : NSDate, str:String) -> String{
-    let dateFormatter = NSDateFormatter()
+func dateToStringBySelf(_ date : Date, str:String) -> String{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = str
     // Date 转 String
-    return dateFormatter.stringFromDate(date)
+    return dateFormatter.string(from: date)
 }
 
 
 //=====================================================================================================
 // String to Date
-func stringToDate(dateStr : String) -> NSDate{
-    let dateFormatter = NSDateFormatter()
+func stringToDate(_ dateStr : String) -> Date{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-    return dateFormatter.dateFromString(dateStr)!
+    return dateFormatter.date(from: dateStr)!
 }
 
-func stringToDateBySelf(dateStr : String, formate: String) -> NSDate{
-    let dateFormatter = NSDateFormatter()
+func stringToDateBySelf(_ dateStr : String, formate: String) -> Date{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = formate
     // String to Date
-    return dateFormatter.dateFromString(dateStr)!
+    return dateFormatter.date(from: dateStr)!
 }
 
-func stringToDateNoHH(dateStr : String) -> NSDate{
-    let dateFormatter = NSDateFormatter()
+func stringToDateNoHH(_ dateStr : String) -> Date{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     // String to Date
-    return dateFormatter.dateFromString(dateStr)!
+    return dateFormatter.date(from: dateStr)!
 }
 
 
 //=====================================================================================================
 //判断字符串为数字
-func stringIsInt(str: String) -> Bool{
-    let scan = NSScanner(string: str)
+func stringIsInt(_ str: String) -> Bool{
+    let scan = Scanner(string: str)
     var i = Int32()
-    return scan.scanInt(&i) && scan.atEnd
+    return scan.scanInt32(&i) && scan.isAtEnd
 }
 
 //判断字符串为浮点型
-func stringIsFloat(str: String) -> Bool{
-    let scan = NSScanner(string: str)
+func stringIsFloat(_ str: String) -> Bool{
+    let scan = Scanner(string: str)
     var f = Float()
-    return scan.scanFloat(&f) && scan.atEnd
+    return scan.scanFloat(&f) && scan.isAtEnd
 }
 
 //返回一个简单的alert
-func textAlertView(str :String) -> UIAlertView{
+func textAlertView(_ str :String) -> UIAlertView{
     let alert = UIAlertView()
     alert.message = str
-    alert.addButtonWithTitle("确定")
+    alert.addButton(withTitle: "确定")
     alert.show()
     return alert
 }
 
 //根据文字获得大小
-func sizeWithText(text: NSString, font: UIFont, maxSize: CGSize) -> CGSize{
+func sizeWithText(_ text: NSString, font: UIFont, maxSize: CGSize) -> CGSize{
     let attrs : NSDictionary = [NSFontAttributeName:font]
-    return text.boundingRectWithSize(maxSize, options: .UsesLineFragmentOrigin,
+    return text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin,
                                      attributes: attrs as? [String : AnyObject], context: nil).size
 }
 
@@ -191,27 +191,24 @@ func sizeWithText(text: NSString, font: UIFont, maxSize: CGSize) -> CGSize{
 // 还是取消为妙..
 // cancel(task)
 
-typealias Task = (cancel : Bool) -> Void
+typealias Task = (_ cancel : Bool) -> Void
 
-func delay(time:NSTimeInterval, task:()->()) ->  Task? {
+func delay(_ time:TimeInterval, task:@escaping ()->()) ->  Task? {
     
-    func dispatch_later(block:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(time * Double(NSEC_PER_SEC))),
-            dispatch_get_main_queue(),
-            block)
+    func dispatch_later(_ block:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+            execute: block)
     }
     
-    var closure: dispatch_block_t? = task
+    var closure: ()->()? = task
     var result: Task?
     
     let delayedClosure: Task = {
         cancel in
         if let internalClosure = closure {
             if (cancel == false) {
-                dispatch_async(dispatch_get_main_queue(), internalClosure);
+                DispatchQueue.main.async(execute: internalClosure);
             }
         }
         closure = nil
@@ -222,13 +219,13 @@ func delay(time:NSTimeInterval, task:()->()) ->  Task? {
     
     dispatch_later {
         if let delayedClosure = result {
-            delayedClosure(cancel: false)
+            delayedClosure(false)
         }
     }
     
     return result;
 }
 
-func cancel(task:Task?) {
-    task?(cancel: true)
+func cancel(_ task:Task?) {
+    task?(true)
 }

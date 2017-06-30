@@ -30,28 +30,28 @@ class MonthCostViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
      
         
-        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(MonthCostViewController.addCost))
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(MonthCostViewController.addCost))
         self.navigationItem.rightBarButtonItem = addItem
     }
     
     //设置固定显示的本月已用
     func setUpElesCon(){
         let nameUsed = "本月已用"
-        let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let namelb = UILabel.introduceLabel()
-        namelb.frame = CGRectMake(20, 90, namelbSize.width, 30)
+        namelb.frame = CGRect(x: 20, y: 90, width: namelbSize.width, height: 30)
         namelb.text = nameUsed
         namelb.tag = 1
         self.view.addSubview(namelb)
         
         let numberText = UITextField.inputTextField()
-        numberText.frame = CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30)
-        numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
-        numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        numberText.frame = CGRect(x: namelb.frame.maxX, y: namelb.frame.minY, width: self.view.frame.size.width-namelb.frame.maxX-20, height: 30)
+        numberText.keyboardType = UIKeyboardType.decimalPad //激活时
+        numberText.returnKeyType = UIReturnKeyType.done //表示完成输入
         numberText.text = String(GetAnalyseData.getThisMonthUse())
         self.view.addSubview(numberText)
         numberText.tag = 2
-        numberText.enabled = false
+        numberText.isEnabled = false
         
     }
     
@@ -69,10 +69,10 @@ class MonthCostViewController: UIViewController {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
+            let type = (costArray.object(at: i) as AnyObject).value(forKey: costNameOfPeriod) as! Int
             if type == 0 {
-                self.nameArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfName) as? String)!)
-                self.numberArray?.addObject((costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!)
+                self.nameArray?.add(((costArray.object(at: i) as AnyObject).value(forKey: costNameOfName) as? String)!)
+                self.numberArray?.add(((costArray.object(at: i) as AnyObject).value(forKey: costNameOfNumber) as? Float)!)
             }
         }
     }
@@ -86,18 +86,18 @@ class MonthCostViewController: UIViewController {
             let nameStr = nameArray![i] as! String
             let numberStr = String(numberArray![i] as! Float)
             
-            let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+            let namelbSize = sizeWithText("本月已用：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
             let namelb = UILabel.introduceLabel()
-            namelb.frame = CGRectMake(20, 130+(30+gap!)*CGFloat(i), namelbSize.width, 30)
+            namelb.frame = CGRect(x: 20, y: 130+(30+gap!)*CGFloat(i), width: namelbSize.width, height: 30)
             namelb.text = nameStr
             namelb.tag = i*2+3
             self.view.addSubview(namelb)
             
             let numberText = UITextField.inputTextField()
-            numberText.frame = CGRectMake(namelb.frame.maxX, namelb.frame.minY, self.view.frame.size.width-namelb.frame.maxX-20, 30)
+            numberText.frame = CGRect(x: namelb.frame.maxX, y: namelb.frame.minY, width: self.view.frame.size.width-namelb.frame.maxX-20, height: 30)
             numberText.placeholder = "请输入金额..."
-            numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
-            numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
+            numberText.keyboardType = UIKeyboardType.decimalPad //激活时
+            numberText.returnKeyType = UIReturnKeyType.done //表示完成输入
             numberText.text = numberStr
             numberText.tag = i*2+4
             self.view.addSubview(numberText)
@@ -107,11 +107,11 @@ class MonthCostViewController: UIViewController {
         }
         
         self.saveBtn = UIButton()
-        self.saveBtn!.frame = CGRectMake(20, lastY!+gap!*3, self.view.frame.size.width-40, 44)
-        self.saveBtn!.layer.backgroundColor = UIColor.redColor().CGColor
+        self.saveBtn!.frame = CGRect(x: 20, y: lastY!+gap!*3, width: self.view.frame.size.width-40, height: 44)
+        self.saveBtn!.layer.backgroundColor = UIColor.red.cgColor
         self.saveBtn!.layer.cornerRadius = 3
-        self.saveBtn!.setTitle("确  定", forState: UIControlState.Normal)
-        self.saveBtn!.addTarget(self, action: #selector(saveData), forControlEvents:.TouchUpInside)
+        self.saveBtn!.setTitle("确  定", for: UIControlState())
+        self.saveBtn!.addTarget(self, action: #selector(saveData), for:.touchUpInside)
         self.view.addSubview(self.saveBtn!)
     }
     
@@ -123,10 +123,10 @@ class MonthCostViewController: UIViewController {
         for view in uiViews{
             let tag = view.tag
             if tag>2 && tag%2==1 {
-                nameViewArray.addObject(view)
+                nameViewArray.add(view)
             }
             if tag>2 && tag%2==0 {
-                numberViewArray.addObject(view)
+                numberViewArray.add(view)
             }
         }
         
@@ -138,17 +138,17 @@ class MonthCostViewController: UIViewController {
             let viewText = numberViewArray[i] as! UITextField
             
             if viewText.text != "" && stringIsFloat(viewText.text!){
-                if view.isKindOfClass(UILabel) {
+                if (view as AnyObject).isKind(of: UILabel) {
                     let lb = view as! UILabel
                     if lb.text != ""{
-                        nameArray.addObject(lb.text!)
-                        numberArray.addObject(viewText.text!)
+                        nameArray.add(lb.text!)
+                        numberArray.add(viewText.text!)
                     }
-                }else if view.isKindOfClass(UITextField) {
+                }else if (view as AnyObject).isKind(of: UITextField) {
                     let lb = view as! UITextField
                     if lb.text != ""{
-                        nameArray.addObject(lb.text!)
-                        numberArray.addObject(viewText.text!)
+                        nameArray.add(lb.text!)
+                        numberArray.add(viewText.text!)
                     }
                 }
             }else{
@@ -188,7 +188,7 @@ class MonthCostViewController: UIViewController {
         let costArray = Cost.selectAllData()
         var count = 0
         for i in 0 ..< costArray.count{
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
+            let type = (costArray.object(at: i) as AnyObject).value(forKey: costNameOfPeriod) as! Int
             if type == 0 {
                 count += 1
             }
@@ -197,7 +197,7 @@ class MonthCostViewController: UIViewController {
         for _ in 0 ..< count {
             let TempCostArray = Cost.selectAllData()
             for j in 0 ..< TempCostArray.count{
-                let type = TempCostArray.objectAtIndex(j).valueForKey(costNameOfPeriod) as! Int
+                let type = (TempCostArray.object(at: j) as AnyObject).value(forKey: costNameOfPeriod) as! Int
                 if type == 0 {
                     Cost.deleteData(j)
                     break
@@ -208,31 +208,31 @@ class MonthCostViewController: UIViewController {
     
     //添加数据时，显示的两个输入框，用tag区分
     func addCost(){
-        let nameTextSize = sizeWithText("本月已用", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let nameTextSize = sizeWithText("本月已用", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let nameText = UITextField.inputTextField()
-        nameText.frame = CGRectMake(20, lastY!+gap!, nameTextSize.width, 30)
+        nameText.frame = CGRect(x: 20, y: lastY!+gap!, width: nameTextSize.width, height: 30)
         nameText.placeholder = "名称"
-        nameText.keyboardType = UIKeyboardType.Default //激活时
-        nameText.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        nameText.keyboardType = UIKeyboardType.default //激活时
+        nameText.returnKeyType = UIReturnKeyType.done //表示完成输入
         nameText.tag = lastTag! + 1
         self.view.addSubview(nameText)
         
-        let lb = UILabel(frame: CGRectMake(nameText.frame.maxX, nameText.frame.minY, 20, 30))
+        let lb = UILabel(frame: CGRect(x: nameText.frame.maxX, y: nameText.frame.minY, width: 20, height: 30))
         lb.text = "："
         self.view.addSubview(lb)
         
         let numberText = UITextField.inputTextField()
-        numberText.frame = CGRectMake(lb.frame.maxX, nameText.frame.minY, self.view.frame.size.width-lb.frame.maxX-20, 30)
+        numberText.frame = CGRect(x: lb.frame.maxX, y: nameText.frame.minY, width: self.view.frame.size.width-lb.frame.maxX-20, height: 30)
         numberText.placeholder = "金额"
-        numberText.keyboardType = UIKeyboardType.DecimalPad //激活时
-        numberText.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        numberText.keyboardType = UIKeyboardType.decimalPad //激活时
+        numberText.returnKeyType = UIReturnKeyType.done //表示完成输入
         numberText.tag = lastTag! + 2
         self.view.addSubview(numberText)
         
         lastY = numberText.frame.maxY
         lastTag = numberText.tag
         
-        self.saveBtn!.frame = CGRectMake(20, lastY!+gap!*3, self.view.frame.size.width-40, 44)
+        self.saveBtn!.frame = CGRect(x: 20, y: lastY!+gap!*3, width: self.view.frame.size.width-40, height: 44)
     }
 
     override func didReceiveMemoryWarning() {

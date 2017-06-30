@@ -15,6 +15,6 @@ import CoreData
 extension Total {
 
     @NSManaged var canUse: NSNumber?
-    @NSManaged var time: NSDate?
+    @NSManaged var time: Date?
 
 }

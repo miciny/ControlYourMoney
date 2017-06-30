@@ -18,7 +18,7 @@ import UIKit
 
 class UILabelPadding : UILabel {
     
-    private var padding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    fileprivate var padding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     
     @IBInspectable
     var paddingLeft: CGFloat {
@@ -44,13 +44,13 @@ class UILabelPadding : UILabel {
         set { padding.bottom = newValue }
     }
     
-    override func drawTextInRect(rect: CGRect) {
-        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, padding))
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, padding))
     }
     
-    override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let insets = self.padding
-        var rect = super.textRectForBounds(UIEdgeInsetsInsetRect(bounds, insets), limitedToNumberOfLines: numberOfLines)
+        var rect = super.textRect(forBounds: UIEdgeInsetsInsetRect(bounds, insets), limitedToNumberOfLines: numberOfLines)
         rect.origin.x    -= insets.left
         rect.origin.y    -= insets.top
         rect.size.width  += (insets.left + insets.right)

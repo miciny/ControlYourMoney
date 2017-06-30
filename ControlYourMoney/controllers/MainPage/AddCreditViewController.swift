@@ -7,6 +7,41 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate{
     
@@ -26,7 +61,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         setupCreditLable()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         initData()
     }
@@ -56,27 +91,27 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         
         //保存账户和类型
         for i in 0 ..< accountTempArray.count {
-            let name = accountTempArray[i].valueForKey(creditAccountNameOfName) as! String
-            accountArray.addObject(name)
+            let name = (accountTempArray[i] as AnyObject).value(forKey: creditAccountNameOfName) as! String
+            accountArray.add(name)
         }
         
         for i in 0 ..< typeTempArray.count {
-            let name = typeTempArray[i].valueForKey(payNameNameOfName) as! String
-            typeArray.addObject(name)
+            let name = (typeTempArray[i] as AnyObject).value(forKey: payNameNameOfName) as! String
+            typeArray.add(name)
         }
         
         //默认显示第一个
         if self.accountCreditData.text == nil {
-            self.accountCreditData.text = accountArray.objectAtIndex(0) as? String
+            self.accountCreditData.text = accountArray.object(at: 0) as? String
         }
         
         if self.accountData.text == nil {
-            self.accountData.text = typeArray.objectAtIndex(0) as? String
+            self.accountData.text = typeArray.object(at: 0) as? String
         }
     }
     
     //确认框事件
-    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         var vc = UIViewController()
         if alertView.tag == 0 {
             vc = AddCreditAccountViewController()
@@ -92,70 +127,70 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let gap = CGFloat(10)
         
         //五个label
-        let periodsCreditSize = sizeWithText("还款期数：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let periodsCreditSize = sizeWithText("还款期数：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let periodsCredit = UILabel.introduceLabel()
-        periodsCredit.frame = CGRectMake(20, 90, periodsCreditSize.width, 30)
+        periodsCredit.frame = CGRect(x: 20, y: 90, width: periodsCreditSize.width, height: 30)
         periodsCredit.text = "还款期数："
         self.view.addSubview(periodsCredit)
         
         let numberCredit = UILabel.introduceLabel()
-        numberCredit.frame = CGRectMake(20, periodsCredit.frame.maxY+gap, periodsCreditSize.width, 30)
+        numberCredit.frame = CGRect(x: 20, y: periodsCredit.frame.maxY+gap, width: periodsCreditSize.width, height: 30)
         numberCredit.text = "每期金额："
         self.view.addSubview(numberCredit)
         
         let dateCredit = UILabel.introduceLabel()
-        dateCredit.frame = CGRectMake(20, numberCredit.frame.maxY+gap, periodsCreditSize.width, 30)
+        dateCredit.frame = CGRect(x: 20, y: numberCredit.frame.maxY+gap, width: periodsCreditSize.width, height: 30)
         dateCredit.text = "还款日期："
         self.view.addSubview(dateCredit)
         
         let account = UILabel.introduceLabel()
-        account.frame = CGRectMake(20, dateCredit.frame.maxY+gap, periodsCreditSize.width, 30)
+        account.frame = CGRect(x: 20, y: dateCredit.frame.maxY+gap, width: periodsCreditSize.width, height: 30)
         account.text = "信用账户："
         self.view.addSubview(account)
         
         let type = UILabel.introduceLabel()
-        type.frame = CGRectMake(20, account.frame.maxY+gap, periodsCreditSize.width, 30)
+        type.frame = CGRect(x: 20, y: account.frame.maxY+gap, width: periodsCreditSize.width, height: 30)
         type.text = "支出类型："
         self.view.addSubview(type)
         
         //三个输入框
         self.periodsCreditData = UITextField.inputTextField()
-        self.periodsCreditData.frame = CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30)
+        self.periodsCreditData.frame = CGRect(x: periodsCredit.frame.maxX, y: periodsCredit.frame.minY, width: self.view.frame.size.width-periodsCredit.frame.maxX-20, height: 30)
         self.periodsCreditData.placeholder = "还款期数..."
-        self.periodsCreditData.keyboardType = UIKeyboardType.NumberPad //激活时 弹出数字键盘
+        self.periodsCreditData.keyboardType = UIKeyboardType.numberPad //激活时 弹出数字键盘
         self.periodsCreditData.becomeFirstResponder() //界面打开时就获取焦点
-        self.periodsCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        self.periodsCreditData.returnKeyType = UIReturnKeyType.done //表示完成输入
         self.view.addSubview(self.periodsCreditData)
         
         self.numberCreditData = UITextField.inputTextField()
-        self.numberCreditData.frame = CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30)
+        self.numberCreditData.frame = CGRect(x: numberCredit.frame.maxX, y: numberCredit.frame.minY, width: self.view.frame.size.width-numberCredit.frame.maxX-20, height: 30)
         self.numberCreditData.placeholder = "每期金额..."
-        self.numberCreditData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
-        self.numberCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        self.numberCreditData.keyboardType = UIKeyboardType.decimalPad //激活时 弹出数字键盘
+        self.numberCreditData.returnKeyType = UIReturnKeyType.done //表示完成输入
         self.view.addSubview(self.numberCreditData)
         
         self.dateCreditData = UITextField.inputTextField()
-        self.dateCreditData.frame = CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30)
+        self.dateCreditData.frame = CGRect(x: dateCredit.frame.maxX, y: dateCredit.frame.minY, width: self.view.frame.size.width-dateCredit.frame.maxX-20, height: 30)
         self.dateCreditData.placeholder = "还款日期..."
-        self.dateCreditData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
-        self.dateCreditData.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        self.dateCreditData.keyboardType = UIKeyboardType.decimalPad //激活时 弹出数字键盘
+        self.dateCreditData.returnKeyType = UIReturnKeyType.done //表示完成输入
         self.view.addSubview(self.dateCreditData)
         
         //两个选择的label
         self.accountCreditData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
-        self.accountCreditData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
+        self.accountCreditData.frame = CGRect(x: account.frame.maxX, y: account.frame.minY, width: self.view.frame.size.width-account.frame.maxX-20, height: 30)
         self.view.addSubview(self.accountCreditData)
         
         self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectType))
-        self.accountData.frame = CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30)
+        self.accountData.frame = CGRect(x: type.frame.maxX, y: type.frame.minY, width: self.view.frame.size.width-type.frame.maxX-20, height: 30)
         self.view.addSubview(self.accountData)
         
         //保存按钮
-        let save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
-        save.layer.backgroundColor = UIColor.redColor().CGColor
+        let save = UIButton(frame: CGRect(x: 20, y: type.frame.maxY+gap*3, width: self.view.frame.size.width-40, height: 44))
+        save.layer.backgroundColor = UIColor.red.cgColor
         save.layer.cornerRadius = 3
-        save.setTitle("保  存", forState: UIControlState.Normal)
-        save.addTarget(self, action: #selector(saveCredit), forControlEvents:.TouchUpInside)
+        save.setTitle("保  存", for: UIControlState())
+        save.addTarget(self, action: #selector(saveCredit), for:.touchUpInside)
         self.view.addSubview(save)
         
     }
@@ -165,7 +200,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let vc = CostNameListViewController()
         vc.delegate = self
         let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
-        self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
+        self.navigationController?.present(vcNavigationController, animated: true, completion: nil)
     }
     
     //进入选择账户的页面
@@ -173,7 +208,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         let vc = AccountListViewController()
         vc.delegate = self
         let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
-        self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
+        self.navigationController?.present(vcNavigationController, animated: true, completion: nil)
     }
 
     //保存数据
@@ -191,7 +226,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
         Credit.insertCrediData(periods, number: Float(numberCreditData.text!)!, time: timeNow, account: accountCreditData.text!, date: date, nextPayDay: nextPayDay, leftPeriods: periods, type: self.accountData.text!)
         
         MyToastView().showToast("添加成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //检查输入框
@@ -234,7 +269,7 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
      MARK text field delegate
      **/
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool { //键盘上的完成按钮 相应事件
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool { //键盘上的完成按钮 相应事件
         //收起键盘
         textField.resignFirstResponder()
         return true
@@ -243,14 +278,14 @@ class AddCreditViewController: UIViewController, UITextFieldDelegate, UITextView
 
 //支出类型的代理
 extension AddCreditViewController: costNameListViewDelegate{
-    func costNameClicked(name: String) {
+    func costNameClicked(_ name: String) {
         self.accountData.text = name
     }
 }
 
 //账户的代理
 extension AddCreditViewController: accountListViewDelegate{
-    func buttonClicked(name: String) {
+    func buttonClicked(_ name: String) {
         self.accountCreditData.text = name
     }
 }

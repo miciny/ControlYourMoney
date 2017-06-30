@@ -19,7 +19,7 @@ class SettingTableViewCell: UITableViewCell {
     
     init(data: SettingDataModul, reuseIdentifier cellId:String){
         self.settingItem = data
-        super.init(style: UITableViewCellStyle.Default, reuseIdentifier:cellId)
+        super.init(style: UITableViewCellStyle.default, reuseIdentifier:cellId)
         rebuildCell()
     }
     
@@ -46,7 +46,7 @@ class SettingTableViewCell: UITableViewCell {
     func buildPersonInfo(){
         //个人设置栏-头像
         let myIcon = UIImageView(frame: CGRect(x: 20, y: 20, width: 60, height: 60))
-        myIcon.backgroundColor = UIColor.grayColor()
+        myIcon.backgroundColor = UIColor.gray
         myIcon.layer.masksToBounds = true //不然设置边角没用
         myIcon.layer.cornerRadius = 5
         if let icon = settingItem.icon{
@@ -58,9 +58,9 @@ class SettingTableViewCell: UITableViewCell {
         if let nameStr = settingItem.name{
             let nameSize = sizeWithText(nameStr, font: settingPageNameFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
             let myName = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y, width: nameSize.width, height: myIcon.frame.height/2))
-            myName.backgroundColor = UIColor.clearColor()
+            myName.backgroundColor = UIColor.clear
             myName.font = settingPageNameFont
-            myName.textAlignment = .Left
+            myName.textAlignment = .left
             myName.text = nameStr
             self.addSubview(myName)
         }
@@ -69,9 +69,9 @@ class SettingTableViewCell: UITableViewCell {
         if let nicknameStr = settingItem.nickname {
             let nicknameSize = sizeWithText("昵称："+nicknameStr, font: settingPageLableFont, maxSize: CGSize(width: Width/2, height: myIcon.frame.height/2))
             let myNickname = UILabel(frame: CGRect(x: myIcon.frame.maxX+10, y: myIcon.frame.origin.y+myIcon.frame.height/2, width: nicknameSize.width, height: myIcon.frame.height/2))
-            myNickname.backgroundColor = UIColor.whiteColor()
+            myNickname.backgroundColor = UIColor.white
             myNickname.font = settingPageLableFont
-            myNickname.textAlignment = .Left
+            myNickname.textAlignment = .left
             myNickname.text = "昵称："+nicknameStr
             self.addSubview(myNickname)
         }
@@ -80,7 +80,7 @@ class SettingTableViewCell: UITableViewCell {
         //个人设置栏-二维码图片
         if let pic = settingItem.pic{
             let my2DIcon = UIImageView(frame: CGRect(x: Width-60, y: myIcon.frame.height/2+10, width: 20, height: 20))
-            my2DIcon.backgroundColor = UIColor.clearColor()
+            my2DIcon.backgroundColor = UIColor.clear
             my2DIcon.image = pic
             my2DIcon.layer.cornerRadius = 1
             self.addSubview(my2DIcon)
@@ -94,10 +94,10 @@ class SettingTableViewCell: UITableViewCell {
         if let labelStr = settingItem.lable{
             let lableSize = sizeWithText(labelStr, font: settingPageLableFont, maxSize: CGSize(width: Width-maxX-50, height: self.frame.height))
             let myLabel = UILabel(frame: CGRect(x: Width-lableSize.width-40, y: 0, width: lableSize.width, height: self.frame.height))
-            myLabel.backgroundColor = UIColor.clearColor()  //没有背景色，不然重新调整位置后会显示多余的竖线
+            myLabel.backgroundColor = UIColor.clear  //没有背景色，不然重新调整位置后会显示多余的竖线
             myLabel.font = settingPageLableFont
-            myLabel.textAlignment = .Right
-            myLabel.textColor = UIColor.grayColor()
+            myLabel.textAlignment = .right
+            myLabel.textColor = UIColor.gray
             myLabel.text = labelStr
             self.addSubview(myLabel)
             
@@ -107,7 +107,7 @@ class SettingTableViewCell: UITableViewCell {
         if let tdicon = settingItem.pic{
             //个人信息页-二维码
             let myIcon = UIImageView(frame: CGRect(x: Width-minX-50, y: self.frame.height/2-10, width: 20, height: 20))
-            myIcon.backgroundColor = UIColor.clearColor()
+            myIcon.backgroundColor = UIColor.clear
             myIcon.image = tdicon
             myIcon.layer.cornerRadius = 5
             self.addSubview(myIcon)
@@ -119,12 +119,12 @@ class SettingTableViewCell: UITableViewCell {
         setNormalTitle()
         
         switchBtn = UISwitch(frame: CGRect(x: Width-70, y: 7, width: 51, height: 31))
-        switchBtn!.backgroundColor = UIColor.clearColor()
+        switchBtn!.backgroundColor = UIColor.clear
         switchBtn!.tintColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
-        switchBtn!.onTintColor = UIColor.greenColor()
+        switchBtn!.onTintColor = UIColor.green
         
         //不能设置frame，只能缩放 iOS7的UISwitch是51x31
-        switchBtn!.transform = CGAffineTransformMakeScale(1, 1)
+        switchBtn!.transform = CGAffineTransform(scaleX: 1, y: 1)
         self.addSubview(switchBtn!)
     }
     
@@ -134,7 +134,7 @@ class SettingTableViewCell: UITableViewCell {
         
         //个人信息页-图像
         let myIcon = UIImageView(frame: CGRect(x: Width-100, y: 20, width: 60, height: 60))
-        myIcon.backgroundColor = UIColor.grayColor()
+        myIcon.backgroundColor = UIColor.gray
         myIcon.layer.masksToBounds = true  //不然设置边角没用
         myIcon.layer.cornerRadius = 5
         myIcon.image = settingItem.pic!
@@ -150,7 +150,7 @@ class SettingTableViewCell: UITableViewCell {
         
         if let icon =  settingItem.icon{
             let myIcon = UIImageView(frame: CGRect(x: 20, y: (settingItem.cellHeigth-25)/2, width: 25, height: 25))
-            myIcon.backgroundColor = UIColor.clearColor()
+            myIcon.backgroundColor = UIColor.clear
             myIcon.image = icon
             myIcon.layer.cornerRadius = 0
             self.addSubview(myIcon)
@@ -160,9 +160,9 @@ class SettingTableViewCell: UITableViewCell {
         
         //普通设置栏-title
         let title = UILabel(frame: titleFrame)
-        title.backgroundColor = UIColor.clearColor()
+        title.backgroundColor = UIColor.clear
         title.font = settingPageNameFont
-        title.textAlignment = .Left
+        title.textAlignment = .left
         title.text = settingItem.name
         self.addSubview(title)
         

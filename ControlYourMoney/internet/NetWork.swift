@@ -66,14 +66,14 @@ class NetWork: NSObject {
     
     //获得manage
     class func getDefaultAlamofireManager() -> Manager{
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 5 //超时时间
         let netManager = Alamofire.Manager(configuration: configuration)
         return netManager
     }
     
     //失败的显示
-    class func networkFailed(response: NSHTTPURLResponse?){
+    class func networkFailed(_ response: HTTPURLResponse?){
         if response == nil {
             MyToastView().showToast("无法连接服务器")
             return
@@ -85,11 +85,11 @@ class NetWork: NSObject {
     
     //系统栏的转圈动画
     class func showNetIndicator(){
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     class func hidenNetIndicator(){
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 
 }

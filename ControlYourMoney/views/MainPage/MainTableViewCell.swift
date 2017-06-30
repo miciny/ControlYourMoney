@@ -36,12 +36,12 @@ class MainTableViewCell: UITableViewCell {
     init(data: AnyObject, dataType: dataTpye, reuseIdentifier cellId:String){
         let dataTypt = dataType
         self.dataModul = data
-        super.init(style: UITableViewCellStyle.Default, reuseIdentifier:cellId)
+        super.init(style: UITableViewCellStyle.default, reuseIdentifier:cellId)
         self.setUpLabel()
         self.setLable(dataTypt)
     }
     
-    func setLable(dataType: dataTpye){
+    func setLable(_ dataType: dataTpye){
         switch dataType {
         case .credit:
             self.setUpCreditLabel()
@@ -58,47 +58,47 @@ class MainTableViewCell: UITableViewCell {
     
     func setUpLabel(){
         
-        self.dataLable = UILabel(frame: CGRectZero)
+        self.dataLable = UILabel(frame: CGRect.zero)
         self.dataLable!.font = detailTitleFont
-        self.dataLable!.textAlignment = NSTextAlignment.Center
-        self.dataLable!.backgroundColor = UIColor.clearColor()
-        self.dataLable!.textColor = UIColor.blackColor()
+        self.dataLable!.textAlignment = NSTextAlignment.center
+        self.dataLable!.backgroundColor = UIColor.clear
+        self.dataLable!.textColor = UIColor.black
         
-        self.dataNumber1 = UILabel(frame: CGRectZero)
+        self.dataNumber1 = UILabel(frame: CGRect.zero)
         self.dataNumber1!.font = detailFont
-        self.dataNumber1!.textAlignment = NSTextAlignment.Left
-        self.dataNumber1!.backgroundColor = UIColor.clearColor()
-        self.dataNumber1!.textColor = UIColor.blackColor()
+        self.dataNumber1!.textAlignment = NSTextAlignment.left
+        self.dataNumber1!.backgroundColor = UIColor.clear
+        self.dataNumber1!.textColor = UIColor.black
         
-        self.dataNumber2 = UILabel(frame: CGRectZero)
+        self.dataNumber2 = UILabel(frame: CGRect.zero)
         self.dataNumber2!.font = detailFont
-        self.dataNumber2!.textAlignment = NSTextAlignment.Right
-        self.dataNumber2!.backgroundColor = UIColor.clearColor()
-        self.dataNumber2!.textColor = UIColor.redColor()
+        self.dataNumber2!.textAlignment = NSTextAlignment.right
+        self.dataNumber2!.backgroundColor = UIColor.clear
+        self.dataNumber2!.textColor = UIColor.red
         
-        self.dataNumber11 = UILabel(frame: CGRectZero)
+        self.dataNumber11 = UILabel(frame: CGRect.zero)
         self.dataNumber11!.font = detailFont
-        self.dataNumber11!.textAlignment = NSTextAlignment.Left
-        self.dataNumber11!.backgroundColor = UIColor.clearColor()
-        self.dataNumber11!.textColor = UIColor.blackColor()
+        self.dataNumber11!.textAlignment = NSTextAlignment.left
+        self.dataNumber11!.backgroundColor = UIColor.clear
+        self.dataNumber11!.textColor = UIColor.black
         
-        self.dataNumber22 = UILabel(frame: CGRectZero)
+        self.dataNumber22 = UILabel(frame: CGRect.zero)
         self.dataNumber22!.font = detailFont
-        self.dataNumber22!.textAlignment = NSTextAlignment.Right
-        self.dataNumber22!.backgroundColor = UIColor.clearColor()
-        self.dataNumber22!.textColor = UIColor.redColor()
+        self.dataNumber22!.textAlignment = NSTextAlignment.right
+        self.dataNumber22!.backgroundColor = UIColor.clear
+        self.dataNumber22!.textColor = UIColor.red
         
-        self.dataNumber111 = UILabel(frame: CGRectZero)
+        self.dataNumber111 = UILabel(frame: CGRect.zero)
         self.dataNumber111!.font = detailFont
-        self.dataNumber111!.textAlignment = NSTextAlignment.Left
-        self.dataNumber111!.backgroundColor = UIColor.clearColor()
-        self.dataNumber111!.textColor = UIColor.blackColor()
+        self.dataNumber111!.textAlignment = NSTextAlignment.left
+        self.dataNumber111!.backgroundColor = UIColor.clear
+        self.dataNumber111!.textColor = UIColor.black
         
-        self.dataNumber222 = UILabel(frame: CGRectZero)
+        self.dataNumber222 = UILabel(frame: CGRect.zero)
         self.dataNumber222!.font = detailFont
-        self.dataNumber222!.textAlignment = NSTextAlignment.Right
-        self.dataNumber222!.backgroundColor = UIColor.clearColor()
-        self.dataNumber222!.textColor = UIColor.redColor()
+        self.dataNumber222!.textAlignment = NSTextAlignment.right
+        self.dataNumber222!.backgroundColor = UIColor.clear
+        self.dataNumber222!.textColor = UIColor.red
     }
     
     //设置信用卡的label
@@ -112,15 +112,15 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableCreditModul
         
-        let size = sizeWithText(modul.title, font: detailTitleFont, maxSize: CGSizeMake(Width, creditCellHeight/3))
-        let size1 = sizeWithText("剩余周期：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, creditCellHeight/3)
+        let size = sizeWithText(modul.title, font: detailTitleFont, maxSize: CGSize(width: Width, height: creditCellHeight/3))
+        let size1 = sizeWithText("剩余周期：", font: detailFont, maxSize: CGSize(width: Width, height: 30))
+        self.dataLable!.frame = CGRect(x: (Width*2/3-size.width)/2, y: 0, width: size.width, height: creditCellHeight/3)
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber2!.frame = CGRectMake(self.dataNumber1!.frame.maxX, self.dataNumber1!.frame.minY, Width*2/3-self.dataNumber1!.frame.maxX-10, self.dataLable!.frame.height)
+        self.dataNumber1!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRect(x: self.dataNumber1!.frame.maxX, y: self.dataNumber1!.frame.minY, width: Width*2/3-self.dataNumber1!.frame.maxX-10, height: self.dataLable!.frame.height)
 
-        self.dataNumber11!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, Width*2/3-self.dataNumber11!.frame.maxX-10, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRect(x: 20, y: self.dataNumber1!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRect(x: self.dataNumber11!.frame.maxX, y: self.dataNumber11!.frame.minY, width: Width*2/3-self.dataNumber11!.frame.maxX-10, height: self.dataLable!.frame.height)
         
         self.dataLable!.text = modul.title
         self.dataNumber1!.text = "还款时间："
@@ -151,19 +151,19 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableSalaryModul
         
-        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 300))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size2 = sizeWithText(modul.time, font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size3 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
+        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSize(width: Width, height: 300))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size2 = sizeWithText(modul.time, font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size3 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSize(width: Width, height: 300))
         
-        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, salaryCellHeight/3)
+        self.dataLable!.frame = CGRect(x: (Width*2/3-size.width)/2, y: 0, width: size.width, height: salaryCellHeight/3)
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber2!.frame = CGRectMake(Width-size3.width-10, self.dataLable!.frame.maxY-10, size3.width, size3.height)
+        self.dataNumber1!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRect(x: Width-size3.width-10, y: self.dataLable!.frame.maxY-10, width: size3.width, height: size3.height)
         self.dataNumber2!.font = useNumberFont
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY+30, size1.width, salaryCellHeight/3)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, salaryCellHeight/3)
+        self.dataNumber11!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY+30, width: size1.width, height: salaryCellHeight/3)
+        self.dataNumber22!.frame = CGRect(x: self.dataNumber11!.frame.maxX, y: self.dataNumber11!.frame.minY, width: size2.width, height: salaryCellHeight/3)
         
         self.dataLable!.text = modul.date
         self.dataNumber1!.text = "金额："
@@ -184,19 +184,19 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! MainTableCashModul
         
-        let size = sizeWithText(modul.useWhere, font: detailTitleFont, maxSize: CGSizeMake(Width, 30))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        let size2 = sizeWithText("日总额：", font: detailFont, maxSize: CGSizeMake(Width, 30))
-        let size3 = sizeWithText(modul.useTotalStr, font: detailFont, maxSize: CGSizeMake(Width, 30))
-        let size4 = sizeWithText(modul.useNumber, font: useNumberFont, maxSize: CGSizeMake(Width, 30))
-        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, creditCellHeight/3)
+        let size = sizeWithText(modul.useWhere, font: detailTitleFont, maxSize: CGSize(width: Width, height: 30))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSize(width: Width, height: 30))
+        let size2 = sizeWithText("日总额：", font: detailFont, maxSize: CGSize(width: Width, height: 30))
+        let size3 = sizeWithText(modul.useTotalStr, font: detailFont, maxSize: CGSize(width: Width, height: 30))
+        let size4 = sizeWithText(modul.useNumber, font: useNumberFont, maxSize: CGSize(width: Width, height: 30))
+        self.dataLable!.frame = CGRect(x: (Width*2/3-size.width)/2, y: 0, width: size.width, height: creditCellHeight/3)
         
-        self.dataNumber1!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
+        self.dataNumber1!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataNumber1!.frame.maxY, size2.width, self.dataLable!.frame.height)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size3.width, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRect(x: 20, y: self.dataNumber1!.frame.maxY, width: size2.width, height: self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRect(x: self.dataNumber11!.frame.maxX, y: self.dataNumber11!.frame.minY, width: size3.width, height: self.dataLable!.frame.height)
         
-        self.dataNumber2!.frame = CGRectMake(Width*5/6-self.creditCellHeight/2-10-size4.width, self.dataNumber1!.frame.minY, size4.width, size4.height)
+        self.dataNumber2!.frame = CGRect(x: Width*5/6-self.creditCellHeight/2-10-size4.width, y: self.dataNumber1!.frame.minY, width: size4.width, height: size4.height)
         
         self.dataLable!.text = modul.useWhere
         self.dataNumber1!.text = "金额："
@@ -204,7 +204,7 @@ class MainTableViewCell: UITableViewCell {
         self.dataNumber2!.font = useNumberFont
         self.dataNumber11!.text = "月总额："
         self.dataNumber22!.text = modul.useTotalStr
-        self.dataNumber22!.textAlignment = .Left
+        self.dataNumber22!.textAlignment = .left
         
         let titles = ["", ""] //["平均", "今日"]
         let dayOffset = getTime().currentDay
@@ -233,22 +233,22 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! CashDetailTableDataModul
         
-        let size = sizeWithText(modul.type, font: detailTitleFont, maxSize: CGSizeMake(Width, 100))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size2 = sizeWithText(modul.useWhere, font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size3 = sizeWithText(modul.useTime, font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size4 = sizeWithText(modul.useNumber, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
+        let size = sizeWithText(modul.type, font: detailTitleFont, maxSize: CGSize(width: Width, height: 100))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size2 = sizeWithText(modul.useWhere, font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size3 = sizeWithText(modul.useTime, font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size4 = sizeWithText(modul.useNumber, font: useNumberFont, maxSize: CGSize(width: Width, height: 300))
         
-        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, cashDetailCellHeight/3)
+        self.dataLable!.frame = CGRect(x: (Width*2/3-size.width)/2, y: 0, width: size.width, height: cashDetailCellHeight/3)
         
-        self.dataNumber2!.frame = CGRectMake(Width-size4.width-10, self.dataLable!.frame.maxY-10, size4.width, self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRect(x: Width-size4.width-10, y: self.dataLable!.frame.maxY-10, width: size4.width, height: self.dataLable!.frame.height)
         self.dataNumber2!.font = useNumberFont
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRect(x: self.dataNumber11!.frame.maxX, y: self.dataNumber11!.frame.minY, width: size2.width, height: self.dataLable!.frame.height)
         
-        self.dataNumber111!.frame = CGRectMake(20, self.dataNumber11!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, size3.width, self.dataNumber111!.frame.height)
+        self.dataNumber111!.frame = CGRect(x: 20, y: self.dataNumber11!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber222!.frame = CGRect(x: self.dataNumber111!.frame.maxX, y: self.dataNumber111!.frame.minY, width: size3.width, height: self.dataNumber111!.frame.height)
         
         self.dataLable!.text = modul.type
         self.dataNumber2!.text = modul.useNumber
@@ -271,22 +271,22 @@ class MainTableViewCell: UITableViewCell {
         
         let modul = self.dataModul as! SalaryDetailTableDataModul
         
-        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSizeMake(Width, 300))
-        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size2 = sizeWithText(modul.type, font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size3 = sizeWithText(modul.time, font: detailFont, maxSize: CGSizeMake(Width, 300))
-        let size4 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSizeMake(Width, 300))
+        let size = sizeWithText(modul.date, font: detailTitleFont, maxSize: CGSize(width: Width, height: 300))
+        let size1 = sizeWithText("金额：", font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size2 = sizeWithText(modul.type, font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size3 = sizeWithText(modul.time, font: detailFont, maxSize: CGSize(width: Width, height: 300))
+        let size4 = sizeWithText(modul.number, font: useNumberFont, maxSize: CGSize(width: Width, height: 300))
         
-        self.dataLable!.frame = CGRectMake((Width*2/3-size.width)/2, 0, size.width, salaryDetailCellHeight/3)
+        self.dataLable!.frame = CGRect(x: (Width*2/3-size.width)/2, y: 0, width: size.width, height: salaryDetailCellHeight/3)
         
-        self.dataNumber2!.frame = CGRectMake(Width-size4.width-10, self.dataLable!.frame.maxY-10, size4.width, self.dataLable!.frame.height)
+        self.dataNumber2!.frame = CGRect(x: Width-size4.width-10, y: self.dataLable!.frame.maxY-10, width: size4.width, height: self.dataLable!.frame.height)
         self.dataNumber2!.font = useNumberFont
         
-        self.dataNumber11!.frame = CGRectMake(20, self.dataLable!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber22!.frame = CGRectMake(self.dataNumber11!.frame.maxX, self.dataNumber11!.frame.minY, size2.width, self.dataLable!.frame.height)
+        self.dataNumber11!.frame = CGRect(x: 20, y: self.dataLable!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber22!.frame = CGRect(x: self.dataNumber11!.frame.maxX, y: self.dataNumber11!.frame.minY, width: size2.width, height: self.dataLable!.frame.height)
         
-        self.dataNumber111!.frame = CGRectMake(20, self.dataNumber11!.frame.maxY, size1.width, self.dataLable!.frame.height)
-        self.dataNumber222!.frame = CGRectMake(self.dataNumber111!.frame.maxX, self.dataNumber111!.frame.minY, size3.width, self.dataNumber111!.frame.height)
+        self.dataNumber111!.frame = CGRect(x: 20, y: self.dataNumber11!.frame.maxY, width: size1.width, height: self.dataLable!.frame.height)
+        self.dataNumber222!.frame = CGRect(x: self.dataNumber111!.frame.maxX, y: self.dataNumber111!.frame.minY, width: size3.width, height: self.dataNumber111!.frame.height)
         
         self.dataLable!.text = modul.date
         self.dataNumber2!.text = modul.number
@@ -306,7 +306,7 @@ class MainTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

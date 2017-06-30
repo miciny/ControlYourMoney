@@ -8,6 +8,41 @@
 
 import UIKit
 import CoreData
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate{
     
@@ -48,13 +83,13 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         self.typeData.text = self.recivedData.type
         
         if Int(self.recivedData.periods) <= 0 {
-            save.enabled = false
-            alreadyPay.enabled = false
-            alreadyPayAll.enabled = false
+            save.isEnabled = false
+            alreadyPay.isEnabled = false
+            alreadyPayAll.isEnabled = false
             
-            save.backgroundColor = UIColor.lightGrayColor()
-            alreadyPay.backgroundColor = UIColor.lightGrayColor()
-            alreadyPayAll.backgroundColor = UIColor.lightGrayColor()
+            save.backgroundColor = UIColor.lightGray
+            alreadyPay.backgroundColor = UIColor.lightGray
+            alreadyPayAll.backgroundColor = UIColor.lightGray
         }
     }
     
@@ -76,100 +111,100 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         let gap = CGFloat(10)
         
         //六个label
-        let nextPaydaySize = sizeWithText("下期还款：", font: introduceFont, maxSize: CGSizeMake(Width, 30))
+        let nextPaydaySize = sizeWithText("下期还款：", font: introduceFont, maxSize: CGSize(width: Width, height: 30))
         let nextPayday = UILabel.introduceLabel()
-        nextPayday.frame = CGRectMake(20, 90, nextPaydaySize.width, 30)
+        nextPayday.frame = CGRect(x: 20, y: 90, width: nextPaydaySize.width, height: 30)
         nextPayday.text = "下期还款："
         self.view.addSubview(nextPayday)
         
         let periodsCredit = UILabel.introduceLabel()
-        periodsCredit.frame = CGRectMake(20, nextPayday.frame.maxY+gap, nextPaydaySize.width, 30)
+        periodsCredit.frame = CGRect(x: 20, y: nextPayday.frame.maxY+gap, width: nextPaydaySize.width, height: 30)
         periodsCredit.text = "还款期数："
         self.view.addSubview(periodsCredit)
         
         let numberCredit = UILabel.introduceLabel()
-        numberCredit.frame = CGRectMake(20, periodsCredit.frame.maxY+gap, nextPaydaySize.width, 30)
+        numberCredit.frame = CGRect(x: 20, y: periodsCredit.frame.maxY+gap, width: nextPaydaySize.width, height: 30)
         numberCredit.text = "每期金额："
         self.view.addSubview(numberCredit)
         
         let dateCredit = UILabel.introduceLabel()
-        dateCredit.frame = CGRectMake(20, numberCredit.frame.maxY+gap, nextPaydaySize.width, 30)
+        dateCredit.frame = CGRect(x: 20, y: numberCredit.frame.maxY+gap, width: nextPaydaySize.width, height: 30)
         dateCredit.text = "还款日期："
         self.view.addSubview(dateCredit)
         
         let account = UILabel.introduceLabel()
-        account.frame = CGRectMake(20, dateCredit.frame.maxY+gap, nextPaydaySize.width, 30)
+        account.frame = CGRect(x: 20, y: dateCredit.frame.maxY+gap, width: nextPaydaySize.width, height: 30)
         account.text = "信用账户："
         self.view.addSubview(account)
         
         let type = UILabel.introduceLabel()
-        type.frame = CGRectMake(20, account.frame.maxY+gap, nextPaydaySize.width, 30)
+        type.frame = CGRect(x: 20, y: account.frame.maxY+gap, width: nextPaydaySize.width, height: 30)
         type.text = "支出类型："
         self.view.addSubview(type)
         
         //四个输入框
         self.nextPaydayText = UITextField.inputTextField()
-        self.nextPaydayText.frame = CGRectMake(nextPayday.frame.maxX, nextPayday.frame.minY, self.view.frame.size.width-nextPayday.frame.maxX-20, 30)
+        self.nextPaydayText.frame = CGRect(x: nextPayday.frame.maxX, y: nextPayday.frame.minY, width: self.view.frame.size.width-nextPayday.frame.maxX-20, height: 30)
         self.nextPaydayText.text = self.nextPaydayString
         self.view.addSubview(self.nextPaydayText)
-        self.nextPaydayText.enabled = false
+        self.nextPaydayText.isEnabled = false
         
         self.periodsCreditData = UITextField.inputTextField()
-        self.periodsCreditData.frame = CGRectMake(periodsCredit.frame.maxX, periodsCredit.frame.minY, self.view.frame.size.width-periodsCredit.frame.maxX-20, 30)
+        self.periodsCreditData.frame = CGRect(x: periodsCredit.frame.maxX, y: periodsCredit.frame.minY, width: self.view.frame.size.width-periodsCredit.frame.maxX-20, height: 30)
         self.periodsCreditData.placeholder = "还款期数..."
         self.view.addSubview(self.periodsCreditData)
         
         self.numberCreditData = UITextField.inputTextField()
-        self.numberCreditData.frame = CGRectMake(numberCredit.frame.maxX, numberCredit.frame.minY, self.view.frame.size.width-numberCredit.frame.maxX-20, 30)
+        self.numberCreditData.frame = CGRect(x: numberCredit.frame.maxX, y: numberCredit.frame.minY, width: self.view.frame.size.width-numberCredit.frame.maxX-20, height: 30)
         self.numberCreditData.placeholder = "每期金额..."
         self.view.addSubview(self.numberCreditData)
         
         self.dateCreditData = UITextField.inputTextField()
-        self.dateCreditData.frame = CGRectMake(dateCredit.frame.maxX, dateCredit.frame.minY, self.view.frame.size.width-dateCredit.frame.maxX-20, 30)
+        self.dateCreditData.frame = CGRect(x: dateCredit.frame.maxX, y: dateCredit.frame.minY, width: self.view.frame.size.width-dateCredit.frame.maxX-20, height: 30)
         self.dateCreditData.placeholder = "还款日期..."
         self.view.addSubview(dateCreditData)
         
         //两个选择label
         self.accountCreditData = UILabel.inputLabel()
-        self.accountCreditData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
+        self.accountCreditData.frame = CGRect(x: account.frame.maxX, y: account.frame.minY, width: self.view.frame.size.width-account.frame.maxX-20, height: 30)
         self.view.addSubview(self.accountCreditData)
         
         self.typeData = UILabel.inputLabel()
-        self.typeData.frame = CGRectMake(type.frame.maxX, type.frame.minY, self.view.frame.size.width-type.frame.maxX-20, 30)
+        self.typeData.frame = CGRect(x: type.frame.maxX, y: type.frame.minY, width: self.view.frame.size.width-type.frame.maxX-20, height: 30)
         self.view.addSubview(self.typeData)
         
         //四个按钮
-        save = UIButton(frame: CGRectMake(20, type.frame.maxY+gap*3, self.view.frame.size.width - 40, 44))
-        save.layer.backgroundColor = UIColor.redColor().CGColor
-        save.setTitle("保  存", forState: UIControlState.Normal)
+        save = UIButton(frame: CGRect(x: 20, y: type.frame.maxY+gap*3, width: self.view.frame.size.width - 40, height: 44))
+        save.layer.backgroundColor = UIColor.red.cgColor
+        save.setTitle("保  存", for: UIControlState())
         save.layer.cornerRadius = 3
-        save.addTarget(self,action:#selector(ChangeCreditViewController.saveCredit),forControlEvents:.TouchUpInside)
+        save.addTarget(self,action:#selector(ChangeCreditViewController.saveCredit),for:.touchUpInside)
         self.view.addSubview(save)
         
-        alreadyPay = UIButton(frame: CGRectMake(20, save.frame.maxY+gap, self.view.frame.size.width - 40, 44))
-        alreadyPay.layer.backgroundColor = UIColor.redColor().CGColor
-        alreadyPay.setTitle("本月已还", forState: UIControlState.Normal)
+        alreadyPay = UIButton(frame: CGRect(x: 20, y: save.frame.maxY+gap, width: self.view.frame.size.width - 40, height: 44))
+        alreadyPay.layer.backgroundColor = UIColor.red.cgColor
+        alreadyPay.setTitle("本月已还", for: UIControlState())
         alreadyPay.layer.cornerRadius = 3
-        alreadyPay.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayCredit),forControlEvents:.TouchUpInside)
+        alreadyPay.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayCredit),for:.touchUpInside)
         self.view.addSubview(alreadyPay)
         
-        alreadyPayAll = UIButton(frame: CGRectMake(20, alreadyPay.frame.maxY+gap, self.view.frame.size.width - 40, 44))
-        alreadyPayAll.layer.backgroundColor = UIColor.redColor().CGColor
-        alreadyPayAll.setTitle("全部已还", forState: UIControlState.Normal)
+        alreadyPayAll = UIButton(frame: CGRect(x: 20, y: alreadyPay.frame.maxY+gap, width: self.view.frame.size.width - 40, height: 44))
+        alreadyPayAll.layer.backgroundColor = UIColor.red.cgColor
+        alreadyPayAll.setTitle("全部已还", for: UIControlState())
         alreadyPayAll.layer.cornerRadius = 3
-        alreadyPayAll.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayAllCredit),forControlEvents:.TouchUpInside)
+        alreadyPayAll.addTarget(self,action:#selector(ChangeCreditViewController.alreadyPayAllCredit),for:.touchUpInside)
         self.view.addSubview(alreadyPayAll)
         
-        let deleteBtn = UIButton(frame: CGRectMake(20, alreadyPayAll.frame.maxY+gap, self.view.frame.size.width - 40, 44))
-        deleteBtn.layer.backgroundColor = UIColor.redColor().CGColor
-        deleteBtn.setTitle("删   除", forState: UIControlState.Normal)
+        let deleteBtn = UIButton(frame: CGRect(x: 20, y: alreadyPayAll.frame.maxY+gap, width: self.view.frame.size.width - 40, height: 44))
+        deleteBtn.layer.backgroundColor = UIColor.red.cgColor
+        deleteBtn.setTitle("删   除", for: UIControlState())
         deleteBtn.layer.cornerRadius = 3
-        deleteBtn.addTarget(self,action:#selector(ChangeCreditViewController.deleteBtnClicked),forControlEvents:.TouchUpInside)
+        deleteBtn.addTarget(self,action:#selector(ChangeCreditViewController.deleteBtnClicked),for:.touchUpInside)
         self.view.addSubview(deleteBtn)
         
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool { //键盘上的完成按钮 相应事件
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool { //键盘上的完成按钮 相应事件
         //收起键盘
         textField.resignFirstResponder()
         return true
@@ -214,7 +249,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
     }
     
     //确认框的代理
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         switch alertView.tag {
         case 1:  //全部还完
             if buttonIndex == 1 {
@@ -246,7 +281,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         Credit.updateCreditDataSortedByTime(changeIndex ,periods: periods, number: Float(numberCreditData.text!)!,date: date, account: accountCreditData.text!,time: getTime(), nextPayDay: nextPayDay, leftPeriods: periods, type: recivedData.type)
         
         MyToastView().showToast("修改成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //本月已还
@@ -265,7 +300,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         
         Total.insertTotalData(GetAnalyseData.getCanUseToFloat() - Float(recivedData.number)!, time: getTime())
         MyToastView().showToast("还款成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //删除，不需要改变余额
@@ -273,7 +308,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         
         Credit.deleteCreditDataSortedByTime(changeIndex)
         MyToastView().showToast("删除成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //全部还款，需要改变剩余额度
@@ -289,7 +324,7 @@ class ChangeCreditViewController: UIViewController, UITextFieldDelegate, UITextV
         Credit.updateCreditDataSortedByTime(changeIndex, changeValue: nextPayDay, changeFieldName: creditNameOfNextPayDay)
         
         MyToastView().showToast("还款成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //检查输入的数据

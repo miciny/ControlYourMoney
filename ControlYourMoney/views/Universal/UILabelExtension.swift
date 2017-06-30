@@ -15,18 +15,18 @@ extension UILabel{
     public class func introduceLabel() -> UILabel{
         let label = UILabel()
         label.font = introduceFont
-        label.textAlignment = NSTextAlignment.Left
-        label.backgroundColor = UIColor.clearColor()
-        label.textColor = UIColor.blackColor()
+        label.textAlignment = NSTextAlignment.left
+        label.backgroundColor = UIColor.clear
+        label.textColor = UIColor.black
         return label
     }
     
     //自定义的输入label样式
     public class func inputLabel() -> UILabel{
         let label = UILabelPadding()
-        label.textAlignment = NSTextAlignment.Left
-        label.backgroundColor = UIColor.whiteColor()
-        label.textColor = UIColor.blackColor()
+        label.textAlignment = NSTextAlignment.left
+        label.backgroundColor = UIColor.white
+        label.textColor = UIColor.black
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 3
         label.font = introduceFont
@@ -34,15 +34,15 @@ extension UILabel{
     }
     
     //自定义的选择的label样式
-    public class func selectLabel(target: UIViewController,selector: Selector) -> UILabel{
+    public class func selectLabel(_ target: UIViewController,selector: Selector) -> UILabel{
         let label = UILabelPadding()
-        label.textAlignment = NSTextAlignment.Left
-        label.backgroundColor = UIColor.whiteColor()
-        label.textColor = UIColor.blackColor()
+        label.textAlignment = NSTextAlignment.left
+        label.backgroundColor = UIColor.white
+        label.textColor = UIColor.black
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 3
         label.font = introduceFont
-        label.userInteractionEnabled = true
+        label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: target, action: selector)
         label.addGestureRecognizer(tap)
         return label
@@ -51,12 +51,12 @@ extension UILabel{
 
 extension UIButton{
     //自定义的check样式btn
-    public class func checkButton(target: UIViewController, selector: Selector) -> UIButton{
-        let btn = UIButton(type: UIButtonType.Custom)
-        btn.setImage(UIImage(named: "CheckOff"), forState:UIControlState.Normal)
-        btn.setImage(UIImage(named: "CheckOn"), forState:UIControlState.Selected)
-        btn.addTarget(target, action: selector, forControlEvents:.TouchUpInside)
-        btn.selected = false
+    public class func checkButton(_ target: UIViewController, selector: Selector) -> UIButton{
+        let btn = UIButton(type: UIButtonType.custom)
+        btn.setImage(UIImage(named: "CheckOff"), for:UIControlState())
+        btn.setImage(UIImage(named: "CheckOn"), for:UIControlState.selected)
+        btn.addTarget(target, action: selector, for:.touchUpInside)
+        btn.isSelected = false
         return btn
     }
 }
@@ -67,11 +67,11 @@ extension UITextField{
         let textField = UITextField()
         
         textField.font = introduceFont
-        textField.textAlignment = NSTextAlignment.Left
-        textField.borderStyle = UITextBorderStyle.RoundedRect
-        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        textField.backgroundColor = UIColor.whiteColor()
-        textField.textColor = UIColor.blackColor()
+        textField.textAlignment = NSTextAlignment.left
+        textField.borderStyle = UITextBorderStyle.roundedRect
+        textField.clearButtonMode = UITextFieldViewMode.whileEditing
+        textField.backgroundColor = UIColor.white
+        textField.textColor = UIColor.black
         return textField
     }
 }

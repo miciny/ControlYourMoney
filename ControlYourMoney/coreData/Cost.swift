@@ -14,29 +14,29 @@ import UIKit
 class Cost: NSManagedObject {
     //所有的数据
     class func selectAllData() -> NSArray{
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var textData : NSArray = []
-        let fetchData = NSFetchRequest(entityName: entityNameOfCost)
+        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: entityNameOfCost)
         do {
             _ = try
-                textData =  allDataSource.executeFetchRequest(fetchData)
+                textData =  allDataSource.fetch(fetchData) as NSArray
         }catch _ as NSError{
         }
         return textData
     }
     
     //删一条数据
-    class func deleteData(indexPath: Int){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func deleteData(_ indexPath: Int){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var data = NSArray()
         data = selectAllData()
-        allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+        allDataSource.delete(data[indexPath] as! NSManagedObject)
         saveData()
     }
     
     //save
     class func saveData(){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         do {
             _ = try
                 allDataSource.save()
@@ -44,16 +44,16 @@ class Cost: NSManagedObject {
     }
     
     //cost插入一条数据, type应该为支出类型，现在没有记录
-    class func insertCostData(name: String, time: NSDate, type: String, number: Float, period: Int){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func insertCostData(_ name: String, time: Date, type: String, number: Float, period: Int){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCost,
-                                                                      inManagedObjectContext: allDataSource) as! Cost
+        let row = NSEntityDescription.insertNewObject(forEntityName: entityNameOfCost,
+                                                                      into: allDataSource) as! Cost
         row.name = name
         row.time = time
         row.type = type
-        row.number = number
-        row.period = period
+        row.number = number as NSNumber
+        row.period = period as NSNumber
         saveData()
     }
 

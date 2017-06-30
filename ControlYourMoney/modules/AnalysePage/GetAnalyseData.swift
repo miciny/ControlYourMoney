@@ -27,18 +27,18 @@ class GetAnalyseData: NSObject {
         }
         
         for i in 0 ..< accountArray.count{
-            let name = accountArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
+            let name = (accountArray.object(at: i) as AnyObject).value(forKey: incomeOfName) as! String
             nameArray.append(name)
         }
         
         let incomeArray = Salary.selectAllData()
         if incomeArray.count > 0{
             for i in 0  ..< incomeArray.count{
-                let type = incomeArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
+                let type = (incomeArray.object(at: i) as AnyObject).value(forKey: incomeOfName) as! String
                 if(nameArray.contains(type)){
-                    let number = incomeArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                    let number = (incomeArray.object(at: i) as AnyObject).value(forKey: incomeOfNumber) as! Float
                     
-                    if let numberTemp = incomePercent.valueForKey(type){
+                    if let numberTemp = incomePercent.value(forKey: type){
                         incomePercent.setValue((numberTemp as! Float)+number, forKey: type)
                     }else{
                         incomePercent.setValue(number, forKey: type)
@@ -61,18 +61,18 @@ class GetAnalyseData: NSObject {
         }
         //首先获取所有支出的名字
         for i in 0 ..< accountArray.count{
-            let name = accountArray.objectAtIndex(i).valueForKey(payNameNameOfName) as! String
+            let name = (accountArray.object(at: i) as AnyObject).value(forKey: payNameNameOfName) as! String
             nameArray.append(name)
         }
         //根据名字，添加数据
         let cashArray = Cash.selectAllData()
         if cashArray.count > 0{
             for i in 0  ..< cashArray.count{
-                let type = cashArray.objectAtIndex(i).valueForKey(cashNameOfType) as! String
+                let type = (cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfType) as! String
                 if(nameArray.contains(type)){
-                    let number = cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float
+                    let number = (cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float
                     
-                    if let numberTemp = costPercent.valueForKey(type){
+                    if let numberTemp = costPercent.value(forKey: type){
                         costPercent.setValue((numberTemp as! Float)+number, forKey: type)
                     }else{
                         costPercent.setValue(number, forKey: type)
@@ -84,12 +84,12 @@ class GetAnalyseData: NSObject {
         let creditArray = Credit.selectAllData()
         if creditArray.count > 0 {
             for i in 0  ..< creditArray.count{
-                let type = creditArray.objectAtIndex(i).valueForKey(creditNameOfType) as! String
+                let type = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfType) as! String
                 if nameArray.contains(type){
-                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-                    let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+                    let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
+                    let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int
                     
-                    if let numberTemp = costPercent.valueForKey(type){
+                    if let numberTemp = costPercent.value(forKey: type){
                         costPercent.setValue((numberTemp as! Float)+number*Float(periods), forKey: type)
                     }else{
                         costPercent.setValue(number*Float(periods), forKey: type)
@@ -138,9 +138,9 @@ class GetAnalyseData: NSObject {
         for i in 1 ..< 13 {
             let timeArray = NSMutableArray()
             if i > 9 {
-                timeArray.addObject("\(timeNow.currentYear)-\(i)")
+                timeArray.add("\(timeNow.currentYear)-\(i)")
             }else{
-                timeArray.addObject("\(timeNow.currentYear)-0\(i)")
+                timeArray.add("\(timeNow.currentYear)-0\(i)")
             }
             
             let credit = getWhichMonthCreditPayIncludeDone(timeArray)
@@ -158,7 +158,7 @@ class GetAnalyseData: NSObject {
     //=====================================================================================================
     
     //某天现金支出
-    class func getDayPay(day: Int) -> Float{
+    class func getDayPay(_ day: Int) -> Float{
         
         var todayUse : Float = 0
         let cashArray = Cash.selectAllData()
@@ -171,16 +171,16 @@ class GetAnalyseData: NSObject {
         let todayDayStr = dateToStringNoHH(stringToDateNoHH("\(timeNow.currentYear)-\(timeNow.currentMonth)-\(day)"))
         
         for i in 0  ..< cashArray.count{
-            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")
+            let dayStr = dateToStringBySelf(cashArray.object(at: i).value(forKey: cashNameOfTime) as! Date, str: "yyyy-MM-dd")
             if(todayDayStr == dayStr){
-                todayUse = todayUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+                todayUse = todayUse + ((cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float)
             }
         }
         return todayUse
     }
     
     //某月现金支出
-    class func getMonthPay(yyyy: Int, month: Int) -> Float{
+    class func getMonthPay(_ yyyy: Int, month: Int) -> Float{
         var thisMonthUse : Float = 0
         let cashArray = Cash.selectAllData()
         
@@ -192,9 +192,9 @@ class GetAnalyseData: NSObject {
         let timeStr = dateToStringBySelf(stringToDateNoHH("\(yyyy)-\(month)-\(1)"), str: "yyyy-MM")
         
         for i in 0  ..< cashArray.count{
-            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM")
+            let dayStr = dateToStringBySelf(cashArray.object(at: i).value(forKey: cashNameOfTime) as! Date, str: "yyyy-MM")
             if(timeStr == dayStr){
-                thisMonthUse = thisMonthUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+                thisMonthUse = thisMonthUse + ((cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float)
             }
         }
         return thisMonthUse
@@ -235,16 +235,16 @@ class GetAnalyseData: NSObject {
             return salary
         }
         
-        let date = salaryArray.lastObject!.valueForKey(incomeOfTime) as! NSDate
+        let date = (salaryArray.lastObject! as AnyObject).value(forKey: incomeOfTime) as! Date
         let dateStr = dateToStringBySelf(date, str: "yyyy-MM")
         
         for i in 0 ..< salaryArray.count {
-            let dateOne = salaryArray.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate
+            let dateOne = (salaryArray.object(at: i) as AnyObject).value(forKey: incomeOfTime) as! Date
             let dateOneStr = dateToStringBySelf(dateOne, str: "yyyy-MM")
-            let salaryName = salaryArray.objectAtIndex(i).valueForKey(incomeOfName) as! String
+            let salaryName = (salaryArray.object(at: i) as AnyObject).value(forKey: incomeOfName) as! String
             
             if dateStr == dateOneStr && salaryName == "工资"{
-                let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                let number = (salaryArray.object(at: i) as AnyObject).value(forKey: incomeOfNumber) as! Float
                 salary += number
             }
         }
@@ -265,9 +265,9 @@ class GetAnalyseData: NSObject {
             return salary
         }
         for i in 0 ..< salaryArray.count {
-            let time = salaryArray.objectAtIndex(i).valueForKey(incomeOfTime) as! NSDate
+            let time = (salaryArray.object(at: i) as AnyObject).value(forKey: incomeOfTime) as! Date
             if time.currentYear == timeNow.currentYear{
-                let number = salaryArray.objectAtIndex(i).valueForKey(incomeOfNumber) as! Float
+                let number = (salaryArray.object(at: i) as AnyObject).value(forKey: incomeOfNumber) as! Float
                 salary += number
             }
             
@@ -294,9 +294,9 @@ class GetAnalyseData: NSObject {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
+            let type = (costArray.object(at: i) as AnyObject).value(forKey: costNameOfPeriod) as! Int
             if type == 1 {
-                thisYearOnceUse += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
+                thisYearOnceUse += ((costArray.object(at: i) as AnyObject).value(forKey: costNameOfNumber) as? Float)!
             }
         }
         
@@ -333,9 +333,9 @@ class GetAnalyseData: NSObject {
         let todayDayStr = dateToStringBySelf(getTime(), str: "yyyy-MM")
         
         for i in 0  ..< cashArray.count{
-            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM")
+            let dayStr = dateToStringBySelf(cashArray.object(at: i).value(forKey: cashNameOfTime) as! Date, str: "yyyy-MM")
             if(todayDayStr == dayStr){
-                thisMonthUse = thisMonthUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+                thisMonthUse = thisMonthUse + ((cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float)
             }
         }
         return thisMonthUse
@@ -352,9 +352,9 @@ class GetAnalyseData: NSObject {
         
         let todayDayStr = dateToStringBySelf(getTime(), str: "yyyy-MM-dd")
         for i in 0  ..< cashArray.count{
-            let dayStr = dateToStringBySelf(cashArray.objectAtIndex(i).valueForKey(cashNameOfTime) as! NSDate, str: "yyyy-MM-dd")
+            let dayStr = dateToStringBySelf(cashArray.object(at: i).value(forKey: cashNameOfTime) as! Date, str: "yyyy-MM-dd")
             if(todayDayStr == dayStr){
-                todayUse = todayUse + (cashArray.objectAtIndex(i).valueForKey(cashNameOfUseNumber) as! Float)
+                todayUse = todayUse + ((cashArray.object(at: i) as AnyObject).value(forKey: cashNameOfUseNumber) as! Float)
             }
         }
         return todayUse
@@ -369,9 +369,9 @@ class GetAnalyseData: NSObject {
         }
         
         for i in 0 ..< costArray.count {
-            let type = costArray.objectAtIndex(i).valueForKey(costNameOfPeriod) as! Int
+            let type = (costArray.object(at: i) as AnyObject).value(forKey: costNameOfPeriod) as! Int
             if type == 0 {
-                thisMonthPay += (costArray.objectAtIndex(i).valueForKey(costNameOfNumber) as? Float)!
+                thisMonthPay += ((costArray.object(at: i) as AnyObject).value(forKey: costNameOfNumber) as? Float)!
             }
         }
         return thisMonthPay
@@ -397,34 +397,34 @@ class GetAnalyseData: NSObject {
         if month < 3 {
             for i in 1  ..< 13{
                 if(i < 3){
-                    monthArrya.addObject("\(year)-0\(i)")
+                    monthArrya.add("\(year)-0\(i)")
                 }else if i > 9{
-                    monthArrya.addObject("\(year-1)-\(i)")
+                    monthArrya.add("\(year-1)-\(i)")
                 }else{
-                    monthArrya.addObject("\(year-1)-0\(i)")
+                    monthArrya.add("\(year-1)-0\(i)")
                 }
             }
         }else{
             for i in 1  ..< 13{
                 if(i < 3){
-                    monthArrya.addObject("\(year+1)-0\(i)")
+                    monthArrya.add("\(year+1)-0\(i)")
                 }else if i > 9{
-                    monthArrya.addObject("\(year)-\(i)")
+                    monthArrya.add("\(year)-\(i)")
                 }else{
-                    monthArrya.addObject("\(year)-0\(i)")
+                    monthArrya.add("\(year)-0\(i)")
                 }
             }
         }
         
         for i in 0  ..< creditArray.count{
-            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
-            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
-            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+            let time = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfTime) as! Date
+            let date = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int
+            let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int
             for j in 0 ..< periods {
                 let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
                 let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-                if monthArrya.containsObject(lastStr){
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
+                if monthArrya.contains(lastStr){
                     creditTotal += number
                 }
             }
@@ -445,17 +445,17 @@ class GetAnalyseData: NSObject {
         creditTotal += getCreditThisMonthLeftPay()
         
         if month == 1 {
-            monthArrya.addObject("\(year)-02")
+            monthArrya.add("\(year)-02")
         }else if month > 2{
             for i in month+1 ..< 13{
                 if i > 9{
-                    monthArrya.addObject("\(year)-\(i)")
+                    monthArrya.add("\(year)-\(i)")
                 }else{
-                    monthArrya.addObject("\(year)-0\(i)")
+                    monthArrya.add("\(year)-0\(i)")
                 }
             }
             for i in 1 ..< 3{
-                monthArrya.addObject("\(year+1)-0\(i)")
+                monthArrya.add("\(year+1)-0\(i)")
             }
         }
         
@@ -472,8 +472,8 @@ class GetAnalyseData: NSObject {
             return creditTotal
         }
         for i in 0  ..< creditArray.count{
-            let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger
+            let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! NSInteger
             if leftPeriods > 0{
                 creditTotal = creditTotal + number*Float(leftPeriods)
             }
@@ -482,7 +482,7 @@ class GetAnalyseData: NSObject {
     }
     
     //某月信用卡总还,没还完的 调用次数过多会很慢
-    class func getWhichMonthCreditPay(strArray: NSMutableArray) -> Float{
+    class func getWhichMonthCreditPay(_ strArray: NSMutableArray) -> Float{
         
         var thisMonthPay : Float = 0
         let creditArray = Credit.selectAllData()
@@ -491,16 +491,16 @@ class GetAnalyseData: NSObject {
             return thisMonthPay
         }
         for i in 0  ..< creditArray.count{
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int
             if leftPeriods > 0 {
-                let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
-                let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
-                let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+                let time = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfTime) as! Date
+                let date = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int
+                let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int
                 for j in 0 ..< periods {
                     let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
                     let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
-                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-                    if strArray.containsObject(lastStr){
+                    let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
+                    if strArray.contains(lastStr){
                         thisMonthPay += number
                     }
                 }
@@ -511,7 +511,7 @@ class GetAnalyseData: NSObject {
     }
     
     //某月信用卡总还,还完的也算
-    class func getWhichMonthCreditPayIncludeDone(timeArray: NSMutableArray) -> Float{
+    class func getWhichMonthCreditPayIncludeDone(_ timeArray: NSMutableArray) -> Float{
         
         var thisMonthPay : Float = 0
         let creditArray = Credit.selectAllData()
@@ -521,15 +521,15 @@ class GetAnalyseData: NSObject {
         }
         
         for i in 0  ..< creditArray.count{
-            let time = creditArray.objectAtIndex(i).valueForKey(creditNameOfTime) as! NSDate
-            let date = creditArray.objectAtIndex(i).valueForKey(creditNameOfDate) as! Int
-            let periods = creditArray.objectAtIndex(i).valueForKey(creditNameOfPeriods) as! Int
+            let time = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfTime) as! Date
+            let date = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfDate) as! Int
+            let periods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfPeriods) as! Int
             for j in 0 ..< periods {
                 let lastPayDay = CalculateCredit.getLastPayDate(time, day: date, periods: j+1)
                 let lastStr = dateToStringBySelf(lastPayDay, str: "yyyy-MM")
                 
-                if timeArray.containsObject(lastStr){
-                    let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
+                if timeArray.contains(lastStr){
+                    let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
                     thisMonthPay += number
                 }
             }
@@ -551,11 +551,11 @@ class GetAnalyseData: NSObject {
         let todayMonthStr = dateToStringBySelf(timeNow, str: "yyyy-MM")
         
         for i in 0  ..< creditArray.count{
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date
             let nextMonthStr = dateToStringBySelf(nextPayDay, str: "yyyy-MM")
             
-            let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! NSInteger
+            let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! NSInteger
             
             if(todayMonthStr == nextMonthStr && leftPeriods > 0){
                 shouldPayData = shouldPayData + number
@@ -570,9 +570,9 @@ class GetAnalyseData: NSObject {
         let timeNow = getTime()
         let timeArray = NSMutableArray()
         if timeNow.currentMonth > 9{
-            timeArray.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth)")
+            timeArray.add("\(timeNow.currentYear)-\(timeNow.currentMonth)")
         }else{
-            timeArray.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
+            timeArray.add("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
         }
         shouldPayData += getWhichMonthCreditPay(timeArray)
         return shouldPayData
@@ -584,11 +584,11 @@ class GetAnalyseData: NSObject {
         let timeNow = getTime()
         let timeArrayOne = NSMutableArray()
         if timeNow.currentMonth == 12{
-            timeArrayOne.addObject("\(timeNow.currentYear+1)-01")
+            timeArrayOne.add("\(timeNow.currentYear+1)-01")
         }else if timeNow.currentMonth > 8{
-            timeArrayOne.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth+1)")
+            timeArrayOne.add("\(timeNow.currentYear)-\(timeNow.currentMonth+1)")
         }else{
-            timeArrayOne.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth+1)")
+            timeArrayOne.add("\(timeNow.currentYear)-0\(timeNow.currentMonth+1)")
         }
         shouldPayData += getWhichMonthCreditPay(timeArrayOne)
         return shouldPayData
@@ -601,9 +601,9 @@ class GetAnalyseData: NSObject {
         
         let timeArray = NSMutableArray()
         if timeNow.currentMonth > 9{
-            timeArray.addObject("\(timeNow.currentYear)-\(timeNow.currentMonth)")
+            timeArray.add("\(timeNow.currentYear)-\(timeNow.currentMonth)")
         }else{
-            timeArray.addObject("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
+            timeArray.add("\(timeNow.currentYear)-0\(timeNow.currentMonth)")
         }
         
         shouldPayData = GetAnalyseData.getWhichMonthCreditPayIncludeDone(timeArray)
@@ -660,7 +660,7 @@ class GetAnalyseData: NSObject {
         if(data.count == 0){
             return 0
         }else{
-            return Total.selectAllData().valueForKey(totalNameOfCanUse).lastObject as! Float
+            return (Total.selectAllData().value(forKey: totalNameOfCanUse) as AnyObject).lastObject as! Float
         }
     }
 }

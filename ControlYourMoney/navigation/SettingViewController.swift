@@ -11,9 +11,9 @@ import Alamofire
 import SwiftyJSON
 
 class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
-    private var mainTabelView: UITableView? //整个table
-    private var settingData : NSMutableArray? //数据
-    private var manager: Manager!
+    fileprivate var mainTabelView: UITableView? //整个table
+    fileprivate var settingData : NSMutableArray? //数据
+    fileprivate var manager: Manager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.title = "我"
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         downLoadUserInfo()
         reloadUserIcon()
@@ -72,20 +72,20 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         let settingThree = SettingDataModul(icon: nil, name: "数据说明", lable: nil, pic: nil)
         let settingFour = SettingDataModul(icon: settingIcon, name: "高级设置", lable: nil, pic: nil)
         
-        settingData?.addObject([settingOne])
-        settingData?.addObject([settingTwo1, settingTwo2])
-        settingData?.addObject([settingThree])
-        settingData?.addObject([settingFour])
+        settingData?.add([settingOne])
+        settingData?.add([settingTwo1, settingTwo2])
+        settingData?.add([settingThree])
+        settingData?.add([settingFour])
     }
     
     //设置tableView
     func setUpTable(){
-        mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
+        mainTabelView = UITableView(frame: self.view.frame, style: .grouped)  //为group模式
         mainTabelView?.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
         mainTabelView?.showsVerticalScrollIndicator = false
         mainTabelView?.showsHorizontalScrollIndicator = false
-        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine //是否显示线条
+        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.singleLine //是否显示线条
         mainTabelView?.sectionFooterHeight = 5  //每个section的间距
         
         mainTabelView?.delegate = self
@@ -101,23 +101,23 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     //=====================================================================================================
     
     //section个数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return settingData!.count
     }
     
     //每个section的行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingData![section].count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (settingData![section] as AnyObject).count
     }
     
     //计算每个cell高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section: [AnyObject]  =  self.settingData![indexPath.section] as! [AnyObject] //获取section里的对象
         let data = section[indexPath.row]
         let item =  data as! SettingDataModul
         let height  = item.cellHeigth
         
-        return height
+        return height!
     }
     
     //=====================================================================================================
@@ -128,19 +128,19 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     //每个cell内容
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "SettingCell"
         let section : NSArray =  self.settingData![indexPath.section] as! NSArray
         let data = section[indexPath.row]
         let cell =  SettingTableViewCell(data:data as! SettingDataModul, reuseIdentifier:cellId)
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator  //显示后面的小箭头
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator  //显示后面的小箭头
         
         return cell
     }
     
     //选择了row
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        mainTabelView!.deselectRowAtIndexPath(indexPath, animated: true)  //被选择后，会变灰，这么做还原
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainTabelView!.deselectRow(at: indexPath, animated: true)  //被选择后，会变灰，这么做还原
         
         switch indexPath.section{
         //进入个人信息页
@@ -193,23 +193,23 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     //一个section头部的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
     
     func showPasswordAlert() {
         let passwordAlert = UIAlertView(title: "密码验证", message: "请输入原始密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
-        passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
+        passwordAlert.alertViewStyle = UIAlertViewStyle.secureTextInput
         passwordAlert.tag = 5
         passwordAlert.show()
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int){
 
         if alertView.tag == 5 {
             if buttonIndex == 1{
-                if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
-                    let str = alertView.textFieldAtIndex(0)!.text
+                if !alertView.textField(at: 0)!.text!.isEmpty {
+                    let str = alertView.textField(at: 0)!.text
                     assertPW(str!)
                 }else{
                     showPasswordAlert()
@@ -219,7 +219,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //验证密码
-    func assertPW(str: String){
+    func assertPW(_ str: String){
         
         let waitView = MyWaitView()
         waitView.showWait("验证中...")
@@ -256,7 +256,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
 //网络请求
 extension SettingViewController{
     //从db获取user数据
-    func getUserInfoFromDB(account: String, manager: Manager){
+    func getUserInfoFromDB(_ account: String, manager: Manager){
         let userInfoPara = [
             "account": "\(account)",
             "token": "111",
@@ -296,7 +296,7 @@ extension SettingViewController{
     
     
     //获取用户头像
-    func getUserIconFromDB(manager: Manager){
+    func getUserIconFromDB(_ manager: Manager){
         
         manager.request(.GET, NetWork.userIconUrl , parameters: NetWork.userGetParas)
             .responseData { (response) in
@@ -359,9 +359,9 @@ extension SettingViewController{
     }
     
     
-    func reloadTable(section: Int, row: Int){
-        let indexPath = NSIndexPath(forRow: row, inSection: section)
-        mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+    func reloadTable(_ section: Int, row: Int){
+        let indexPath = IndexPath(row: row, section: section)
+        mainTabelView?.reloadRows(at: [indexPath], with: .none)
     }
 
 }

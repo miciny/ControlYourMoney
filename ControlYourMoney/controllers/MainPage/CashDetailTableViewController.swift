@@ -11,8 +11,8 @@ import UIKit
 class CashDetailTableViewController: UITableViewController {
     var showData: [NSMutableDictionary]?  //传入的数据，根据传入的数据显示cell 和 title
     
-    private var textDataDic = NSMutableDictionary() //cell显示的数据
-    private var textDataTotalDic = NSMutableDictionary() //每月显示的总额
+    fileprivate var textDataDic = NSMutableDictionary() //cell显示的数据
+    fileprivate var textDataTotalDic = NSMutableDictionary() //每月显示的总额
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class CashDetailTableViewController: UITableViewController {
     //设置title 等
     func setUpTitle(){
         self.title = "记账列表"
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
     }
     
@@ -40,29 +40,29 @@ class CashDetailTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return self.textDataDic.allKeys.count
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.textDataDic.allValues[section] as! NSArray).count
 
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let data = (self.textDataDic.allValues[indexPath.section] as! NSArray).objectAtIndex(indexPath.row) as! CashDetailTableDataModul
+        let data = (self.textDataDic.allValues[indexPath.section] as! NSArray).object(at: indexPath.row) as! CashDetailTableDataModul
         let cell = MainTableViewCell(data: data, dataType: dataTpye.cashDetail, reuseIdentifier: "cell")
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return (self.self.textDataDic.allKeys[section] as? String)! + "(" + String(0-(self.textDataTotalDic.objectForKey(self.textDataDic.allKeys[section]) as! Float)) + ")"
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return (self.self.textDataDic.allKeys[section] as? String)! + "(" + String(0-(self.textDataTotalDic.object(forKey: self.textDataDic.allKeys[section]) as! Float)) + ")"
     }
     
     override func didReceiveMemoryWarning() {

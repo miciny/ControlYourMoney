@@ -15,7 +15,7 @@ class PieChartsViewController: UIViewController {
     var yearIncomePie: MCYPiePolyLineChartView! //收入百分比
     var isIn = false //是否已经加载了视图
     
-    private var refreshView: RefreshHeaderView? //自己写的
+    fileprivate var refreshView: RefreshHeaderView? //自己写的
     let wiatView = MyWaitView()
 
     override func viewDidLoad() {
@@ -36,9 +36,9 @@ class PieChartsViewController: UIViewController {
             isIn = true
         }
         
-        let PieChartPageQueue: dispatch_queue_t = dispatch_queue_create("PieChartPageQueue", DISPATCH_QUEUE_SERIAL)
+        let PieChartPageQueue: DispatchQueue = DispatchQueue(label: "PieChartPageQueue", attributes: [])
         
-        dispatch_async(PieChartPageQueue,{
+        PieChartPageQueue.async(execute: {
             let dataDic1 = GetAnalyseData.getCostPercent()
             let dataDic2 = GetAnalyseData.getIncomePercent()
             let thisYearPayTotal = GetAnalyseData.getThisYearPayTotal() + GetAnalyseData.getCreditThisYearTotalPay()
@@ -50,7 +50,7 @@ class PieChartsViewController: UIViewController {
                 strTwo = "无数据"
             }
             
-            dispatch_async(mainQueue, {
+            mainQueue.async(execute: {
                 
                 if dataDic1 != nil {
                     self.yearCostPie.setPieChartData(dataDic1!, holeText: strOne)
@@ -71,7 +71,7 @@ class PieChartsViewController: UIViewController {
     //设置ScrollView
     func setScroll(){
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: Width, height: Height-100-60))
-        scrollView.backgroundColor = UIColor.whiteColor()
+        scrollView.backgroundColor = UIColor.white
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         self.view.addSubview(scrollView)
@@ -101,8 +101,8 @@ class PieChartsViewController: UIViewController {
     
     //结束刷新时调用
     func endFresh(){
-        self.scrollView.scrollEnabled = true
-        self.scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
         self.refreshView?.endRefresh()
         let toast = MyToastView()
@@ -118,8 +118,8 @@ class PieChartsViewController: UIViewController {
 extension PieChartsViewController: isRefreshingDelegate{
     //isfreshing中的代理方法
     func reFreshing(){
-        scrollView.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
-        scrollView.scrollEnabled = false
+        scrollView.setContentOffset(CGPoint(x: 0, y: -RefreshHeaderHeight), animated: true)
+        scrollView.isScrollEnabled = false
         //这里做你想做的事
         self.setData()
     }

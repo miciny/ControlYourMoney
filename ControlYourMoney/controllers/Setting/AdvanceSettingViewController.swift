@@ -9,8 +9,8 @@
 import UIKit
 
 class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
-    private var mainTabelView: UITableView? //整个table
-    private var settingData : NSMutableArray? //数据
+    fileprivate var mainTabelView: UITableView? //整个table
+    fileprivate var settingData : NSMutableArray? //数据
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,22 +31,22 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
         let settingOne = SettingDataModul(icon: nil, name: "清空本地数据", lable: nil, pic: nil)
         let settingTwo = SettingDataModul(icon: nil, name: "清空本地缓存", lable: Cache.cacheSize, pic: nil)
         
-        settingData?.addObject([settingOne])
-        settingData?.addObject([settingTwo])
+        settingData?.add([settingOne])
+        settingData?.add([settingTwo])
     }
     
     //footerView
     func setFooterView() -> UIView{
         let footerView = UIView()
-        footerView.backgroundColor = UIColor.clearColor()
+        footerView.backgroundColor = UIColor.clear
         
         let logout = UIButton()
         logout.frame = CGRect(x: 20, y: 20, width: Width-40, height: 44)
-        logout.backgroundColor = UIColor.redColor()
-        logout.setTitle("退出登录", forState: .Normal)
-        logout.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        logout.backgroundColor = UIColor.red
+        logout.setTitle("退出登录", for: UIControlState())
+        logout.setTitleColor(UIColor.white, for: UIControlState())
         logout.layer.cornerRadius = 5
-        logout.addTarget(self, action: #selector(self.logout), forControlEvents: .TouchUpInside)
+        logout.addTarget(self, action: #selector(self.logout), for: .touchUpInside)
         footerView.addSubview(logout)
         
         footerView.frame = CGRect(x: 0, y: 0, width: Width, height: logout.frame.maxY+10)
@@ -63,12 +63,12 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     
     //设置tableView
     func setUpTable(){
-        mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
+        mainTabelView = UITableView(frame: self.view.frame, style: .grouped)  //为group模式
         mainTabelView?.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
         mainTabelView?.showsVerticalScrollIndicator = false
         mainTabelView?.showsHorizontalScrollIndicator = false
-        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine //是否显示线条
+        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.singleLine //是否显示线条
         mainTabelView?.sectionFooterHeight = 5  //每个section的间距
         
         mainTabelView?.delegate = self
@@ -86,33 +86,33 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     //=====================================================================================================
     
     //section个数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return settingData!.count
     }
     
     //每个section的行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingData![section].count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (settingData![section] as AnyObject).count
     }
     
     //计算每个cell高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section: [AnyObject]  =  self.settingData![indexPath.section] as! [AnyObject] //获取section里的对象
         let data = section[indexPath.row]
         let item =  data as! SettingDataModul
         let height  = item.cellHeigth
         
-        return height
+        return height!
     }
     
     //一个section头部的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
     
     //选择了row
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        mainTabelView!.deselectRowAtIndexPath(indexPath, animated: true)  //被选择后，会变灰，这么做还原
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainTabelView!.deselectRow(at: indexPath, animated: true)  //被选择后，会变灰，这么做还原
         switch indexPath.section{
         case 0:
             switch indexPath.row {
@@ -146,12 +146,12 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     
     
     //每个cell内容
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "SettingCell"
         let section : NSArray =  self.settingData![indexPath.section] as! NSArray
         let data = section[indexPath.row] as! SettingDataModul
         let cell =  SettingTableViewCell(data: data , reuseIdentifier:cellId)
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator  //显示后面的小箭头
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator  //显示后面的小箭头
         
         return cell
     }
@@ -163,7 +163,7 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     //=====================================================================================================
     
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         switch alertView.tag{
         case 0:
             if buttonIndex == 1 {
@@ -180,9 +180,9 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
             if buttonIndex == 1 {
                 let wait = MyWaitView()
                 wait.showWait("清除中")
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
                     Cache.clearCache()
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         wait.hideView()
                         self.setData()
                         self.mainTabelView?.reloadData()
@@ -206,18 +206,18 @@ class AdvanceSettingViewController: UIViewController, UITableViewDelegate, UITab
     func loginPage(){
         //导航
         let viewArray = NSMutableArray()
-        viewArray.addObjectsFromArray((self.navigationController?.viewControllers)!)
+        viewArray.addObjects(from: (self.navigationController?.viewControllers)!)
         //删一次
-        viewArray.removeObjectAtIndex(1)
+        viewArray.removeObject(at: 1)
         
-        let rootView = viewArray.objectAtIndex(0) as! UIViewController
+        let rootView = viewArray.object(at: 0) as! UIViewController
         rootView.tabBarController?.selectedIndex = 0
         //重新设置导航器，执行动画
         self.navigationController?.setViewControllers(viewArray as NSArray as! [UIViewController], animated: true)
         //进入登录页
         let vcc = LoginViewController()
         let vccNavigationController = UINavigationController(rootViewController: vcc) //带导航栏
-        rootView.presentViewController(vccNavigationController, animated: true, completion: nil)
+        rootView.present(vccNavigationController, animated: true, completion: nil)
         
     }
 

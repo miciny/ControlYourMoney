@@ -17,10 +17,10 @@ extension Credit {
     @NSManaged var account: String?
     @NSManaged var date: NSNumber?
     @NSManaged var leftPeriods: NSNumber?
-    @NSManaged var nextPayDay: NSDate?
+    @NSManaged var nextPayDay: Date?
     @NSManaged var number: NSNumber?
     @NSManaged var periods: NSNumber?
-    @NSManaged var time: NSDate?
+    @NSManaged var time: Date?
     @NSManaged var type: String?
 
 }

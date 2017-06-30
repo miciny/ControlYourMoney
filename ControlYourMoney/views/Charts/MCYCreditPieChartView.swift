@@ -31,7 +31,7 @@ class MCYCreditPieChartView: UIView {
         setUpPieChart(frame, title: title, holeText: holeText)
     }
     
-    func setUpPieChart(frame: CGRect, title: String, holeText:String){
+    func setUpPieChart(_ frame: CGRect, title: String, holeText:String){
         pieChart = PieChartView()
         pieChart.frame = frame
         
@@ -46,15 +46,15 @@ class MCYCreditPieChartView: UIView {
         
         pieChart.drawCenterTextEnabled = true
         
-        let strs = holeText.componentsSeparatedByString("\n")
+        let strs = holeText.components(separatedBy: "\n")
         let length = (strs[0] as NSString).length
         
         let centerText = NSMutableAttributedString(string: holeText)
         
         var paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        paragraphStyle.alignment = .Center
+        paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 5
         
         centerText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, centerText.length))
@@ -78,7 +78,7 @@ class MCYCreditPieChartView: UIView {
         self.addSubview(pieChart)
     }
     
-    func setPieChartData(titles: [String], values: [Double]){
+    func setPieChartData(_ titles: [String], values: [Double]){
         var yVals = [ChartDataEntry]()
         var xVals = [String]()
         let count = titles.count
@@ -93,9 +93,9 @@ class MCYCreditPieChartView: UIView {
         let dataSet = PieChartDataSet(yVals: yVals, label: nil)
         dataSet.sliceSpace = 0 //每个弧度的间隔
         var colors = [UIColor]()
-        colors.append(UIColor.greenColor())
-        colors.append(UIColor.redColor())
-        colors.append(UIColor.yellowColor())
+        colors.append(UIColor.green)
+        colors.append(UIColor.red)
+        colors.append(UIColor.yellow)
         dataSet.colors = colors
     
         let data = PieChartData(xVals: xVals, dataSet: dataSet)

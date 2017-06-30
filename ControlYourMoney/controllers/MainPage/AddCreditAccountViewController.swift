@@ -19,7 +19,7 @@ class AddCreditAccountViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         
         //取消按钮
-        let rightBarBtn = UIBarButtonItem(title: "取消", style: .Plain, target: self,
+        let rightBarBtn = UIBarButtonItem(title: "取消", style: .plain, target: self,
                                          action: #selector(AddCreditAccountViewController.backToPrevious))
         self.navigationItem.rightBarButtonItem = rightBarBtn
 
@@ -28,32 +28,32 @@ class AddCreditAccountViewController: UIViewController {
     
     //退出页面
     func backToPrevious(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //设置页面元素
     func setupLable(){
         let gap = CGFloat(10)
         
-        let creditAccountSize = sizeWithText("信用账号：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let creditAccountSize = sizeWithText("信用账号：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let creditAccount = UILabel.introduceLabel()
-        creditAccount.frame = CGRectMake(20, 90, creditAccountSize.width, 30)
+        creditAccount.frame = CGRect(x: 20, y: 90, width: creditAccountSize.width, height: 30)
         creditAccount.text = "信用账号："
         self.view.addSubview(creditAccount)
         
         self.creditAccountText = UITextField.inputTextField()
-        self.creditAccountText.frame = CGRectMake(creditAccount.frame.maxX, creditAccount.frame.minY, self.view.frame.size.width-creditAccount.frame.maxX-20, 30)
+        self.creditAccountText.frame = CGRect(x: creditAccount.frame.maxX, y: creditAccount.frame.minY, width: self.view.frame.size.width-creditAccount.frame.maxX-20, height: 30)
         self.creditAccountText.placeholder = "请输入信用账号..."
-        self.creditAccountText.keyboardType = UIKeyboardType.Default //激活时
+        self.creditAccountText.keyboardType = UIKeyboardType.default //激活时
         self.creditAccountText.becomeFirstResponder() //界面打开时就获取焦点
-        self.creditAccountText.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        self.creditAccountText.returnKeyType = UIReturnKeyType.done //表示完成输入
         self.view.addSubview(self.creditAccountText)
         
-        let save = UIButton(frame: CGRectMake(20, creditAccount.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
-        save.layer.backgroundColor = UIColor.redColor().CGColor
+        let save = UIButton(frame: CGRect(x: 20, y: creditAccount.frame.maxY+gap*3, width: self.view.frame.size.width-40, height: 44))
+        save.layer.backgroundColor = UIColor.red.cgColor
         save.layer.cornerRadius = 3
-        save.setTitle("保  存", forState: UIControlState.Normal)
-        save.addTarget(self,action: #selector(saveAccount),forControlEvents:.TouchUpInside)
+        save.setTitle("保  存", for: UIControlState())
+        save.addTarget(self,action: #selector(saveAccount),for:.touchUpInside)
         self.view.addSubview(save)
     }
 
@@ -70,7 +70,7 @@ class AddCreditAccountViewController: UIViewController {
         
         //是否已存在
         for i in 0 ..< accountArray.count {
-            let name = accountArray[i].valueForKey(creditAccountNameOfName) as! String
+            let name = (accountArray[i] as AnyObject).value(forKey: creditAccountNameOfName) as! String
             if name == str {
                 textAlertView("已存在")
                 return
@@ -79,7 +79,7 @@ class AddCreditAccountViewController: UIViewController {
         
         CreditAccount.insertAccountData(str!, time: getTime())
         MyToastView().showToast("添加成功！")
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

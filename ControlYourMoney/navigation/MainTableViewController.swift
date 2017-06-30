@@ -21,19 +21,19 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         self.setUpData()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: false)
         if isCounting {
             return
         }
         self.setUpHeaderView()
         
-        let MainPageQueue: dispatch_queue_t = dispatch_queue_create("MainPageQueue", DISPATCH_QUEUE_SERIAL)
-        dispatch_async(MainPageQueue) {
+        let MainPageQueue: DispatchQueue = DispatchQueue(label: "MainPageQueue", attributes: [])
+        MainPageQueue.async {
             self.isCounting = true
             self.setUpData()
             
-            dispatch_async(mainQueue, {
+            mainQueue.async(execute: {
                 self.isCounting = false
                 self.tableView.reloadData()
             })
@@ -49,13 +49,13 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         let cashModul =  GetDataArray.getCashShowArray()
         
         if cashModul != nil {
-            AllData.addObject([keyOfCash: cashModul!])
+            AllData.add([keyOfCash: cashModul!])
         }
         if creditModul != nil {
-            AllData.addObject([keyOfCredit: creditModul!])
+            AllData.add([keyOfCredit: creditModul!])
         }
         if salaryModul != nil {
-            AllData.addObject([keyOfIncome: salaryModul!])
+            AllData.add([keyOfIncome: salaryModul!])
         }
     }
     
@@ -67,14 +67,14 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         self.title = "首页"
         self.navigationItem.title = mainViewTitle
         
-        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(MainTableViewController.Add))
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(MainTableViewController.Add))
         self.navigationItem.rightBarButtonItem = addItem
         
-        let addItemFast = UIBarButtonItem(title: "记账", style: .Plain, target: self, action:
+        let addItemFast = UIBarButtonItem(title: "记账", style: .plain, target: self, action:
             #selector(MainTableViewController.AddFast))
         self.navigationItem.leftBarButtonItem = addItemFast
         
-        let backItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: nil)
+        let backItem = UIBarButtonItem(title: "返回", style: .plain, target: self, action: nil)
         self.navigationItem.backBarButtonItem = backItem
     }
     
@@ -96,7 +96,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         if headerView == nil {
             headerView = MainTableHeaderView(viewHeight: 120, target: self)
             self.tableView.tableHeaderView = headerView
-            self.tableView.tableFooterView = UIView(frame: CGRectZero)
+            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         }else{
             headerView?.setUpData()
         }
@@ -104,7 +104,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     //进入改剩余用额的页面
-    func buttonClicked(lastStr: String) {
+    func buttonClicked(_ lastStr: String) {
         let vc = ChangeLastViewController()
         vc.hidesBottomBarWhenPushed = true
         vc.lastStr = lastStr
@@ -123,13 +123,13 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     **/
     //=====================================================================================================
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return AllData.count
         
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard AllData.count > 0 else{
             return 0
         }
@@ -137,42 +137,42 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
         //行用卡全显示，工资显示一个，记账显示一个
         let dic = AllData[section] as! NSDictionary
         let key = dic.allKeys[0] as! String
-        let values = dic.valueForKey(key) as! NSArray
+        let values = dic.value(forKey: key) as! NSArray
         return values.count
         
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard AllData.count > 0 else{
-            let cell = UITableViewCell(frame: CGRectZero)
+            let cell = UITableViewCell(frame: CGRect.zero)
             return cell
         }
         
         let dic = AllData[indexPath.section] as! NSDictionary
         let key = dic.allKeys[0] as! String
-        let values = dic.valueForKey(key) as! NSArray
+        let values = dic.value(forKey: key) as! NSArray
         
         if(key == keyOfCash){
-            let data = values.objectAtIndex(indexPath.row) as! MainTableCashModul
+            let data = values.object(at: indexPath.row) as! MainTableCashModul
             let cell = MainTableViewCell(data: data, dataType: dataTpye.cash, reuseIdentifier: "cell")
             return cell
             
         }else if(key == keyOfCredit){
-            let data = values.objectAtIndex(indexPath.row) as! MainTableCreditModul
+            let data = values.object(at: indexPath.row) as! MainTableCreditModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.credit, reuseIdentifier: "cell")
             return cell
             
         }else{ // if(key == keyOfSalary)
-            let data = values.objectAtIndex(indexPath.row) as! MainTableSalaryModul
+            let data = values.object(at: indexPath.row) as! MainTableSalaryModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.salary, reuseIdentifier: "cell")
             return cell
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         guard AllData.count > 0 else{
             return 0
@@ -193,8 +193,8 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     
     
     //cell点击事件
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView!.deselectRow(at: indexPath, animated: true)
         let dic = AllData[indexPath.section] as! NSDictionary
         let key = dic.allKeys[0] as! String
         
@@ -208,10 +208,10 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            let values = dic.valueForKey(key) as! NSArray
+            let values = dic.value(forKey: key) as! NSArray
             let vc = ChangeCreditViewController()
             vc.hidesBottomBarWhenPushed = true
-            let data = values.objectAtIndex(indexPath.row) as! MainTableCreditModul
+            let data = values.object(at: indexPath.row) as! MainTableCreditModul
             
             vc.recivedData = data
             vc.changeIndex = data.index
@@ -220,7 +220,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
     }
     
     //section的title
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard AllData.count > 0 else{
             return nil
         }
@@ -233,7 +233,7 @@ class MainTableViewController: UITableViewController, mainHeaderChangeLastDelega
 
 //actionView选择的协议
 extension MainTableViewController: bottomMenuViewDelegate{
-    func buttonClicked(tag: Int, eventFlag: Int) {
+    func buttonClicked(_ tag: Int, eventFlag: Int) {
         switch eventFlag{
         case 0:
             switch tag{

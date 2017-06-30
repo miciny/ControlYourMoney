@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-let mainQueue = dispatch_get_main_queue() //主线程
-let Width = UIScreen.mainScreen().bounds.width
-let Height = UIScreen.mainScreen().bounds.height
+let mainQueue = DispatchQueue.main //主线程
+let Width = UIScreen.main.bounds.width
+let Height = UIScreen.main.bounds.height
 
 let rowHeight: CGFloat = 120
 let mainViewTitle = "MyMoney"
@@ -88,28 +88,28 @@ let keyOfCash = "现金记账"
 let keyOfCredit = "信用还款"
 
 let standardFontNo = CGFloat(15)
-let standardFont = UIFont.systemFontOfSize(standardFontNo) //标准字体大小
-let pageTitleFont = UIFont.boldSystemFontOfSize(standardFontNo+3) //页面title的字体大小
+let standardFont = UIFont.systemFont(ofSize: standardFontNo) //标准字体大小
+let pageTitleFont = UIFont.boldSystemFont(ofSize: standardFontNo+3) //页面title的字体大小
 
-let totalFont = UIFont.systemFontOfSize(standardFontNo+9) //财产字体大小
-let lastFont = UIFont.systemFontOfSize(standardFontNo+5) //可用字体大小
-let introduceFont = UIFont.systemFontOfSize(standardFontNo+3) //输入框前面文字的字体大小
+let totalFont = UIFont.systemFont(ofSize: standardFontNo+9) //财产字体大小
+let lastFont = UIFont.systemFont(ofSize: standardFontNo+5) //可用字体大小
+let introduceFont = UIFont.systemFont(ofSize: standardFontNo+3) //输入框前面文字的字体大小
 
-let detailTitleFont = UIFont.systemFontOfSize(standardFontNo+5) //tableView的cell的title
-let detailFont = UIFont.systemFontOfSize(standardFontNo+1) //文字的字体大小
-let useNumberFont = UIFont.systemFontOfSize(standardFontNo+35) //文字的字体大小
+let detailTitleFont = UIFont.systemFont(ofSize: standardFontNo+5) //tableView的cell的title
+let detailFont = UIFont.systemFont(ofSize: standardFontNo+1) //文字的字体大小
+let useNumberFont = UIFont.systemFont(ofSize: standardFontNo+35) //文字的字体大小
 
-let accountListTitleFont = UIFont.systemFontOfSize(standardFontNo-3)//字体大小
+let accountListTitleFont = UIFont.systemFont(ofSize: standardFontNo-3)//字体大小
 
-let explainFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
+let explainFont = UIFont.systemFont(ofSize: standardFontNo)//字体大小
 
-let analyseTitleFont = UIFont.boldSystemFontOfSize(standardFontNo+2)//字体大小
-let analyseDataFont = UIFont.systemFontOfSize(standardFontNo)//字体大小
+let analyseTitleFont = UIFont.boldSystemFont(ofSize: standardFontNo+2)//字体大小
+let analyseDataFont = UIFont.systemFont(ofSize: standardFontNo)//字体大小
 
-let settingPageNameFont = UIFont.systemFontOfSize(standardFontNo+2) //设置页字体大小
-let settingPageLableFont = UIFont.systemFontOfSize(standardFontNo) //设置页lable字体大小
+let settingPageNameFont = UIFont.systemFont(ofSize: standardFontNo+2) //设置页字体大小
+let settingPageLableFont = UIFont.systemFont(ofSize: standardFontNo) //设置页lable字体大小
 
-let periodsFont = UIFont.systemFontOfSize(standardFontNo+2) //周期字体
+let periodsFont = UIFont.systemFont(ofSize: standardFontNo+2) //周期字体
 
 let myOwnAccount = "招商银行_"
 let myOwnAccountPayDay = Int(21)

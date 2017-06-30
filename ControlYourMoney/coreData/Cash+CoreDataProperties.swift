@@ -14,7 +14,7 @@ import CoreData
 
 extension Cash {
 
-    @NSManaged var time: NSDate?
+    @NSManaged var time: Date?
     @NSManaged var type: String?
     @NSManaged var useNumber: NSNumber?
     @NSManaged var useWhere: String?

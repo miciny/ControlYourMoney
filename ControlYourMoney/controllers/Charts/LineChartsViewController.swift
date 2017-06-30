@@ -15,7 +15,7 @@ class LineChartsViewController: UIViewController {
     var monthPreLine: MCYLineChartView! //月预计支出表
     var dayCostLine: MCYLineChartView! //日支出表
     
-    private var refreshView: RefreshHeaderView? //自己写的
+    fileprivate var refreshView: RefreshHeaderView? //自己写的
     let wiatView = MyWaitView()
     
     //五项数据源
@@ -42,8 +42,8 @@ class LineChartsViewController: UIViewController {
             wiatView.showWait("计算中...")
         }
         
-        let LinePageQueue: dispatch_queue_t = dispatch_queue_create("LinePageQueue", DISPATCH_QUEUE_SERIAL)
-        dispatch_async(LinePageQueue,{
+        let LinePageQueue: DispatchQueue = DispatchQueue(label: "LinePageQueue", attributes: [])
+        LinePageQueue.async(execute: {
             self.getData()
             
             let thisYearCreditPayTotal = GetAnalyseData.getCreditThisYearTotalPay()
@@ -51,7 +51,7 @@ class LineChartsViewController: UIViewController {
             let thisYearPayTotal = thisYearCashPayTotal + thisYearCreditPayTotal
             let thisMonthPayTotal = GetAnalyseData.getThisMonthUse()
             
-            dispatch_async(mainQueue, {
+            mainQueue.async(execute: {
                 self.monthCostLine.lineChart.descriptionText = "月现金支出(\(thisYearCashPayTotal))"
                 self.monthPreLine.lineChart.descriptionText = "预计月支出(\(thisYearPayTotal))"
                 self.dayCostLine.lineChart.descriptionText = "日现金支出(\(thisMonthPayTotal))"
@@ -72,9 +72,9 @@ class LineChartsViewController: UIViewController {
             days.append("\(i+1)")
         }
         
-        monthsCost = GetAnalyseData.getEveryMonthPay()
-        monthsPreCost = GetAnalyseData.getPreEveryMonthPay()
-        daysCost = GetAnalyseData.getEveryDayPay()
+        monthsCost = GetAnalyseData.getEveryMonthPay() as NSArray
+        monthsPreCost = GetAnalyseData.getPreEveryMonthPay() as NSArray
+        daysCost = GetAnalyseData.getEveryDayPay() as NSArray
     }
     
     //设置显示数据
@@ -91,7 +91,7 @@ class LineChartsViewController: UIViewController {
     // 设置整个scrollView
     func setScroll(){
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: Width, height: Height-100-60))
-        scrollView.backgroundColor = UIColor.whiteColor()
+        scrollView.backgroundColor = UIColor.white
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         self.view.addSubview(scrollView)
@@ -130,8 +130,8 @@ class LineChartsViewController: UIViewController {
     
     //结束刷新时调用
     func endFresh(){
-        self.scrollView.scrollEnabled = true
-        self.scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
         self.refreshView?.endRefresh()
         let toast = MyToastView()
@@ -147,8 +147,8 @@ class LineChartsViewController: UIViewController {
 extension LineChartsViewController: isRefreshingDelegate{
     //isfreshing中的代理方法
     func reFreshing(){
-        scrollView.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
-        scrollView.scrollEnabled = false
+        scrollView.setContentOffset(CGPoint(x: 0, y: -RefreshHeaderHeight), animated: true)
+        scrollView.isScrollEnabled = false
         //这里做你想做的事
         self.calculateData()
     }

@@ -18,13 +18,13 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: false)
+        UIApplication.shared.setStatusBarStyle(.default, animated: false)
         manager = NetWork.getDefaultAlamofireManager()
         setUpEles()
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         hideNavigator()
     }
@@ -35,14 +35,14 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     
     //设置元素
     func setUpEles(){
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         let settingBtnSize = sizeWithText("设置网络", font: standardFont, maxSize: CGSize(width: Width, height: Height))
         let settingBtn = UIButton(frame: CGRect(x: Width-20-settingBtnSize.width, y: 54, width: settingBtnSize.width, height: settingBtnSize.height))
-        settingBtn.setTitle("设置网络", forState: .Normal)
-        settingBtn.setTitleColor(UIColor(red: 0/255, green: 191/255, blue: 255/255, alpha: 1), forState: .Normal)
+        settingBtn.setTitle("设置网络", for: UIControlState())
+        settingBtn.setTitleColor(UIColor(red: 0/255, green: 191/255, blue: 255/255, alpha: 1), for: UIControlState())
         settingBtn.titleLabel?.font = standardFont
-        settingBtn.addTarget(self, action: #selector(self.settingNet), forControlEvents: .TouchUpInside)
+        settingBtn.addTarget(self, action: #selector(self.settingNet), for: .touchUpInside)
         self.view.addSubview(settingBtn)
         
         
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         account.font = standardFont
         account.delegate = self
         account.tag = 1
-        account.clearButtonMode = .WhileEditing
+        account.clearButtonMode = .whileEditing
         self.view.addSubview(account)
         
         let line1 = UIView(frame: CGRect(x: 10, y: nameLabel.frame.maxY, width: Width-10, height: 1))
@@ -81,8 +81,8 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         pw.font = standardFont
         pw.tag = 2
         pw.delegate = self
-        pw.clearButtonMode = .WhileEditing
-        pw.secureTextEntry = true
+        pw.clearButtonMode = .whileEditing
+        pw.isSecureTextEntry = true
         self.view.addSubview(pw)
         
         let line2 = UIView(frame: CGRect(x: 10, y: pwLabel.frame.maxY, width: Width-10, height: 1))
@@ -90,22 +90,22 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         self.view.addSubview(line2)
         
         let loginBtn = UIButton(frame: CGRect(x: 10, y: line2.frame.maxY+10, width: Width-20, height: 44))
-        loginBtn.setTitle("登陆", forState: .Normal)
+        loginBtn.setTitle("登陆", for: UIControlState())
         loginBtn.layer.masksToBounds = true
         loginBtn.layer.cornerRadius = 5
         loginBtn.backgroundColor = UIColor(red: 0/255, green: 191/255, blue: 255/255, alpha: 1)
-        loginBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        loginBtn.addTarget(self, action: #selector(self.login), forControlEvents: .TouchUpInside)
+        loginBtn.setTitleColor(UIColor.white, for: UIControlState())
+        loginBtn.addTarget(self, action: #selector(self.login), for: .touchUpInside)
         self.view.addSubview(loginBtn)
         
         let registBtn = UIButton(frame: CGRect(x: 10, y: Height-64, width: Width-20, height: 44))
-        registBtn.setTitle("注册", forState: .Normal)
+        registBtn.setTitle("注册", for: UIControlState())
         registBtn.layer.masksToBounds = true
         registBtn.layer.borderWidth = 0.8
-        registBtn.layer.borderColor = UIColor.grayColor().CGColor
+        registBtn.layer.borderColor = UIColor.gray.cgColor
         registBtn.layer.cornerRadius = 5
-        registBtn.backgroundColor = UIColor.whiteColor()
-        registBtn.setTitleColor(UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1), forState: .Normal)
+        registBtn.backgroundColor = UIColor.white
+        registBtn.setTitleColor(UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1), for: UIControlState())
         self.view.addSubview(registBtn)
     }
     
@@ -116,7 +116,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     }
     
     //键盘上的完成按钮 相应事件 收起键盘
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //收起键盘
         textField.resignFirstResponder()
         return true
@@ -125,11 +125,11 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     //输入框字符改变了
     //    要获取最新内容，则需要String的 stringByReplacingCharactersInRange 方法，但这个方法在Swift的String中又不支持。
     //    要解决这个问题，就要先替 NSRange 做个扩展。
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         if textField.tag == 1 {
-            let newText = textField.text!.stringByReplacingCharactersInRange(
-                range.toRange(textField.text!), withString: string)
+            let newText = textField.text!.replacingCharacters(
+                in: range.toRange(textField.text!), with: string)
             //加载图片
             if let imageData = SaveDataToCacheDir.loadIconFromCacheDir(newText){
                 userIcon.image = ChangeValue.dataToImage(imageData)
@@ -152,12 +152,12 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         account.resignFirstResponder()
         pw.resignFirstResponder()
         
-        guard let accountStr = account.text where accountStr != "" else{
+        guard let accountStr = account.text, accountStr != "" else{
             textAlertView("请输入账号！")
             return
         }
         
-        guard let pwStr = pw.text where pwStr != "" else{
+        guard let pwStr = pw.text, pwStr != "" else{
             textAlertView("请输入密码！")
             return
         }

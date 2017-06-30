@@ -13,29 +13,29 @@ import UIKit
 class Salary: NSManagedObject {
     //所有的数据
     class func selectAllData() -> NSArray{
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var textData : NSArray = []
-        let fetchData = NSFetchRequest(entityName: entityNameOfIncome)
+        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: entityNameOfIncome)
         do {
             _ = try
-                textData =  allDataSource.executeFetchRequest(fetchData)
+                textData =  allDataSource.fetch(fetchData) as NSArray
         }catch _ as NSError{
         }
         return textData
     }
     
     //删一条数据
-    class func deleteData(indexPath: Int){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func deleteData(_ indexPath: Int){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var data = NSArray()
         data = selectAllData()
-        allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+        allDataSource.delete(data[indexPath] as! NSManagedObject)
         saveData()
     }
     
     //save
     class func saveData(){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         do {
             _ = try
                 allDataSource.save()
@@ -43,26 +43,26 @@ class Salary: NSManagedObject {
     }
     
     //Income插入一条数据
-    class func insertIncomeData(time: NSDate, number: Float, name: String){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func insertIncomeData(_ time: Date, number: Float, name: String){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfIncome,
-                                                                      inManagedObjectContext: allDataSource) as! Salary
+        let row = NSEntityDescription.insertNewObject(forEntityName: entityNameOfIncome,
+                                                                      into: allDataSource) as! Salary
         
         row.name = name
-        row.number = number
+        row.number = number as NSNumber
         row.time = time
         saveData()
     }
     
     //Income改一条数据
-    class func updateIncomeData(indexPath: Int, time: NSDate, number: Float, name: String){
+    class func updateIncomeData(_ indexPath: Int, time: Date, number: Float, name: String){
         var data = NSArray()
         data = selectAllData()
         
-        data[indexPath].setValue(time, forKey: incomeOfTime)
-        data[indexPath].setValue(number, forKey: incomeOfNumber)
-        data[indexPath].setValue(name, forKey: incomeOfName)
+        (data[indexPath] as AnyObject).setValue(time, forKey: incomeOfTime)
+        (data[indexPath] as AnyObject).setValue(number, forKey: incomeOfNumber)
+        (data[indexPath] as AnyObject).setValue(name, forKey: incomeOfName)
         saveData()
     }
 

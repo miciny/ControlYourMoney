@@ -15,29 +15,29 @@ class Cash: NSManagedObject {
 
     //所有的数据
     class func selectAllData() -> NSArray{
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var textData : NSArray = []
-        let fetchData = NSFetchRequest(entityName: entityNameOfCash)
+        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: entityNameOfCash)
         do {
             _ = try
-                textData =  allDataSource.executeFetchRequest(fetchData)
+                textData =  allDataSource.fetch(fetchData) as NSArray
         }catch _ as NSError{
         }
         return textData
     }
     
     //删一条数据
-    class func deleteData(indexPath: Int){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func deleteData(_ indexPath: Int){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var data = NSArray()
         data = selectAllData()
-        allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+        allDataSource.delete(data[indexPath] as! NSManagedObject)
         saveData()
     }
     
     //save
     class func saveData(){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         do {
             _ = try
                 allDataSource.save()
@@ -45,14 +45,14 @@ class Cash: NSManagedObject {
     }
     
     //Cash插入一条数据
-    class func insertCashData(useWhere: String, useNumber: Float, type: String, time: NSDate){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func insertCashData(_ useWhere: String, useNumber: Float, type: String, time: Date){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfCash,
-                                                                      inManagedObjectContext: allDataSource) as! Cash
+        let row = NSEntityDescription.insertNewObject(forEntityName: entityNameOfCash,
+                                                                      into: allDataSource) as! Cash
         row.time = time
         row.type = type
-        row.useNumber = useNumber
+        row.useNumber = useNumber as NSNumber
         row.useWhere = useWhere
         saveData()
     }

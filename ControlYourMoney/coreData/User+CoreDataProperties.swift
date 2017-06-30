@@ -21,9 +21,9 @@ extension User {
     @NSManaged var location: String?
     @NSManaged var pw: String?
     @NSManaged var sex: String?
-    @NSManaged var create_time: NSDate?
+    @NSManaged var create_time: Date?
     @NSManaged var motto: String?
-    @NSManaged var pic: NSData?
+    @NSManaged var pic: Data?
     @NSManaged var http: String?
     @NSManaged var picPath: String?
     @NSManaged var changed: NSNumber? //0没改过 1改过

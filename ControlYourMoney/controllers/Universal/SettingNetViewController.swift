@@ -20,13 +20,13 @@ class SettingNetViewController: UIViewController{
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     func setUpEles(){
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         let nameLabelSize = sizeWithText("IP", font: standardFont, maxSize: CGSize(width: Width, height: Height))
         let nameLabel = UILabel(frame: CGRect(x: 10, y: 100, width: nameLabelSize.width, height: 44))
@@ -37,7 +37,7 @@ class SettingNetViewController: UIViewController{
         account.frame = CGRect(x: nameLabel.frame.maxX + 50, y: nameLabel.frame.minY, width: Width-nameLabel.frame.maxX - 60, height: 44)
         account.placeholder = "请输入IP地址"
         account.font = standardFont
-        account.clearButtonMode = .WhileEditing
+        account.clearButtonMode = .whileEditing
         self.view.addSubview(account)
         
         let line1 = UIView(frame: CGRect(x: 10, y: nameLabel.frame.maxY, width: Width-10, height: 1))
@@ -53,7 +53,7 @@ class SettingNetViewController: UIViewController{
         pw.frame = CGRect(x: account.frame.minX, y: pwLabel.frame.minY, width: account.frame.width, height: 44)
         pw.placeholder = "请输入Port"
         pw.font = standardFont
-        pw.clearButtonMode = .WhileEditing
+        pw.clearButtonMode = .whileEditing
         self.view.addSubview(pw)
         
         let line2 = UIView(frame: CGRect(x: 10, y: pwLabel.frame.maxY, width: Width-10, height: 1))
@@ -61,12 +61,12 @@ class SettingNetViewController: UIViewController{
         self.view.addSubview(line2)
         
         let loginBtn = UIButton(frame: CGRect(x: 10, y: line2.frame.maxY+10, width: Width-20, height: 44))
-        loginBtn.setTitle("保存", forState: .Normal)
+        loginBtn.setTitle("保存", for: UIControlState())
         loginBtn.layer.masksToBounds = true
         loginBtn.layer.cornerRadius = 5
         loginBtn.backgroundColor = UIColor(red: 0/255, green: 191/255, blue: 255/255, alpha: 1)
-        loginBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        loginBtn.addTarget(self, action: #selector(self.save), forControlEvents: .TouchUpInside)
+        loginBtn.setTitleColor(UIColor.white, for: UIControlState())
+        loginBtn.addTarget(self, action: #selector(self.save), for: .touchUpInside)
         self.view.addSubview(loginBtn)
     }
     
@@ -80,12 +80,12 @@ class SettingNetViewController: UIViewController{
     }
     
     func save(){
-        guard let ip = account.text where ip != "" else{
+        guard let ip = account.text, ip != "" else{
             textAlertView("请输入IP地址！")
             return
         }
         
-        guard let port = pw.text where port != "" else{
+        guard let port = pw.text, port != "" else{
             textAlertView("请输入Port端口号！")
             return
         }
@@ -93,7 +93,7 @@ class SettingNetViewController: UIViewController{
         InternetSetting.updateuserData(0, changeValue: ip, changeFieldName: internetSettingNameOfIP)
         InternetSetting.updateuserData(0, changeValue: port, changeFieldName: internetSettingNameOfPort)
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     override func didReceiveMemoryWarning() {

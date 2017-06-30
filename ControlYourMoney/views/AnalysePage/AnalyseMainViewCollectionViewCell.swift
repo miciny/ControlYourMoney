@@ -13,7 +13,7 @@ class AnalyseMainViewCollectionViewCell: UICollectionViewCell {
     var dataLable: UILabel! //cell上title
     var dataPic: UIImageView? //cell上的图片
     var data: UILabel!  //cell上的数据
-    private let picHeight = CGFloat(20)
+    fileprivate let picHeight = CGFloat(20)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,27 +27,27 @@ class AnalyseMainViewCollectionViewCell: UICollectionViewCell {
     func rebuildCell(){
         
         self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.backgroundColor = UIColor.whiteColor()
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.backgroundColor = UIColor.white
         
         self.dataPic = UIImageView()
-        self.dataPic?.frame = CGRectMake(10, (self.frame.height-picHeight)/2, 20, 20)
+        self.dataPic?.frame = CGRect(x: 10, y: (self.frame.height-picHeight)/2, width: 20, height: 20)
         
         self.dataLable = UILabel()
-        self.dataLable.frame = CGRectMake(self.dataPic!.frame.maxX+10, 0, self.frame.width-40, self.frame.height/2)
+        self.dataLable.frame = CGRect(x: self.dataPic!.frame.maxX+10, y: 0, width: self.frame.width-40, height: self.frame.height/2)
         self.dataLable!.font = analyseTitleFont
-        self.dataLable!.textAlignment = NSTextAlignment.Left
-        self.dataLable!.backgroundColor = UIColor.clearColor()
-        self.dataLable!.textColor = UIColor.blackColor()
+        self.dataLable!.textAlignment = NSTextAlignment.left
+        self.dataLable!.backgroundColor = UIColor.clear
+        self.dataLable!.textColor = UIColor.black
         self.dataLable!.numberOfLines = 0
         self.addSubview(self.dataLable)
         
         self.data = UILabel()
         self.data.font = analyseDataFont
-        self.data.frame = CGRectMake(self.dataLable.frame.minX, self.frame.height/2, self.frame.width-40, self.frame.height/2)
-        self.data.textAlignment = NSTextAlignment.Left
-        self.data.backgroundColor = UIColor.clearColor()
-        self.data.textColor = UIColor.grayColor()
+        self.data.frame = CGRect(x: self.dataLable.frame.minX, y: self.frame.height/2, width: self.frame.width-40, height: self.frame.height/2)
+        self.data.textAlignment = NSTextAlignment.left
+        self.data.backgroundColor = UIColor.clear
+        self.data.textColor = UIColor.gray
         self.data.numberOfLines = 0
         self.addSubview(data)
     }

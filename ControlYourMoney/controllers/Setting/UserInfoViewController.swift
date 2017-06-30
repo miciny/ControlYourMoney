@@ -10,9 +10,9 @@ import UIKit
 import Alamofire
 
 class UserInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    private var mainTabelView: UITableView? //整个table
-    private var infoData : NSMutableArray? //数据
-    private var manager: Manager!
+    fileprivate var mainTabelView: UITableView? //整个table
+    fileprivate var infoData : NSMutableArray? //数据
+    fileprivate var manager: Manager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         setData()
         mainTabelView?.reloadData()
@@ -32,7 +32,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     
     func setUpEles(){
         self.title = "个人信息"                        //页面title和底部title
-        self.view.backgroundColor = UIColor.whiteColor() //背景色
+        self.view.backgroundColor = UIColor.white //背景色
     }
     
     func setData(){
@@ -56,8 +56,8 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         let infoTwo2 = SettingDataModul(icon: nil, name: "地区", lable: userData.location, pic: nil)
         let infoTwo3 = SettingDataModul(icon: nil, name: "个性签名", lable: userData.motto, pic: nil)
         
-        infoData?.addObject([infoOne1, infoOne2, infoOne3, infoOne4, infoOne5])
-        infoData?.addObject([infoTwo1, infoTwo2, infoTwo3])
+        infoData?.add([infoOne1, infoOne2, infoOne3, infoOne4, infoOne5])
+        infoData?.add([infoTwo1, infoTwo2, infoTwo3])
     }
     
     //初始化manager
@@ -67,13 +67,13 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
 
     //设置tableView
     func setUpTable(){
-        mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
+        mainTabelView = UITableView(frame: self.view.frame, style: .grouped)  //为group模式
         mainTabelView?.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
         mainTabelView?.showsVerticalScrollIndicator = false
         mainTabelView?.showsHorizontalScrollIndicator = false
         mainTabelView?.sectionFooterHeight = 5
-        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine //是否显示线条
+        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.singleLine //是否显示线条
         
         mainTabelView?.delegate = self
         mainTabelView?.dataSource = self
@@ -82,42 +82,42 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     //section个数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return infoData!.count
     }
     
     //每个section的行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return infoData![section].count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (infoData![section] as AnyObject).count
     }
     
     //计算每个cell高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section: [AnyObject]  =  self.infoData![indexPath.section] as! [AnyObject] //获取section里的对象
         let data = section[indexPath.row]
         let item =  data as! SettingDataModul
         let height  = item.cellHeigth
         
-        return height
+        return height!
     }
     
     //每个cell内容
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "InfoCell"
         let section : NSArray =  self.infoData![indexPath.section] as! NSArray
         let data = section[indexPath.row]
         let cell =  SettingTableViewCell(data: data as! SettingDataModul, reuseIdentifier: cellId)
         //昵称不能变
         if indexPath.section != 0 || indexPath.row != 2 {
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            cell.selectionStyle = .None
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell.selectionStyle = .none
         }
         return cell
     }
     
     //选择了row
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        mainTabelView!.deselectRowAtIndexPath(indexPath, animated: true)  //被选择后，会变灰，这么做还原
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainTabelView!.deselectRow(at: indexPath, animated: true)  //被选择后，会变灰，这么做还原
         
         //提取cell的数据
         let section : NSArray =  self.infoData![indexPath.section] as! NSArray
@@ -153,7 +153,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     //第一个section距离navigationbar的距离,第一个和第二个的间距设置，用mainTabelView?.sectionFooterHeight = 10，这个距离的计算是header的高度加上footer的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
 

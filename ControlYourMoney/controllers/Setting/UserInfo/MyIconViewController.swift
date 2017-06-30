@@ -10,7 +10,7 @@ import UIKit
 
 //选择的协议
 extension MyIconViewController : bottomMenuViewDelegate{
-    func buttonClicked(tag: Int, eventFlag: Int) {
+    func buttonClicked(_ tag: Int, eventFlag: Int) {
         switch eventFlag{
         case 0:
             switch tag{
@@ -29,8 +29,8 @@ extension MyIconViewController : bottomMenuViewDelegate{
 
 class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate{
 
-    private var imageView : UIImageView?
-    private var picker:UIImagePickerController?
+    fileprivate var imageView : UIImageView?
+    fileprivate var picker:UIImagePickerController?
     
     var image: UIImage?
     
@@ -45,10 +45,10 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
     //定义title 导航栏等
     func setUpEles(){
         self.title = "个人头像"
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.black
         
         //右上角添加按钮
-        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Camera, target: self, action: #selector(MyIconViewController.addButtonClicked))
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.camera, target: self, action: #selector(MyIconViewController.addButtonClicked))
         self.navigationItem.rightBarButtonItem = addItem
     }
     
@@ -68,13 +68,13 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     //拍照
     func takePhoto(){
-        let sourceType : UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.Camera
-        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+        let sourceType : UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.camera
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
             picker = UIImagePickerController()
             picker?.delegate = self
             picker!.allowsEditing = true
             picker?.sourceType = sourceType
-            self.presentViewController(picker!, animated:true, completion: nil)
+            self.present(picker!, animated:true, completion: nil)
         }else{
             print("模拟器中无法打开照相机，请在真机上使用")
         }
@@ -83,16 +83,16 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
     //选取当地的照片，想要页面中文，在info.plist 中Localized resources can be mixed 为YES
     func localPhoto(){
         picker = UIImagePickerController()
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker!.sourceType = UIImagePickerControllerSourceType.photoLibrary
         picker!.allowsEditing = true
         picker!.delegate = self
-        self.presentViewController(picker!, animated:true, completion: nil)
+        self.present(picker!, animated:true, completion: nil)
     }
     
     //选取图片之后
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]){
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
         let type : NSString = info["UIImagePickerControllerMediaType"] as! NSString
-        if(type.isEqualToString("public.image")){
+        if(type.isEqual(to: "public.image")){
             let image : UIImage = info["UIImagePickerControllerEditedImage"] as! UIImage
             let imageData = ChangeValue.imageToData(image)
             
@@ -111,7 +111,7 @@ class MyIconViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
             
             imageView!.image = image    //展示
-            picker.dismissViewControllerAnimated(true, completion:nil)
+            picker.dismiss(animated: true, completion:nil)
         }
     }
     

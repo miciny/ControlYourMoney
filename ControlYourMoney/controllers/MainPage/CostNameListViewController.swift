@@ -21,18 +21,18 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         
         //取消按钮
-        let leftBarBtn = UIBarButtonItem(title: "取消", style: .Plain, target: self,
+        let leftBarBtn = UIBarButtonItem(title: "取消", style: .plain, target: self,
                                          action: #selector(backToPrevious))
         self.navigationItem.leftBarButtonItem = leftBarBtn
         
         //右上角+按钮
-        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(goAddPayName))
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(goAddPayName))
         self.navigationItem.rightBarButtonItem = addItem
         
         setUpTable()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setUpData()
         self.searchTable.reloadData()
@@ -44,7 +44,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         searchTable.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
         searchTable.showsHorizontalScrollIndicator = false
-        searchTable.tableFooterView = UIView(frame: CGRectZero)
+        searchTable.tableFooterView = UIView(frame: CGRect.zero)
         
         searchTable.delegate = self
         searchTable.dataSource = self
@@ -58,8 +58,8 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
         dataAll = NSMutableArray()
         let accountTempArray = PayName.selectAllData()
         for i in 0 ..< accountTempArray.count {
-            let name = accountTempArray[i].valueForKey(payNameNameOfName) as! String
-            dataAll.addObject(name)
+            let name = (accountTempArray[i] as AnyObject).value(forKey: payNameNameOfName) as! String
+            dataAll.add(name)
         }
         
         self.dataShow = [AccountListModul]()
@@ -77,42 +77,42 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
      */
     
     //section个数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
     
     //每个section的行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
         count = dataShow.count
         return count
     }
     
     //计算每个cell高度,固定44
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let height  = CGFloat(44)
         return height
     }
     
     //每个cell内容
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellId = "Cell"
         let data = dataShow[indexPath.row]
         let cell =  AccountListTableViewCell(data: data , reuseIdentifier:cellId)
         
         if indexPath.row == 0 {
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
         }
         return cell
     }
     
     //点击事件
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
             return
@@ -126,7 +126,7 @@ class CostNameListViewController: UIViewController, UITableViewDelegate, UITable
 
     //退出页面
     func backToPrevious(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //进入添加支出类型的页面

@@ -10,10 +10,10 @@ import UIKit
 
 class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
-    private var collectionView : UICollectionView?  //整个集合视图
-    private let cellReuseIdentifier = "analyseCell"
-    private var cellData: NSMutableDictionary?
-    private var refreshView: RefreshHeaderView? //自己写的
+    fileprivate var collectionView : UICollectionView?  //整个集合视图
+    fileprivate let cellReuseIdentifier = "analyseCell"
+    fileprivate var cellData: NSMutableDictionary?
+    fileprivate var refreshView: RefreshHeaderView? //自己写的
     
     let preOneStr = "预计本月支出"
     let preTowStr = "预计年底结余"
@@ -49,11 +49,11 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
         layout.minimumLineSpacing = 0 //上下
         layout.minimumInteritemSpacing = 0 //左右
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, 0, Width, Height), collectionViewLayout: layout)
-        self.collectionView?.backgroundColor = UIColor.clearColor()
+        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Width, height: Height), collectionViewLayout: layout)
+        self.collectionView?.backgroundColor = UIColor.clear
         
         //注册一个cell
-        self.collectionView!.registerClass(AnalyseMainViewCollectionViewCell.self, forCellWithReuseIdentifier: self.cellReuseIdentifier)
+        self.collectionView!.register(AnalyseMainViewCollectionViewCell.self, forCellWithReuseIdentifier: self.cellReuseIdentifier)
         
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
@@ -73,8 +73,8 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     
     //计算数据
     func calculateData(){
-        let DataAnalysePageQueue: dispatch_queue_t = dispatch_queue_create("DataAnalysePageQueue", DISPATCH_QUEUE_SERIAL)
-        dispatch_async(DataAnalysePageQueue,{
+        let DataAnalysePageQueue: DispatchQueue = DispatchQueue(label: "DataAnalysePageQueue", attributes: [])
+        DataAnalysePageQueue.async(execute: {
             let thisMonthPay = GetAnalyseData.getPreThisMonthPay()
             let thisYearPay = GetAnalyseData.getPreThisYearPay()
             let nowLeft = GetAnalyseData.getPreNowLeft()
@@ -118,7 +118,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
             let IncomeOne = AnalysePageDataModul(pic: nil, name: self.incomeOneStr, data: "\(allRealSalary)")
             let IncomeTwo = AnalysePageDataModul(pic: nil, name: self.incomeTwoStr, data: "\(allPropety)")
             
-            dispatch_async(mainQueue, {
+            mainQueue.async(execute: {
                 self.cellData = NSMutableDictionary()
                 self.cellData?.setValue([preOne, preTow, preThree, preFour], forKey: "预计")
                 self.cellData?.setValue([creditOne, creditTwo, creditThree, creditFour, creditfive, creditSix], forKey: "信用")
@@ -139,8 +139,8 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     
     //结束刷新时调用
     func endFresh(){
-        self.collectionView!.scrollEnabled = true
-        self.collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight), animated: true)
+        self.collectionView!.isScrollEnabled = true
+        self.collectionView!.setContentOffset(CGPoint(x: 0, y: -RefreshHeaderHeight), animated: true)
         
         self.refreshView?.endRefresh()
         MyToastView().showToast("刷新完成！")
@@ -153,19 +153,19 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
      **/
     //=====================================================================================================
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return (cellData?.allKeys.count)!
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return (cellData!.allValues[section] as! NSArray).count
     }
     
     //collection的内容
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! AnalyseMainViewCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! AnalyseMainViewCollectionViewCell
         
         let data = (cellData!.allValues[indexPath.section] as! NSArray)[indexPath.row] as! AnalysePageDataModul
         if data.pic != nil {
@@ -180,7 +180,7 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     //cell点击事件
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = (cellData!.allValues[indexPath.section] as! NSArray)[indexPath.row] as! AnalysePageDataModul
         switch data.name {
         case preOneStr:
@@ -255,21 +255,21 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
     }
 
     //cell的大小
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         //设置每一个cell的宽高
-        return CGSizeMake(Width/2, 64)
+        return CGSize(width: Width/2, height: 64)
         
     }
     
     //返回分组头部视图的尺寸
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let size = CGSize(width: Width, height: 5)
         return size
     }
     
     //返回分组脚部视图的尺寸
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let size = CGSize(width: Width, height: 15)
         return size
     }
@@ -283,8 +283,8 @@ class DataAnalyseViewController: UIViewController, UICollectionViewDelegate, UIC
 extension DataAnalyseViewController: isRefreshingDelegate{
     //isfreshing中的代理方法
     func reFreshing(){
-        collectionView!.setContentOffset(CGPointMake(0, -RefreshHeaderHeight*2), animated: true)
-        collectionView!.scrollEnabled = false
+        collectionView!.setContentOffset(CGPoint(x: 0, y: -RefreshHeaderHeight*2), animated: true)
+        collectionView!.isScrollEnabled = false
         //这里做你想做的事
         self.calculateData()
     }

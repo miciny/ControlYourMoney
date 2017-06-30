@@ -18,7 +18,7 @@ import SwiftyJSON
 class InsertData: NSObject {
     
     //插入所有money数据
-    class func insertAllMoneyData(json: JSON){
+    class func insertAllMoneyData(_ json: JSON){
         let cashDic = json[entityNameOfCash]
         InsertData.insertCashData(cashDic)
         
@@ -45,7 +45,7 @@ class InsertData: NSObject {
     }
     
     //初始化user数据
-    class func initUserData(data: UserInfoModel){
+    class func initUserData(_ data: UserInfoModel){
         let dataTemp = User.selectAllData()
         if dataTemp.count == 0 {
             User.insertUserData(data.account, name: data.name, nickname: data.nickname, address: data.address, location: data.location, pw: data.pw, sex: data.sex, time: data.time, motto: data.motto, pic: data.pic, http: data.http, picPath: data.picPath)
@@ -55,7 +55,7 @@ class InsertData: NSObject {
     }
     
     //现金
-    class func insertCashData(cashDic: JSON){
+    class func insertCashData(_ cashDic: JSON){
         if cashDic != nil{
             for i in 0 ..< cashDic.count {
                 let row = cashDic[i]
@@ -72,7 +72,7 @@ class InsertData: NSObject {
     }
     
     //收入
-    class func insertIncomeData(incomeDic: JSON){
+    class func insertIncomeData(_ incomeDic: JSON){
         if incomeDic != nil{
             for i in 0 ..< incomeDic.count {
                 let row = incomeDic[i]
@@ -88,7 +88,7 @@ class InsertData: NSObject {
     }
     
     //收入来源
-    class func insertIncomeNameData(incomeNameDic: JSON){
+    class func insertIncomeNameData(_ incomeNameDic: JSON){
         if incomeNameDic != nil{
             for i in 0 ..< incomeNameDic.count {
                 let row = incomeNameDic[i]
@@ -102,7 +102,7 @@ class InsertData: NSObject {
     }
     
     //预计花费
-    class func insertCostData(costDic: JSON){
+    class func insertCostData(_ costDic: JSON){
         if costDic != nil{
             for i in 0 ..< costDic.count {
                 let row = costDic[i]
@@ -120,7 +120,7 @@ class InsertData: NSObject {
     }
     
     //总计
-    class func insertTotalData(totalDic: JSON){
+    class func insertTotalData(_ totalDic: JSON){
         if totalDic != nil{
             for i in 0 ..< totalDic.count {
                 let row = totalDic[i]
@@ -134,7 +134,7 @@ class InsertData: NSObject {
     }
     
     //支出类型
-    class func insertPayNameData(payNameDic: JSON){
+    class func insertPayNameData(_ payNameDic: JSON){
         if payNameDic != nil{
             for i in 0 ..< payNameDic.count {
                 let row = payNameDic[i]
@@ -148,7 +148,7 @@ class InsertData: NSObject {
     }
     
     //信用账号
-    class func insertCreditAccountData(creditAccountDic: JSON){
+    class func insertCreditAccountData(_ creditAccountDic: JSON){
         if creditAccountDic != nil{
             for i in 0 ..< creditAccountDic.count {
                 let row = creditAccountDic[i]
@@ -162,7 +162,7 @@ class InsertData: NSObject {
     }
     
     //信用
-    class func insertCreditData(creditDic: JSON){
+    class func insertCreditData(_ creditDic: JSON){
         if creditDic != nil{
             for i in 0 ..< creditDic.count {
                 let row = creditDic[i]

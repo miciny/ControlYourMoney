@@ -27,7 +27,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
     }
 
     func setUpEles(){
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         userIcon.frame = CGRect(x: Width/2-50, y: 100, width: 100, height: 100)
         userIcon.image = ChangeValue.dataToImage(nil)
@@ -44,16 +44,16 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         tipLabel.font = standardFont
         tipLabel.sizeToFit()
         tipLabel.textColor = UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1)
-        tipLabel.center = CGPointMake(Width * 0.5, CGRectGetMaxY(imgView.frame) + 30)
+        tipLabel.center = CGPoint(x: Width * 0.5, y: imgView.frame.maxY + 30)
         self.view.addSubview(tipLabel)
         
         let changeAccountBtnSize = sizeWithText("切换用户", font: pageTitleFont, maxSize: CGSize(width: Width, height: Height))
         let changeAccountBtn = UIButton(frame: CGRect(x: Width/2-changeAccountBtnSize.width/2, y: Height-64, width: changeAccountBtnSize.width, height: 44))
-        changeAccountBtn.setTitleColor(UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1), forState: .Normal)
-        changeAccountBtn.setTitle("切换用户", forState: .Normal)
+        changeAccountBtn.setTitleColor(UIColor(red: 0, green: 191/255, blue: 255/255, alpha: 1), for: UIControlState())
+        changeAccountBtn.setTitle("切换用户", for: UIControlState())
         changeAccountBtn.titleLabel?.font = pageTitleFont
-        changeAccountBtn.backgroundColor = UIColor.clearColor()
-        changeAccountBtn.addTarget(self, action: #selector(self.changeAccount), forControlEvents: .TouchUpInside)
+        changeAccountBtn.backgroundColor = UIColor.clear
+        changeAccountBtn.addTarget(self, action: #selector(self.changeAccount), for: .touchUpInside)
         self.view.addSubview(changeAccountBtn)
     
     }
@@ -68,8 +68,8 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         self.navigationController?.pushViewController(vcc, animated: true)
         //导航
         let viewArray = NSMutableArray()
-        viewArray.addObjectsFromArray((self.navigationController?.viewControllers)!)
-        viewArray.removeObjectAtIndex(0)
+        viewArray.addObjects(from: (self.navigationController?.viewControllers)!)
+        viewArray.removeObject(at: 0)
         //重新设置导航器，执行动画
         self.navigationController?.setViewControllers(viewArray as NSArray as! [UIViewController], animated: true)
         
@@ -88,7 +88,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setUpTouch()
     }
     
@@ -97,11 +97,11 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
         let context = LAContext()
         var error : NSError?
         
-        if (context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error)) {
-            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "请验证已有指纹", reply: { (success: Bool, error: NSError?) -> Void in
+        if (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)) {
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: "请验证已有指纹", reply: { (success: Bool, error: NSError?) -> Void in
                 
                 // 进入主页面
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if success {
                         self.dismiss()
                     }else{
@@ -110,12 +110,12 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
                         }
                     }
                 })
-            })
+            } as! (Bool, Error?) -> Void)
         }else{
             switch error!.code{
-            case LAError.TouchIDNotEnrolled.rawValue:
+            case LAError.Code.touchIDNotEnrolled.rawValue:
                 UIAlertView(title: "提示", message: "您还没有保存过Touch ID", delegate: self, cancelButtonTitle: "好的").show()
-            case LAError.PasscodeNotSet.rawValue:
+            case LAError.Code.passcodeNotSet.rawValue:
                 UIAlertView(title: "提示", message: "您还没有设置密码", delegate: self, cancelButtonTitle: "好的").show()
             default:
                 UIAlertView(title: "提示", message: "TouchID不可用", delegate: self, cancelButtonTitle: "好的").show()
@@ -128,16 +128,16 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
     //密码验证 可以弄个输入框，输入密码 或者跳到输入密码界面
     func showPasswordAlert() {
         let passwordAlert = UIAlertView(title: "TouchID", message: "请输入密码", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
-        passwordAlert.alertViewStyle = UIAlertViewStyle.SecureTextInput
+        passwordAlert.alertViewStyle = UIAlertViewStyle.secureTextInput
         passwordAlert.tag = 5
         passwordAlert.show()
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int){
         if alertView.tag == 5 {
             if buttonIndex == 1{
-                if !alertView.textFieldAtIndex(0)!.text!.isEmpty {
-                    if alertView.textFieldAtIndex(0)!.text == passwdString {
+                if !alertView.textField(at: 0)!.text!.isEmpty {
+                    if alertView.textField(at: 0)!.text == passwdString {
                         self.dismiss()
                     }else{
                         showPasswordAlert()
@@ -154,7 +154,7 @@ class TouchIDViewController: UIViewController, UIAlertViewDelegate{
     
     //消失
     func dismiss(){
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

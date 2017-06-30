@@ -33,7 +33,7 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.view.addSubview(tableView)
     }
@@ -46,38 +46,38 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
 
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return AllData.allKeys.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //行用卡全显示，工资显示一个，记账显示一个
         return (AllData.allValues[section] as! NSArray).count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
-            let data = AllData.valueForKey(keyOfCash)?.objectAtIndex(indexPath.row) as! MainTableCashModul
+            let data = (AllData.value(forKey: keyOfCash) as AnyObject).object(indexPath.row) as! MainTableCashModul
             let cell = MainTableViewCell(data: data, dataType: dataTpye.cash, reuseIdentifier: "cell")
             return cell
             
         }else if((AllData.allKeys[indexPath.section] as? String) == keyOfCredit){
-            let data = AllData.valueForKey(keyOfCredit)?.objectAtIndex(indexPath.row) as! MainTableCreditModul
+            let data = (AllData.value(forKey: keyOfCredit) as AnyObject).object(indexPath.row) as! MainTableCreditModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.credit, reuseIdentifier: "cell")
             return cell
             
         }else{ // if((textData.allKeys[indexPath.section] as? String) == keyOfSalary)
-            let data = AllData.valueForKey(keyOfIncome)?.objectAtIndex(indexPath.row) as! MainTableSalaryModul
+            let data = (AllData.value(forKey: keyOfIncome) as AnyObject).object(indexPath.row) as! MainTableSalaryModul
             
             let cell = MainTableViewCell(data: data, dataType: dataTpye.salary, reuseIdentifier: "cell")
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
             return 130
             
@@ -90,8 +90,8 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     //cell点击事件
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView!.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView!.deselectRow(at: indexPath, animated: true)
         
         if((AllData.allKeys[indexPath.section] as? String) == keyOfCash){
             let vc = CashDetailTableViewController()
@@ -103,7 +103,7 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let vc = ChangeCreditViewController()
-            let data = AllData.valueForKey(keyOfCredit)?.objectAtIndex(indexPath.row) as! MainTableCreditModul
+            let data = (AllData.value(forKey: keyOfCredit) as AnyObject).object(indexPath.row) as! MainTableCreditModul
             
             vc.recivedData = data
             vc.changeIndex = data.index
@@ -112,7 +112,7 @@ class CreditDetailListViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     //section的title
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return AllData.allKeys[section] as? String
     }
     

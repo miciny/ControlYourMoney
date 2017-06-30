@@ -14,32 +14,32 @@ import UIKit
 class PayName: NSManagedObject {
     //所有的数据
     class func selectAllData() -> NSArray{
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var textData : NSArray = []
-        let fetchData = NSFetchRequest(entityName: entityNameOfPayName)
+        let fetchData = NSFetchRequest<NSFetchRequestResult>(entityName: entityNameOfPayName)
 //        let predicate = NSPredicate(format: "id= ‘1‘ ", "")
 //        fetchData.predicate = predicate
         
         do {
             _ = try
-                textData =  allDataSource.executeFetchRequest(fetchData)
+                textData =  allDataSource.fetch(fetchData) as NSArray
         }catch _ as NSError{
         }
         return textData
     }
     
     //删一条数据
-    class func deleteData(indexPath: Int){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func deleteData(_ indexPath: Int){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         var data = NSArray()
         data = selectAllData()
-        allDataSource.deleteObject(data[indexPath] as! NSManagedObject)
+        allDataSource.delete(data[indexPath] as! NSManagedObject)
         saveData()
     }
     
     //save
     class func saveData(){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         do {
             _ = try
                 allDataSource.save()
@@ -47,11 +47,11 @@ class PayName: NSManagedObject {
     }
     
     //payName插入一条数据
-    class func insertPayNameData(name: String, time: NSDate){
-        let allDataSource = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    class func insertPayNameData(_ name: String, time: Date){
+        let allDataSource = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let row = NSEntityDescription.insertNewObjectForEntityForName(entityNameOfPayName,
-                                                                    inManagedObjectContext: allDataSource) as! PayName
+        let row = NSEntityDescription.insertNewObject(forEntityName: entityNameOfPayName,
+                                                                    into: allDataSource) as! PayName
         row.name = name
         row.time = time
         saveData()

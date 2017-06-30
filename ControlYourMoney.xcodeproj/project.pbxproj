@@ -527,8 +527,8 @@
 		E16ED93D1C23B8C700D9BFB7 /* ControlYourMoney */ = {
 			isa = PBXGroup;
 			children = (
-				E15B2BA11D0287F0009590DB /* internet */,
 				E126FCB31CF8B25D00DAFF84 /* json.json */,
+				E15B2BA11D0287F0009590DB /* internet */,
 				E126FC2E1CF8237F00DAFF84 /* coreData */,
 				E18774821CE2D41600CBBBB3 /* navigation */,
 				E19E01EC1CE2C74700A52C04 /* modules */,
@@ -666,6 +666,7 @@
 					E16ED93A1C23B8C700D9BFB7 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 6Z66KJ4WDN;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -713,7 +714,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		6CD37998A94BDD3D5E08499B /* [CP] Embed Pods Frameworks */ = {
@@ -956,12 +957,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.myMoney;
 				PRODUCT_NAME = MakeMoney;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -976,11 +978,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ControlYourMoney/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maocaiyuan.myMoney;
 				PRODUCT_NAME = MakeMoney;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -9,9 +9,9 @@
 import UIKit
 
 enum RefreshState{
-    case  RefreshStateNormal //正常
-    case  RefreshStatePulling //正在下啦
-    case  RefreshStateLoading //正在加载
+    case  refreshStateNormal //正常
+    case  refreshStatePulling //正在下啦
+    case  refreshStateLoading //正在加载
 }
 
 let RefreshHeaderHeight: CGFloat = 64 //高度
@@ -19,13 +19,13 @@ let RefreshHeaderHeight: CGFloat = 64 //高度
 class RefreshHeaderView: UIView, UIScrollViewDelegate{
 
     var refreshState: RefreshState?
-    private var delegate : isRefreshingDelegate?
+    fileprivate var delegate : isRefreshingDelegate?
     
-    private var headerView: UIView! //顶部刷新view
-    private var titleLabel: UILabel!
-    private var scrollView: UIScrollView!
-    private var actView: UIActivityIndicatorView?
-    private var arrowImage: UIImageView?
+    fileprivate var headerView: UIView! //顶部刷新view
+    fileprivate var titleLabel: UILabel!
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var actView: UIActivityIndicatorView?
+    fileprivate var arrowImage: UIImageView?
     
     init(frame: CGRect, subView: UIScrollView, target: isRefreshingDelegate){
         
@@ -39,10 +39,10 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
     
     //设置观察者
     func designKFC(){
-        scrollView.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: nil)
+        scrollView.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.new, context: nil)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if(keyPath == "contentOffset"){
             scrollViewContentOffsetDidChange(scrollView);
         }
@@ -51,17 +51,17 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
     //设置页面
     func initUI(){
         
-        headerView = UIView(frame: CGRectMake(0, -RefreshHeaderHeight, scrollView.frame.width, RefreshHeaderHeight))
-        headerView.backgroundColor = UIColor.clearColor()
+        headerView = UIView(frame: CGRect(x: 0, y: -RefreshHeaderHeight, width: scrollView.frame.width, height: RefreshHeaderHeight))
+        headerView.backgroundColor = UIColor.clear
         scrollView.addSubview(headerView)
         
         titleLabel = UILabel()
-        titleLabel?.font = UIFont.systemFontOfSize(12)
-        titleLabel?.textAlignment = NSTextAlignment.Center
+        titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        titleLabel?.textAlignment = NSTextAlignment.center
         titleLabel?.text = "下拉刷新"
         
         actView = UIActivityIndicatorView()
-        actView?.color = UIColor.grayColor()
+        actView?.color = UIColor.gray
         
         arrowImage = UIImageView(image: UIImage(named: "tableview_pull_refresh"))
         
@@ -95,61 +95,61 @@ class RefreshHeaderView: UIView, UIScrollViewDelegate{
     }
     
     //delegate
-    func scrollViewContentOffsetDidChange(scrollView: UIScrollView) {
+    func scrollViewContentOffsetDidChange(_ scrollView: UIScrollView) {
         
-        if(dragHeight() < 0 || refreshState == RefreshState.RefreshStateLoading ){
+        if(dragHeight() < 0 || refreshState == RefreshState.refreshStateLoading ){
             return
         }else{
-            if(scrollView.dragging){
+            if(scrollView.isDragging){
                 if(dragHeight() < RefreshHeaderHeight){
-                    setRrefreshState(.RefreshStateNormal)
+                    setRrefreshState(.refreshStateNormal)
                 }else{
-                    setRrefreshState(.RefreshStatePulling)
+                    setRrefreshState(.refreshStatePulling)
                 }
             }else{
-                if(refreshState == RefreshState.RefreshStatePulling){
-                    setRrefreshState(.RefreshStateLoading)
+                if(refreshState == RefreshState.refreshStatePulling){
+                    setRrefreshState(.refreshStateLoading)
                 }
             }
         }
     }
     
     //刷新状态变换
-    func setRrefreshState(state: RefreshState){
+    func setRrefreshState(_ state: RefreshState){
         
         refreshState = state
         switch state{
-        case .RefreshStateNormal:
+        case .refreshStateNormal:
             
-            arrowImage?.hidden = false
+            arrowImage?.isHidden = false
             actView?.stopAnimating()
             titleLabel?.text = "下拉刷新"
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.arrowImage?.transform  = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.arrowImage?.transform  = CGAffineTransform.identity
             })
             break
-        case .RefreshStatePulling:
+        case .refreshStatePulling:
             titleLabel?.text = "松开刷新"
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.arrowImage?.transform  = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.arrowImage?.transform  = CGAffineTransform(rotationAngle: CGFloat(M_PI))
             })
             break
-        case .RefreshStateLoading:
+        case .refreshStateLoading:
             titleLabel?.text = "正在刷新"
-            arrowImage?.hidden = true
+            arrowImage?.isHidden = true
             actView?.startAnimating()
             self.delegate?.reFreshing()
             break
         }
     }
     
-    private func dragHeight()->CGFloat{
+    fileprivate func dragHeight()->CGFloat{
         return  (scrollView.contentOffset.y + scrollView.contentInset.top) *  -1.0;
     }
     
     //结束刷新
     func endRefresh(){
-        setRrefreshState(.RefreshStateNormal)
+        setRrefreshState(.refreshStateNormal)
     }
 }
 

@@ -10,21 +10,21 @@ import UIKit
 
 class MainTableHeaderView: UIView {
     
-    private let totalLabel: UILabel! //财产
-    private let lastLabel: UILabel! //可用
-    private let shouldPayLabel: UILabel! //应还
+    fileprivate let totalLabel: UILabel! //财产
+    fileprivate let lastLabel: UILabel! //可用
+    fileprivate let shouldPayLabel: UILabel! //应还
     
-    private let shouldPayText: UILabel!
-    private let totalText: UILabel!
-    private let lastText: UILabel!
+    fileprivate let shouldPayText: UILabel!
+    fileprivate let totalText: UILabel!
+    fileprivate let lastText: UILabel!
     
-    private var total: String! //总的财产
-    private var last: String! //可用的数据
-    private var shouldPay: String! //应还
+    fileprivate var total: String! //总的财产
+    fileprivate var last: String! //可用的数据
+    fileprivate var shouldPay: String! //应还
     
-    private var headerViewHeight: CGFloat!
-    private var shouldPayType: Int! //显示 本月应还 还是 下月应还 的flag， 1为本月 0为下月
-    private var creditTotal: Float! //所有信用应还
+    fileprivate var headerViewHeight: CGFloat!
+    fileprivate var shouldPayType: Int! //显示 本月应还 还是 下月应还 的flag， 1为本月 0为下月
+    fileprivate var creditTotal: Float! //所有信用应还
     
     var delegate : mainHeaderChangeLastDelegate?
     
@@ -82,44 +82,44 @@ class MainTableHeaderView: UIView {
     //设置元素
     func setUpView(){
         
-        self.frame = CGRectMake(0, 0, Width, headerViewHeight)
-        self.backgroundColor = UIColor.whiteColor()
+        self.frame = CGRect(x: 0, y: 0, width: Width, height: headerViewHeight)
+        self.backgroundColor = UIColor.white
         
-        let totalSize = sizeWithText("财产：", font: totalFont, maxSize: CGSizeMake(self.frame.width/2, headerViewHeight/3))
-        self.totalText.frame = CGRectMake(20, 0, totalSize.width , headerViewHeight/3)
-        self.totalText.textAlignment = NSTextAlignment.Left
+        let totalSize = sizeWithText("财产：", font: totalFont, maxSize: CGSize(width: self.frame.width/2, height: headerViewHeight/3))
+        self.totalText.frame = CGRect(x: 20, y: 0, width: totalSize.width , height: headerViewHeight/3)
+        self.totalText.textAlignment = NSTextAlignment.left
         self.totalText.font = totalFont
-        self.totalText.textColor = UIColor.blackColor()
+        self.totalText.textColor = UIColor.black
         
-        self.totalLabel.frame = CGRectMake(totalText.frame.maxX, 0, self.frame.width-totalText.frame.maxX-20 , headerViewHeight/3)
-        self.totalLabel.textAlignment = NSTextAlignment.Right
+        self.totalLabel.frame = CGRect(x: totalText.frame.maxX, y: 0, width: self.frame.width-totalText.frame.maxX-20 , height: headerViewHeight/3)
+        self.totalLabel.textAlignment = NSTextAlignment.right
         self.totalLabel.font = totalFont
-        self.totalLabel.textColor = UIColor.blueColor()
+        self.totalLabel.textColor = UIColor.blue
         
-        let lastSize = sizeWithText("可用：", font: lastFont, maxSize: CGSizeMake(self.frame.width/2, headerViewHeight/3))
-        self.lastText.frame = CGRectMake(20, headerViewHeight/3, lastSize.width , headerViewHeight/3)
-        self.lastText.textAlignment = NSTextAlignment.Left
+        let lastSize = sizeWithText("可用：", font: lastFont, maxSize: CGSize(width: self.frame.width/2, height: headerViewHeight/3))
+        self.lastText.frame = CGRect(x: 20, y: headerViewHeight/3, width: lastSize.width , height: headerViewHeight/3)
+        self.lastText.textAlignment = NSTextAlignment.left
         self.lastText.font = lastFont
-        self.lastText.textColor = UIColor.blackColor()
+        self.lastText.textColor = UIColor.black
         
-        self.lastLabel.frame = CGRectMake(lastText.frame.maxX, headerViewHeight/3, self.frame.width-lastText.frame.maxX-20, headerViewHeight/3)
-        self.lastLabel.textAlignment = NSTextAlignment.Right
+        self.lastLabel.frame = CGRect(x: lastText.frame.maxX, y: headerViewHeight/3, width: self.frame.width-lastText.frame.maxX-20, height: headerViewHeight/3)
+        self.lastLabel.textAlignment = NSTextAlignment.right
         self.lastLabel.font = lastFont
-        self.lastLabel.userInteractionEnabled = true
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeLast))
+        self.lastLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeLast))
         self.lastLabel.addGestureRecognizer(tap)
-        self.lastLabel.textColor = UIColor.blueColor()
+        self.lastLabel.textColor = UIColor.blue
         
-        let shouldPaySize = sizeWithText("本月应还：", font: lastFont, maxSize: CGSizeMake(self.frame.width/2, headerViewHeight/3))
-        self.shouldPayText.frame = CGRectMake(20, headerViewHeight*2/3, shouldPaySize.width, headerViewHeight/3)
-        self.shouldPayText.textAlignment = NSTextAlignment.Left
+        let shouldPaySize = sizeWithText("本月应还：", font: lastFont, maxSize: CGSize(width: self.frame.width/2, height: headerViewHeight/3))
+        self.shouldPayText.frame = CGRect(x: 20, y: headerViewHeight*2/3, width: shouldPaySize.width, height: headerViewHeight/3)
+        self.shouldPayText.textAlignment = NSTextAlignment.left
         self.shouldPayText.font = lastFont
-        self.shouldPayText.textColor = UIColor.blackColor()
+        self.shouldPayText.textColor = UIColor.black
         
-        self.shouldPayLabel.frame = CGRectMake(shouldPayText.frame.maxX, headerViewHeight*2/3, self.frame.width-shouldPayText.frame.maxX-20, headerViewHeight/3)
-        self.shouldPayLabel.textAlignment = NSTextAlignment.Right
+        self.shouldPayLabel.frame = CGRect(x: shouldPayText.frame.maxX, y: headerViewHeight*2/3, width: self.frame.width-shouldPayText.frame.maxX-20, height: headerViewHeight/3)
+        self.shouldPayLabel.textAlignment = NSTextAlignment.right
         self.shouldPayLabel.font = lastFont
-        self.shouldPayLabel.textColor = UIColor.blueColor()
+        self.shouldPayLabel.textColor = UIColor.blue
         
         self.addSubview(self.totalLabel)
         self.addSubview(self.totalText)
@@ -131,7 +131,7 @@ class MainTableHeaderView: UIView {
     
     //提取数据
     func setUpData(){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             //这里写需要放到子线程做的耗时的代码
             var shouldPayData : Float = 0
             let thisMonthCreditLeftPay = GetAnalyseData.getCreditThisMonthLeftPay()
@@ -150,23 +150,23 @@ class MainTableHeaderView: UIView {
             //显示总金额，可用和应还
             let lastData = GetAnalyseData.getCanUseToFloat()
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if self.creditTotal > 3000{
-                    self.shouldPayLabel.textColor = UIColor.redColor()
+                    self.shouldPayLabel.textColor = UIColor.red
                 }else{
-                    self.shouldPayLabel.textColor = UIColor.greenColor()
+                    self.shouldPayLabel.textColor = UIColor.green
                 }
                 
                 if lastData < 1000{
-                    self.lastLabel.textColor = UIColor.redColor()
+                    self.lastLabel.textColor = UIColor.red
                 }else{
-                    self.lastLabel.textColor = UIColor.greenColor()
+                    self.lastLabel.textColor = UIColor.green
                 }
                 
                 if -self.creditTotal + lastData < 1000{
-                    self.totalLabel.textColor = UIColor.redColor()
+                    self.totalLabel.textColor = UIColor.red
                 }else{
-                    self.totalLabel.textColor = UIColor.greenColor()
+                    self.totalLabel.textColor = UIColor.green
                 }
                 
                 self.total = String(-self.creditTotal + lastData)

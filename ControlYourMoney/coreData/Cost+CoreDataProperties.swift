@@ -17,7 +17,7 @@ extension Cost {
     @NSManaged var name: String?
     @NSManaged var number: NSNumber?
     @NSManaged var period: NSNumber?
-    @NSManaged var time: NSDate?
+    @NSManaged var time: Date?
     @NSManaged var type: String?
 
 }

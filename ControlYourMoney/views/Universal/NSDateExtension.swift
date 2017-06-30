@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSDate{
+extension Date{
     /// 返回当前日期 年份
     var currentYear:Int{
         get{
@@ -33,11 +33,11 @@ extension NSDate{
      - parameter format: 比如 GetFormatDate(yyyy) 返回当前日期年份
      - returns: 返回值
      */
-    func getFormatDate(format:String)->Int{
-        let dateFormatter = NSDateFormatter()
+    func getFormatDate(_ format:String)->Int{
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        let dateString:String = dateFormatter.stringFromDate(self)
-        var dates:[String] = dateString.componentsSeparatedByString("")
+        let dateString:String = dateFormatter.string(from: self)
+        var dates:[String] = dateString.components(separatedBy: "")
         let Value  = dates[0]
         if(Value==""){
             return 0

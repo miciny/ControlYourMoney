@@ -16,13 +16,13 @@ class UserInfoModel: NSObject {
     var location: String?
     var pw: String!
     var sex: String?
-    var time: NSDate!
+    var time: Date!
     var motto: String?
-    var pic: NSData?
+    var pic: Data?
     var http: String?
     var picPath: String?
     
-    init(account: String!, nickname: String?, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: NSDate!, motto: String?, pic: NSData?, http: String?, picPath: String?){
+    init(account: String!, nickname: String?, name: String?, address: String?, location: String?, pw: String!, sex: String?, time: Date!, motto: String?, pic: Data?, http: String?, picPath: String?){
         self.account = account
         self.name = name
         self.nickname = nickname

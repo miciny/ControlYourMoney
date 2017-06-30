@@ -18,8 +18,8 @@ import SwiftyJSON
 import Alamofire
 
 class SyncDataViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate{
-    private var mainTabelView: UITableView? //整个table
-    private var settingData : NSMutableArray? //数据
+    fileprivate var mainTabelView: UITableView? //整个table
+    fileprivate var settingData : NSMutableArray? //数据
     
     let downLoad = UIButton() //下载按钮
     let textView = UITextView() //显示上传数据的textview
@@ -41,17 +41,17 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         setUpTable()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        InternetSetting.updateuserData(0, changeValue: (self.switchBtn?.on)!, changeFieldName: internetSettingNameOfInternet)
+        InternetSetting.updateuserData(0, changeValue: (self.switchBtn?.isOn)!, changeFieldName: internetSettingNameOfInternet)
     }
     
     func setUpTitle(){
         self.title = "同步数据"
         self.view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
         
-        let addItemFast = UIBarButtonItem(title: "说明", style: .Plain, target: self, action:
+        let addItemFast = UIBarButtonItem(title: "说明", style: .plain, target: self, action:
             #selector(SyncDataViewController.goExplainPage))
         self.navigationItem.rightBarButtonItem = addItemFast
     }
@@ -73,18 +73,18 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         let settingTwo1 = SettingDataModul(icon: nil, name: "IP地址", lable: ip, pic: nil)
         let settingTwo2 = SettingDataModul(icon: nil, name: "端口", lable: port, pic: nil)
         
-        settingData?.addObject([settingOne])
-        settingData?.addObject([settingTwo1, settingTwo2])
+        settingData?.add([settingOne])
+        settingData?.add([settingTwo1, settingTwo2])
     }
     
     //设置tableView
     func setUpTable(){
-        mainTabelView = UITableView(frame: self.view.frame, style: .Grouped)  //为group模式
+        mainTabelView = UITableView(frame: self.view.frame, style: .grouped)  //为group模式
         mainTabelView?.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
         mainTabelView?.showsVerticalScrollIndicator = false
         mainTabelView?.showsHorizontalScrollIndicator = false
-        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine //是否显示线条
+        mainTabelView?.separatorStyle = UITableViewCellSeparatorStyle.singleLine //是否显示线条
         mainTabelView?.sectionFooterHeight = 5  //每个section的间距
         
         mainTabelView?.delegate = self
@@ -102,33 +102,33 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //=====================================================================================================
     
     //section个数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return settingData!.count
     }
     
     //每个section的行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingData![section].count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (settingData![section] as AnyObject).count
     }
     
     //计算每个cell高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section: [AnyObject]  =  self.settingData![indexPath.section] as! [AnyObject] //获取section里的对象
         let data = section[indexPath.row]
         let item =  data as! SettingDataModul
         let height  = item.cellHeigth
         
-        return height
+        return height!
     }
     
     //一个section头部的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
     
     //选择了row
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        mainTabelView!.deselectRowAtIndexPath(indexPath, animated: true)  //被选择后，会变灰，这么做还原
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainTabelView!.deselectRow(at: indexPath, animated: true)  //被选择后，会变灰，这么做还原
         switch indexPath.section{
         //ip 端口
         case 1:
@@ -136,22 +136,22 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
             case 0: //ip
                 let ipAlert = UIAlertView(title: "修改IP地址", message: "请输入IP", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
                 ipAlert.tag = 0
-                ipAlert.alertViewStyle = .PlainTextInput
+                ipAlert.alertViewStyle = .plainTextInput
                 
                 let section : NSArray =  self.settingData![1] as! NSArray
                 let data = section[0] as! SettingDataModul
-                ipAlert.textFieldAtIndex(0)!.text = data.lable
+                ipAlert.textField(at: 0)!.text = data.lable
                 
                 ipAlert.show()
                 
             case 1: //端口
                 let portAlert = UIAlertView(title: "修改端口", message: "请输入端口号", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
                 portAlert.tag = 1
-                portAlert.alertViewStyle = .PlainTextInput
+                portAlert.alertViewStyle = .plainTextInput
                 
                 let section : NSArray =  self.settingData![1] as! NSArray
                 let data = section[1] as! SettingDataModul
-                portAlert.textFieldAtIndex(0)!.text = data.lable
+                portAlert.textField(at: 0)!.text = data.lable
                 
                 portAlert.show()
             default:
@@ -171,18 +171,18 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     //每个cell内容
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "SettingCell"
         let section : NSArray =  self.settingData![indexPath.section] as! NSArray
         let data = section[indexPath.row] as! SettingDataModul
         let cell =  SettingTableViewCell(data: data , reuseIdentifier:cellId)
         
         if indexPath.section > 0 {
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator  //显示后面的小箭头
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator  //显示后面的小箭头
         }
         
         if indexPath.section == 0 {
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
             self.switchBtn = cell.switchBtn
             self.switchBtn?.setOn(self.switchIsOn, animated: true)
         }
@@ -197,19 +197,19 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //=====================================================================================================
     
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         switch alertView.tag{
         case 0:
             if buttonIndex == 1 {
                 let section : NSArray =  self.settingData![1] as! NSArray
                 let data = section[0] as! SettingDataModul
                 
-                let text = alertView.textFieldAtIndex(0)!.text
+                let text = alertView.textField(at: 0)!.text
                 
                 data.lable = text
                 
-                let indexPath = NSIndexPath(forRow: 0, inSection: 1)
-                mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                let indexPath = IndexPath(row: 0, section: 1)
+                mainTabelView?.reloadRows(at: [indexPath], with: .none)
                 
                 InternetSetting.updateuserData(0, changeValue: text!, changeFieldName: internetSettingNameOfIP)
             }
@@ -219,12 +219,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
                 let section : NSArray =  self.settingData![1] as! NSArray
                 let data = section[1] as! SettingDataModul
                 
-                let text = alertView.textFieldAtIndex(0)!.text
+                let text = alertView.textField(at: 0)!.text
                 
                 data.lable = text
                 
-                let indexPath = NSIndexPath(forRow: 1, inSection: 1)
-                mainTabelView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                let indexPath = IndexPath(row: 1, section: 1)
+                mainTabelView?.reloadRows(at: [indexPath], with: .none)
                 
                 InternetSetting.updateuserData(0, changeValue: text!, changeFieldName: internetSettingNameOfPort)
             }
@@ -240,40 +240,41 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //footerView
     func setFooterView() -> UIView{
         let footerView = UIView()
-        footerView.backgroundColor = UIColor.clearColor()
+        footerView.backgroundColor = UIColor.clear
         
         let upLoad = UIButton()
         upLoad.frame = CGRect(x: 20, y: 20, width: Width-40, height: 50)
-        upLoad.backgroundColor = UIColor(red: 0/255, green: 205/255, blue: 0/255, alpha: 1.0)
-        upLoad.setTitle("上传数据", forState: .Normal)
-        upLoad.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        upLoad.setTitle("上传数据", for: UIControlState())
+        upLoad.setTitleColor(UIColor.white, for: UIControlState())
         upLoad.layer.cornerRadius = 5
-        upLoad.addTarget(self, action: #selector(controlUpData), forControlEvents: .TouchUpInside)
+        upLoad.addTarget(self, action: #selector(controlUpData), for: .touchUpInside)
+        upLoad.isEnabled = false
+        upLoad.backgroundColor = UIColor.lightGray
         footerView.addSubview(upLoad)
         
         downLoad.frame = CGRect(x: 20, y: upLoad.frame.maxY+20, width: Width-40, height: 50)
-        downLoad.backgroundColor = UIColor.whiteColor()
-        downLoad.setTitle("下载数据", forState: .Normal)
-        downLoad.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        downLoad.addTarget(self, action: #selector(downLoadData), forControlEvents: .TouchUpInside)
+        downLoad.backgroundColor = UIColor.white
+        downLoad.setTitle("下载数据", for: UIControlState())
+        downLoad.setTitleColor(UIColor.black, for: UIControlState())
+        downLoad.addTarget(self, action: #selector(downLoadData), for: .touchUpInside)
         downLoad.layer.cornerRadius = 5
         footerView.addSubview(downLoad)
         
         copyBtn.frame = CGRect(x: 20, y: downLoad.frame.maxY+10, width: 40, height: 20)
-        copyBtn.setTitle("复制", forState: .Normal)
-        copyBtn.titleLabel?.font = UIFont.systemFontOfSize(12)
-        copyBtn.backgroundColor = UIColor.lightGrayColor()
-        copyBtn.addTarget(self, action: #selector(copyText), forControlEvents: .TouchUpInside)
-        copyBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        copyBtn.enabled = false
-        copyBtn.hidden = true //一开始不显示复制按钮
+        copyBtn.setTitle("复制", for: UIControlState())
+        copyBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        copyBtn.backgroundColor = UIColor.lightGray
+        copyBtn.addTarget(self, action: #selector(copyText), for: .touchUpInside)
+        copyBtn.setTitleColor(UIColor.black, for: UIControlState())
+        copyBtn.isEnabled = false
+        copyBtn.isHidden = true //一开始不显示复制按钮
         footerView.addSubview(copyBtn)
         
         textView.frame = CGRect(x: 20, y: copyBtn.frame.maxY+10, width: Width-40, height: 200)
-        textView.backgroundColor = UIColor.clearColor()
+        textView.backgroundColor = UIColor.clear
         textView.font = standardFont
-        textView.textColor = UIColor.blackColor()
-        textView.editable = false
+        textView.textColor = UIColor.black
+        textView.isEditable = false
         footerView.addSubview(textView)
         
         footerView.frame = CGRect(x: 0, y: 0, width: Width, height: textView.frame.maxY+10)
@@ -281,8 +282,11 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         //这种判断有点问题，先这样吧
         let cash = Cash.selectAllData()
         if cash.count > 0 {
-            downLoad.enabled = false
-            downLoad.backgroundColor = UIColor.lightGrayColor()
+            downLoad.isEnabled = false
+            downLoad.backgroundColor = UIColor.lightGray
+            
+            upLoad.backgroundColor = UIColor(red: 0/255, green: 205/255, blue: 0/255, alpha: 1.0)
+            upLoad.isEnabled = true
         }
         
         return footerView
@@ -290,12 +294,12 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //复制文本
     func copyText(){
-        guard let str = textView.text where str != "" else{
+        guard let str = textView.text, str != "" else{
             MyToastView().showToast("无数据")
             return
         }
         
-        UIPasteboard.generalPasteboard().string = str
+        UIPasteboard.general.string = str
         MyToastView().showToast("复制成功")
     }
     
@@ -312,7 +316,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //下载数据，就是导入数据到数据库
     func downLoadData(){
-        if (self.switchBtn?.on == true) {
+        if (self.switchBtn?.isOn == true) {
             
             if checkNet() != networkType.wifi{
                 textAlertView("请连接Wi-Fi进行同步")
@@ -363,8 +367,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     
     //下载数据
     func downloadDataFromJsonFile() -> Bool{
-        if let file = NSBundle.mainBundle().pathForResource("json", ofType: "json") {
-            let data = NSData(contentsOfFile: file)!
+        if let file = Bundle.main.path(forResource: "json", ofType: "json") {
+            let data = try! Data(contentsOf: URL(fileURLWithPath: file))
             self.json = JSON(data: data)
             
             insertData()
@@ -389,8 +393,8 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         toast.showToast("导入数据成功！")
         
         //下载按钮不可用
-        self.downLoad.enabled = false
-        self.downLoad.backgroundColor = UIColor.lightGrayColor()
+        self.downLoad.isEnabled = false
+        self.downLoad.backgroundColor = UIColor.lightGray
         
     }
 
@@ -403,7 +407,7 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
     //本地时只是显示，网络时才连接网络
     func controlUpData(){
         
-        if self.switchBtn?.on == true{
+        if self.switchBtn?.isOn == true{
             
             if checkNet() != networkType.wifi{
                 textAlertView("请连接Wi-Fi进行同步")
@@ -426,17 +430,17 @@ class SyncDataViewController: UIViewController, UITableViewDelegate, UITableView
         
         textView.text = ""
         textView.text = jsonStr
-        textView.backgroundColor = UIColor.whiteColor()
+        textView.backgroundColor = UIColor.white
         
-        copyBtn.backgroundColor = UIColor.whiteColor()
-        copyBtn.enabled = true
-        copyBtn.hidden = false
+        copyBtn.backgroundColor = UIColor.white
+        copyBtn.isEnabled = true
+        copyBtn.isHidden = false
         
         return jsonStr
     }
     
     //上传数据到服务器
-    func upLoadDataToDB(str: String){
+    func upLoadDataToDB(_ str: String){
         let data = DataToModel.getUserDataToModel()
         
         let paras = [

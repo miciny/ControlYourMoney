@@ -33,7 +33,7 @@ class MCYLineChartView: UIView {
         setUpLineChart(frame, title: title, scaleEnabled: scaleEnabled)
     }
     
-    func setUpLineChart(frame: CGRect, title: String, scaleEnabled: Bool){
+    func setUpLineChart(_ frame: CGRect, title: String, scaleEnabled: Bool){
         lineChart = LineChartView()
         lineChart.frame = frame
         lineChart.backgroundColor = UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 1)
@@ -76,8 +76,8 @@ class MCYLineChartView: UIView {
         lineChart.viewPortHandler.setMaximumScaleY(1.0)
         
         //用于点击之后显示数据
-        let marker = BalloonMarker(color: UIColor.clearColor(), font:UIFont.systemFontOfSize(12.0), insets:UIEdgeInsetsMake(20.0, 8.0, 8.0, 8.0))
-        marker.minimumSize = CGSizeMake(80, 40)
+        let marker = BalloonMarker(color: UIColor.clear, font:UIFont.systemFont(ofSize: 12.0), insets:UIEdgeInsetsMake(20.0, 8.0, 8.0, 8.0))
+        marker.minimumSize = CGSize(width: 80, height: 40)
         lineChart.marker = marker
 
         //        monthCostLine.legend.form = ChartLegend.ChartLegendForm.Line
@@ -85,7 +85,7 @@ class MCYLineChartView: UIView {
         self.addSubview(lineChart)
     }
     
-    func setLineChartData(xdata : NSArray, ydata : NSArray){
+    func setLineChartData(_ xdata : NSArray, ydata : NSArray){
         let count = xdata.count
         var xVals = [String]()
         var yVals = [ChartDataEntry]()

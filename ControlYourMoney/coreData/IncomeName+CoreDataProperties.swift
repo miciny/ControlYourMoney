@@ -15,6 +15,6 @@ import CoreData
 extension IncomeName {
 
     @NSManaged var name: String?
-    @NSManaged var time: NSDate?
+    @NSManaged var time: Date?
 
 }

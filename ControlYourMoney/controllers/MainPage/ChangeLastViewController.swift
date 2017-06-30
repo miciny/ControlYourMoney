@@ -27,25 +27,25 @@ class ChangeLastViewController: UIViewController {
         let gap = CGFloat(10)
         
         //label
-        let totlaSize = sizeWithText("可用总额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let totlaSize = sizeWithText("可用总额：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let total = UILabel.introduceLabel()
-        total.frame = CGRectMake(20, 90, totlaSize.width, 30)
+        total.frame = CGRect(x: 20, y: 90, width: totlaSize.width, height: 30)
         total.text = "可用总额："
         self.view.addSubview(total)
         
         //输入框
         self.totalData = UITextField.inputTextField()
-        self.totalData.frame = CGRectMake(total.frame.maxX, total.frame.minY, self.view.frame.size.width-total.frame.maxX-20, 30)
+        self.totalData.frame = CGRect(x: total.frame.maxX, y: total.frame.minY, width: self.view.frame.size.width-total.frame.maxX-20, height: 30)
         self.totalData.placeholder = "请输入金额..."
         self.totalData.text = lastStr
         self.totalData.becomeFirstResponder() //界面打开时就获取焦点
         self.view.addSubview(self.totalData)
         
-        let save = UIButton(frame: CGRectMake(20, total.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
-        save.layer.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1).CGColor
-        save.setTitle("保  存", forState: UIControlState.Normal)
+        let save = UIButton(frame: CGRect(x: 20, y: total.frame.maxY+gap*3, width: self.view.frame.size.width-40, height: 44))
+        save.layer.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1).cgColor
+        save.setTitle("保  存", for: UIControlState())
         save.layer.cornerRadius = 3
-        save.addTarget(self,action: #selector(saveLast),forControlEvents:.TouchUpInside)
+        save.addTarget(self,action: #selector(saveLast),for:.touchUpInside)
         self.view.addSubview(save)
     }
 
@@ -65,7 +65,7 @@ class ChangeLastViewController: UIViewController {
         //保存数据
         Total.insertTotalData(Float(totalData.text!)!, time: getTime())
         MyToastView().showToast("修改成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
        
     }
     

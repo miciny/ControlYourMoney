@@ -16,8 +16,8 @@ class InitData: NSObject {
     class func calculateCredit(){
         var creditArray = Credit.selectAllData()
         //排序
-        let time = NSSortDescriptor.init(key: creditNameOfTime, ascending: true)
-        creditArray = creditArray.sortedArrayUsingDescriptors([time])
+        let time = NSSortDescriptor.init(key: creditNameOfNextPayDay, ascending: true)
+        creditArray = creditArray.sortedArray(using: [time])
         
         guard creditArray.count > 0 else{
             return
@@ -25,13 +25,13 @@ class InitData: NSObject {
         
         let timeNow = getTime()
         for i in 0 ..< creditArray.count {
-            let nextPayDay = creditArray.objectAtIndex(i).valueForKey(creditNameOfNextPayDay) as! NSDate  // 下期还款日期
-            let leftPeriods = creditArray.objectAtIndex(i).valueForKey(creditNameOfLeftPeriods) as! Int  // 剩余还款期数
+            let nextPayDay = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNextPayDay) as! Date  // 下期还款日期
+            let leftPeriods = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfLeftPeriods) as! Int  // 剩余还款期数
             
             //剩余还款大于0的才计算
             if leftPeriods > 0 {
                 let months = CalculateCredit.getMonthOffset(timeNow, time2: nextPayDay)  //获取月份差
-                let number = creditArray.objectAtIndex(i).valueForKey(creditNameOfNumber) as! Float  //
+                let number = (creditArray.object(at: i) as AnyObject).value(forKey: creditNameOfNumber) as! Float  //
                 if months < leftPeriods && months > 0{
                     
                     let nextPay = CalculateCredit.calculateTime(nextPayDay, months: months)
@@ -65,7 +65,7 @@ class InitData: NSObject {
         if data.count == 0 {
             return false
         }else{
-            if (data.lastObject?.valueForKey(userNameOfChanged) as! Bool){
+            if ((data.lastObject as AnyObject).value(forKey: userNameOfChanged) as! Bool){
                 return true
             }else{
                 return false

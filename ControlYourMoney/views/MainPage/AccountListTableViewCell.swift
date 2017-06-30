@@ -18,7 +18,7 @@ class AccountListTableViewCell: UITableViewCell {
     
     init(data: AccountListModul, reuseIdentifier cellId:String){
         self.accountList = data
-        super.init(style: UITableViewCellStyle.Default, reuseIdentifier:cellId)
+        super.init(style: UITableViewCellStyle.default, reuseIdentifier:cellId)
         rebuildCell()
     }
     
@@ -28,10 +28,10 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: accountListTitleFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: 10, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.clearColor()
-            searchRecodeLabel.textColor = UIColor.lightGrayColor()
+            searchRecodeLabel.backgroundColor = UIColor.clear
+            searchRecodeLabel.textColor = UIColor.lightGray
             searchRecodeLabel.font = accountListTitleFont
-            searchRecodeLabel.textAlignment = .Left
+            searchRecodeLabel.textAlignment = .left
             searchRecodeLabel.text = accountList.name
             self.addSubview(searchRecodeLabel)
         }else if(accountList.type == 1){
@@ -39,9 +39,9 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: standardFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: 20, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.clearColor()
+            searchRecodeLabel.backgroundColor = UIColor.clear
             searchRecodeLabel.font = standardFont
-            searchRecodeLabel.textAlignment = .Left
+            searchRecodeLabel.textAlignment = .left
             searchRecodeLabel.text = accountList.name
             self.addSubview(searchRecodeLabel)
         }else if(accountList.type == 2){
@@ -49,9 +49,9 @@ class AccountListTableViewCell: UITableViewCell {
             let searchRecodeSize = sizeWithText(accountList.name, font: standardFont, maxSize: CGSize(width: Width/2, height: 1000))
             let searchRecodeLabel = UILabel(frame: CGRect(x: Width/2-searchRecodeSize.width/2, y: self.frame.origin.y,
                 width: searchRecodeSize.width, height: self.frame.height))
-            searchRecodeLabel.backgroundColor = UIColor.clearColor()
+            searchRecodeLabel.backgroundColor = UIColor.clear
             searchRecodeLabel.font = standardFont
-            searchRecodeLabel.textAlignment = .Center
+            searchRecodeLabel.textAlignment = .center
             searchRecodeLabel.text = accountList.name
             self.addSubview(searchRecodeLabel)
         }
@@ -62,7 +62,7 @@ class AccountListTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

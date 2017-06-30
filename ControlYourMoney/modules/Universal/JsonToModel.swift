@@ -12,7 +12,7 @@ import SwiftyJSON
 class JsonToModel: NSObject {
     
     //json数据改为UserInfoModel
-    class func getUserJsonDataToModel(json: JSON) -> UserInfoModel{
+    class func getUserJsonDataToModel(_ json: JSON) -> UserInfoModel{
         let accout = json[userNameOfAccount].stringValue
         let nickname = json[userNameOfNickname].stringValue
         let name = json[userNameOfName].stringValue

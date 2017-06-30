@@ -10,7 +10,7 @@ import UIKit
 
 //选择的协议
 extension MyTDCodeImageViewController : bottomMenuViewDelegate{
-    func buttonClicked(tag: Int, eventFlag: Int) {
+    func buttonClicked(_ tag: Int, eventFlag: Int) {
         switch eventFlag{
         case 0:
             switch tag{
@@ -29,7 +29,7 @@ extension MyTDCodeImageViewController : bottomMenuViewDelegate{
 
 class MyTDCodeImageViewController: UIViewController {
     
-    private var imageView : UIImageView?
+    fileprivate var imageView : UIImageView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +41,10 @@ class MyTDCodeImageViewController: UIViewController {
     //定义title 导航栏等
     func setUpEles(){
         self.title = "个人二维码"
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         //右上角添加按钮
-        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self,
+        let addItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self,
                                       action: #selector(MyIconViewController.addButtonClicked))
         self.navigationItem.rightBarButtonItem = addItem
     }
@@ -71,7 +71,7 @@ class MyTDCodeImageViewController: UIViewController {
         self.view.addSubview(imageView!)
     }
 
-    func image(image: UIImage, didFinishSavingWithError: NSError?,contextInfo: AnyObject){
+    func image(_ image: UIImage, didFinishSavingWithError: NSError?,contextInfo: AnyObject){
         
         if didFinishSavingWithError != nil{
             MyToastView().showToast("保存出错！")

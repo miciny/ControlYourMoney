@@ -11,7 +11,7 @@ import Alamofire
 
 class PostData: NSObject {
     //post用户信息数据到db
-    class func postUserInfoToDB(str: String, manager: Manager){
+    class func postUserInfoToDB(_ str: String, manager: Manager){
         
         let paras = [
             "data": strToJson(str)
@@ -39,9 +39,9 @@ class PostData: NSObject {
     
     //post user icon
     //
-    class func postUserIconToDB(imagePath: String, manager: Manager){
+    class func postUserIconToDB(_ imagePath: String, manager: Manager){
         let data = DataToModel.getUserDataToModel()
-        let iconURL = NSURL(fileURLWithPath: imagePath)
+        let iconURL = URL(fileURLWithPath: imagePath)
         let url = NetWork.userIconUrl
         
         //上传图片

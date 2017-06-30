@@ -20,7 +20,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         setupSalaryLable()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         initData()
     }
@@ -38,12 +38,12 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         }
         
         for i in 0 ..< accountTempArray.count {
-            let name = accountTempArray[i].valueForKey(creditAccountNameOfName) as! String
-            nameArray.addObject(name)
+            let name = (accountTempArray[i] as AnyObject).value(forKey: creditAccountNameOfName) as! String
+            nameArray.add(name)
         }
         
         if self.accountData.text == nil {
-            self.accountData.text = nameArray.objectAtIndex(0) as? String
+            self.accountData.text = nameArray.object(at: 0) as? String
         }
     }
     
@@ -51,39 +51,39 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
     func setupSalaryLable(){
         let gap = CGFloat(10)
         
-        let numberSalarySize = sizeWithText("工资金额：", font: introduceFont, maxSize: CGSizeMake(self.view.frame.width/2, 30))
+        let numberSalarySize = sizeWithText("工资金额：", font: introduceFont, maxSize: CGSize(width: self.view.frame.width/2, height: 30))
         let numberSalary = UILabel.introduceLabel()
-        numberSalary.frame = CGRectMake(20, 90, numberSalarySize.width, 30)
+        numberSalary.frame = CGRect(x: 20, y: 90, width: numberSalarySize.width, height: 30)
         numberSalary.text = "收入金额："
         self.view.addSubview(numberSalary)
         
         self.numberSalaryData = UITextField.inputTextField()
-        self.numberSalaryData.frame = CGRectMake(numberSalary.frame.maxX, numberSalary.frame.minY, self.view.frame.size.width-numberSalary.frame.maxX-20, 30)
+        self.numberSalaryData.frame = CGRect(x: numberSalary.frame.maxX, y: numberSalary.frame.minY, width: self.view.frame.size.width-numberSalary.frame.maxX-20, height: 30)
         self.numberSalaryData.placeholder = "请输入金额..."
-        self.numberSalaryData.keyboardType = UIKeyboardType.DecimalPad //激活时 弹出数字键盘
+        self.numberSalaryData.keyboardType = UIKeyboardType.decimalPad //激活时 弹出数字键盘
         self.numberSalaryData.becomeFirstResponder() //界面打开时就获取焦点
-        self.numberSalaryData.returnKeyType = UIReturnKeyType.Done //表示完成输入
+        self.numberSalaryData.returnKeyType = UIReturnKeyType.done //表示完成输入
         self.view.addSubview(self.numberSalaryData)
         
         let account = UILabel.introduceLabel()
-        account.frame = CGRectMake(20, numberSalary.frame.maxY+gap, numberSalarySize.width, 30)
+        account.frame = CGRect(x: 20, y: numberSalary.frame.maxY+gap, width: numberSalarySize.width, height: 30)
         account.text = "收入类型："
         self.view.addSubview(account)
         
         self.accountData = UILabel.selectLabel(self, selector: #selector(goSelectAccount))
-        self.accountData.frame = CGRectMake(account.frame.maxX, account.frame.minY, self.view.frame.size.width-account.frame.maxX-20, 30)
+        self.accountData.frame = CGRect(x: account.frame.maxX, y: account.frame.minY, width: self.view.frame.size.width-account.frame.maxX-20, height: 30)
         self.view.addSubview(self.accountData)
         
-        let save = UIButton(frame: CGRectMake(20, account.frame.maxY+gap*3, self.view.frame.size.width-40, 44))
-        save.layer.backgroundColor = UIColor.redColor().CGColor
+        let save = UIButton(frame: CGRect(x: 20, y: account.frame.maxY+gap*3, width: self.view.frame.size.width-40, height: 44))
+        save.layer.backgroundColor = UIColor.red.cgColor
         save.layer.cornerRadius = 3
-        save.setTitle("保  存", forState: UIControlState.Normal)
-        save.addTarget(self,action: #selector(saveSalary),forControlEvents:.TouchUpInside)
+        save.setTitle("保  存", for: UIControlState())
+        save.addTarget(self,action: #selector(saveSalary),for:.touchUpInside)
         self.view.addSubview(save)
     }
     
     //确认框代理
-    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         let vc = AddIncomeAccountViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -106,7 +106,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         CalculateCredit.changeTotal(-Float(self.numberSalaryData.text!)!)
         
         MyToastView().showToast("添加成功！")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     //进入选择账号页
@@ -114,7 +114,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
         let vc = IncomeNameListViewController()
         vc.delegate = self
         let vcNavigationController = UINavigationController(rootViewController: vc) //带导航栏
-        self.navigationController?.presentViewController(vcNavigationController, animated: true, completion: nil)
+        self.navigationController?.present(vcNavigationController, animated: true, completion: nil)
     }
     
     
@@ -126,7 +126,7 @@ class AddIncomeViewController: UIViewController, UITextFieldDelegate, UITextView
 
 //账号选择的代理
 extension AddIncomeViewController: accountListViewDelegate{
-    func buttonClicked(name: String) {
+    func buttonClicked(_ name: String) {
         self.accountData.text = name
     }
 }

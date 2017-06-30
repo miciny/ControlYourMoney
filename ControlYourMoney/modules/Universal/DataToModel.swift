@@ -18,18 +18,18 @@ class DataToModel: NSObject {
         if data.count == 0 {
             dataModel = UserInfoModel(account: "", nickname: "", name: nil, address: nil, location: nil, pw: "", sex: nil, time: getTime(), motto: nil, pic: nil, http: nil, picPath: nil)
         }else{
-            let accout = data.lastObject?.valueForKey(userNameOfAccount) as! String
-            let nickname = data.lastObject?.valueForKey(userNameOfNickname) as? String
-            let name = data.lastObject?.valueForKey(userNameOfName) as? String
-            let address = data.lastObject?.valueForKey(userNameOfAddress) as? String
-            let location = data.lastObject?.valueForKey(userNameOfLocation) as? String
-            let pw = data.lastObject?.valueForKey(userNameOfPW) as! String
-            let sex = data.lastObject?.valueForKey(userNameOfSex) as? String
-            let time = data.lastObject?.valueForKey(userNameOfTime) as! NSDate
-            let motto = data.lastObject?.valueForKey(userNameOfMotto) as? String
-            let pic = data.lastObject?.valueForKey(userNameOfPic) as? NSData
-            let http = data.lastObject?.valueForKey(userNameOfHttp) as? String
-            let picPath = data.lastObject?.valueForKey(userNameOfPicPath) as? String
+            let accout = (data.lastObject as AnyObject).value(forKey: userNameOfAccount) as! String
+            let nickname = (data.lastObject as AnyObject).value(forKey: userNameOfNickname) as? String
+            let name = (data.lastObject as AnyObject).value(forKey: userNameOfName) as? String
+            let address = (data.lastObject as AnyObject).value(forKey: userNameOfAddress) as? String
+            let location = (data.lastObject as AnyObject).value(forKey: userNameOfLocation) as? String
+            let pw = (data.lastObject as AnyObject).value(forKey: userNameOfPW) as! String
+            let sex = (data.lastObject as AnyObject).value(forKey: userNameOfSex) as? String
+            let time = (data.lastObject as AnyObject).value(forKey: userNameOfTime) as! Date
+            let motto = (data.lastObject as AnyObject).value(forKey: userNameOfMotto) as? String
+            let pic = (data.lastObject as AnyObject).value(forKey: userNameOfPic) as? Data
+            let http = (data.lastObject as AnyObject).value(forKey: userNameOfHttp) as? String
+            let picPath = (data.lastObject as AnyObject).value(forKey: userNameOfPicPath) as? String
             
             dataModel = UserInfoModel(account: accout, nickname: nickname, name: name, address: address, location: location, pw: pw, sex: sex, time: time, motto: motto, pic: pic, http: http, picPath: picPath)
         }
@@ -47,9 +47,9 @@ class DataToModel: NSObject {
         if data.count == 0 {
             InternetSetting.insertInternetSettingData(ip, port: port, internet: internet)
         }else{
-            ip = data.lastObject?.valueForKey(internetSettingNameOfIP) as! String
-            port = data.lastObject?.valueForKey(internetSettingNameOfPort) as! String
-            internet = data.lastObject?.valueForKey(internetSettingNameOfInternet) as! Bool
+            ip = (data.lastObject as AnyObject).value(forKey: internetSettingNameOfIP) as! String
+            port = (data.lastObject as AnyObject).value(forKey: internetSettingNameOfPort) as! String
+            internet = (data.lastObject as AnyObject).value(forKey: internetSettingNameOfInternet) as! Bool
         }
         
         return URLModel(ip: ip, port: port, internet: internet)
